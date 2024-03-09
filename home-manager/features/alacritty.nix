@@ -33,7 +33,7 @@
         WINIT_X11_SCALE_FACTOR = "1";
       };
       font = {
-        size = 10;
+        size = 14;
         normal.family = "JetBrainsMonoNL NF";
       };
       window.padding = {

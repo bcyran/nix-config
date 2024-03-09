@@ -25,6 +25,7 @@
     ./features/greetd.nix
     ./features/console.nix
     ./features/xdg-portal.nix
+    ./features/pipewire.nix
   ];
 
   nixpkgs = {

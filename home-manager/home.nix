@@ -23,7 +23,9 @@
     ./features/fish.nix
     ./features/alacritty.nix
     ./features/hyprland.nix
+    ./features/dunst.nix
     ./features/waybar
+    ./features/rofi
   ];
 
   nixpkgs = {
@@ -66,7 +68,10 @@
     curl
     ranger
     neofetch
+    roboto
+    libnotify
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    keepassxc
   ];
 
   # Enable home-manager and git
@@ -75,6 +80,7 @@
   programs.bat.enable = true;
   programs.ripgrep.enable = true;
   programs.btop.enable = true;
+  programs.firefox.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

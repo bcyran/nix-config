@@ -14,9 +14,11 @@
         "QT_QPA_PLATFORM,wayland"
       ];
       monitor = [
-        "desc:California Institute of Technology 0x1402, 2880x1800@60, 0x325, 1.5, transform, 0"
-        "desc:Dell Inc. DELL PD2421D FJWHGC3, 2560x1440@60, 1920x325, 1.0, transform, 0"
-        "desc:Dell Inc. DELL PD2421D CGSHL93, 2560x1440@60, 4480x0, 1.0, transform, 3"
+        "eDP-1, 1920x1080@60, 0x0, 1"
+        ",preferred, auto, 1"
+        # "desc:California Institute of Technology 0x1402, 2880x1800@60, 0x325, 1.5, transform, 0"
+        # "desc:Dell Inc. DELL PD2421D FJWHGC3, 2560x1440@60, 1920x325, 1.0, transform, 0"
+        # "desc:Dell Inc. DELL PD2421D CGSHL93, 2560x1440@60, 4480x0, 1.0, transform, 3"
       ];
       input = {
         kb_layout = "pl";
@@ -190,7 +192,11 @@
         "CONTROL, space, exec, dunstctl close"
         "CONTROL, escape, exec, dunstctl history-pop"
 
-        "$mod, space, exec, onagre"
+        "$mod, space, exec, ~/.config/rofi/scripts/appmenu.sh"
+        "$mod SHIFT, space, exec, ~/.config/rofi/scripts/filesearch.sh"
+        "$mod CONTROL, space, exec, ~/.config/rofi/scripts/runmenu.sh"
+        "$mod SHIFT, backspace, exec, ~/.config/rofi/scripts/powermenu.sh"
+        "$mod, c, exec, ~/.config/rofi/scripts/calc.sh"
         "$mod, return, exec, alacritty"
         "$mod SHIFT, return, exec, alacritty --class terminal-floating"
         "$mod, Y, exec, firefox"
