@@ -18,8 +18,12 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+    ./features/git.nix
     ./features/tmux.nix
     ./features/fish.nix
+    ./features/alacritty.nix
+    ./features/hyprland.nix
+    ./features/waybar
   ];
 
   nixpkgs = {
@@ -62,29 +66,15 @@
     curl
     ranger
     neofetch
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
-  programs.git.enable = true;
   programs.eza.enable = true;
   programs.bat.enable = true;
-  programs.alacritty.enable = true;
+  programs.ripgrep.enable = true;
   programs.btop.enable = true;
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    systemd = {
-      enable = true;
-    };
-    extraConfig = ''
-      $mod = ALT
-
-      bind = $mod, return, exec, alacritty
-      bind = $mod SHIFT, q, killactive
-      bind = $mod SHIFT, e, exit
-    '';
-  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

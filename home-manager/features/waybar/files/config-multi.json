@@ -1,0 +1,43 @@
+[
+  {
+    "output": [
+      "DP-6",
+    ],
+    "modules-left": [
+      "hyprland/workspaces",
+      "hyprland/submap",
+      "hyprland/window",
+    ],
+    "modules-center": [
+      "clock",
+    ],
+    "modules-right": [
+      "custom/mpris",
+      "custom/philipstv",
+      "custom/sunset",
+      "custom/backlight",
+      "bluetooth",
+      "pulseaudio",
+      "network",
+      "battery",
+      "tray",
+    ],
+    "include": [
+      "~/.config/waybar/common.json",
+    ],
+  },
+  {
+    "output": [
+      "eDP-1",
+      "DP-7",
+    ],
+    "modules-left": [
+      "hyprland/workspaces",
+    ],
+    "modules-center": [],
+    "modules-right": [],
+    "include": [
+      "~/.config/waybar/common.json",
+    ],
+  },
+]

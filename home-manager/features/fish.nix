@@ -12,6 +12,17 @@
       vim = "nvim";
     };
     functions = {
+      fish_title = ''
+        set -q argv[1]; or set argv fish
+        echo $USER@(hostname) (prompt_pwd): $argv[1]
+      '';
+      fish_user_key_bindings = ''
+        for mode in insert default visual
+            bind -M $mode \cp history-search-backward
+            bind -M $mode \cn history-search-forward
+            bind -M $mode \cy accept-autosuggestion
+        end
+      '';
       cat = ''
         if isatty && type bat > /dev/null
           bat $argv

@@ -22,6 +22,9 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
+    ./features/greetd.nix
+    ./features/console.nix
+    ./features/xdg-portal.nix
   ];
 
   nixpkgs = {
@@ -109,6 +112,7 @@
 
   environment.systemPackages = with pkgs; [
     gcc
+    inotifyTools
     neovim
   ];
 
