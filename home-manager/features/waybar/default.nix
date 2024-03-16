@@ -5,5 +5,4 @@
     source = ./files;
     recursive = true;
   };
-  home.packages = with pkgs; [ icomoon-feather ];
 }

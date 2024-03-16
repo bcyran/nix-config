@@ -3,30 +3,34 @@
     enable = true;
     settings = {
       colors = {
-        bright = {
-          black = "0x3e4452";
-          blue = "0xa3b8ef";
-          cyan = "0x56b6c2";
-          green = "0x7eca9c";
-          magenta = "0xde98fd";
-          red = "0xbe5046";
-          white = "0x5c6370";
-          yellow = "0xd19a66";
+        primary = {
+          background = "#222436";
+          foreground = "#c8d3f5";
         };
         normal = {
-          black = "0x1e222a";
-          blue = "0x61afef";
-          cyan = "0x56b6c2";
-          green = "0x98c379";
-          magenta = "0xc678dd";
-          red = "0xe06c75";
-          white = "0xabb2bf";
-          yellow = "0xe5c07b";
+          black = "#1b1d2b";
+          red = "#ff757f";
+          green = "#c3e88d";
+          yellow = "#ffc777";
+          blue = "#82aaff";
+          magenta = "#c099ff";
+          cyan = "#86e1fc";
+          white = "#828bb8";
         };
-        primary = {
-          background = "0x1e222a";
-          foreground = "0xabb2bf";
+        bright = {
+          black = "#444a73";
+          red = "#ff757f";
+          green = "#c3e88d";
+          yellow = "#ffc777";
+          blue = "#82aaff";
+          magenta = "#c099ff";
+          cyan = "#86e1fc";
+          white = "#c8d3f5";
         };
+        indexed_colors = [
+          { index = 16; color = "#ff966c"; }
+          { index = 17; color = "#c53b53"; }
+        ];
       };
       env = {
         TERM = "xterm-256color";

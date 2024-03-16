@@ -2,7 +2,7 @@
 * {
   border: none;
   border-radius: 0;
-  font-family: "Roboto Condensed";
+  font-family: "Roboto Condensed", "JetBrainsMonoNL NF";
   font-size: 19px;
   font-weight: 400;
   min-height: 0;
@@ -12,31 +12,31 @@
 
 window#waybar {
   background: transparent;
-  color: #1e222a;
+  color: #c8d3f5;
 }
 
 window > box {
   margin: 10px 10px 0 10px;
-  background: #1e222a;
+  background: #1e2030;
   border: 1px solid transparent;
   border-radius: 5px;
   padding: 4px 10px 4px 4px;
 }
 
 tooltip {
-  background: #1e222a;
-  border: 1px solid #abb2bf;
+  background: #1e2030;
+  border: 1px solid #c8d3f5;
   border-radius: 5px;
 }
 
 tooltip label {
-  color: #abb2bf;
+  color: #c8d3f5;
 }
 
 /* WORKSPACES */
 #workspaces button{
-  background: #1e222a;
-  color: #abb2bf;
+  background: #1e2030;
+  color: #c8d3f5;
   padding: 2px 6px;
   margin: 0 4px 0 0;
   border-radius: 3px;
@@ -47,16 +47,16 @@ tooltip label {
 }
 
 #workspaces button.active {
-  background: #e5c07b;
-  color: #1e222a;
+  background: #65bcff;
+  color: #1e2030;
 }
 
 #workspaces button.urgent {
-  background: #61afef;
-  color: #1e222a;
+  background: #c3e88d;
+  color: #1e2030;
 }
 
 /* HYPRLAND SUBMAP */
 #submap {
-  color: #98c379;
+  color: #c3e88d;
 }

@@ -39,21 +39,21 @@
         history_length = 20;
       };
       urgency_low = {
-        background = "#1e222a";
-        foreground = "#abb2bf";
-        frame_color = "#e5c07b";
+        background = "#1e2030";
+        foreground = "#c8d3f5";
+        frame_color = "#65bcff";
         timeout = 10;
       };
       urgency_normal = {
-        background = "#1e222a";
-        foreground = "#abb2bf";
-        frame_color = "#e5c07b";
+        background = "#1e2030";
+        foreground = "#c8d3f5";
+        frame_color = "#65bcff";
         timeout = 10;
       };
       urgency_critical = {
-        background = "#1e222a";
-        foreground = "#abb2bf";
-        frame_color = "#e5c07b";
+        background = "#1e2030";
+        foreground = "#c8d3f5";
+        frame_color = "#65bcff";
         timeout = 0;
       };
     };
