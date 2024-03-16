@@ -70,8 +70,11 @@
     neofetch
     roboto
     libnotify
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    (nerdfonts.override {fonts = ["JetBrainsMono"];})
     keepassxc
+    cargo
+    rustc
+    alejandra
   ];
 
   # Enable home-manager and git

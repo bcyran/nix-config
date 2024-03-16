@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.git = {
     enable = true;
     userName = "Bazyli Cyran";
@@ -15,7 +14,7 @@
       };
     };
     includes = [
-      { path = "${pkgs.delta-themes}/share/themes.gitconfig"; }
+      {path = "${pkgs.delta-themes}/share/themes.gitconfig";}
     ];
     aliases = {
       st = "status";
@@ -23,14 +22,19 @@
       cob = "checkout -b";
       sw = "switch";
       swc = "switch -c";
+      sl = "switch -";
+      sr = "!f() { git for-each-ref --count=10 --sort=-committerdate --format='%(refname:short)|%(committerdate:relative)|%(subject)|%(authorname)' refs/heads | column -ts'|' | fzf +m | cut -d ' ' -f 1 | xargs -o git switch; }; f";
       br = "branch";
-      aa = "add -all";
+      aa = "add --all";
+      sa = "stash --all";
       rh = "reset HEAD";
       rh1 = "reset HEAD~1";
       cm = "commit";
       cma = "commit --amend";
       cmane = "commit --amend --no-edit";
-      l = "log --oneline -10";
+      ll = "log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+      l = "ll -15";
+      lp = "l -p";
       df = "diff";
       dfc = "diff --cached";
       pf = "push --force-with-lease";
@@ -51,6 +55,9 @@
       };
       merge.conflictstyle = "diff3";
       pull.ff = "only";
+      rerere.enable = true;
+      branch.sort = "-committerdate";
+      column.ui = "auto";
       diff.colorMoved = "default";
     };
   };

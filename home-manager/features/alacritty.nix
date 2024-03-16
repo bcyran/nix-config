@@ -28,8 +28,14 @@
           white = "#c8d3f5";
         };
         indexed_colors = [
-          { index = 16; color = "#ff966c"; }
-          { index = 17; color = "#c53b53"; }
+          {
+            index = 16;
+            color = "#ff966c";
+          }
+          {
+            index = 17;
+            color = "#c53b53";
+          }
         ];
       };
       env = {

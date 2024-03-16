@@ -103,7 +103,7 @@
     bazyli = {
       isNormalUser = true;
       description = "Bazyli Cyran";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = ["networkmanager" "wheel"];
       shell = pkgs.fish;
     };
   };
