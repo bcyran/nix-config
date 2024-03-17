@@ -24,8 +24,12 @@
     ./features/alacritty.nix
     ./features/hyprland.nix
     ./features/dunst.nix
+    ./features/swayidle.nix
+    ./features/wlsunset.nix
+    ./features/swaylock.nix
     ./features/waybar
     ./features/rofi
+    ./features/scripts
   ];
 
   nixpkgs = {
@@ -55,7 +59,6 @@
     };
   };
 
-  # TODO: Set your username
   home = {
     username = "bazyli";
     homeDirectory = "/home/bazyli";
@@ -74,6 +77,7 @@
     keepassxc
     cargo
     rustc
+    nodejs_21
     alejandra
   ];
 

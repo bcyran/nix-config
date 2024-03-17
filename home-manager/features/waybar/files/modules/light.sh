@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-readonly backlight="${HOME}/bin/backlight"
+readonly backlight="backlight"
 
 light_print() {
     while true; do

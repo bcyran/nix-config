@@ -75,12 +75,8 @@
     auto-optimise-store = true;
   };
 
-  # FIXME: Add the rest of your current configuration
-
-  # TODO: Set your hostname
   networking.hostName = "nixtest";
 
-  # TODO: This is just an example, be sure to use whatever bootloader you prefer
   boot.loader.systemd-boot.enable = true;
   networking.networkmanager.enable = true;
 
@@ -98,24 +94,31 @@
     LC_TIME = "pl_PL.UTF-8";
   };
 
-  # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
-  users.users = {
-    bazyli = {
-      isNormalUser = true;
-      description = "Bazyli Cyran";
-      extraGroups = ["networkmanager" "wheel"];
-      shell = pkgs.fish;
+  users = {
+    users = {
+      bazyli = {
+        isNormalUser = true;
+        description = "Bazyli Cyran";
+        extraGroups = ["networkmanager" "wheel" "video"];
+        shell = pkgs.fish;
+      };
+    };
+    groups = {
+      video = {};
     };
   };
 
   programs.fish.enable = true;
   programs.hyprland.enable = true;
+  programs.light.enable = true;
 
   environment.systemPackages = with pkgs; [
     gcc
     inotifyTools
     neovim
   ];
+
+  security.pam.services.swaylock = {};
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.

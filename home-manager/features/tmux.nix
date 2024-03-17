@@ -2,7 +2,7 @@
   programs.tmux = {
     enable = true;
     sensibleOnTop = true;
-    escapeTime = 100;
+    escapeTime = 50;
     terminal = "tmux-256color";
     keyMode = "vi";
     shortcut = "a";

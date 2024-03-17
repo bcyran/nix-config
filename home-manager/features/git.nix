@@ -14,7 +14,12 @@
       };
     };
     includes = [
-      {path = "${pkgs.delta-themes}/share/themes.gitconfig";}
+      {
+        path = pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/dandavison/delta/f49fd3b012067e34c101d7dfc6cc3bbac1fe5ccc/themes.gitconfig";
+          sha256 = "09kfrlmrnj5h3vs8cwfs66yhz2zpgk0qnmajvsr57wsxzgda3mh6";
+        };
+      }
     ];
     aliases = {
       st = "status";
