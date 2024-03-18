@@ -3,8 +3,7 @@
   config,
   ...
 }: let
-  # scripts = import ./scripts/scripts.nix {inherit pkgs;};
-  # backlight = "${scripts.backlight}/bin/backlight";
+  # backlight = "${pkgs.backlight}/bin/backlight";
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   light = "${pkgs.light}/bin/light";
   swaylock = "${config.programs.swaylock.package}/bin/swaylock";
@@ -13,7 +12,7 @@ in {
     enable = true;
     extraArgs = ["-d"];
     timeouts = [
-      # FIXME: Why does `backlight` doesn't work here?
+      # FIXME: Why `backlight` doesn't work here?
       # {
       #   timeout = 5 * 60;
       #   command = "${backlight} set 10";
