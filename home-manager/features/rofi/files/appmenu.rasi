@@ -9,6 +9,6 @@ configuration {
     display-drun: "Applications";
 }
 
-@import "base"
+@import "@commonConfigPath@"
 
 // vim:ft=css

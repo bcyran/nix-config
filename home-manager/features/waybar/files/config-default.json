@@ -19,6 +19,6 @@
     "tray",
   ],
   "include": [
-    "~/.config/waybar/common.json",
+    "@configCommonPath@",
   ],
 }

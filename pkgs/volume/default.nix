@@ -1,10 +1,11 @@
 {
   writeShellApplication,
   wireplumber,
+  coreutils,
   bc,
 }:
 writeShellApplication {
   name = "volume";
-  runtimeInputs = [wireplumber bc];
+  runtimeInputs = [wireplumber coreutils bc];
   text = builtins.readFile ./volume.sh;
 }

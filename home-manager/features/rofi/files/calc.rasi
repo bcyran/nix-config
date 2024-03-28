@@ -10,7 +10,7 @@ configuration {
     display-calc: "Calc";
 }
 
-@import "base"
+@import "@commonConfigPath@"
 
 listview {
     columns: 1;

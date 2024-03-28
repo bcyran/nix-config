@@ -8,7 +8,7 @@ configuration {
     display-run: "Run";
 }
 
-@import "base"
+@import "@commonConfigPath@"
 
 listview {
     columns: 1;

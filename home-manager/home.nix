@@ -1,13 +1,13 @@
 #This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
-  inputs,
   outputs,
-  lib,
-  config,
   pkgs,
+  config,
   ...
-}: {
+}: let
+  rofi = import ./features/rofi {inherit pkgs config;};
+in {
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
@@ -28,7 +28,7 @@
     ./features/wlsunset.nix
     ./features/swaylock.nix
     ./features/waybar
-    ./features/rofi
+    # ./features/rofi
   ];
 
   nixpkgs = {
@@ -78,10 +78,14 @@
     rustc
     nodejs_21
     alejandra
-    backlight
-    volume
-    wallpaper
-    scr
+    my.backlight
+    my.volume
+    my.wallpaper
+    my.scr
+    rofi.appmenu
+    rofi.powermenu
+    rofi.calc
+    rofi.runmenu
   ];
 
   # Enable home-manager and git

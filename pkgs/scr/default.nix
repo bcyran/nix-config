@@ -1,6 +1,7 @@
 {
   writeShellApplication,
   hyprland,
+  coreutils,
   libnotify,
   satty,
   grimblast,
@@ -8,6 +9,6 @@
 }:
 writeShellApplication {
   name = "scr";
-  runtimeInputs = [hyprland libnotify satty grimblast xdg-user-dirs];
+  runtimeInputs = [hyprland coreutils libnotify satty grimblast xdg-user-dirs];
   text = builtins.readFile ./scr.sh;
 }

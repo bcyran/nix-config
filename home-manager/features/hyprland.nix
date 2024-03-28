@@ -1,4 +1,14 @@
 {
+  pkgs,
+  config,
+  ...
+}: let
+  rofi = import ./rofi {inherit pkgs config;};
+  appmenuBin = "${rofi.appmenu}/bin/rofi-appmenu";
+  runmenuBin = "${rofi.runmenu}/bin/rofi-runmenu";
+  powermenuBin = "${rofi.powermenu}/bin/rofi-powermenu";
+  calcBin = "${rofi.calc}/bin/rofi-calc";
+in {
   wayland.windowManager.hyprland = {
     enable = true;
     systemd = {
@@ -192,11 +202,10 @@
         "CONTROL, space, exec, dunstctl close"
         "CONTROL, escape, exec, dunstctl history-pop"
 
-        "$mod, space, exec, ~/.config/rofi/scripts/appmenu.sh"
-        "$mod SHIFT, space, exec, ~/.config/rofi/scripts/filesearch.sh"
-        "$mod CONTROL, space, exec, ~/.config/rofi/scripts/runmenu.sh"
-        "$mod SHIFT, backspace, exec, ~/.config/rofi/scripts/powermenu.sh"
-        "$mod, c, exec, ~/.config/rofi/scripts/calc.sh"
+        "$mod, space, exec, ${appmenuBin}"
+        "$mod CONTROL, space, exec, ${runmenuBin}"
+        "$mod SHIFT, backspace, exec, ${powermenuBin}"
+        "$mod, c, exec, ${calcBin}"
         "$mod, return, exec, alacritty"
         "$mod SHIFT, return, exec, alacritty --class terminal-floating"
         "$mod, Y, exec, firefox"
@@ -206,8 +215,8 @@
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
       ];
-      "exec-once" = [
-        "~/.config/waybar/launch.sh"
+      windowrulev2 = [
+        "noblur, class:Rofi"
       ];
     };
     extraConfig = ''

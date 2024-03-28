@@ -22,11 +22,11 @@
     "max-length": 60
   },
   "clock": {
-    "format": "<span rise='-800'> </span>  {:%H:%M, %a %e %B}",
+    "format": "<span rise='-800'> </span>  {:L%H:%M, %a %e %B}",
     "tooltip-format": "<big>{:%Y %b}</big>\n<tt><small>{calendar}</small></tt>"
   },
   "custom/mpris": {
-    "exec": "~/.config/waybar/modules/mpris.sh",
+    "exec": "waybar-mpris",
     "return-type": "json",
     "format": "<span rise='-800'>{icon} </span> {}",
     "format-icons": {
@@ -36,48 +36,8 @@
     "on-click": "playerctl play-pause",
     "max-length": 50
   },
-  "custom/philipstv": {
-    "exec": "~/.config/waybar/modules/philipstv.sh",
-    "interval": 60,
-    "format": "<span rise='-800'>󰻅</span> {}",
-    "on-click": "philipstv key pause",
-    "on-click-right": "philipstv key play",
-    "on-click-middle": "philipstv key mute",
-    "on-scroll-up": "philipstv key volup",
-    "on-scroll-down": "philipstv key voldown",
-    "on-double-click": "philipstv-gui",
-    "tooltip": false
-  },
-  "custom/vpn": {
-    "exec": "~/.config/waybar/modules/vpn.sh",
-    "return-type": "json",
-    "format": "<span rise='-800'>{icon} </span> {}",
-    "format-icons": {
-      "on": "󰒙",
-      "off": ""
-    },
-    "interval": 60
-  },
-  "custom/updates": {
-    "exec": "~/.config/waybar/modules/updates.sh",
-    "format": "<span rise='-800'> </span>  {}",
-    "interval": 600,
-    "tooltip": false
-  },
-  "custom/sunset": {
-    "return-type": "json",
-    "exec": "~/.config/waybar/modules/sunset.sh",
-    "interval": 15,
-    "format": "<span rise='-800'>{icon} </span> {}",
-    "format-icons": {
-      "on": "󱩍",
-      "off": "󰹐"
-    },
-    "on-click": "~/.config/waybar/modules/sunset.sh toggle",
-    "tooltip": false
-  },
   "custom/backlight": {
-    "exec": "~/.config/waybar/modules/light.sh",
+    "exec": "waybar-backlight",
     "format": "<span rise='-800'>󰃟 </span>  {}",
     "on-scroll-up": "~/.config/waybar/modules/light.sh inc",
     "on-scroll-down": "~/.config/waybar/modules/light.sh dec",
