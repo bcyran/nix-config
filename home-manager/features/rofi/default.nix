@@ -7,7 +7,7 @@
     name = "common.rasi";
     text = builtins.readFile ./files/common.rasi;
   };
-  rofi = pkgs.rofi.override {plugins = [pkgs.rofi-calc];};
+  rofi = pkgs.rofi-wayland.override {plugins = [pkgs.rofi-calc];};
 in {
   appmenu = pkgs.callPackage ./appmenu.nix {
     inherit commonConfigPath rofi;
