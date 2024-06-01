@@ -1,0 +1,57 @@
+.onagre {
+  height: 400px;
+  width: 700px;
+  background: #1e2030;
+  color: #c8d3f5;
+  --font-family: "Roboto Condensed";
+  font-size: 24px;
+  --icon-theme: "We10X-blue-dark";
+  --icon-size: 40px;
+
+  .container {
+    .search {
+      color: #c8d3f5;
+      background: #2f334d;
+      border-radius: 5;
+
+      .input {
+        --placeholder-color: #828bb8;
+        border-radius: 5;
+      }
+    }
+
+    .rows {
+      .row {
+        color: #828bb8;
+        border-radius: 5;
+
+        .title {
+          font-size: 18px;
+        }
+
+        .description {
+          font-size: 14px;
+        }
+      }
+
+      .row-selected {
+        color: #c8d3f5;
+        border-radius: 5;
+
+        .title {
+          font-size: 18px;
+        }
+
+        .description {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .scrollable {
+      .scroller {
+        color: #2f334d;
+      }
+    }
+  }
+}

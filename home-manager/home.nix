@@ -30,6 +30,7 @@ in {
     ./features/ssh.nix
     ./features/zathura.nix
     ./features/btop.nix
+    ./features/onagre
     ./features/waybar
   ];
 
