@@ -27,8 +27,9 @@ in {
     ./features/swayidle.nix
     ./features/wlsunset.nix
     ./features/swaylock.nix
+    ./features/ssh.nix
+    ./features/zathura.nix
     ./features/waybar
-    # ./features/rofi
   ];
 
   nixpkgs = {
@@ -76,12 +77,13 @@ in {
     keepassxc
     cargo
     rustc
-    nodejs_21
+    nodejs
     alejandra
     my.backlight
     my.volume
     my.wallpaper
     my.scr
+    xfce.thunar
     rofi.appmenu
     rofi.powermenu
     rofi.calc
@@ -93,6 +95,7 @@ in {
   programs.eza.enable = true;
   programs.bat.enable = true;
   programs.ripgrep.enable = true;
+  programs.fd.enable = true;
   programs.btop.enable = true;
   programs.firefox.enable = true;
 

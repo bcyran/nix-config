@@ -1,6 +1,9 @@
 {pkgs, ...}: {
   programs.fish = {
     enable = true;
+    shellAbbrs = {
+      g = "git";
+    };
     shellAliases = {
       git = "LANG=en_US.UTF-8 command git";
       k = "kubectl";

@@ -26,6 +26,7 @@
     ./features/console.nix
     ./features/xdg-portal.nix
     ./features/pipewire.nix
+    ./features/filesystem.nix
   ];
 
   nixpkgs = {
@@ -111,6 +112,8 @@
   programs.fish.enable = true;
   programs.hyprland.enable = true;
   programs.light.enable = true;
+  # For remembering settings in thunar
+  programs.xfconf.enable = true;
 
   environment.systemPackages = with pkgs; [
     gcc
