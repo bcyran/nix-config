@@ -30,6 +30,7 @@ in {
     ./features/ssh.nix
     ./features/zathura.nix
     ./features/btop.nix
+    ./features/keepassxc.nix
     ./features/onagre
     ./features/waybar
   ];
@@ -76,7 +77,6 @@ in {
     roboto
     libnotify
     (nerdfonts.override {fonts = ["JetBrainsMono"];})
-    keepassxc
     cargo
     rustc
     nodejs
