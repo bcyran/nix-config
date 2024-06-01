@@ -29,6 +29,7 @@ in {
     ./features/swaylock.nix
     ./features/ssh.nix
     ./features/zathura.nix
+    ./features/btop.nix
     ./features/waybar
   ];
 
@@ -96,7 +97,6 @@ in {
   programs.bat.enable = true;
   programs.ripgrep.enable = true;
   programs.fd.enable = true;
-  programs.btop.enable = true;
   programs.firefox.enable = true;
 
   # Nicely reload system units when changing configs
