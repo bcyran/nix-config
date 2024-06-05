@@ -1,3 +1,5 @@
+@import "colors.css";
+
 /* GENERAL */
 * {
   border: none;
@@ -12,31 +14,31 @@
 
 window#waybar {
   background: transparent;
-  color: #c8d3f5;
+  color: @fg;
 }
 
 window > box {
   margin: 10px 10px 0 10px;
-  background: #1e2030;
+  background: @bg_dark;
   border: 1px solid transparent;
   border-radius: 5px;
   padding: 4px 10px 4px 4px;
 }
 
 tooltip {
-  background: #1e2030;
-  border: 1px solid #c8d3f5;
+  background: @bg_dark;
+  border: 1px solid @fg;
   border-radius: 5px;
 }
 
 tooltip label {
-  color: #c8d3f5;
+  color: @fg;
 }
 
 /* WORKSPACES */
 #workspaces button{
-  background: #1e2030;
-  color: #c8d3f5;
+  background: @bg_dark;
+  color: @fg;
   padding: 2px 6px;
   margin: 0 4px 0 0;
   border-radius: 3px;
@@ -47,16 +49,16 @@ tooltip label {
 }
 
 #workspaces button.active {
-  background: #65bcff;
-  color: #1e2030;
+  background: @base04;
+  color: @bg_dark;
 }
 
 #workspaces button.urgent {
-  background: #c3e88d;
-  color: #1e2030;
+  background: @fg;
+  color: @bg_dark;
 }
 
 /* HYPRLAND SUBMAP */
 #submap {
-  color: #c3e88d;
+  color: @fg;
 }

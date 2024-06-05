@@ -1,42 +1,32 @@
-{
+{config, ...}: {
   programs.alacritty = {
     enable = true;
     settings = {
       colors = {
         primary = {
-          background = "#222436";
-          foreground = "#c8d3f5";
+          background = "#${config.colorScheme.palette.bg}";
+          foreground = "#${config.colorScheme.palette.fg}";
         };
         normal = {
-          black = "#1b1d2b";
-          red = "#ff757f";
-          green = "#c3e88d";
-          yellow = "#ffc777";
-          blue = "#82aaff";
-          magenta = "#c099ff";
-          cyan = "#86e1fc";
-          white = "#828bb8";
+          black = "#${config.colorScheme.palette.base00}";
+          red = "#${config.colorScheme.palette.base01}";
+          green = "#${config.colorScheme.palette.base02}";
+          yellow = "#${config.colorScheme.palette.base03}";
+          blue = "#${config.colorScheme.palette.base04}";
+          magenta = "#${config.colorScheme.palette.base05}";
+          cyan = "#${config.colorScheme.palette.base06}";
+          white = "#${config.colorScheme.palette.base07}";
         };
         bright = {
-          black = "#444a73";
-          red = "#ff757f";
-          green = "#c3e88d";
-          yellow = "#ffc777";
-          blue = "#82aaff";
-          magenta = "#c099ff";
-          cyan = "#86e1fc";
-          white = "#c8d3f5";
+          black = "#${config.colorScheme.palette.base08}";
+          red = "#${config.colorScheme.palette.base09}";
+          green = "#${config.colorScheme.palette.base0A}";
+          yellow = "#${config.colorScheme.palette.base0B}";
+          blue = "#${config.colorScheme.palette.base0C}";
+          magenta = "#${config.colorScheme.palette.base0D}";
+          cyan = "#${config.colorScheme.palette.base0E}";
+          white = "#${config.colorScheme.palette.base0F}";
         };
-        indexed_colors = [
-          {
-            index = 16;
-            color = "#ff966c";
-          }
-          {
-            index = 17;
-            color = "#c53b53";
-          }
-        ];
       };
       env = {
         TERM = "xterm-256color";

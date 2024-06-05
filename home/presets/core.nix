@@ -1,4 +1,8 @@
-{outputs, ...}: {
+{
+  outputs,
+  nix-colors,
+  ...
+}: {
   nixpkgs = {
     # You can add overlays here
     overlays = [
@@ -27,6 +31,10 @@
   };
 
   programs.home-manager.enable = true;
+
+  imports = [
+    nix-colors.homeManagerModules.default
+  ];
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

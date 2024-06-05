@@ -8,5 +8,6 @@
     ../../presets/core.nix
     ../../presets/cli.nix
     ../../presets/desktop.nix
+    ../../presets/tokyonight.nix
   ];
 }
