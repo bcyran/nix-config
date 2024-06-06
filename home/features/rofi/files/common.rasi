@@ -1,8 +1,13 @@
 * {
-    background: #1e2030;
-    foreground: #c8d3f5;
-    light-background: #2f334d;
-    accent: #65bcff;
+    color-bg: @colorBg@;
+    color-bg-dark: @colorBgDark@;
+    color-bg-higlight: @colorBgHighlight@;
+    color-fg: @colorFg@;
+    color-fg-dark: @colorFgDark@;
+    color-accent-primary: @colorAccentPrimary@;
+    color-accent-secondary: @colorAccentSecondary@;
+    color-warning: @colorWarning@;
+    color-error: @colorError@;
 
     pad: 8px;
 }
@@ -11,10 +16,9 @@ window {
     width: 30em;
     location: center;
     anchor: center;
-    /* margin: 70px 0 0 20px; */
     border: 2px solid;
-    border-color: @light-background;
-    background-color: @background;
+    border-color: @color-bg-higlight;
+    background-color: @color-bg;
     font: "RobotoCondensed 14";
     border-radius: 3px;
 }
@@ -22,8 +26,12 @@ window {
 inputbar {
     children:   [ prompt,textbox-prompt-colon,entry ];
     padding: @pad;
-    border-color: @light-background;
-    text-color: @foreground;
+    border-color: @color-bg-higlight;
+    text-color: @color-fg;
+}
+
+prompt {
+    text-color: @color-fg;
 }
 
 listview {
@@ -31,64 +39,64 @@ listview {
     lines: 8;
     fixed-columns: true;
     border: 2px solid 0 0 0;
-    border-color: @light-background;
+    border-color: @color-bg-higlight;
     scrollbar: false;
 }
 
 entry {
-    background-color: @background;
-    text-color: @foreground;
+    background-color: @color-bg;
+    text-color: @color-fg;
     placeholder: "search...";
-    placeholder-color: @light-background;
+    placeholder-color: @color-bg-higlight;
 }
 
 element {
     padding: @pad;
-    background-color: @background;
-    text-color: @foreground;
+    background-color: @color-bg;
+    text-color: @color-fg;
     border-radius: 3px;
 }
 
 /* NORMAL */
 element normal.normal {
-    background-color: @background;
-    text-color: @foreground;
+    background-color: @color-bg;
+    text-color: @color-fg;
 }
 element normal.urgent {
-    background-color: @background;
-    text-color: @foreground;
+    background-color: @color-bg;
+    text-color: @color-fg;
 }
 element normal.active {
-    background-color: @background;
-    text-color: @foreground;
+    background-color: @color-bg;
+    text-color: @color-fg;
 }
 
 /* SELECTED */
 element selected.normal {
-    background-color: @accent;
-    text-color: @background;
+    background-color: @color-accent-primary;
+    text-color: @color-bg;
 }
 element selected.urgent {
-    background-color: @accent;
-    text-color: @background;
+    background-color: @color-accent-primary;
+    text-color: @color-bg;
 }
 element selected.active {
-    background-color: @accent;
-    text-color: @background;
+    background-color: @color-accent-primary;
+    text-color: @color-bg;
 }
 
 /* ALTERNATE */
 element alternate.normal {
-    background-color: @background;
-    text-color: @foreground;
+    background-color: @color-bg;
+    text-color: @color-fg;
 }
 element alternate.urgent {
-    background-color: @background;
-    text-color: @foreground;
+    background-color: @color-bg;
+    text-color: @color-fg;
 }
 element alternate.active {
-    background-color: @background;
-    text-color: @foreground;
+    background-color: @color-bg;
+    text-color: @color-fg;
 }
 
 // vim:ft=css

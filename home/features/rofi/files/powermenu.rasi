@@ -6,7 +6,6 @@ configuration {
 @import "@commonConfigPath@"
 
 * {
-    accent: #98c379;
     pad: 2px;
 }
 
@@ -14,12 +13,22 @@ window {
     width: 8em;
     location: north east;
     anchor: north east;
-    margin: 70px 20px 0 0;
+    margin: 20px 20px 0 0;
 }
 
 listview {
     columns: 1;
     lines: 6;
+}
+
+element selected.normal {
+    background-color: @color-accent-secondary;
+}
+element selected.urgent {
+    background-color: @color-accent-secondary;
+}
+element selected.active {
+    background-color: @color-accent-secondary;
 }
 
 // vim:ft=css

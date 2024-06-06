@@ -3,9 +3,18 @@
   config,
   ...
 }: let
-  commonConfigPath = pkgs.writeTextFile {
+  commonConfigPath = pkgs.substituteAll {
     name = "common.rasi";
-    text = builtins.readFile ./files/common.rasi;
+    src = ./files/common.rasi;
+    colorBg = "#${config.colorScheme.palette.guiBg}";
+    colorBgDark = "#${config.colorScheme.palette.guiBgDark}";
+    colorBgHighlight = "#${config.colorScheme.palette.guiBgHighlight}";
+    colorFg = "#${config.colorScheme.palette.guiFg}";
+    colorFgDark = "#${config.colorScheme.palette.guiFgDark}";
+    colorAccentPrimary = "#${config.colorScheme.palette.guiAccentPrimary}";
+    colorAccentSecondary = "#${config.colorScheme.palette.guiAccentSecondary}";
+    colorWarning = "#${config.colorScheme.palette.guiWarning}";
+    colorError = "#${config.colorScheme.palette.guiError}";
   };
   rofi = pkgs.rofi-wayland.override {plugins = [pkgs.rofi-calc];};
 in {

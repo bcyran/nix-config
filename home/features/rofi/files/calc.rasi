@@ -19,7 +19,7 @@ listview {
 
 message {
     border: 2px solid 0 0 0;
-    border-color: @light-background;
+    border-color: @color-bg-highlight;
     padding: 10px 5px 10px 5px;
 }
 
