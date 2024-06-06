@@ -4,14 +4,10 @@
     slug = "tokyo-night-moon";
     name = "Tokyo Night Moon";
     author = "Folke Lemaitre";
-    palette = {
-      # Extensions
+    palette = rec {
+      # Terminal & CLI
       bg = "#222436";
-      bg_dark = "#1e2030";
-      bg_highlight = "#2f334d";
       fg = "#c8d3f5";
-      fg_dark = "#828bb8";
-      # Base16
       base00 = "#1b1d2b";
       base01 = "#ff757f";
       base02 = "#c3e88d";
@@ -28,6 +24,17 @@
       base0D = "#c099ff";
       base0E = "#86e1fc";
       base0F = "#c8d3f5";
+
+      # GUI
+      guiBg = bg;
+      guiBgDark = "#1e2030";
+      guiBgHighlight = "#2f334d";
+      guiFg = fg;
+      guiFgDark = "#828bb8";
+      guiAccentPrimary = base04;
+      guiAccentSecondary = base02;
+      guiWarning = base03;
+      guiError = base01;
     };
   };
 }

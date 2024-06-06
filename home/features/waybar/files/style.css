@@ -49,16 +49,16 @@ tooltip label {
 }
 
 #workspaces button.active {
-  background: @base04;
+  background: @accent_primary;
   color: @bg_dark;
 }
 
 #workspaces button.urgent {
-  background: @fg;
+  background: @warning;
   color: @bg_dark;
 }
 
 /* HYPRLAND SUBMAP */
 #submap {
-  color: @fg;
+  color: @warning;
 }
