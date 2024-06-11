@@ -39,21 +39,21 @@
         history_length = 20;
       };
       urgency_low = {
-        background = "#${config.colorScheme.palette.guiBgDark}";
-        foreground = "#${config.colorScheme.palette.guiFg}";
-        frame_color = "#${config.colorScheme.palette.guiAccentPrimary}";
+        background = "#${config.colorScheme.palette.base00}";
+        foreground = "#${config.colorScheme.palette.base05}";
+        frame_color = "#${config.colorScheme.palette.accentPrimary}";
         timeout = 10;
       };
       urgency_normal = {
-        background = "#${config.colorScheme.palette.guiBgDark}";
-        foreground = "#${config.colorScheme.palette.guiFg}";
-        frame_color = "#${config.colorScheme.palette.guiAccentPrimary}";
+        background = "#${config.colorScheme.palette.base00}";
+        foreground = "#${config.colorScheme.palette.base05}";
+        frame_color = "#${config.colorScheme.palette.accentPrimary}";
         timeout = 10;
       };
       urgency_critical = {
-        background = "#${config.colorScheme.palette.guiBgDark}";
-        foreground = "#${config.colorScheme.palette.guiFg}";
-        frame_color = "#${config.colorScheme.palette.guiAccentPrimary}";
+        background = "#${config.colorScheme.palette.base00}";
+        foreground = "#${config.colorScheme.palette.base05}";
+        frame_color = "#${config.colorScheme.palette.accentPrimary}";
         timeout = 0;
       };
     };
