@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   services.dunst = {
     enable = true;
     settings = {
@@ -39,21 +39,21 @@
         history_length = 20;
       };
       urgency_low = {
-        background = "#1e2030";
-        foreground = "#c8d3f5";
-        frame_color = "#65bcff";
+        background = "#${config.colorScheme.palette.guiBgDark}";
+        foreground = "#${config.colorScheme.palette.guiFg}";
+        frame_color = "#${config.colorScheme.palette.guiAccentPrimary}";
         timeout = 10;
       };
       urgency_normal = {
-        background = "#1e2030";
-        foreground = "#c8d3f5";
-        frame_color = "#65bcff";
+        background = "#${config.colorScheme.palette.guiBgDark}";
+        foreground = "#${config.colorScheme.palette.guiFg}";
+        frame_color = "#${config.colorScheme.palette.guiAccentPrimary}";
         timeout = 10;
       };
       urgency_critical = {
-        background = "#1e2030";
-        foreground = "#c8d3f5";
-        frame_color = "#65bcff";
+        background = "#${config.colorScheme.palette.guiBgDark}";
+        foreground = "#${config.colorScheme.palette.guiFg}";
+        frame_color = "#${config.colorScheme.palette.guiAccentPrimary}";
         timeout = 0;
       };
     };
