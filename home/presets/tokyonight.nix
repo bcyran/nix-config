@@ -23,6 +23,12 @@
       base0F = "#c53b53"; # Purple; deprecated, embedded language
 
       # GUI
+      accentPrimary = base0D;
+      accentSecondary = base0B;
+      warning = base0A;
+      error = base0F;
+
+      # Legacy
       bg = "#222436";
       fg = "#c8d3f5";
       comment = "#565f89";
