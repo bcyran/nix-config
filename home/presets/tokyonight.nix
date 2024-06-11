@@ -27,20 +27,6 @@
       accentSecondary = base0B;
       warning = base0A;
       error = base0F;
-
-      # Legacy
-      bg = "#222436";
-      fg = "#c8d3f5";
-      comment = "#565f89";
-      guiBg = bg;
-      guiBgDark = "#1e2030";
-      guiBgHighlight = "#2f334d";
-      guiFg = fg;
-      guiFgDark = "#828bb8";
-      guiAccentPrimary = base04;
-      guiAccentSecondary = base02;
-      guiWarning = base03;
-      guiError = base01;
     };
   };
 }
