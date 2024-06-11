@@ -48,15 +48,27 @@ in {
   };
   xdg.configFile."waybar/colors.css" = {
     text = ''
-      @define-color bg #${config.colorScheme.palette.guiBg};
-      @define-color bg_dark #${config.colorScheme.palette.guiBgDark};
-      @define-color bg_highlight #${config.colorScheme.palette.guiBgHighlight};
-      @define-color fg #${config.colorScheme.palette.guiFg};
-      @define-color fg_dark #${config.colorScheme.palette.guiFgDark};
-      @define-color accent_primary #${config.colorScheme.palette.guiAccentPrimary};
-      @define-color accent_secondary #${config.colorScheme.palette.guiAccentSecondary};
-      @define-color warning #${config.colorScheme.palette.guiWarning};
-      @define-color error #${config.colorScheme.palette.guiError};
+      @define-color base00 #${config.colorScheme.palette.base00};
+      @define-color base01 #${config.colorScheme.palette.base01};
+      @define-color base02 #${config.colorScheme.palette.base02};
+      @define-color base03 #${config.colorScheme.palette.base03};
+      @define-color base04 #${config.colorScheme.palette.base04};
+      @define-color base05 #${config.colorScheme.palette.base05};
+      @define-color base06 #${config.colorScheme.palette.base06};
+      @define-color base07 #${config.colorScheme.palette.base07};
+      @define-color base08 #${config.colorScheme.palette.base08};
+      @define-color base09 #${config.colorScheme.palette.base09};
+      @define-color base0A #${config.colorScheme.palette.base0A};
+      @define-color base0B #${config.colorScheme.palette.base0B};
+      @define-color base0C #${config.colorScheme.palette.base0C};
+      @define-color base0D #${config.colorScheme.palette.base0D};
+      @define-color base0E #${config.colorScheme.palette.base0E};
+      @define-color base0F #${config.colorScheme.palette.base0F};
+
+      @define-color accent_primary #${config.colorScheme.palette.accentPrimary};
+      @define-color accent_secondary #${config.colorScheme.palette.accentSecondary};
+      @define-color warning #${config.colorScheme.palette.warning};
+      @define-color error #${config.colorScheme.palette.error};
     '';
   };
   systemd.user.services.waybar = {
