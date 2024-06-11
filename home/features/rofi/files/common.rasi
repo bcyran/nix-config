@@ -1,13 +1,25 @@
 * {
-    color-bg: @colorBg@;
-    color-bg-dark: @colorBgDark@;
-    color-bg-higlight: @colorBgHighlight@;
-    color-fg: @colorFg@;
-    color-fg-dark: @colorFgDark@;
-    color-accent-primary: @colorAccentPrimary@;
-    color-accent-secondary: @colorAccentSecondary@;
-    color-warning: @colorWarning@;
-    color-error: @colorError@;
+    base00: #@base00@;
+    base01: #@base01@;
+    base02: #@base02@;
+    base03: #@base03@;
+    base04: #@base04@;
+    base05: #@base05@;
+    base06: #@base06@;
+    base07: #@base07@;
+    base08: #@base08@;
+    base09: #@base09@;
+    base0A: #@base0A@;
+    base0B: #@base0B@;
+    base0C: #@base0C@;
+    base0D: #@base0D@;
+    base0E: #@base0E@;
+    base0F: #@base0F@;
+
+    accent-primary: #@accentPrimary@;
+    accent-secondary: #@accentSecondary@;
+    warning: #@warning@;
+    error: #@error@;
 
     pad: 8px;
 }
@@ -17,8 +29,8 @@ window {
     location: center;
     anchor: center;
     border: 2px solid;
-    border-color: @color-bg-higlight;
-    background-color: @color-bg;
+    border-color: @base01;
+    background-color: @base00;
     font: "RobotoCondensed 14";
     border-radius: 3px;
 }
@@ -26,12 +38,12 @@ window {
 inputbar {
     children:   [ prompt,textbox-prompt-colon,entry ];
     padding: @pad;
-    border-color: @color-bg-higlight;
-    text-color: @color-fg;
+    border-color: @base01;
+    text-color: @base05;
 }
 
 prompt {
-    text-color: @color-fg;
+    text-color: @base05;
 }
 
 listview {
@@ -39,64 +51,64 @@ listview {
     lines: 8;
     fixed-columns: true;
     border: 2px solid 0 0 0;
-    border-color: @color-bg-higlight;
+    border-color: @base01;
     scrollbar: false;
 }
 
 entry {
-    background-color: @color-bg;
-    text-color: @color-fg;
+    background-color: @base00;
+    text-color: @base05;
     placeholder: "search...";
-    placeholder-color: @color-bg-higlight;
+    placeholder-color: @base01;
 }
 
 element {
     padding: @pad;
-    background-color: @color-bg;
-    text-color: @color-fg;
+    background-color: @base00;
+    text-color: @base05;
     border-radius: 3px;
 }
 
 /* NORMAL */
 element normal.normal {
-    background-color: @color-bg;
-    text-color: @color-fg;
+    background-color: @base00;
+    text-color: @base05;
 }
 element normal.urgent {
-    background-color: @color-bg;
-    text-color: @color-fg;
+    background-color: @base00;
+    text-color: @base05;
 }
 element normal.active {
-    background-color: @color-bg;
-    text-color: @color-fg;
+    background-color: @base00;
+    text-color: @base05;
 }
 
 /* SELECTED */
 element selected.normal {
-    background-color: @color-accent-primary;
-    text-color: @color-bg;
+    background-color: @accent-primary;
+    text-color: @base00;
 }
 element selected.urgent {
-    background-color: @color-accent-primary;
-    text-color: @color-bg;
+    background-color: @accent-primary;
+    text-color: @base00;
 }
 element selected.active {
-    background-color: @color-accent-primary;
-    text-color: @color-bg;
+    background-color: @accent-primary;
+    text-color: @base00;
 }
 
 /* ALTERNATE */
 element alternate.normal {
-    background-color: @color-bg;
-    text-color: @color-fg;
+    background-color: @base00;
+    text-color: @base05;
 }
 element alternate.urgent {
-    background-color: @color-bg;
-    text-color: @color-fg;
+    background-color: @base00;
+    text-color: @base05;
 }
 element alternate.active {
-    background-color: @color-bg;
-    text-color: @color-fg;
+    background-color: @base00;
+    text-color: @base05;
 }
 
 // vim:ft=css

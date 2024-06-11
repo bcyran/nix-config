@@ -22,13 +22,13 @@ listview {
 }
 
 element selected.normal {
-    background-color: @color-accent-secondary;
+    background-color: @accent-secondary;
 }
 element selected.urgent {
-    background-color: @color-accent-secondary;
+    background-color: @accent-secondary;
 }
 element selected.active {
-    background-color: @color-accent-secondary;
+    background-color: @accent-secondary;
 }
 
 // vim:ft=css
