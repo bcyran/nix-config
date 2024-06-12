@@ -2,7 +2,9 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  inherit (config.colorScheme) palette;
+in {
   programs.fish = {
     enable = true;
     shellAbbrs = {
@@ -107,27 +109,27 @@
       set -gx tide_right_prompt_items status cmd_duration context jobs node python rustc java go
 
       # Syntax Highlighting Colors
-      set -g fish_color_normal ${config.colorScheme.palette.base05}
-      set -g fish_color_command ${config.colorScheme.palette.base0D}
-      set -g fish_color_keyword ${config.colorScheme.palette.base0E}
-      set -g fish_color_quote ${config.colorScheme.palette.base0B}
-      set -g fish_color_redirection ${config.colorScheme.palette.base0C}
-      set -g fish_color_end ${config.colorScheme.palette.base0C}
-      set -g fish_color_error ${config.colorScheme.palette.base0F}
-      set -g fish_color_param ${config.colorScheme.palette.base05}
-      set -g fish_color_comment ${config.colorScheme.palette.base03}
-      set -g fish_color_selection --background=${config.colorScheme.palette.base02}
-      set -g fish_color_search_match --background=${config.colorScheme.palette.base02}
-      set -g fish_color_operator ${config.colorScheme.palette.base0C}
-      set -g fish_color_escape ${config.colorScheme.palette.base0C}
-      set -g fish_color_autosuggestion ${config.colorScheme.palette.base03}
+      set -g fish_color_normal ${palette.base05}
+      set -g fish_color_command ${palette.base0D}
+      set -g fish_color_keyword ${palette.base0E}
+      set -g fish_color_quote ${palette.base0B}
+      set -g fish_color_redirection ${palette.base0C}
+      set -g fish_color_end ${palette.base0C}
+      set -g fish_color_error ${palette.base0F}
+      set -g fish_color_param ${palette.base05}
+      set -g fish_color_comment ${palette.base03}
+      set -g fish_color_selection --background=${palette.base02}
+      set -g fish_color_search_match --background=${palette.base02}
+      set -g fish_color_operator ${palette.base0C}
+      set -g fish_color_escape ${palette.base0C}
+      set -g fish_color_autosuggestion ${palette.base03}
 
       # Completion Pager Colors
-      set -g fish_pager_color_progress ${config.colorScheme.palette.base03}
-      set -g fish_pager_color_prefix ${config.colorScheme.palette.base0C}
-      set -g fish_pager_color_completion ${config.colorScheme.palette.base05}
-      set -g fish_pager_color_description ${config.colorScheme.palette.base03}
-      set -g fish_pager_color_selected_background --background=${config.colorScheme.palette.base02}
+      set -g fish_pager_color_progress ${palette.base03}
+      set -g fish_pager_color_prefix ${palette.base0C}
+      set -g fish_pager_color_completion ${palette.base05}
+      set -g fish_pager_color_description ${palette.base03}
+      set -g fish_pager_color_selected_background --background=${palette.base02}
     '';
     plugins = [
       {

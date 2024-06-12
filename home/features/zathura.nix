@@ -20,15 +20,15 @@ in {
 
       default-bg = "#${palette.base00}";
       default-fg = "#${palette.base05}";
-      statusbar-bg = "#${palette.base01}";
+      statusbar-bg = "#${palette.base10}";
       statusbar-fg = "#${palette.base05}";
-      inputbar-bg = "#${palette.base00}";
+      inputbar-bg = "#${palette.base10}";
       inputbar-fg = "#${palette.base05}";
-      notification-bg = "#${palette.base00}";
+      notification-bg = "#${palette.base10}";
       notification-fg = "#${palette.base05}";
-      notification-error-bg = "#${palette.base00}";
+      notification-error-bg = "#${palette.base10}";
       notification-error-fg = "#${palette.error}";
-      notification-warning-bg = "#${palette.base00}";
+      notification-warning-bg = "#${palette.base10}";
       notification-warning-fg = "#${palette.warning}";
       highlight-color = "rgba(${hexToRGBString "," palette.accentSecondary},0.5)";
       highlight-active-color = "rgba(${hexToRGBString "," palette.accentPrimary},0.5)";

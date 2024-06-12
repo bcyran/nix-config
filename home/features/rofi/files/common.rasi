@@ -15,6 +15,14 @@
     base0D: #@base0D@;
     base0E: #@base0E@;
     base0F: #@base0F@;
+    base10: #@base10@;
+    base11: #@base11@;
+    base12: #@base12@;
+    base13: #@base13@;
+    base14: #@base14@;
+    base15: #@base15@;
+    base16: #@base16@;
+    base17: #@base17@;
 
     accent-primary: #@accentPrimary@;
     accent-secondary: #@accentSecondary@;
@@ -30,7 +38,7 @@ window {
     anchor: center;
     border: 2px solid;
     border-color: @base01;
-    background-color: @base00;
+    background-color: @base10;
     font: "RobotoCondensed 14";
     border-radius: 3px;
 }
@@ -56,7 +64,7 @@ listview {
 }
 
 entry {
-    background-color: @base00;
+    background-color: @base10;
     text-color: @base05;
     placeholder: "search...";
     placeholder-color: @base01;
@@ -64,50 +72,50 @@ entry {
 
 element {
     padding: @pad;
-    background-color: @base00;
+    background-color: @base10;
     text-color: @base05;
     border-radius: 3px;
 }
 
 /* NORMAL */
 element normal.normal {
-    background-color: @base00;
+    background-color: @base10;
     text-color: @base05;
 }
 element normal.urgent {
-    background-color: @base00;
+    background-color: @base10;
     text-color: @base05;
 }
 element normal.active {
-    background-color: @base00;
+    background-color: @base10;
     text-color: @base05;
 }
 
 /* SELECTED */
 element selected.normal {
     background-color: @accent-primary;
-    text-color: @base00;
+    text-color: @base10;
 }
 element selected.urgent {
     background-color: @accent-primary;
-    text-color: @base00;
+    text-color: @base10;
 }
 element selected.active {
     background-color: @accent-primary;
-    text-color: @base00;
+    text-color: @base10;
 }
 
 /* ALTERNATE */
 element alternate.normal {
-    background-color: @base00;
+    background-color: @base10;
     text-color: @base05;
 }
 element alternate.urgent {
-    background-color: @base00;
+    background-color: @base10;
     text-color: @base05;
 }
 element alternate.active {
-    background-color: @base00;
+    background-color: @base10;
     text-color: @base05;
 }
 

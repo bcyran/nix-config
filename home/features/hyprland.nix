@@ -3,6 +3,7 @@
   config,
   ...
 }: let
+  inherit (config.colorScheme) palette;
   rofi = import ./rofi {inherit pkgs config;};
   appmenuBin = "${rofi.appmenu}/bin/rofi-appmenu";
   runmenuBin = "${rofi.runmenu}/bin/rofi-runmenu";
@@ -46,20 +47,20 @@ in {
         gaps_in = 5;
         gaps_out = 10;
         border_size = 2;
-        "col.active_border" = "rgb(${config.colorScheme.palette.accentPrimary})";
-        "col.inactive_border" = "rgb(${config.colorScheme.palette.base01})";
+        "col.active_border" = "rgb(${palette.accentPrimary})";
+        "col.inactive_border" = "rgb(${palette.base01})";
       };
       group = {
         focus_removed_window = true;
         insert_after_current = true;
-        "col.border_active" = "rgb(${config.colorScheme.palette.accentPrimary})";
-        "col.border_inactive" = "rgb(${config.colorScheme.palette.base01})";
+        "col.border_active" = "rgb(${palette.accentPrimary})";
+        "col.border_inactive" = "rgb(${palette.base01})";
         groupbar = {
           render_titles = false;
           gradients = false;
-          "col.active" = "rgb(${config.colorScheme.palette.accentPrimary})";
-          "col.inactive" = "rgb(${config.colorScheme.palette.base01})";
-          text_color = "rgb(${config.colorScheme.palette.base05})";
+          "col.active" = "rgb(${palette.accentPrimary})";
+          "col.inactive" = "rgb(${palette.base01})";
+          text_color = "rgb(${palette.base05})";
         };
       };
       decoration = {

@@ -1,31 +1,33 @@
-{config, ...}: {
+{config, ...}: let
+  inherit (config.colorScheme) palette;
+in {
   programs.alacritty = {
     enable = true;
     settings = {
       colors = {
         primary = {
-          background = "#${config.colorScheme.palette.base00}";
-          foreground = "#${config.colorScheme.palette.base05}";
+          background = "#${palette.base00}";
+          foreground = "#${palette.base05}";
         };
         normal = {
-          black = "#${config.colorScheme.palette.base00}";
-          red = "#${config.colorScheme.palette.base08}";
-          green = "#${config.colorScheme.palette.base0B}";
-          yellow = "#${config.colorScheme.palette.base0A}";
-          blue = "#${config.colorScheme.palette.base0D}";
-          magenta = "#${config.colorScheme.palette.base0E}";
-          cyan = "#${config.colorScheme.palette.base0C}";
-          white = "#${config.colorScheme.palette.base05}";
+          black = "#${palette.base00}";
+          red = "#${palette.base08}";
+          green = "#${palette.base0B}";
+          yellow = "#${palette.base0A}";
+          blue = "#${palette.base0D}";
+          magenta = "#${palette.base0E}";
+          cyan = "#${palette.base0C}";
+          white = "#${palette.base05}";
         };
         bright = {
-          black = "#${config.colorScheme.palette.base00}";
-          red = "#${config.colorScheme.palette.base08}";
-          green = "#${config.colorScheme.palette.base0B}";
-          yellow = "#${config.colorScheme.palette.base0A}";
-          blue = "#${config.colorScheme.palette.base0D}";
-          magenta = "#${config.colorScheme.palette.base0E}";
-          cyan = "#${config.colorScheme.palette.base0C}";
-          white = "#${config.colorScheme.palette.base05}";
+          black = "#${palette.base02}";
+          red = "#${palette.base12}";
+          green = "#${palette.base14}";
+          yellow = "#${palette.base13}";
+          blue = "#${palette.base16}";
+          magenta = "#${palette.base17}";
+          cyan = "#${palette.base15}";
+          white = "#${palette.base07}";
         };
       };
       env = {
