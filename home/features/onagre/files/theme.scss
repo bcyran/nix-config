@@ -1,8 +1,8 @@
 .onagre {
   height: 400px;
   width: 700px;
-  background: #1e2030;
-  color: #c8d3f5;
+  background: #@base10@;
+  color: #@base04@;
   --font-family: "Roboto Condensed";
   font-size: 24px;
   --icon-theme: "We10X-blue-dark";
@@ -10,19 +10,19 @@
 
   .container {
     .search {
-      color: #c8d3f5;
-      background: #2f334d;
+      color: #@base05@;
+      background: #@base01@;
       border-radius: 5;
 
       .input {
-        --placeholder-color: #828bb8;
+        --placeholder-color: #@base04@;
         border-radius: 5;
       }
     }
 
     .rows {
       .row {
-        color: #828bb8;
+        color: #@base04@;
         border-radius: 5;
 
         .title {
@@ -35,7 +35,7 @@
       }
 
       .row-selected {
-        color: #c8d3f5;
+        color: #@base05@;
         border-radius: 5;
 
         .title {
@@ -50,7 +50,7 @@
 
     .scrollable {
       .scroller {
-        color: #2f334d;
+        color: #@base01@;
       }
     }
   }
