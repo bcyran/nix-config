@@ -85,11 +85,13 @@ in {
       Description = "Waybar panels";
       PartOf = ["graphical-session.target"];
       After = ["graphical-session-pre.target"];
+      StartLimitBurst = 15;
     };
     Service = {
       ExecStart = "${launcher}/bin/waybar-launch";
       ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR2 $MAINPID";
       Restart = "on-failure";
+      RestartSec = 2;
       KillMode = "mixed";
     };
     Install = {
