@@ -15,6 +15,7 @@ in {
     ../features/zathura.nix
     ../features/keepassxc.nix
     ../features/spotify.nix
+    ../features/megasync.nix
     ../features/waybar
     ../features/onagre
   ];

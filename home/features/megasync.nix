@@ -1,0 +1,3 @@
+{
+  services.megasync.enable = true;
+}
