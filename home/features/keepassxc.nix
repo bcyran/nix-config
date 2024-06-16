@@ -1,5 +1,9 @@
-{pkgs, ...}: {
-  home.packages = [pkgs.keepassxc];
+{pkgs, ...}: let
+  keepassxc = pkgs.keepassxc;
+  keepassxcDesktopName = "org.keepassxc.KeePassXC.desktop";
+  keepassxcDesktop = "${keepassxc}/share/applications/${keepassxcDesktopName}";
+in {
+  home.packages = [keepassxc];
   xdg.configFile."keepassxc/keepassxc.ini" = {
     text = pkgs.lib.generators.toINI {} {
       General = {
@@ -32,5 +36,8 @@
         IconDownloadFallback = true;
       };
     };
+  };
+  xdg.configFile."autostart/${keepassxcDesktopName}" = {
+    source = keepassxcDesktop;
   };
 }

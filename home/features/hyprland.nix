@@ -14,6 +14,7 @@ in {
     enable = true;
     systemd = {
       enable = true;
+      enableXdgAutostart = true;
     };
     settings = {
       "$mod" = "ALT";
