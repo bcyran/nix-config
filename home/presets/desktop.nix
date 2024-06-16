@@ -14,6 +14,7 @@ in {
     ../features/swaylock.nix
     ../features/zathura.nix
     ../features/keepassxc.nix
+    ../features/spotify.nix
     ../features/waybar
     ../features/onagre
   ];
