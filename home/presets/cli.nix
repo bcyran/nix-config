@@ -3,7 +3,6 @@
     ../features/fish.nix
     ../features/tmux.nix
     ../features/git.nix
-    ../features/ssh.nix
     ../features/btop.nix
   ];
 

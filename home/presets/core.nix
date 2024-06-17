@@ -36,6 +36,7 @@
     nix-colors.homeManagerModules.default
 
     ../features/systemd.nix
+    ../features/ssh.nix
   ];
 
   # Nicely reload system units when changing configs
