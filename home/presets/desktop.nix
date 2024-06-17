@@ -16,6 +16,7 @@ in {
     ../features/keepassxc.nix
     ../features/spotify.nix
     ../features/megasync.nix
+    ../features/syncthing.nix
     ../features/waybar
     ../features/onagre
   ];
