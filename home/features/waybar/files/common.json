@@ -39,8 +39,8 @@
   "custom/backlight": {
     "exec": "waybar-backlight",
     "format": "<span rise='-800'>󰃟 </span>  {}",
-    "on-scroll-up": "~/.config/waybar/modules/light.sh inc",
-    "on-scroll-down": "~/.config/waybar/modules/light.sh dec",
+    "on-scroll-up": "waybar-backlight inc",
+    "on-scroll-down": "waybar-backlight dec",
     "tooltip": false
   },
   "bluetooth": {

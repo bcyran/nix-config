@@ -9,7 +9,7 @@ light_print() {
     done
 }
 
-case "$1" in
+case "${1-''}" in
     dec)
         "${backlight}" down 10
         ;;
