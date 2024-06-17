@@ -4,6 +4,9 @@
   ...
 }: let
   inherit (config.colorScheme) palette;
+  systemdNotifyBin = "${pkgs.systemd}/bin/systemd-notify";
+  sleepBin = "${pkgs.coreutils}/bin/sleep";
+  killBin = "${pkgs.coreutils}/bin/sleep";
   # Config files: common, default, multi-monitor
   configCommon = pkgs.writeTextFile {
     name = "config-common.json";
@@ -36,12 +39,15 @@
     src = ./files/launch.sh;
     configDefaultPath = configDefault;
     configMultiPath = configMulti;
+    systemdNotifyBin = systemdNotifyBin;
+    sleepBin = sleepBin;
   };
   launcher = pkgs.writeShellApplication {
     name = "waybar-launch";
     runtimeInputs = with pkgs; [waybar hyprland killall gnugrep backlightModule mprisModule];
     text = builtins.readFile launcherRendered;
   };
+  launcherBin = "${launcher}/bin/waybar-launch";
 in {
   programs.waybar.enable = true;
   xdg.configFile."waybar/style.css" = {
@@ -83,19 +89,21 @@ in {
   systemd.user.services.waybar = {
     Unit = {
       Description = "Waybar panels";
-      PartOf = ["graphical-session.target"];
+      PartOf = ["tray.target"];
       After = ["graphical-session-pre.target"];
       StartLimitBurst = 15;
     };
     Service = {
-      ExecStart = "${launcher}/bin/waybar-launch";
-      ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR2 $MAINPID";
+      Type = "notify";
+      NotifyAccess = "all";
+      ExecStart = launcherBin;
+      ExecReload = "${killBin} -SIGUSR2 $MAINPID";
       Restart = "on-failure";
       RestartSec = 2;
       KillMode = "mixed";
     };
     Install = {
-      WantedBy = ["graphical-session.target"];
+      WantedBy = ["tray.target"];
     };
   };
 }

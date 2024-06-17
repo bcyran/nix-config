@@ -34,6 +34,8 @@
 
   imports = [
     nix-colors.homeManagerModules.default
+
+    ../features/systemd.nix
   ];
 
   # Nicely reload system units when changing configs

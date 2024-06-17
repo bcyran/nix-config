@@ -14,4 +14,12 @@ if [[ ${num_monitors} -gt 1 ]]; then
     effective_config=${CONFIG_MULTI}
 fi
 
-waybar --config "${effective_config}"
+waybar --config "${effective_config}" &
+readonly pid=$!
+
+# Only report the waybar systemd service as started after the bar is started
+# and an additional delay for internal initialization.
+@sleepBin@ 1
+@systemdNotifyBin@ --ready
+
+wait ${pid}
