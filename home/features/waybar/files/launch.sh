@@ -19,7 +19,7 @@ readonly pid=$!
 
 # Only report the waybar systemd service as started after the bar is started
 # and an additional delay for internal initialization.
-@sleepBin@ 1
-@systemdNotifyBin@ --ready
+sleep 1
+systemd-notify --ready
 
 wait ${pid}

@@ -4,8 +4,6 @@
   ...
 }: let
   inherit (config.colorScheme) palette;
-  systemdNotifyBin = "${pkgs.systemd}/bin/systemd-notify";
-  sleepBin = "${pkgs.coreutils}/bin/sleep";
   killBin = "${pkgs.coreutils}/bin/sleep";
   # Config files: common, default, multi-monitor
   configCommon = pkgs.writeTextFile {
@@ -39,12 +37,19 @@
     src = ./files/launch.sh;
     configDefaultPath = configDefault;
     configMultiPath = configMulti;
-    systemdNotifyBin = systemdNotifyBin;
-    sleepBin = sleepBin;
   };
   launcher = pkgs.writeShellApplication {
     name = "waybar-launch";
-    runtimeInputs = with pkgs; [waybar hyprland killall gnugrep backlightModule mprisModule];
+    runtimeInputs = with pkgs; [
+      waybar
+      hyprland
+      killall
+      gnugrep
+      coreutils
+      systemd
+      backlightModule
+      mprisModule
+    ];
     text = builtins.readFile launcherRendered;
   };
   launcherBin = "${launcher}/bin/waybar-launch";
