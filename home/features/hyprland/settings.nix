@@ -1,4 +1,9 @@
-{config, ...}: let
+{
+  pkgs,
+  config,
+  ...
+}: let
+  alacrittyBin = "${pkgs.alacritty}/bin/alacritty";
   inherit (config.colorScheme) palette;
 in {
   wayland.windowManager.hyprland.settings = {
@@ -97,6 +102,11 @@ in {
       force_default_wallpaper = 0;
       animate_manual_resizes = true;
     };
+    # cursor = {
+    #   inactive_timeout = 60;
+    #   hide_on_key_press = true;
+    #   persistent_warps = true;
+    # };
     workspace = [
       "1, monitor:$monitorC, default:true"
       "2, monitor:$monitorC"
@@ -109,6 +119,9 @@ in {
       "9, monitor:$monitorL"
       "10, monitor:$monitorL"
       "11, monitor:$monitorC"
+    ];
+    exec-once = [
+      "${alacrittyBin} --class terminal-workspace"
     ];
   };
 }
