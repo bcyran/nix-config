@@ -7,7 +7,7 @@
 in {
   imports = [
     ../features/alacritty.nix
-    ../features/hyprland.nix
+    ../features/hyprland
     ../features/dunst.nix
     ../features/swayidle.nix
     ../features/wlsunset.nix
