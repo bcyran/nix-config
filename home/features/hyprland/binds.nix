@@ -10,6 +10,16 @@
   powermenuBin = "${rofi.powermenu}/bin/rofi-powermenu";
   calcBin = "${rofi.calc}/bin/rofi-calc";
 
+  hyprctlBin = "${pkgs.hyprland}/bin/hyprctl";
+  alacrittyBin = "${pkgs.alacritty}/bin/alacritty";
+  playerctlBin = "${pkgs.playerctl}/bin/playerctl";
+  dunstctlBin = "${pkgs.dunst}/bin/dunstctl";
+  firefoxBin = "${pkgs.firefox}/bin/firefox";
+  thunarBin = "${pkgs.xfce.thunar}/bin/thunar";
+  backlightBin = "${pkgs.my.backlight}/bin/backlight";
+  volumeBin = "${pkgs.my.volume}/bin/volume";
+  scrBin = "${pkgs.my.scr}/bin/scr";
+
   workspaceBinds = let
     # Keys: 1 - 9, 0, -
     keys = map (x: builtins.toString x) (lib.range 1 9) ++ ["0" "minus"];
@@ -36,8 +46,8 @@ in {
           "$mod SHIFT, p, pseudo,"
           "$mod SHIFT, x, pin,"
           "$mod, v, togglesplit,"
-          "$mod, d, exec, hyprctl keyword general:layout dwindle"
-          "$mod SHIFT, d, exec, hyprctl keyword general:layout master"
+          "$mod, d, exec, ${hyprctlBin} keyword general:layout dwindle"
+          "$mod SHIFT, d, exec, ${hyprctlBin} keyword general:layout master"
           "$mod, o, changegroupactive, b"
           "$mod, p, changegroupactive, f"
           "$mod, t, togglegroup"
@@ -65,32 +75,32 @@ in {
           "$mod, mouse_left, changegroupactive, b"
           "$mod, mouse_right, changegroupactive, f"
 
-          "$mod, equal, exec, scr output"
-          "$mod CONTROL, equal, exec, scr area"
-          "$mod SHIFT, equal, exec, scr active"
+          "$mod, equal, exec, ${scrBin} output"
+          "$mod CONTROL, equal, exec, ${scrBin} area"
+          "$mod SHIFT, equal, exec, ${scrBin} active"
 
-          "$mod, slash, exec, playerctl play-pause"
-          "$mod, comma, exec, playerctl previous"
-          "$mod, period, exec, playerctl next"
+          "$mod, slash, exec, ${playerctlBin} play-pause"
+          "$mod, comma, exec, ${playerctlBin} previous"
+          "$mod, period, exec, ${playerctlBin} next"
 
-          ",XF86AudioRaiseVolume, exec, volume up"
-          ",XF86AudioLowerVolume, exec, volume down"
-          ",XF86AudioMute, exec, volume toggle"
+          ",XF86AudioRaiseVolume, exec, ${volumeBin} up"
+          ",XF86AudioLowerVolume, exec, ${volumeBin} down"
+          ",XF86AudioMute, exec, ${volumeBin} toggle"
 
-          ",XF86MonBrightnessUp, exec, backlight up 10"
-          ",XF86MonBrightnessDown, exec, backlight down 10"
+          ",XF86MonBrightnessDown, exec, ${backlightBin} down 10"
+          ",XF86MonBrightnessUp, exec, ${backlightBin} up 10"
 
-          "CONTROL, space, exec, dunstctl close"
-          "CONTROL, escape, exec, dunstctl history-pop"
+          "CONTROL, space, exec, ${dunstctlBin} close"
+          "CONTROL, escape, exec, ${dunstctlBin} history-pop"
 
           "$mod, space, exec, ${appmenuBin}"
           "$mod CONTROL, space, exec, ${runmenuBin}"
           "$mod SHIFT, backspace, exec, ${powermenuBin}"
           "$mod, c, exec, ${calcBin}"
-          "$mod, return, exec, alacritty"
-          "$mod SHIFT, return, exec, alacritty --class terminal-floating"
-          "$mod, Y, exec, firefox"
-          "$mod, N, exec, thunar"
+          "$mod, return, exec, ${alacrittyBin}"
+          "$mod SHIFT, return, exec, ${alacrittyBin} --class terminal-floating"
+          "$mod, Y, exec, ${firefoxBin}"
+          "$mod, N, exec, ${thunarBin}"
         ]
         ++ workspaceBinds;
       bindm = [
