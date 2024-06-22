@@ -5,20 +5,20 @@
   ...
 }: let
   rofi = import ../rofi {inherit pkgs config;};
-  appmenuBin = "${rofi.appmenu}/bin/rofi-appmenu";
-  runmenuBin = "${rofi.runmenu}/bin/rofi-runmenu";
-  powermenuBin = "${rofi.powermenu}/bin/rofi-powermenu";
-  calcBin = "${rofi.calc}/bin/rofi-calc";
+  appmenuBin = lib.getExe rofi.appmenu;
+  runmenuBin = lib.getExe rofi.runmenu;
+  powermenuBin = lib.getExe rofi.powermenu;
+  calcBin = lib.getExe rofi.calc;
 
-  hyprctlBin = "${pkgs.hyprland}/bin/hyprctl";
-  alacrittyBin = "${pkgs.alacritty}/bin/alacritty";
-  playerctlBin = "${pkgs.playerctl}/bin/playerctl";
-  dunstctlBin = "${pkgs.dunst}/bin/dunstctl";
-  firefoxBin = "${pkgs.firefox}/bin/firefox";
-  thunarBin = "${pkgs.xfce.thunar}/bin/thunar";
-  backlightBin = "${pkgs.my.backlight}/bin/backlight";
-  volumeBin = "${pkgs.my.volume}/bin/volume";
-  scrBin = "${pkgs.my.scr}/bin/scr";
+  hyprctlBin = "${lib.getBin pkgs.hyprland}/hyprctl";
+  alacrittyBin = lib.getExe pkgs.alacritty;
+  playerctlBin = lib.getExe pkgs.playerctl;
+  dunstctlBin = "${lib.getBin pkgs.dunst}/dunstctl";
+  firefoxBin = lib.getExe pkgs.firefox;
+  thunarBin = lib.getExe pkgs.xfce.thunar;
+  backlightBin = lib.getExe pkgs.my.backlight;
+  volumeBin = lib.getExe pkgs.my.volume;
+  scrBin = lib.getExe pkgs.my.scr;
 
   workspaceBinds = let
     # Keys: 1 - 9, 0, -

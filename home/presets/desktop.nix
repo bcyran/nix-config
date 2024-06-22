@@ -1,9 +1,10 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: let
-  rofi = import ../features/rofi {inherit pkgs config;};
+  rofi = import ../features/rofi {inherit pkgs config lib;};
 in {
   imports = [
     ../features/alacritty.nix

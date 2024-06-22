@@ -1,9 +1,10 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: let
-  alacrittyBin = "${pkgs.alacritty}/bin/alacritty";
+  alacrittyBin = lib.getExe pkgs.alacritty;
   inherit (config.colorScheme) palette;
 in {
   wayland.windowManager.hyprland.settings = {

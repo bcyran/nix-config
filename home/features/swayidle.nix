@@ -1,11 +1,12 @@
 {
   pkgs,
+  lib,
   config,
   ...
 }: let
-  backlight = "${pkgs.my.backlight}/bin/backlight";
-  hyprctl = "${pkgs.hyprland}/bin/hyprctl";
-  # swaylock = "${config.programs.swaylock.package}/bin/swaylock";
+  backlight = lib.getExe pkgs.my.backlight;
+  hyprctl = "${lib.getBin pkgs.hyprland}/hyprctl";
+  # swaylock = lib.getExe config.programs.swaylock.package;
 in {
   services.swayidle = {
     enable = true;
