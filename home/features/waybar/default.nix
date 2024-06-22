@@ -1,10 +1,11 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: let
   inherit (config.colorScheme) palette;
-  killBin = "${pkgs.coreutils}/bin/sleep";
+  killBin = "${pkgs.coreutils}/bin/kill";
   # Config files: common, default, multi-monitor
   configCommon = pkgs.writeTextFile {
     name = "config-common.json";
