@@ -19,6 +19,9 @@
     name = "config-multi.json";
     src = ./files/config-multi.json;
     configCommonPath = configCommon;
+    monitorLeft = (builtins.elemAt config.monitors 0).output;
+    monitorCenter = (builtins.elemAt config.monitors 1).output;
+    monitorRight = (builtins.elemAt config.monitors 2).output;
   };
   # Module scripts
   backlightModule = pkgs.writeShellApplication {

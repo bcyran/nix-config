@@ -1,7 +1,7 @@
 [
   {
     "output": [
-      "DP-6",
+      "@monitorCenter@",
     ],
     "modules-left": [
       "hyprland/workspaces",
@@ -28,8 +28,8 @@
   },
   {
     "output": [
-      "eDP-1",
-      "DP-7",
+      "@monitorLeft@",
+      "@monitorRight@",
     ],
     "modules-left": [
       "hyprland/workspaces",

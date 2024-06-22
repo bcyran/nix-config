@@ -32,12 +32,14 @@
 
   programs.home-manager.enable = true;
 
-  imports = [
-    nix-colors.homeManagerModules.default
+  imports =
+    [
+      nix-colors.homeManagerModules.default
 
-    ../features/systemd.nix
-    ../features/ssh.nix
-  ];
+      ../features/systemd.nix
+      ../features/ssh.nix
+    ]
+    ++ (builtins.attrValues outputs.homeManagerModules);
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

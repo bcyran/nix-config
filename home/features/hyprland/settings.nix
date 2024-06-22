@@ -8,20 +8,24 @@
 in {
   wayland.windowManager.hyprland.settings = {
     "$mod" = "ALT";
-    "$monitorL" = "eDP-1";
-    "$monitorC" = "DP-6";
-    "$monitorR" = "DP-7";
+    "$monitorL" = (builtins.elemAt config.monitors 0).output;
+    "$monitorC" = (builtins.elemAt config.monitors 1).output;
+    "$monitorR" = (builtins.elemAt config.monitors 2).output;
     env = [
       "XCURSOR_SIZE,24"
       "QT_QPA_PLATFORM,wayland"
     ];
-    monitor = [
-      "eDP-1, 1920x1080@60, 0x0, 1"
-      ",preferred, auto, 1"
-      # "desc:California Institute of Technology 0x1402, 2880x1800@60, 0x325, 1.5, transform, 0"
-      # "desc:Dell Inc. DELL PD2421D FJWHGC3, 2560x1440@60, 1920x325, 1.0, transform, 0"
-      # "desc:Dell Inc. DELL PD2421D CGSHL93, 2560x1440@60, 4480x0, 1.0, transform, 3"
-    ];
+    monitor = let
+      mon_id = m:
+        if m.id_by_output
+        then "${m.output}"
+        else "desc:${m.description}";
+      mon = m: "${mon_id m}, ${toString m.width}x${toString m.height}@${toString m.refreshRate}, ${toString m.x}x${toString m.y}, ${toString m.scale}, transform, ${toString m.transform}";
+    in
+      (map mon config.monitors)
+      ++ [
+        ",preferred, auto, 1"
+      ];
     input = {
       kb_layout = "pl";
       follow_mouse = 1;
