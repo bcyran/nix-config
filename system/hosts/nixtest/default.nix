@@ -22,6 +22,7 @@
     ../../features/pipewire.nix
     ../../features/filesystem.nix
     ../../features/bluetooth.nix
+    ../../features/virtualisation.nix
   ];
 
   networking.hostName = "nixtest";

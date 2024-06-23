@@ -12,5 +12,6 @@
     protonvpn-gui
     vlc
     tor-browser
+    gnome.gnome-boxes
   ];
 }
