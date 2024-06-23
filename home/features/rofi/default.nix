@@ -12,6 +12,7 @@
 in {
   appmenu = pkgs.callPackage ./appmenu.nix {
     inherit commonConfigPath rofi;
+    iconThemeName = config.gtk.iconTheme.name;
   };
   runmenu = pkgs.callPackage ./runmenu.nix {
     inherit commonConfigPath rofi;

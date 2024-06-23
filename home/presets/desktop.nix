@@ -19,6 +19,7 @@ in {
     ../features/megasync.nix
     ../features/syncthing.nix
     ../features/swww.nix
+    ../features/gtk.nix
     ../features/waybar
     ../features/onagre
   ];

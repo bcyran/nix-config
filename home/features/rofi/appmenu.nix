@@ -3,12 +3,13 @@
   substituteAll,
   rofi,
   commonConfigPath,
+  iconThemeName,
 }: let
   rofiBin = "${rofi}/bin/rofi";
   config = substituteAll {
     name = "appmenu.rasi";
     src = ./files/appmenu.rasi;
-    inherit commonConfigPath;
+    inherit commonConfigPath iconThemeName;
   };
 in
   writeShellApplication {
