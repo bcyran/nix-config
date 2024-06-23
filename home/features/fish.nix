@@ -98,6 +98,10 @@ in {
       '';
     };
     interactiveShellInit = ''
+      set -gx ATUIN_NOBIND true
+      atuin init fish | source
+      bind / _atuin_search
+
       fish_vi_key_bindings
       set -gx fish_vi_force_cursor
       set -gx fish_greeting
@@ -145,5 +149,17 @@ in {
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
+  };
+  programs.atuin = {
+    enable = true;
+    enableBashIntegration = false;
+    enableFishIntegration = false;
+    enableNushellIntegration = false;
+    enableZshIntegration = false;
+    settings = {
+      inline_height = 15;
+      ctrl_n_shortcuts = true;
+      enter_accept = true;
+    };
   };
 }
