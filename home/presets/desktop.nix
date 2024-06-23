@@ -31,12 +31,16 @@ in {
     my.backlight
     my.wallpaper
     my.scr
-    xfce.thunar
     rofi.appmenu
     rofi.powermenu
     rofi.calc
     rofi.runmenu
+    gparted
+    gnome.file-roller
+    gnome.gnome-calculator
+    gnome.gnome-font-viewer
   ];
 
   programs.firefox.enable = true;
+  programs.chromium.enable = true;
 }

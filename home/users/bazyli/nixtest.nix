@@ -9,6 +9,7 @@
     ../../presets/cli.nix
     ../../presets/desktop.nix
     ../../presets/tokyonight.nix
+    ../../presets/personal.nix
   ];
 
   monitors = [

@@ -46,8 +46,6 @@
   programs.fish.enable = true;
   programs.hyprland.enable = true;
   programs.light.enable = true;
-  # For remembering settings in thunar
-  programs.xfconf.enable = true;
 
   environment.systemPackages = with pkgs; [
     gcc

@@ -10,12 +10,14 @@
   powermenuBin = lib.getExe rofi.powermenu;
   calcBin = lib.getExe rofi.calc;
 
+  thunar = pkgs.xfce.thunar.override {thunarPlugins = with pkgs; [xfce.thunar-volman xfce.thunar-archive-plugin];};
+
   hyprctlBin = "${lib.getBin pkgs.hyprland}/hyprctl";
   alacrittyBin = lib.getExe pkgs.alacritty;
   playerctlBin = lib.getExe pkgs.playerctl;
   dunstctlBin = "${lib.getBin pkgs.dunst}/dunstctl";
   firefoxBin = lib.getExe pkgs.firefox;
-  thunarBin = lib.getExe pkgs.xfce.thunar;
+  thunarBin = "${thunar}/bin/thunar";
   backlightBin = lib.getExe pkgs.my.backlight;
   volumeBin = lib.getExe pkgs.my.volume;
   scrBin = lib.getExe pkgs.my.scr;
