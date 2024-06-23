@@ -21,6 +21,7 @@
     ../../features/xdg-portal.nix
     ../../features/pipewire.nix
     ../../features/filesystem.nix
+    ../../features/bluetooth.nix
   ];
 
   networking.hostName = "nixtest";
