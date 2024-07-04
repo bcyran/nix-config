@@ -24,6 +24,7 @@
     ../../features/bluetooth.nix
     ../../features/virtualisation.nix
     ../../features/logiops.nix
+    ../../features/printing.nix
   ];
 
   networking.hostName = "nixtest";
