@@ -5,7 +5,7 @@
   ...
 }: let
   backlight = lib.getExe pkgs.my.backlight;
-  hyprctl = "${lib.getBin pkgs.hyprland}/hyprctl";
+  hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   # swaylock = lib.getExe config.programs.swaylock.package;
 in {
   services.swayidle = {

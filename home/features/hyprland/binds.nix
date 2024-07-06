@@ -12,7 +12,7 @@
 
   thunar = pkgs.xfce.thunar.override {thunarPlugins = with pkgs; [xfce.thunar-volman xfce.thunar-archive-plugin];};
 
-  hyprctlBin = "${lib.getBin pkgs.hyprland}/hyprctl";
+  hyprctlBin = "${pkgs.hyprland}/bin/hyprctl";
   alacrittyBin = lib.getExe pkgs.alacritty;
   playerctlBin = lib.getExe pkgs.playerctl;
   dunstctlBin = "${lib.getBin pkgs.dunst}/dunstctl";
