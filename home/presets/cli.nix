@@ -12,9 +12,6 @@
     curl
     ranger
     neofetch
-    cargo
-    rustc
-    nodejs
     alejandra
     my.volume
   ];
