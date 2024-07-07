@@ -4,6 +4,7 @@
     ../features/tmux.nix
     ../features/git.nix
     ../features/btop.nix
+    ../features/direnv.nix
     ../features/neovim
   ];
 

@@ -82,5 +82,8 @@
 
     # ripgrep
     .rgignore
+
+    # direnv
+    .direnv
   '';
 }
