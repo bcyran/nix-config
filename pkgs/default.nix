@@ -18,4 +18,5 @@ in rec {
     inherit (python3Packages) buildPythonApplication pythonOlder poetry-core poetry-dynamic-versioning appdirs;
     inherit philipstv ttkbootstrap;
   };
+  timewall = pkgs.callPackage ./timewall {};
 }

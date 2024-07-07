@@ -41,6 +41,7 @@ in {
     gnome.gnome-font-viewer
     my.philipstv
     my.philipstv-gui
+    my.timewall
   ];
 
   programs.firefox.enable = true;
