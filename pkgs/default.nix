@@ -11,4 +11,7 @@ in {
   philipstv = pkgs.callPackage ./philipstv {
     inherit (python3Packages) buildPythonPackage pythonOlder poetry-core poetry-dynamic-versioning pytestCheckHook requests-mock requests pydantic click appdirs;
   };
+  ttkbootstrap = pkgs.callPackage ./ttkbootstrap {
+    inherit (python3Packages) buildPythonPackage pythonOlder tkinter pillow;
+  };
 }
