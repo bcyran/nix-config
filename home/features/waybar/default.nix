@@ -35,6 +35,11 @@
     runtimeInputs = with pkgs; [playerctl];
     text = builtins.readFile ./files/modules/mpris.sh;
   };
+  philipstvModule = pkgs.writeShellApplication {
+    name = "waybar-philipstv";
+    runtimeInputs = with pkgs; [my.philipstv];
+    text = builtins.readFile ./files/modules/philipstv.sh;
+  };
   # Launcher script
   launcherRendered = pkgs.substituteAll {
     name = "launch";
@@ -53,6 +58,9 @@
       systemd
       backlightModule
       mprisModule
+      philipstvModule
+      my.philipstv
+      my.philipstv-gui
     ];
     text = builtins.readFile launcherRendered;
   };

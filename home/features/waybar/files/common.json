@@ -36,6 +36,18 @@
     "on-click": "playerctl play-pause",
     "max-length": 50
   },
+  "custom/philipstv": {
+    "exec": "waybar-philipstv",
+    "interval": 60,
+    "format": "<span rise='-800'>󰻅</span> {}",
+    "on-click": "philipstv key pause",
+    "on-click-right": "philipstv key play",
+    "on-click-middle": "philipstv key mute",
+    "on-scroll-up": "philipstv key volup",
+    "on-scroll-down": "philipstv key voldown",
+    "on-double-click": "philipstv-gui",
+    "tooltip": false
+  },
   "custom/backlight": {
     "exec": "waybar-backlight",
     "format": "<span rise='-800'>󰃟 </span>  {}",
