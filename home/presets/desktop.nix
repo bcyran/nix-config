@@ -40,6 +40,7 @@ in {
     gnome.gnome-calculator
     gnome.gnome-font-viewer
     my.philipstv
+    my.philipstv-gui
   ];
 
   programs.firefox.enable = true;
