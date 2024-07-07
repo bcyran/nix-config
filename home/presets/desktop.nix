@@ -39,6 +39,7 @@ in {
     gnome.file-roller
     gnome.gnome-calculator
     gnome.gnome-font-viewer
+    my.philipstv
   ];
 
   programs.firefox.enable = true;
