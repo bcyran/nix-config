@@ -5,6 +5,7 @@
   pythonOlder,
   poetry-core,
   poetry-dynamic-versioning,
+  installShellFiles,
   pytestCheckHook,
   requests-mock,
   requests,
@@ -28,6 +29,7 @@ buildPythonPackage rec {
   nativeBuildInputs = [
     poetry-core
     poetry-dynamic-versioning
+    installShellFiles
   ];
 
   nativeCheckInputs = [
@@ -41,6 +43,13 @@ buildPythonPackage rec {
     click
     appdirs
   ];
+
+  postInstall = ''
+    installShellCompletion --cmd philipstv \
+      --bash <(_PHILIPSTV_COMPLETE=bash_source $out/bin/philipstv) \
+      --zsh <(_PHILIPSTV_COMPLETE=zsh_source $out/bin/philipstv) \
+      --fish <(_PHILIPSTV_COMPLETE=fish_source $out/bin/philipstv)
+  '';
 
   meta = with lib; {
     description = "CLI and library to control Philips Android-powered TVs.";
