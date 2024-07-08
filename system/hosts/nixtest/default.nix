@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
@@ -29,7 +33,15 @@
 
   networking.hostName = "nixtest";
 
-  boot.loader.systemd-boot.enable = true;
+  boot = {
+    initrd.systemd.enable = true;
+    loader.systemd-boot.enable = lib.mkForce false;
+    bootspec.enable = true;
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/etc/secureboot";
+    };
+  };
   networking.networkmanager.enable = true;
 
   i18n.defaultLocale = "pl_PL.UTF-8";

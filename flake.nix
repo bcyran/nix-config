@@ -21,6 +21,11 @@
     # Shameless plug: looking for a way to nixify your themes and make
     # everything match nicely? Try nix-colors!
     nix-colors.url = "github:misterio77/nix-colors";
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -28,6 +33,7 @@
     nixpkgs,
     home-manager,
     nix-colors,
+    lanzaboote,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -67,6 +73,7 @@
         specialArgs = {inherit inputs outputs;};
         modules = [
           # > Our main nixos configuration file <
+          lanzaboote.nixosModules.lanzaboote
           ./system/hosts/nixtest
         ];
       };
