@@ -26,6 +26,11 @@
       url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -34,6 +39,7 @@
     home-manager,
     nix-colors,
     lanzaboote,
+    disko,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -74,6 +80,7 @@
         modules = [
           # > Our main nixos configuration file <
           lanzaboote.nixosModules.lanzaboote
+          disko.nixosModules.disko
           ./system/hosts/nixtest
         ];
       };

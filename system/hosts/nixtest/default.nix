@@ -13,6 +13,7 @@
     # inputs.hardware.nixosModules.common-ssd
 
     # Hardware
+    ./disks.nix
     ./hardware-configuration.nix
 
     # Presets
