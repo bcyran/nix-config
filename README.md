@@ -53,3 +53,13 @@ My NixOS and Home Manager config.
    ```shell
    home-manager switch --flake .
    ```
+
+## Credits & resources
+
+I used this to learn about NixOS and might have copied some stuff from there:
+
+- [Misterio77/nix-starter-configs](https://github.com/Misterio77/nix-starter-configs)
+- [Misterio77/nix-config](https://github.com/Misterio77/nix-config)
+- [fufexan/dotfiles](https://github.com/fufexan/dotfiles)
+- [Secure Boot & TPM-backed Full Disk Encryption on NixOS](https://jnsgr.uk/2024/04/nixos-secure-boot-tpm-fde/)
+- [jnsgruk/nixos-config](https://github.com/jnsgruk/nixos-config)
