@@ -1,7 +1,8 @@
 {pkgs, ...}: let
   keepassxc = pkgs.keepassxc;
+  keepassxcBin = "${keepassxc}/bin/keepassxc";
   keepassxcDesktopName = "org.keepassxc.KeePassXC.desktop";
-  keepassxcDesktop = "${keepassxc}/share/applications/${keepassxcDesktopName}";
+  # keepassxcDesktop = "${keepassxc}/share/applications/${keepassxcDesktopName}";
 in {
   home.packages = [keepassxc];
   xdg.configFile."keepassxc/keepassxc.ini" = {
@@ -38,6 +39,28 @@ in {
     };
   };
   xdg.configFile."autostart/${keepassxcDesktopName}" = {
-    source = keepassxcDesktop;
+    # source = keepassxcDesktop;
+    # FIXME: For some reason SSH_AUTH_SOCK env is not available to keepassxc if not set explictly.
+    #        Setting AuthSockOverride in the config does not work too.
+    text = ''
+      [Desktop Entry]
+      Name=KeePassXC
+      GenericName=Password Manager
+      GenericName[pl]=Menedżer haseł
+      Comment=Community-driven port of the Windows application “KeePass Password Safe”
+      Exec=env SSH_AUTH_SOCK=/run/user/1000/ssh-agent ${keepassxcBin} %f
+      TryExec=keepassxc
+      Icon=keepassxc
+      StartupWMClass=keepassxc
+      StartupNotify=true
+      Terminal=false
+      Type=Application
+      Version=1.5
+      Categories=Utility;Security;Qt;
+      MimeType=application/x-keepass2;
+      SingleMainWindow=true
+      X-GNOME-SingleWindow=true
+      Keywords=security;privacy;password-manager;yubikey;password;keepass;
+    '';
   };
 }
