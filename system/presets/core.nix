@@ -46,10 +46,9 @@
     config.nix.registry;
 
   nix.settings = {
-    # Enable flakes and new 'nix' command
     experimental-features = "nix-command flakes";
-    # Deduplicate and optimize nix store
     auto-optimise-store = true;
+    warn-dirty = false;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
