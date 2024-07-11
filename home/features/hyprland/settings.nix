@@ -93,7 +93,7 @@ in {
       force_split = 2;
     };
     master = {
-      new_is_master = false;
+      new_status = "slave";
     };
     gestures = {
       workspace_swipe = true;
@@ -107,11 +107,11 @@ in {
       force_default_wallpaper = 0;
       animate_manual_resizes = true;
     };
-    # cursor = {
-    #   inactive_timeout = 60;
-    #   hide_on_key_press = true;
-    #   persistent_warps = true;
-    # };
+    cursor = {
+      inactive_timeout = 60;
+      hide_on_key_press = true;
+      persistent_warps = true;
+    };
     workspace = [
       "1, monitor:$monitorC, default:true"
       "2, monitor:$monitorC"
