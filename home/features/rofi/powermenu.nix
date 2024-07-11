@@ -4,7 +4,6 @@
   rofi,
   hyprland,
   systemd,
-  lockerBin,
   commonConfigPath,
 }: let
   rofiBin = "${rofi}/bin/rofi";
@@ -24,12 +23,12 @@ in
 
       choice=$(printf '%s\n' "''${opts[@]}" | ''${cmd})
       case "''${choice}" in
-          Lock) ${lockerBin} ;;
+          Lock) loginctl lock-session ;;
           Logout) hyprctl dispatch exit ;;
           Poweroff) systemctl -i poweroff ;;
-          Suspend) ${lockerBin} && systemctl suspend ;;
-          Reboot) systemctl reboot ;;
-          Hibernate) ${lockerBin} && systemctl hibernate ;;
+          Suspend) systemctl -i suspend ;;
+          Reboot) systemctl -i reboot ;;
+          Hibernate) systemctl -i hibernate ;;
       esac
     '';
   }

@@ -19,7 +19,6 @@ in {
   };
   powermenu = pkgs.callPackage ./powermenu.nix {
     inherit commonConfigPath rofi;
-    lockerBin = "${config.programs.swaylock.package}/bin/swaylock";
   };
   calc = pkgs.callPackage ./calc.nix {
     inherit commonConfigPath rofi;

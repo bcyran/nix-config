@@ -3,10 +3,12 @@
   ring_color = "#c8d3f5ff";
   ring_hl_color = "#1e2030dd";
   text_color = "#1e2030dd";
+  swaylockPackage = pkgs.swaylock-effects;
+  swaylockBin = "${swaylockPackage}/bin/swaylock";
 in {
   programs.swaylock = {
     enable = true;
-    package = pkgs.swaylock-effects;
+    package = swaylockPackage;
     settings = {
       screenshots = true;
       effect-blur = "5x2";
@@ -33,6 +35,24 @@ in {
 
       text-wrong-color = text_color;
       text-ver-color = text_color;
+    };
+  };
+  # This requires `services.systemd-lock-handler.enable = true` in the system config.
+  systemd.user.services.lock = {
+    Unit = {
+      Description = "Screen locker.";
+      OnSuccess = ["unlock.target"];
+      PartOf = ["lock.target"];
+      After = ["lock.target"];
+    };
+    Service = {
+      Type = "forking";
+      ExecStart = "${swaylockBin} --daemonize";
+      Restart = "on-failure";
+      RestartSec = 0;
+    };
+    Install = {
+      WantedBy = ["lock.target"];
     };
   };
 }

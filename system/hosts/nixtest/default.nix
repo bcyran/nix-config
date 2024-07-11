@@ -22,8 +22,9 @@
 
     # Features
     ../../features/locale.nix
-    ../../features/greetd.nix
     ../../features/console.nix
+    ../../features/greetd.nix
+    ../../features/swaylock.nix
     ../../features/xdg-portal.nix
     ../../features/pipewire.nix
     ../../features/filesystem.nix
@@ -54,8 +55,6 @@
   environment.systemPackages = with pkgs; [
     neovim
   ];
-
-  security.pam.services.swaylock = {};
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
