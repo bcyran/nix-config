@@ -1,8 +1,11 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  terminusFont = pkgs.terminus_font;
+in {
   console = {
     enable = true;
-    packages = with pkgs; [terminus_font];
-    font = "ter-232n";
+    earlySetup = true;
+    packages = [terminusFont];
+    font = "${terminusFont}/share/consolefonts/ter-224n.psf.gz";
     keyMap = "pl";
   };
 }
