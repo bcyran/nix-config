@@ -31,6 +31,11 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -40,6 +45,7 @@
     nix-colors,
     lanzaboote,
     disko,
+    nix-index-database,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -95,6 +101,7 @@
         extraSpecialArgs = {inherit inputs outputs nix-colors;};
         modules = [
           # > Our main home-manager configuration file <
+          nix-index-database.hmModules.nix-index
           ./home/users/bazyli/nixtest.nix
         ];
       };

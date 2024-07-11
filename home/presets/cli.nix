@@ -5,6 +5,7 @@
     ../features/git.nix
     ../features/btop.nix
     ../features/direnv.nix
+    ../features/nix-index.nix
     ../features/neovim
   ];
 
