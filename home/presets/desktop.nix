@@ -36,9 +36,9 @@ in {
     rofi.calc
     rofi.runmenu
     gparted
-    gnome.file-roller
-    gnome.gnome-calculator
-    gnome.gnome-font-viewer
+    file-roller
+    gnome-calculator
+    gnome-font-viewer
     my.philipstv
     my.philipstv-gui
     my.timewall
