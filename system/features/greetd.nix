@@ -2,12 +2,14 @@
   pkgs,
   lib,
   ...
-}: {
+}: let
+  tuigreetBin = lib.getExe pkgs.greetd.tuigreet;
+in {
   services.greetd = {
     enable = true;
     settings = {
       default_session = {
-        command = "${lib.getExe pkgs.greetd.tuigreet} --time --cmd Hyprland";
+        command = "${tuigreetBin} --time --cmd Hyprland --asterisks --remember";
         user = "bazyli";
       };
     };
