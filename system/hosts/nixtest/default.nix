@@ -33,6 +33,7 @@
     ../../features/logiops.nix
     ../../features/printing.nix
     ../../features/silentboot.nix
+    ../../features/ddcci.nix
   ];
 
   networking.hostName = "nixtest";

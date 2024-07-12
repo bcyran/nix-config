@@ -13,8 +13,8 @@
 
   boot.initrd.availableKernelModules = ["xhci_pci" "nvme" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel" "i2c-dev" "ddcci_backlight"];
-  boot.extraModulePackages = [config.boot.kernelPackages.ddcci-driver];
+  boot.kernelModules = ["kvm-intel"];
+  boot.extraModulePackages = [];
 
   # swapDevices =
   #   [ { device = "/dev/disk/by-uuid/25e1fe7c-5f41-4edd-a9f0-d73ee9e66d8b"; }
