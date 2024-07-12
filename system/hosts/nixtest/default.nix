@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
@@ -21,6 +17,7 @@
     ../../presets/users/bazyli.nix
 
     # Features
+    ../../features/lanzaboote.nix
     ../../features/locale.nix
     ../../features/console.nix
     ../../features/greetd.nix
@@ -37,16 +34,6 @@
   ];
 
   networking.hostName = "nixtest";
-
-  boot = {
-    initrd.systemd.enable = true;
-    loader.systemd-boot.enable = lib.mkForce false;
-    bootspec.enable = true;
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "/etc/secureboot";
-    };
-  };
   networking.networkmanager.enable = true;
 
   programs.fish.enable = true;
