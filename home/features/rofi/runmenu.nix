@@ -13,6 +13,5 @@
 in
   writeShellApplication {
     name = "rofi-runmenu";
-    runtimeInputs = [rofi];
     text = "${rofiBin} -no-lazy-grab -show run -config ${config}";
   }

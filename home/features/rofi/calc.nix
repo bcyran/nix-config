@@ -13,6 +13,5 @@
 in
   writeShellApplication {
     name = "rofi-calc";
-    runtimeInputs = [rofi];
     text = "${rofiBin} -no-lazy-grab -show calc -config ${config}";
   }

@@ -7,6 +7,9 @@
   commonConfigPath,
 }: let
   rofiBin = "${rofi}/bin/rofi";
+  loginctlBin = "${systemd}/bin/loginctl";
+  hyprctlBin = "${hyprland}/bin/hyprctl";
+  systemctlBin = "${systemd}/bin/systemctl";
   config = substituteAll {
     name = "powermenu.rasi";
     src = ./files/powermenu.rasi;
@@ -15,7 +18,6 @@
 in
   writeShellApplication {
     name = "rofi-powermenu";
-    runtimeInputs = [rofi hyprland systemd];
     text = ''
       opts=(Lock Logout Poweroff Suspend Hibernate Reboot)
 
@@ -23,12 +25,12 @@ in
 
       choice=$(printf '%s\n' "''${opts[@]}" | ''${cmd})
       case "''${choice}" in
-          Lock) loginctl lock-session ;;
-          Logout) hyprctl dispatch exit ;;
-          Poweroff) systemctl -i poweroff ;;
-          Suspend) systemctl -i suspend ;;
-          Reboot) systemctl -i reboot ;;
-          Hibernate) systemctl -i hibernate ;;
+          Lock) ${loginctlBin} lock-session ;;
+          Logout) ${hyprctlBin} dispatch exit ;;
+          Poweroff) ${systemctlBin} -i poweroff ;;
+          Suspend) ${systemctlBin} -i suspend ;;
+          Reboot) ${systemctlBin} -i reboot ;;
+          Hibernate) ${systemctlBin} -i hibernate ;;
       esac
     '';
   }
