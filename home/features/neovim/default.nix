@@ -9,6 +9,7 @@
       require("config.lazy")
     '';
     extraPackages = with pkgs; [
+      gcc # for treesitter
       lua-language-server
       dockerfile-language-server-nodejs
       nil
