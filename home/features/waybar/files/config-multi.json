@@ -37,7 +37,7 @@
     "modules-center": [],
     "modules-right": [],
     "include": [
-      "~/.config/waybar/common.json",
+      "@configCommonPath@",
     ],
   },
 ]
