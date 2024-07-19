@@ -80,7 +80,15 @@
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
-      # FIXME replace with your hostname
+      slimbook = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          # > Our main nixos configuration file <
+          lanzaboote.nixosModules.lanzaboote
+          disko.nixosModules.disko
+          ./system/hosts/slimbook
+        ];
+      };
       nixtest = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
@@ -95,7 +103,15 @@
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
-      # FIXME replace with your username@hostname
+      "bazyli@slimbook" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+        extraSpecialArgs = {inherit inputs outputs nix-colors;};
+        modules = [
+          # > Our main home-manager configuration file <
+          nix-index-database.hmModules.nix-index
+          ./home/users/bazyli/slimbook.nix
+        ];
+      };
       "bazyli@nixtest" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs nix-colors;};
