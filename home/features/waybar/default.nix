@@ -59,6 +59,7 @@
       systemd
       backlightModule
       mprisModule
+      playerctl
       philipstvModule
       my.philipstv
       my.philipstv-gui
