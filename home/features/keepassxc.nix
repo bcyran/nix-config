@@ -48,7 +48,7 @@ in {
       GenericName=Password Manager
       GenericName[pl]=Menedżer haseł
       Comment=Community-driven port of the Windows application “KeePass Password Safe”
-      Exec=env SSH_AUTH_SOCK=/run/user/1000/ssh-agent ${keepassxcBin} %f
+      Exec=env QT_QPA_PLATFORM=wayland SSH_AUTH_SOCK=/run/user/1000/ssh-agent ${keepassxcBin} %f
       TryExec=keepassxc
       Icon=keepassxc
       StartupWMClass=keepassxc
