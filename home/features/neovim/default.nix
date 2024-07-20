@@ -10,6 +10,7 @@
     '';
     extraPackages = with pkgs; [
       gcc # for treesitter
+      wl-clipboard
       lua-language-server
       dockerfile-language-server-nodejs
       nil

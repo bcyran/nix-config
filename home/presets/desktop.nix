@@ -28,6 +28,7 @@ in {
   home.packages = with pkgs; [
     roboto
     libnotify
+    wl-clipboard
     (nerdfonts.override {fonts = ["JetBrainsMono"];})
     my.backlight
     my.wallpaper
