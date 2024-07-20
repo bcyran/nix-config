@@ -5,7 +5,8 @@
   ...
 }: let
   inherit (config.colorScheme) palette;
-  killBin = "${lib.getBin pkgs.coreutils}/kill";
+  killBin = "${lib.getBin pkgs.coreutils}/bin/kill";
+  sleepBin = "${lib.getBin pkgs.coreutils}/bin/sleep";
   # Config files: common, default, multi-monitor
   configCommon = pkgs.writeTextFile {
     name = "config-common.json";
@@ -113,6 +114,7 @@ in {
     Service = {
       Type = "notify";
       NotifyAccess = "all";
+      ExecStartPre = "${sleepBin} 2";
       ExecStart = launcherBin;
       ExecReload = "${killBin} -SIGUSR2 $MAINPID";
       Restart = "on-failure";
@@ -120,7 +122,7 @@ in {
       KillMode = "mixed";
     };
     Install = {
-      WantedBy = ["tray.target"];
+      RequiredBy = ["tray.target"];
     };
   };
 }

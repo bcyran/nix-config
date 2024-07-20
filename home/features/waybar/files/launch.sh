@@ -14,12 +14,14 @@ if [[ ${num_monitors} -gt 1 ]]; then
     effective_config=${CONFIG_MULTI}
 fi
 
-waybar --config "${effective_config}" &
-readonly pid=$!
-
-# Only report the waybar systemd service as started after the bar is started
-# and an additional delay for internal initialization.
-sleep 1
-systemd-notify --ready
-
-wait ${pid}
+bar_configured_count=0
+waybar --config "${effective_config}" | while read -r line; do
+    echo "${line}"
+    if [[ "${line}" == *"Bar configured"* ]]; then
+        ((bar_configured_count++))
+        if [[ ${bar_configured_count} -ge ${num_monitors} ]]; then
+            # Notify systemd once the "Bar configured" message is printed once for each of the bars
+            systemd-notify --ready
+        fi
+    fi
+done

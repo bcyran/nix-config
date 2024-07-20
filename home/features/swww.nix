@@ -6,6 +6,7 @@
   swww = pkgs.swww;
   swwwDaemonBin = "${swww}/bin/swww-daemon"; # `lib.getBin` doesn't work here
   wallpaperBin = lib.getExe pkgs.my.wallpaper;
+  sleepBin = "${pkgs.coreutils}/bin/sleep";
 in {
   home.packages = [swww];
   systemd.user.services.swww = {
@@ -30,9 +31,11 @@ in {
       Description = "Wallpaper setter";
       PartOf = ["graphical-session.target"];
       After = ["swww.service"];
+      Requires = ["swww.service"];
     };
     Service = {
       Type = "oneshot";
+      ExecStartPre = "${sleepBin} 2";
       ExecStart = wallpaperBin;
     };
     Install = {

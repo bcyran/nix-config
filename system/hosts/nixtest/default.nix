@@ -21,8 +21,8 @@
     ../../features/locale.nix
     ../../features/console.nix
     ../../features/greetd.nix
+    ../../features/hyprland
     ../../features/swaylock.nix
-    ../../features/xdg-portal.nix
     ../../features/pipewire.nix
     ../../features/filesystem.nix
     ../../features/bluetooth.nix
@@ -37,7 +37,6 @@
   networking.networkmanager.enable = true;
 
   programs.fish.enable = true;
-  programs.hyprland.enable = true;
   programs.light.enable = true;
 
   environment.systemPackages = with pkgs; [

@@ -1,0 +1,24 @@
+From f27392ba3657036cfeef1963cf1cdc31b3c93af2 Mon Sep 17 00:00:00 2001
+From: Bazyli Cyran <bazyli@cyran.dev>
+Date: Sat, 20 Jul 2024 14:39:44 +0200
+Subject: [PATCH] fix(systemd): Remove dependency on graphical-session.target
+
+---
+ contrib/systemd/xdg-desktop-portal-hyprland.service.in | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/contrib/systemd/xdg-desktop-portal-hyprland.service.in b/contrib/systemd/xdg-desktop-portal-hyprland.service.in
+index a2e3760..3307603 100644
+--- a/contrib/systemd/xdg-desktop-portal-hyprland.service.in
++++ b/contrib/systemd/xdg-desktop-portal-hyprland.service.in
+@@ -1,7 +1,6 @@
+ [Unit]
+ Description=Portal service (Hyprland implementation)
+ PartOf=graphical-session.target
+-After=graphical-session.target
+ ConditionEnvironment=WAYLAND_DISPLAY
+ 
+ [Service]
+-- 
+2.45.2
+
