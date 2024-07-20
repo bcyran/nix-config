@@ -1,6 +1,9 @@
 {pkgs, ...}: {
+  imports = [
+    ../features/signal.nix
+  ];
+
   home.packages = with pkgs; [
-    signal-desktop
     portfolio
     gnucash
     obsidian
