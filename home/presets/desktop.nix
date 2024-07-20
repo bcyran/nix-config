@@ -22,6 +22,7 @@ in {
     ../features/gtk.nix
     ../features/waybar
     ../features/onagre
+    ../features/firefox.nix
   ];
 
   home.packages = with pkgs; [
@@ -44,6 +45,5 @@ in {
     my.timewall
   ];
 
-  programs.firefox.enable = true;
   programs.chromium.enable = true;
 }
