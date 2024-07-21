@@ -9,6 +9,10 @@
         settings = {
           "browser.search.defaultenginename" = "Kagi";
           "browser.search.order.1" = "Kagi";
+          "media.ffmpeg.vaapi.enabled" = true;
+          "media.ffvpx.enabled" = false;
+          "media.av1.enabled" = false;
+          "gfx.webrender.all" = true;
         };
         search = {
           force = true;
