@@ -34,6 +34,7 @@
     ../../features/printing.nix
     ../../features/silentboot.nix
     ../../features/ddcci.nix
+    ../../features/btrbk.nix
   ];
 
   networking.hostName = "slimbook";
