@@ -8,7 +8,9 @@
       src = ./files/common.rasi;
     }
     // config.colorScheme.palette);
-  rofi = pkgs.rofi-wayland.override {plugins = [pkgs.rofi-calc];};
+  # See: https://github.com/NixOS/nixpkgs/issues/298539
+  rofi-calc = pkgs.rofi-calc.override {rofi-unwrapped = pkgs.rofi-wayland-unwrapped;};
+  rofi = pkgs.rofi-wayland.override {plugins = [rofi-calc];};
 in {
   appmenu = pkgs.callPackage ./appmenu.nix {
     inherit commonConfigPath rofi;
