@@ -6,22 +6,23 @@
 }: let
   alacrittyBin = lib.getExe pkgs.alacritty;
   inherit (config.colorScheme) palette;
+  monitorId = m:
+    if m.id_by_output
+    then "${m.output}"
+    else "desc:${m.description}";
+  monitorByIdx = idx: builtins.elemAt config.monitors idx;
 in {
   wayland.windowManager.hyprland.settings = {
     "$mod" = "ALT";
-    "$monitorL" = (builtins.elemAt config.monitors 0).output;
-    "$monitorC" = (builtins.elemAt config.monitors 1).output;
-    "$monitorR" = (builtins.elemAt config.monitors 2).output;
+    "$monitorL" = monitorId (monitorByIdx 0);
+    "$monitorC" = monitorId (monitorByIdx 1);
+    "$monitorR" = monitorId (monitorByIdx 2);
     env = [
       "XCURSOR_SIZE,24"
       "QT_QPA_PLATFORM,wayland"
     ];
     monitor = let
-      mon_id = m:
-        if m.id_by_output
-        then "${m.output}"
-        else "desc:${m.description}";
-      mon = m: "${mon_id m}, ${toString m.width}x${toString m.height}@${toString m.refreshRate}, ${toString m.x}x${toString m.y}, ${toString m.scale}, transform, ${toString m.transform}";
+      mon = m: "${monitorId m}, ${toString m.width}x${toString m.height}@${toString m.refreshRate}, ${toString m.x}x${toString m.y}, ${toString m.scale}, transform, ${toString m.transform}";
     in
       (map mon config.monitors)
       ++ [

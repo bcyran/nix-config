@@ -28,6 +28,7 @@
     {
       description = "Dell Inc. DELL P2421D FJWHGC3";
       output = "DP-6";
+      altOutput = "DP-8";
       width = 2560;
       height = 1440;
       refreshRate = 60;
@@ -38,6 +39,7 @@
     {
       description = "Dell Inc. DELL P2421D CGSHL93";
       output = "DP-7";
+      altOutput = "DP-9";
       width = 2560;
       height = 1440;
       refreshRate = 60;

@@ -1,7 +1,7 @@
 [
   {
     "output": [
-      "@monitorCenter@",
+      @monitorCenter@
     ],
     "modules-left": [
       "hyprland/workspaces",
@@ -28,8 +28,8 @@
   },
   {
     "output": [
-      "@monitorLeft@",
-      "@monitorRight@",
+      @monitorLeft@,
+      @monitorRight@
     ],
     "modules-left": [
       "hyprland/workspaces",

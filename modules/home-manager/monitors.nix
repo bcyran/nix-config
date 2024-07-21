@@ -17,6 +17,11 @@ in {
             type = types.str;
             example = "DP-1";
           };
+          altOutput = mkOption {
+            type = types.nullOr types.str;
+            default = null;
+            example = "DP-7";
+          };
           width = mkOption {
             type = types.int;
             example = 1920;

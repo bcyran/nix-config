@@ -17,13 +17,18 @@
     src = ./files/config-default.json;
     configCommonPath = configCommon;
   };
+  monitorByIdx = idx: builtins.elemAt config.monitors idx;
+  monitorOutputsJsonStr = m:
+    if m.altOutput == null
+    then ''"${m.output}"''
+    else ''"${m.output}", "${m.altOutput}"'';
   configMulti = pkgs.substituteAll {
     name = "config-multi.json";
     src = ./files/config-multi.json;
     configCommonPath = configCommon;
-    monitorLeft = (builtins.elemAt config.monitors 0).output;
-    monitorCenter = (builtins.elemAt config.monitors 1).output;
-    monitorRight = (builtins.elemAt config.monitors 2).output;
+    monitorLeft = monitorOutputsJsonStr (monitorByIdx 0);
+    monitorCenter = monitorOutputsJsonStr (monitorByIdx 1);
+    monitorRight = monitorOutputsJsonStr (monitorByIdx 2);
   };
   # Module scripts
   backlightModule = pkgs.writeShellApplication {
