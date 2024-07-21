@@ -13,6 +13,7 @@
     wget
     curl
     ranger
+    dust
     neofetch
     alejandra
     my.volume
