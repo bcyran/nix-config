@@ -1,10 +1,10 @@
 {pkgs, ...}: let
-  keepassxc = pkgs.keepassxc;
-  keepassxcBin = "${keepassxc}/bin/keepassxc";
+  keepassxcPackage = pkgs.keepassxc;
+  keepassxcBin = "${keepassxcPackage}/bin/keepassxc";
   keepassxcDesktopName = "org.keepassxc.KeePassXC.desktop";
-  # keepassxcDesktop = "${keepassxc}/share/applications/${keepassxcDesktopName}";
+  # keepassxcDesktop = "${keepassxcPackage}/share/applications/${keepassxcDesktopName}";
 in {
-  home.packages = [keepassxc];
+  home.packages = [keepassxcPackage];
   xdg.configFile."keepassxc/keepassxc.ini" = {
     text = pkgs.lib.generators.toINI {} {
       General = {
@@ -35,6 +35,9 @@ in {
       };
       Security = {
         IconDownloadFallback = true;
+      };
+      FdoSecrets = {
+        Enabled = true;
       };
     };
   };
