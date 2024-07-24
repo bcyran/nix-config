@@ -77,9 +77,9 @@ in {
           "$mod, mouse_left, changegroupactive, b"
           "$mod, mouse_right, changegroupactive, f"
 
-          "$mod, equal, exec, ${scrBin} output"
-          "$mod CONTROL, equal, exec, ${scrBin} area"
-          "$mod SHIFT, equal, exec, ${scrBin} active"
+          "$mod, s, exec, ${scrBin} output"
+          "$mod CONTROL, s, exec, ${scrBin} area"
+          "$mod SHIFT, s, exec, ${scrBin} active"
 
           "$mod, slash, exec, ${playerctlBin} play-pause"
           "$mod, comma, exec, ${playerctlBin} previous"
