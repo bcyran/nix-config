@@ -38,6 +38,7 @@
     ../../features/printing.nix
     ../../features/silentboot.nix
     ../../features/ddcci.nix
+    ../../features/tlp.nix
   ];
 
   networking.hostName = "nixtest";
