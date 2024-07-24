@@ -10,7 +10,7 @@ in {
     ../features/alacritty.nix
     ../features/hyprland
     ../features/dunst.nix
-    ../features/swayidle.nix
+    ../features/hypridle.nix
     ../features/wlsunset.nix
     ../features/swaylock.nix
     ../features/zathura.nix
