@@ -8,5 +8,6 @@
     enable = true;
     plugins = with pkgs.xfce; [thunar-volman thunar-archive-plugin];
   };
+  programs.xfconf.enable = true;
   programs.file-roller.enable = true;
 }
