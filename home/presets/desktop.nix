@@ -23,7 +23,7 @@ in {
     ../features/waybar
     ../features/onagre
     ../features/firefox.nix
-    ../features/mime-apps.nix
+    ../features/xdg.nix
   ];
 
   home.packages = with pkgs; [
