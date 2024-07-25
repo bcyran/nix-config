@@ -3,9 +3,11 @@
 mpris_print() {
     local status metadata artist title
 
-    status=$(playerctl status 2> /dev/null)
+    if ! status=$(playerctl status 2> /dev/null); then
+        echo "{}"
+    fi
 
-    if [[ "${status}" != 'Playing' && "${status}" != 'Paused' ]]; then
+    if [[ ! "${status}" =~ ^(Playing|Paused|Stopped)$ ]]; then
         return
     fi
 
