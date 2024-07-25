@@ -51,5 +51,19 @@ in {
       enable = true;
       defaultApplications = associations;
     };
+
+    userDirs = let
+      homeDir = config.home.homeDirectory;
+    in {
+      enable = true;
+      desktop = "${homeDir}/Pulpit";
+      documents = "${homeDir}/Dokumenty";
+      download = "${homeDir}/Pobrane";
+      music = "${homeDir}/Muzyka";
+      pictures = "${homeDir}/Obrazy";
+      publicShare = "${homeDir}/Udostępnione";
+      templates = "${homeDir}/Szablony";
+      videos = "${homeDir}/Wideo";
+    };
   };
 }
