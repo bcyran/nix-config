@@ -1,15 +1,55 @@
-let
-  editorDesktop = "nvim.desktop";
+{config, ...}: let
+  textEditor = "nvim.desktop";
+  webBrowser = "firefox.desktop";
+  pdfViewer = "org.pwmt.zathura-pdf-mupdf.desktop";
+  imageViewer = "org.gnome.gThumb.desktop";
+
+  makeAssociations = program: type: subtypes:
+    builtins.listToAttrs (map (subtype: {
+        name = "${type}/${subtype}";
+        value = program;
+      })
+      subtypes);
+
+  associations =
+    makeAssociations textEditor "text" [
+      "plain"
+      "markdown"
+      "javascript"
+      "xml"
+    ]
+    // makeAssociations textEditor "application" [
+      "json"
+      "x-shellscript"
+    ]
+    // makeAssociations webBrowser "application" [
+      "x-extension-htm"
+      "x-extension-html"
+      "x-extension-shtml"
+      "x-extension-xht"
+      "x-extension-xtml"
+      "xhtml+xml"
+    ]
+    // makeAssociations webBrowser "x-scheme-handler" [
+      "http"
+      "https"
+      "ftp"
+    ]
+    // makeAssociations webBrowser "text" ["html"]
+    // makeAssociations imageViewer "image" [
+      "jpeg"
+      "png"
+      "gif"
+      "svg"
+    ]
+    // makeAssociations pdfViewer "application" ["pdf"];
 in {
-  xdg.mimeApps = {
+  xdg = {
     enable = true;
-    defaultApplications = {
-      "text/plain" = [editorDesktop];
-      "text/markdown" = [editorDesktop];
-      "text/html" = [editorDesktop];
-      "text/javascript" = [editorDesktop];
-      "text/xml" = [editorDesktop];
-      "application/x-shellscript" = [editorDesktop];
+
+    mimeApps = {
+      enable = true;
+      defaultApplications = associations;
     };
   };
 }
