@@ -25,7 +25,7 @@
     ../../features/console.nix
     ../../features/greetd.nix
     ../../features/hyprland
-    ../../features/swaylock.nix
+    ../../features/lock.nix
     ../../features/pipewire.nix
     ../../features/filesystem.nix
     ../../features/bluetooth.nix
