@@ -86,5 +86,8 @@
     # direnv
     .direnv
   '';
-  home.packages = [pkgs.my.git-smash];
+  home.packages = with pkgs; [
+    my.git-smash
+    my.git-chain
+  ];
 }
