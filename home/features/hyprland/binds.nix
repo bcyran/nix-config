@@ -44,6 +44,7 @@ in {
           "$mod SHIFT, q, killactive,"
           "$mod SHIFT, e, exit, "
           "$mod, f, fullscreen"
+          "$mod, m, fakefullscreen"
           "$mod SHIFT, f, togglefloating,"
           "$mod SHIFT, p, pseudo,"
           "$mod SHIFT, x, pin,"
