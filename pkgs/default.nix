@@ -19,4 +19,5 @@ in rec {
     inherit philipstv ttkbootstrap;
   };
   timewall = pkgs.callPackage ./timewall {};
+  git-smash = pkgs.callPackage ./git-smash {};
 }

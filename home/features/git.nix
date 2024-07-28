@@ -86,4 +86,5 @@
     # direnv
     .direnv
   '';
+  home.packages = [pkgs.my.git-smash];
 }
