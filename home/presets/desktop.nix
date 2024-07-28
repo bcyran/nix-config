@@ -13,6 +13,7 @@ in {
     ../features/hypridle.nix
     ../features/wlsunset.nix
     ../features/swaylock.nix
+    ../features/hyprlock.nix
     ../features/zathura.nix
     ../features/keepassxc.nix
     ../features/spotify.nix
