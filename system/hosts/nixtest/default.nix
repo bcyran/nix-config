@@ -28,6 +28,7 @@
     ../../features/locale.nix
     ../../features/console.nix
     ../../features/greetd.nix
+    ../../features/networking.nix
     ../../features/hyprland
     ../../features/lock.nix
     ../../features/pipewire.nix
@@ -42,7 +43,6 @@
   ];
 
   networking.hostName = "nixtest";
-  networking.networkmanager.enable = true;
 
   programs.fish.enable = true;
   programs.light.enable = true;
