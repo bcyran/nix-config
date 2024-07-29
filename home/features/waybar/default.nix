@@ -17,7 +17,7 @@
     src = ./files/config-default.json;
     configCommonPath = configCommon;
   };
-  monitorByIdx = idx: builtins.elemAt config.monitors idx;
+  monitorByIdx = idx: builtins.elemAt config.my.hardware.monitors idx;
   monitorOutputsJsonStr = m:
     if m.altOutput == null
     then ''"${m.output}"''

@@ -10,7 +10,7 @@
     if m.id_by_output
     then "${m.output}"
     else "desc:${m.description}";
-  monitorByIdx = idx: builtins.elemAt config.monitors idx;
+  monitorByIdx = idx: builtins.elemAt config.my.hardware.monitors idx;
 in {
   wayland.windowManager.hyprland.settings = {
     "$mod" = "ALT";
@@ -24,7 +24,7 @@ in {
     monitor = let
       mon = m: "${monitorId m}, ${toString m.width}x${toString m.height}@${toString m.refreshRate}, ${toString m.x}x${toString m.y}, ${toString m.scale}, transform, ${toString m.transform}";
     in
-      (map mon config.monitors)
+      (map mon config.my.hardware.monitors)
       ++ [
         ",preferred, auto, 1"
       ];

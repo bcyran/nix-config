@@ -5,7 +5,7 @@
 }: let
   inherit (lib) mkOption types;
 in {
-  options.monitors = mkOption {
+  options.my.hardware.monitors = mkOption {
     type = types.listOf (
       types.submodule {
         options = {
@@ -66,7 +66,7 @@ in {
   config = {
     assertions = [
       {
-        assertion = (lib.length config.monitors) == 3;
+        assertion = (lib.length config.my.hardware.monitors) == 3;
         message = "Exactly 3 monitors are required.";
       }
     ];

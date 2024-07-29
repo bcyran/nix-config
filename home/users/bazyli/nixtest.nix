@@ -12,7 +12,7 @@
     ../../presets/personal.nix
   ];
 
-  monitors = [
+  my.hardware.monitors = [
     # Left (builtin)
     {
       description = "BOE 0x074F";

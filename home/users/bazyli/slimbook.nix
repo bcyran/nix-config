@@ -12,7 +12,7 @@
     ../../presets/personal.nix
   ];
 
-  monitors = [
+  my.hardware.monitors = [
     # Left (builtin)
     {
       description = "California Institute of Technology 0x1402";
