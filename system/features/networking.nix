@@ -10,7 +10,8 @@
       export LC_ALL=C
 
       enable_disable_wifi() {
-        result=$(nmcli dev | grep "ethernet" | grep -w "connected")
+        # Do not fail the script on exit code 1 (set -e) due to lack of matches
+        result=$(nmcli dev | { grep "ethernet" || test $? = 1; } | { grep -w "connected" || test $? = 1; })
         if [[ -n "$result" ]]; then
           echo "Detected wired connection, disabling Wi-Fi"
           nmcli radio wifi off
