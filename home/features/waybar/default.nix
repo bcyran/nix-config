@@ -8,9 +8,10 @@
   killBin = "${lib.getBin pkgs.coreutils}/bin/kill";
   sleepBin = "${lib.getBin pkgs.coreutils}/bin/sleep";
   # Config files: common, default, multi-monitor
-  configCommon = pkgs.writeTextFile {
+  configCommon = pkgs.substituteAll {
     name = "config-common.json";
-    text = builtins.readFile ./files/common.json;
+    src = ./files/common.json;
+    wirelessNetworkInterface = config.my.hardware.networkInterfaces.wireless;
   };
   configDefault = pkgs.substituteAll {
     name = "config-default.json";

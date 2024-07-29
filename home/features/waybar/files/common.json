@@ -78,7 +78,7 @@
     "on-click-middle": "volume toggle"
   },
   "network": {
-    "interface": "wlp3s0",
+    "interface": "@wirelessNetworkInterface@",
     "format-wifi": "<span rise='-800'>{icon}</span>   {essid}",
     "format-icons": [
       "󰤯",
