@@ -38,6 +38,7 @@
     ../../features/ddcci.nix
     ../../features/btrbk.nix
     ../../features/tlp.nix
+    ../../features/polkit.nix
   ];
 
   networking.hostName = "slimbook";

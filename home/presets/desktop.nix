@@ -24,6 +24,7 @@ in {
     ../features/onagre
     ../features/firefox.nix
     ../features/xdg.nix
+    ../features/polkit.nix
   ];
 
   home.packages = with pkgs; [

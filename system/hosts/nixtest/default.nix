@@ -41,6 +41,7 @@
     ../../features/silentboot.nix
     ../../features/ddcci.nix
     ../../features/tlp.nix
+    ../../features/polkit.nix
   ];
 
   networking.hostName = "nixtest";
