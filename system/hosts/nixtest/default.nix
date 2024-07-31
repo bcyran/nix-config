@@ -27,6 +27,7 @@
     ../../features/lanzaboote.nix
     ../../features/locale.nix
     ../../features/console.nix
+    ../../features/utilities.nix
     ../../features/greetd.nix
     ../../features/networking.nix
     ../../features/hyprland
