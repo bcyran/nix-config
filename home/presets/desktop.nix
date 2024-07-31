@@ -39,7 +39,6 @@ in {
     rofi.powermenu
     rofi.calc
     rofi.runmenu
-    gparted
     file-roller
     gnome-calculator
     gnome-font-viewer

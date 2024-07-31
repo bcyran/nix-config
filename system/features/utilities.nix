@@ -6,5 +6,6 @@
     curl
     usbutils
     pciutils
+    gparted
   ];
 }
