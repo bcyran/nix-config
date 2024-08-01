@@ -25,6 +25,7 @@ in {
     ../features/firefox.nix
     ../features/xdg.nix
     ../features/polkit.nix
+    ../features/udiskie.nix
   ];
 
   home.packages = with pkgs; [
