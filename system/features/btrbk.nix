@@ -9,6 +9,8 @@
         };
         snapshot_preserve = "7d";
         snapshot_preserve_min = "2d";
+        archive_preserve = "7d";
+        archive_preserve_min = "2d";
       };
     };
   };
