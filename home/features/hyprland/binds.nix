@@ -96,7 +96,7 @@ in {
           "CONTROL, space, exec, ${dunstctlBin} close"
           "CONTROL, escape, exec, ${dunstctlBin} history-pop"
 
-          "$mod, space, exec, ${appmenuBin}"
+          "$mod, space, exec, anyrun"
           "$mod CONTROL, space, exec, ${runmenuBin}"
           "$mod SHIFT, backspace, exec, ${powermenuBin}"
           "$mod, c, exec, ${calcBin}"

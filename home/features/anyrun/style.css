@@ -1,0 +1,41 @@
+* {
+  font-family: "Roboto Condensed";
+  font-size: 1.1rem;
+}
+
+#window {
+  background: transparent;
+}
+
+#main {
+  background: @base10;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+#entry {
+  background: @base11;
+  border: 2px solid @base01;
+  box-shadow: none;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+list#main {
+  padding: 12px 0 0 0;
+}
+
+#match, #match box {
+  padding: 2px;
+  border-radius: 8px;
+  background: @base10;
+  transition: 100ms ease-out;
+}
+
+#match:selected, #match:selected box {
+  background: @base01;
+}
+
+#match image {
+  background: transparent;
+}

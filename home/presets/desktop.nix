@@ -26,6 +26,7 @@ in {
     ../features/xdg.nix
     ../features/polkit.nix
     ../features/udiskie.nix
+    ../features/anyrun
   ];
 
   home.packages = with pkgs; [

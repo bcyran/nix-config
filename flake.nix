@@ -35,6 +35,11 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    anyrun = {
+      url = "github:anyrun-org/anyrun";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -45,6 +50,7 @@
     lanzaboote,
     disko,
     nix-index-database,
+    anyrun,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -108,6 +114,7 @@
         modules = [
           # > Our main home-manager configuration file <
           nix-index-database.hmModules.nix-index
+          anyrun.homeManagerModules.default
           ./home/users/bazyli/slimbook.nix
         ];
       };
@@ -117,6 +124,7 @@
         modules = [
           # > Our main home-manager configuration file <
           nix-index-database.hmModules.nix-index
+          anyrun.homeManagerModules.default
           ./home/users/bazyli/nixtest.nix
         ];
       };
