@@ -6,6 +6,8 @@
 }: let
   inherit (config.colorScheme) palette;
   styleSheet = builtins.readFile ./style.css;
+  kidexPackage = pkgs.my.kidex;
+  kidexBin = "${kidexPackage}/bin/kidex";
 in {
   programs.anyrun = {
     enable = true;
@@ -16,6 +18,7 @@ in {
         rink
         translate
         websearch
+        kidex
       ];
       x = {fraction = 0.5;};
       y = {fraction = 0.3;};
@@ -91,5 +94,38 @@ in {
 
       ${styleSheet}
     '';
+  };
+  home.packages = [kidexPackage];
+  xdg.configFile."kidex.ron".text = ''
+    Config(
+      ignored: [
+        "*/.*",
+        "*.git*",
+        "*.node_modules*",
+        "*.cache*",
+        "*build/*",
+        "*__pycache__*",
+      ],
+      directories: [
+        WatchDir(
+          path: "/home/bazyli",
+          recurse: true,
+          ignored: [],
+        ),
+      ],
+    )
+  '';
+  systemd.user.services.kidex = {
+    Unit = {
+      Description = "A simple file indexing service for looking up file locations ";
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = kidexBin;
+      Restart = "on-failuire";
+    };
+    Install = {
+      WantedBy = ["default.target"];
+    };
   };
 }
