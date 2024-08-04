@@ -1,4 +1,25 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: let
+  # NOTE: Would be nice to find a way to derive this from base16 theme colors
+  deltaThemeName = config.colorScheme.slug;
+  deltaTheme = pkgs.writeText "${deltaThemeName}.gitconfig" ''
+    [delta "${deltaThemeName}"]
+      minus-style                   = syntax "#3a273a"
+      minus-non-emph-style          = syntax "#3a273a"
+      minus-emph-style              = syntax "#6b2e43"
+      minus-empty-line-marker-style = syntax "#3a273a"
+      line-numbers-minus-style      = "#e26a75"
+      plus-style                    = syntax "#273849"
+      plus-non-emph-style           = syntax "#273849"
+      plus-emph-style               = syntax "#305f6f"
+      plus-empty-line-marker-style  = syntax "#273849"
+      line-numbers-plus-style       = "#b8db87"
+      line-numbers-zero-style       = "#3b4261"
+  '';
+in {
   programs.git = {
     enable = true;
     userName = "Bazyli Cyran";
@@ -6,8 +27,8 @@
     delta = {
       enable = true;
       options = {
-        features = "zebra-dark";
-        syntax-theme = "TwoDark";
+        features = deltaThemeName;
+        syntax-theme = config.programs.bat.config.theme;
         navigate = true;
         line-numbers = false;
         side-by-side = false;
@@ -19,6 +40,9 @@
           url = "https://raw.githubusercontent.com/dandavison/delta/f49fd3b012067e34c101d7dfc6cc3bbac1fe5ccc/themes.gitconfig";
           sha256 = "09kfrlmrnj5h3vs8cwfs66yhz2zpgk0qnmajvsr57wsxzgda3mh6";
         };
+      }
+      {
+        path = deltaTheme;
       }
     ];
     aliases = {
