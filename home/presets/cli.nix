@@ -6,6 +6,7 @@
     ../features/btop.nix
     ../features/direnv.nix
     ../features/nix-index.nix
+    ../features/bat
     ../features/neovim
   ];
 
@@ -20,7 +21,6 @@
   ];
 
   programs.eza.enable = true;
-  programs.bat.enable = true;
   programs.ripgrep.enable = true;
   programs.fd.enable = true;
 }
