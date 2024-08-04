@@ -42,6 +42,7 @@
     ../../features/ddcci.nix
     ../../features/tlp.nix
     ../../features/polkit.nix
+    ../../features/upower.nix
   ];
 
   networking.hostName = "nixtest";

@@ -27,6 +27,7 @@ in {
     ../features/polkit.nix
     ../features/udiskie.nix
     ../features/anyrun
+    ../features/poweralertd.nix
   ];
 
   home.packages = with pkgs; [
