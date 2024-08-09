@@ -1,6 +1,6 @@
 {pkgs, ...}: let
   xdph = pkgs.xdg-desktop-portal-hyprland.overrideAttrs (finalAttrs: previousAttrs: {
-    patches = previousAttrs.patches ++ [./xdph-service.patch];
+    patches = [./xdph-service.patch];
   });
 in {
   programs.hyprland = {
