@@ -16,6 +16,7 @@
   alacrittyBin = lib.getExe pkgs.alacritty;
   playerctlBin = lib.getExe pkgs.playerctl;
   dunstctlBin = "${lib.getBin pkgs.dunst}/dunstctl";
+  swayncClientBin = "${pkgs.swaynotificationcenter}/bin/swaync-client";
   firefoxBin = lib.getExe pkgs.firefox;
   thunarBin = "${thunar}/bin/thunar";
   backlightBin = lib.getExe pkgs.my.backlight;
@@ -93,8 +94,8 @@ in {
           ",XF86MonBrightnessDown, exec, ${backlightBin} down 10"
           ",XF86MonBrightnessUp, exec, ${backlightBin} up 10"
 
-          "CONTROL, space, exec, ${dunstctlBin} close"
-          "CONTROL, escape, exec, ${dunstctlBin} history-pop"
+          "CONTROL, space, exec, ${swayncClientBin} --toggle-panel"
+          "CONTROL, escape, exec, ${swayncClientBin} --close-latest"
 
           "$mod, space, exec, anyrun"
           "$mod CONTROL, space, exec, ${runmenuBin}"
