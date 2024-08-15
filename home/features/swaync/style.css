@@ -1,0 +1,132 @@
+* {
+  font-family: "Roboto Condensed";
+  transition: 100ms;
+  box-shadow: unset;
+  color: @base07;
+}
+
+.notification-background {
+  padding: 4px 20px 0 0;
+}
+
+.notification-background:first-child {
+  padding-top: 20px;
+}
+
+.notification {
+  background: @base10;
+  color: @base05;
+  border-radius: 8px;
+  border: 2px solid @base01;
+}
+
+.close-button {
+  background: @base00;
+  color: @base07;
+}
+
+.close-button:hover {
+  background: @base02;
+  color: @base05;
+}
+
+.notification-content {
+  border-radius: 0;
+  padding: 8px;
+}
+
+.notification-default-action {
+  border-radius: 0;
+  color: @base05;
+}
+
+.notification-action {
+  border-radius: 0;
+  color: @base05;
+}
+
+.notification-action:hover, .notification-default-action:hover {
+  color: @base05;
+  background: @base01;
+}
+
+.notification-group-icon {
+  color: @base05;
+}
+
+.notification-group-header {
+  color: @base05;
+}
+
+.notification-group-buttons > button {
+  background: @base00;
+  color: @base05;
+}
+
+.notification-group-buttons > button:hover {
+  background: @base02;
+}
+
+.control-center {
+  background: @base10;
+  color: @base05;
+  border-radius: 8px;
+  border: 2px solid @base01;
+  padding: 8px;
+}
+
+.control-center .notification-background {
+  padding-top: 8px;
+}
+
+.text-box .summary {
+  color: @base05;
+  font-size: 1.2rem;
+}
+
+.text-box .time {
+  color: @base05;
+  font-size: 1.1rem;
+  font-weight: normal;
+}
+
+.text-box .body {
+  color: @base05;
+  font-size: 1.1rem;
+}
+
+.widget-title label {
+  color: @base05;
+}
+
+.widget-title > button {
+  background: @base00;
+  color: @base05;
+}
+
+.widget-title > button:hover {
+  background: @base02;
+}
+
+.widget-dnd label {
+  color: @base05;
+}
+
+.widget-dnd > switch {
+  background: @base00;
+  color: @base05;
+}
+
+.widget-dnd > switch:hover {
+  background: @base02;
+  color: @base05;
+}
+
+.widget-dnd > switch:checked {
+  background: @base01;
+  color: @base05;
+}
+
+.widget-dnd > switch slider {
+  background: @base05;
+}

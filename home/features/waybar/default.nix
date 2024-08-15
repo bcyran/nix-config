@@ -67,6 +67,7 @@
       mprisModule
       playerctl
       philipstvModule
+      swaynotificationcenter
       my.philipstv
       my.philipstv-gui
     ];

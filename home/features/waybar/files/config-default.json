@@ -17,6 +17,7 @@
     "network",
     "battery",
     "tray",
+    "custom/notification",
   ],
   "include": [
     "@configCommonPath@",

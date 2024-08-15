@@ -9,7 +9,6 @@ in {
   imports = [
     ../features/alacritty.nix
     ../features/hyprland
-    ../features/dunst.nix
     ../features/hypridle.nix
     ../features/wlsunset.nix
     ../features/hyprlock.nix
@@ -28,6 +27,7 @@ in {
     ../features/udiskie.nix
     ../features/anyrun
     ../features/poweralertd.nix
+    ../features/swaync
   ];
 
   home.packages = with pkgs; [
