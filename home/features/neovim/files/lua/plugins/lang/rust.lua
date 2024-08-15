@@ -52,6 +52,7 @@ return {
                 "--",
                 "-Dclippy::correctness",
                 "-Wclippy::nursery",
+                "-Aclippy::option_if_let_else",
                 "-Wclippy::pedantic",
                 "-Aclippy::module_name_repetitions",
                 "-Wclippy::perf",
