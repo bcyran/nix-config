@@ -40,6 +40,10 @@
       url = "github:anyrun-org/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    anyrun-powermenu = {
+      url = "github:bcyran/anyrun-powermenu";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {

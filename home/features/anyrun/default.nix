@@ -12,14 +12,16 @@ in {
   programs.anyrun = {
     enable = true;
     config = {
-      plugins = with inputs.anyrun.packages.${pkgs.system}; [
-        applications
-        shell
-        rink
-        translate
-        websearch
-        kidex
-      ];
+      plugins = with inputs.anyrun.packages.${pkgs.system};
+        [
+          applications
+          shell
+          rink
+          translate
+          websearch
+          kidex
+        ]
+        ++ [inputs.anyrun-powermenu.packages.${pkgs.system}.default];
       x = {fraction = 0.5;};
       y = {fraction = 0.3;};
       width = {fraction = 0.3;};
