@@ -24,7 +24,7 @@ in {
         ++ [inputs.anyrun-powermenu.packages.${pkgs.system}.default];
       x = {fraction = 0.5;};
       y = {fraction = 0.3;};
-      width = {fraction = 0.3;};
+      width = {absolute = 700;};
       hideIcons = false;
       layer = "overlay";
       closeOnClick = true;
@@ -46,7 +46,7 @@ in {
       '';
       "translate.ron".text = ''
         Config(
-          prefix: "tr",
+          prefix: ":",
           language_delimiter: ">",
           max_entries: 3,
         )

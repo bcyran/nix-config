@@ -13,6 +13,10 @@
   padding: 12px;
 }
 
+box#main {
+  border: 2px solid @base01;
+}
+
 #entry {
   background: @base11;
   border: 2px solid @base01;
