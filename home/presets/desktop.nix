@@ -61,6 +61,7 @@ in {
       spotify.enable = true;
       syncthing.enable = true;
       megasync.enable = true;
+      udiskie.enable = true;
     };
   };
 
