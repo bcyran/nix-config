@@ -26,7 +26,6 @@ in {
     ../features/polkit.nix
     ../features/udiskie.nix
     ../features/anyrun
-    ../features/poweralertd.nix
     ../features/dunst.nix
     ../features/swaync
   ];
@@ -63,4 +62,5 @@ in {
   };
 
   programs.chromium.enable = true;
+  services.poweralertd.enable = true;
 }
