@@ -42,17 +42,21 @@
 
   programs.home-manager.enable = true;
   services.ssh-agent.enable = true;
+  systemd.user = {
+    enable = true;
+    # Nicely reload system units when changing configs
+    startServices = "sd-switch";
+    # This makes the tray.target stop when logging out and start again when logging in.
+    # It's important because otherwise it's constantly active and thus services relying on it
+    # don't start in proper sequence when logging out and logging in again.
+    targets.tray.Unit.StopWhenUnneeded = true;
+  };
 
   imports =
     [
       nix-colors.homeManagerModules.default
-
-      ../features/systemd.nix
     ]
     ++ (builtins.attrValues outputs.homeManagerModules);
-
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.11";
