@@ -59,6 +59,7 @@ in {
       keepassxc.enable = true;
       firefox.enable = true;
       spotify.enable = true;
+      syncthing.enable = true;
       megasync.enable = true;
     };
   };
