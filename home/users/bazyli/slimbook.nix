@@ -16,8 +16,10 @@
   };
 
   my = {
-    presets = {
+    configurations = {
       core.enable = true;
+    };
+    presets = {
       cli.enable = true;
       desktop.enable = true;
       personal.enable = true;

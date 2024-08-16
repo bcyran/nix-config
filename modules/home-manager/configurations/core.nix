@@ -6,9 +6,9 @@
   ...
 }:
 with lib; let
-  cfg = config.my.presets.core;
+  cfg = config.my.configurations.core;
 in {
-  options.my.presets.core.enable = mkEnableOption "core";
+  options.my.configurations.core.enable = mkEnableOption "core";
 
   config = mkIf cfg.enable {
     nixpkgs = {
