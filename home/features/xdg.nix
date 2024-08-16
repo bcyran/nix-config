@@ -1,4 +1,11 @@
-{config, ...}: let
+{
+  config,
+  lib,
+  ...
+}:
+with lib; let
+  cfg = config.my.configurations.xdg;
+
   textEditor = "nvim.desktop";
   webBrowser = "firefox.desktop";
   pdfViewer = "org.pwmt.zathura-pdf-mupdf.desktop";
@@ -44,26 +51,30 @@
     ]
     // makeAssociations pdfViewer "application" ["pdf"];
 in {
-  xdg = {
-    enable = true;
+  options.my.configurations.xdg.enable = mkEnableOption "xdg";
 
-    mimeApps = {
+  config = mkIf cfg.enable {
+    xdg = {
       enable = true;
-      defaultApplications = associations;
-    };
 
-    userDirs = let
-      homeDir = config.home.homeDirectory;
-    in {
-      enable = true;
-      desktop = "${homeDir}/Pulpit";
-      documents = "${homeDir}/Dokumenty";
-      download = "${homeDir}/Pobrane";
-      music = "${homeDir}/Muzyka";
-      pictures = "${homeDir}/Obrazy";
-      publicShare = "${homeDir}/Udostępnione";
-      templates = "${homeDir}/Szablony";
-      videos = "${homeDir}/Wideo";
+      mimeApps = {
+        enable = true;
+        defaultApplications = associations;
+      };
+
+      userDirs = let
+        homeDir = config.home.homeDirectory;
+      in {
+        enable = true;
+        desktop = "${homeDir}/Pulpit";
+        documents = "${homeDir}/Dokumenty";
+        download = "${homeDir}/Pobrane";
+        music = "${homeDir}/Muzyka";
+        pictures = "${homeDir}/Obrazy";
+        publicShare = "${homeDir}/Udostępnione";
+        templates = "${homeDir}/Szablony";
+        videos = "${homeDir}/Wideo";
+      };
     };
   };
 }
