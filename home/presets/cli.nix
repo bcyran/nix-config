@@ -23,6 +23,7 @@
   my = {
     programs = {
       btop.enable = true;
+      direnv.enable = true;
     };
   };
 
