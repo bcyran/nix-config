@@ -53,6 +53,7 @@ in {
   my = {
     programs = {
       alacritty.enable = true;
+      waybar.enable = true;
       anyrun.enable = true;
       swaync.enable = true;
       hypridle.enable = true;
