@@ -54,6 +54,7 @@ in {
     programs = {
       alacritty.enable = true;
       anyrun.enable = true;
+      swaync.enable = true;
       hypridle.enable = true;
       hyprlock.enable = true;
       swww.enable = true;
