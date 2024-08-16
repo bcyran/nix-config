@@ -3,9 +3,7 @@
   config,
   lib,
   ...
-}: let
-  rofi = import ../features/rofi {inherit pkgs config lib;};
-in {
+}: {
   imports = [
     ../features/alacritty.nix
     ../features/hyprland
@@ -21,6 +19,7 @@ in {
     ../features/gtk.nix
     ../features/waybar
     ../features/onagre
+    ../features/rofi
     ../features/firefox.nix
     ../features/xdg.nix
     ../features/polkit.nix
@@ -38,10 +37,6 @@ in {
     my.backlight
     my.wallpaper
     my.scr
-    rofi.appmenu
-    rofi.powermenu
-    rofi.calc
-    rofi.runmenu
     file-roller
     gnome-calculator
     gnome-font-viewer

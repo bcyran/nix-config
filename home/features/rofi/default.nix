@@ -11,7 +11,6 @@
   # See: https://github.com/NixOS/nixpkgs/issues/298539
   rofi-calc = pkgs.rofi-calc.override {rofi-unwrapped = pkgs.rofi-wayland-unwrapped;};
   rofi = pkgs.rofi-wayland.override {plugins = [rofi-calc];};
-in {
   appmenu = pkgs.callPackage ./appmenu.nix {
     inherit commonConfigPath rofi;
     iconThemeName = config.gtk.iconTheme.name;
@@ -25,4 +24,11 @@ in {
   calc = pkgs.callPackage ./calc.nix {
     inherit commonConfigPath rofi;
   };
+in {
+  home.packages = [
+    appmenu
+    powermenu
+    calc
+    runmenu
+  ];
 }

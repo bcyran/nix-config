@@ -7,11 +7,10 @@
 with lib; let
   cfg = config.my.programs.hyprland;
 
-  rofi = import ../rofi {inherit pkgs config;};
-  appmenuBin = lib.getExe rofi.appmenu;
-  runmenuBin = lib.getExe rofi.runmenu;
-  powermenuBin = lib.getExe rofi.powermenu;
-  calcBin = lib.getExe rofi.calc;
+  appmenuBin = "rofi-appmenu";
+  runmenuBin = "rofi-runmenu";
+  powermenuBin = "rofi-powermenu";
+  calcBin = "rofi-calc";
 
   thunar = pkgs.xfce.thunar.override {thunarPlugins = with pkgs; [xfce.thunar-volman xfce.thunar-archive-plugin];};
 
