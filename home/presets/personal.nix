@@ -1,8 +1,4 @@
 {pkgs, ...}: {
-  imports = [
-    ../features/signal.nix
-  ];
-
   home.packages = with pkgs; [
     portfolio
     gnucash

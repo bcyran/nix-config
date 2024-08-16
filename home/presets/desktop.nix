@@ -1,34 +1,4 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: {
-  imports = [
-    ../features/alacritty.nix
-    ../features/hyprland
-    ../features/hypridle.nix
-    ../features/wlsunset.nix
-    ../features/hyprlock.nix
-    ../features/zathura.nix
-    ../features/keepassxc.nix
-    ../features/spotify.nix
-    ../features/megasync.nix
-    ../features/syncthing.nix
-    ../features/swww.nix
-    ../features/gtk.nix
-    ../features/waybar
-    ../features/onagre
-    ../features/rofi
-    ../features/firefox.nix
-    ../features/xdg.nix
-    ../features/polkit.nix
-    ../features/udiskie.nix
-    ../features/anyrun
-    ../features/dunst.nix
-    ../features/swaync
-  ];
-
+{pkgs, ...}: {
   home.packages = with pkgs; [
     roboto
     libnotify

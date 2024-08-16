@@ -3,5 +3,7 @@
 {
   # List your module files here
   # my-module = import ./my-module.nix;
+  programs = import ./programs;
+  configurations = import ./configurations;
   hardware = import ./hardware.nix;
 }

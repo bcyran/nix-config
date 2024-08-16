@@ -74,7 +74,7 @@
     # Example usage: `lib.my.listDir <dir>`.
     extendLibWithMy = nixpkgs:
       nixpkgs.lib.extend
-      (final: prev: {my = import ./lib {lib = final;};});
+      (final: prev: {my = import ./lib {lib = final;};} // home-manager.lib);
     lib = extendLibWithMy nixpkgs;
   in {
     # Your custom packages
