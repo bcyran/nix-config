@@ -26,6 +26,7 @@
       git.enable = true;
       btop.enable = true;
       direnv.enable = true;
+      nix-index.enable = true;
     };
   };
 
