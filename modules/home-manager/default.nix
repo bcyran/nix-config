@@ -5,5 +5,6 @@
   # my-module = import ./my-module.nix;
   programs = import ./programs;
   configurations = import ./configurations;
+  presets = import ./presets;
   hardware = import ./hardware.nix;
 }
