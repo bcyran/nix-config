@@ -55,6 +55,7 @@ in {
       alacritty.enable = true;
       hypridle.enable = true;
       hyprlock.enable = true;
+      swww.enable = true;
       keepassxc.enable = true;
       firefox.enable = true;
       spotify.enable = true;
