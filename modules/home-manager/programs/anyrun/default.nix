@@ -134,7 +134,7 @@ in {
       Service = {
         Type = "simple";
         ExecStart = kidexBin;
-        Restart = "on-failuire";
+        Restart = "on-failure";
       };
       Install = {
         WantedBy = ["default.target"];
