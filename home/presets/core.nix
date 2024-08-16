@@ -41,13 +41,13 @@
   };
 
   programs.home-manager.enable = true;
+  services.ssh-agent.enable = true;
 
   imports =
     [
       nix-colors.homeManagerModules.default
 
       ../features/systemd.nix
-      ../features/ssh.nix
     ]
     ++ (builtins.attrValues outputs.homeManagerModules);
 
