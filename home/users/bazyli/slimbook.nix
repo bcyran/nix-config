@@ -1,15 +1,23 @@
 {
+  inputs,
+  outputs,
+  ...
+}: {
+  imports = [
+    inputs.nix-colors.homeManagerModules.default
+    inputs.nix-index-database.hmModules.nix-index
+    inputs.anyrun.homeManagerModules.default
+    outputs.homeManagerModules.default
+  ];
+
   home = {
     username = "bazyli";
     homeDirectory = "/home/bazyli";
   };
 
-  imports = [
-    ../../presets/core.nix
-  ];
-
   my = {
     presets = {
+      core.enable = true;
       cli.enable = true;
       desktop.enable = true;
       personal.enable = true;
