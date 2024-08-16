@@ -64,6 +64,9 @@
       udiskie.enable = true;
       zathura.enable = true;
     };
+    configurations = {
+      gtk.enable = true;
+    };
   };
 
   programs.chromium.enable = true;

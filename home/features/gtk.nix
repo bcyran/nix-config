@@ -1,9 +1,13 @@
 {
   pkgs,
   config,
+  lib,
   ...
-}: let
+}:
+with lib; let
   inherit (config.colorScheme) palette;
+  cfg = config.my.configurations.gtk;
+
   themeCSS = ''
     @define-color window_bg_color #${palette.base10};
     @define-color window_fg_color #${palette.base05};
@@ -39,35 +43,39 @@
     @define-color destructive_color @destructive_bg_color;
   '';
 in {
-  gtk = {
-    enable = true;
+  options.my.configurations.gtk.enable = mkEnableOption "gtk";
 
-    font = {
-      name = "Roboto";
-      package = pkgs.roboto;
-      size = 12;
+  config = mkIf cfg.enable {
+    gtk = {
+      enable = true;
+
+      font = {
+        name = "Roboto";
+        package = pkgs.roboto;
+        size = 12;
+      };
+
+      iconTheme = {
+        name = "Qogir";
+        package = pkgs.qogir-icon-theme;
+      };
+
+      theme = {
+        name = "adw-gtk3-dark";
+        package = pkgs.adw-gtk3;
+      };
     };
 
-    iconTheme = {
-      name = "Qogir";
-      package = pkgs.qogir-icon-theme;
+    home.pointerCursor = {
+      package = pkgs.numix-cursor-theme;
+      name = "Numix-Cursor-Light";
+      size = 16;
+      gtk.enable = true;
+      x11.enable = true;
     };
-
-    theme = {
-      name = "adw-gtk3-dark";
-      package = pkgs.adw-gtk3;
+    xdg.configFile = {
+      "gtk-4.0/gtk.css".text = themeCSS;
+      "gtk-3.0/gtk.css".text = themeCSS;
     };
-  };
-
-  home.pointerCursor = {
-    package = pkgs.numix-cursor-theme;
-    name = "Numix-Cursor-Light";
-    size = 16;
-    gtk.enable = true;
-    x11.enable = true;
-  };
-  xdg.configFile = {
-    "gtk-4.0/gtk.css".text = themeCSS;
-    "gtk-3.0/gtk.css".text = themeCSS;
   };
 }
