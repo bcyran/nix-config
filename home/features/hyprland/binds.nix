@@ -7,17 +7,11 @@
 with lib; let
   cfg = config.my.programs.hyprland;
 
-  appmenuBin = "rofi-appmenu";
-  runmenuBin = "rofi-runmenu";
-  powermenuBin = "rofi-powermenu";
-  calcBin = "rofi-calc";
-
   thunar = pkgs.xfce.thunar.override {thunarPlugins = with pkgs; [xfce.thunar-volman xfce.thunar-archive-plugin];};
 
   hyprctlBin = "${pkgs.hyprland}/bin/hyprctl";
   alacrittyBin = lib.getExe pkgs.alacritty;
   playerctlBin = lib.getExe pkgs.playerctl;
-  dunstctlBin = "${lib.getBin pkgs.dunst}/dunstctl";
   swayncClientBin = "${pkgs.swaynotificationcenter}/bin/swaync-client";
   firefoxBin = lib.getExe pkgs.firefox;
   thunarBin = "${thunar}/bin/thunar";
@@ -101,9 +95,6 @@ in {
             "CONTROL, escape, exec, ${swayncClientBin} --close-latest"
 
             "$mod, space, exec, anyrun"
-            "$mod CONTROL, space, exec, ${runmenuBin}"
-            "$mod SHIFT, backspace, exec, ${powermenuBin}"
-            "$mod, c, exec, ${calcBin}"
             "$mod, return, exec, ${alacrittyBin}"
             "$mod SHIFT, return, exec, ${alacrittyBin} --class terminal-floating"
             "$mod, Y, exec, ${firefoxBin}"
