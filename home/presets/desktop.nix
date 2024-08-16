@@ -58,6 +58,7 @@ in {
       hyprlock.enable = true;
       keepassxc.enable = true;
       firefox.enable = true;
+      megasync.enable = true;
     };
   };
 
