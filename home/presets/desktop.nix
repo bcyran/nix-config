@@ -54,6 +54,7 @@ in {
   my = {
     programs = {
       alacritty.enable = true;
+      hypridle.enable = true;
       firefox.enable = true;
     };
   };
