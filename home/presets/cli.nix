@@ -22,6 +22,7 @@
 
   my = {
     programs = {
+      fish.enable = true;
       btop.enable = true;
       direnv.enable = true;
     };
