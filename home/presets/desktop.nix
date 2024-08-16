@@ -27,6 +27,7 @@ in {
     ../features/udiskie.nix
     ../features/anyrun
     ../features/poweralertd.nix
+    ../features/dunst.nix
     ../features/swaync
   ];
 
