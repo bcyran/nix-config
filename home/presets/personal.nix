@@ -17,4 +17,10 @@
     tor-browser
     gnome.gnome-boxes
   ];
+
+  my = {
+    programs = {
+      signal.enable = true;
+    };
+  };
 }
