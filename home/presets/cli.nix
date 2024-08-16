@@ -24,6 +24,7 @@
     programs = {
       fish.enable = true;
       git.enable = true;
+      tmux.enable = true;
       btop.enable = true;
       direnv.enable = true;
       nix-index.enable = true;
