@@ -56,6 +56,7 @@ in {
       alacritty.enable = true;
       hypridle.enable = true;
       hyprlock.enable = true;
+      keepassxc.enable = true;
       firefox.enable = true;
     };
   };
