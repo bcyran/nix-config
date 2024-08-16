@@ -69,6 +69,13 @@
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
+
+    # Extend `nixpkgs.lib` with `my` custom lib and return it.
+    # Example usage: `lib.my.listDir <dir>`.
+    extendLibWithMy = nixpkgs:
+      nixpkgs.lib.extend
+      (final: prev: {my = import ./lib {lib = final;};});
+    lib = extendLibWithMy nixpkgs;
   in {
     # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc
@@ -90,7 +97,7 @@
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
       slimbook = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
+        specialArgs = {inherit inputs outputs lib;};
         modules = [
           # > Our main nixos configuration file <
           lanzaboote.nixosModules.lanzaboote
@@ -99,7 +106,7 @@
         ];
       };
       nixtest = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
+        specialArgs = {inherit inputs outputs lib;};
         modules = [
           # > Our main nixos configuration file <
           lanzaboote.nixosModules.lanzaboote
@@ -114,7 +121,7 @@
     homeConfigurations = {
       "bazyli@slimbook" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs nix-colors;};
+        extraSpecialArgs = {inherit inputs outputs lib nix-colors;};
         modules = [
           # > Our main home-manager configuration file <
           nix-index-database.hmModules.nix-index
@@ -124,7 +131,7 @@
       };
       "bazyli@nixtest" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs nix-colors;};
+        extraSpecialArgs = {inherit inputs outputs lib nix-colors;};
         modules = [
           # > Our main home-manager configuration file <
           nix-index-database.hmModules.nix-index
