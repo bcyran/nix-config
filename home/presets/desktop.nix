@@ -63,6 +63,7 @@ in {
       syncthing.enable = true;
       megasync.enable = true;
       udiskie.enable = true;
+      zathura.enable = true;
     };
   };
 
