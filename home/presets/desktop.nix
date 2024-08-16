@@ -50,5 +50,11 @@ in {
     my.timewall
   ];
 
+  my = {
+    programs = {
+      alacritty.enable = true;
+    };
+  };
+
   programs.chromium.enable = true;
 }
