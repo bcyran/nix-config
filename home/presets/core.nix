@@ -56,7 +56,7 @@
     [
       nix-colors.homeManagerModules.default
     ]
-    ++ (builtins.attrValues outputs.homeManagerModules);
+    ++ (builtins.attrValues outputs.homeManagerModules.default);
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.11";
