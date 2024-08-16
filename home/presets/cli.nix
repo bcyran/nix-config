@@ -20,6 +20,12 @@
     my.volume
   ];
 
+  my = {
+    programs = {
+      btop.enable = true;
+    };
+  };
+
   programs.eza.enable = true;
   programs.ripgrep.enable = true;
   programs.fd.enable = true;
