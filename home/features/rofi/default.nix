@@ -1,8 +1,12 @@
 {
   pkgs,
   config,
+  lib,
   ...
-}: let
+}:
+with lib; let
+  cfg = config.my.programs.rofi;
+
   commonConfigPath = pkgs.substituteAll ({
       name = "common.rasi";
       src = ./files/common.rasi;
@@ -25,10 +29,14 @@
     inherit commonConfigPath rofi;
   };
 in {
-  home.packages = [
-    appmenu
-    powermenu
-    calc
-    runmenu
-  ];
+  options.my.programs.rofi.enable = mkEnableOption "rofi";
+
+  config = mkIf cfg.enable {
+    home.packages = [
+      appmenu
+      powermenu
+      calc
+      runmenu
+    ];
+  };
 }
