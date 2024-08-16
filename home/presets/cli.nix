@@ -23,6 +23,7 @@
   my = {
     programs = {
       fish.enable = true;
+      neovim.enable = true;
       git.enable = true;
       tmux.enable = true;
       bat.enable = true;
