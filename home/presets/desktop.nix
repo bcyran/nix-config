@@ -66,6 +66,7 @@
     };
     configurations = {
       gtk.enable = true;
+      polkit.enable = true;
     };
   };
 
