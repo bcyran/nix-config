@@ -54,6 +54,7 @@ in {
   my = {
     programs = {
       alacritty.enable = true;
+      firefox.enable = true;
     };
   };
 
