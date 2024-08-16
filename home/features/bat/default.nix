@@ -1,9 +1,13 @@
 {
   pkgs,
   config,
+  lib,
   ...
-}: let
+}:
+with lib; let
   inherit (config.colorScheme) slug name author palette;
+  cfg = config.my.programs.bat;
+
   batTheme = pkgs.substituteAll ({
       name = "${slug}.tmTheme";
       src = ./bat.tmTheme;
@@ -13,17 +17,21 @@
     }
     // palette);
 in {
-  programs.bat = {
-    enable = true;
-    config = {
-      theme = slug;
+  options.my.programs.bat.enable = mkEnableOption "bat";
+
+  config = mkIf cfg.enable {
+    programs.bat = {
+      enable = true;
+      config = {
+        theme = slug;
+      };
+      themes = {
+        "${slug}".src = batTheme;
+      };
     };
-    themes = {
-      "${slug}".src = batTheme;
+    home.sessionVariables = {
+      MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+      MANROFFOPT = "-c";
     };
-  };
-  home.sessionVariables = {
-    MANPAGER = "sh -c 'col -bx | bat -l man -p'";
-    MANROFFOPT = "-c";
   };
 }
