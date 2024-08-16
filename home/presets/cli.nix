@@ -23,6 +23,7 @@
   my = {
     programs = {
       fish.enable = true;
+      git.enable = true;
       btop.enable = true;
       direnv.enable = true;
     };
