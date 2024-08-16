@@ -1,10 +1,4 @@
 rec {
-  my = {
-    programs = import ./programs;
-    configurations = import ./configurations;
-    presets = import ./presets;
-    hardware = import ./hardware.nix;
-  };
-
+  my = import ./my.nix;
   default = my;
 }

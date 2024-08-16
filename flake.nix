@@ -121,11 +121,8 @@
     homeConfigurations = {
       "bazyli@slimbook" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs lib nix-colors;};
+        extraSpecialArgs = {inherit inputs outputs lib;};
         modules = [
-          # > Our main home-manager configuration file <
-          nix-index-database.hmModules.nix-index
-          anyrun.homeManagerModules.default
           ./home/users/bazyli/slimbook.nix
         ];
       };
@@ -133,9 +130,6 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs lib nix-colors;};
         modules = [
-          # > Our main home-manager configuration file <
-          nix-index-database.hmModules.nix-index
-          anyrun.homeManagerModules.default
           ./home/users/bazyli/nixtest.nix
         ];
       };

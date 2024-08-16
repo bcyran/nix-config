@@ -1,7 +1,7 @@
 {
+  inputs,
   pkgs,
   outputs,
-  nix-colors,
   ...
 }: {
   nixpkgs = {
@@ -52,11 +52,12 @@
     targets.tray.Unit.StopWhenUnneeded = true;
   };
 
-  imports =
-    [
-      nix-colors.homeManagerModules.default
-    ]
-    ++ (builtins.attrValues outputs.homeManagerModules.default);
+  imports = [
+    inputs.nix-colors.homeManagerModules.default
+    inputs.nix-index-database.hmModules.nix-index
+    inputs.anyrun.homeManagerModules.default
+    outputs.homeManagerModules.default
+  ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.11";
