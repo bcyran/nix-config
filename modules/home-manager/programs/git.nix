@@ -29,8 +29,8 @@ in {
   config = mkIf cfg.enable {
     programs.git = {
       enable = true;
-      userName = "Bazyli Cyran";
-      userEmail = "bazyli@cyran.dev";
+      userName = config.my.user.name;
+      userEmail = config.my.user.email;
       delta = {
         enable = true;
         options = {

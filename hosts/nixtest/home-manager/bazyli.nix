@@ -10,11 +10,6 @@
     outputs.homeManagerModules.default
   ];
 
-  home = {
-    username = "bazyli";
-    homeDirectory = "/home/bazyli";
-  };
-
   my = {
     user = {
       name = "bazyli";
@@ -26,6 +21,7 @@
     };
     configurations = {
       core.enable = true;
+      user.enable = true;
     };
     presets = {
       cli.enable = true;

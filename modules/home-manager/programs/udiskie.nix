@@ -24,7 +24,7 @@ in {
         device_config = [
           {
             id_uuid = "e028f76b-e2a1-4a92-89a5-2fc5aeac615b";
-            keyfile = "/home/bazyli/.backup_key";
+            keyfile = "${config.my.user.home}/.backup_key";
             automount = true;
             ignore = false;
           }

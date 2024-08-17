@@ -119,7 +119,7 @@ in {
         ],
         directories: [
           WatchDir(
-            path: "/home/bazyli",
+            path: "${config.my.user.home}",
             recurse: true,
             ignored: [],
           ),
