@@ -107,12 +107,12 @@
       "bazyli@slimbook" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs lib;};
-        modules = [./home/users/bazyli/slimbook.nix];
+        modules = [./hosts/slimbook/users/bazyli.nix];
       };
       "bazyli@nixtest" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs lib;};
-        modules = [./home/users/bazyli/nixtest.nix];
+        modules = [./hosts/nixtest/users/bazyli.nix];
       };
     };
   };
