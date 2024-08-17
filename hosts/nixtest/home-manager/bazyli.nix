@@ -1,14 +1,6 @@
-{
-  inputs,
-  outputs,
-  ...
-}: {
+{outputs, ...}: {
   imports = [
-    inputs.nix-colors.homeManagerModules.default
-    inputs.nix-index-database.hmModules.nix-index
-    inputs.anyrun.homeManagerModules.default
     outputs.homeManagerModules.default
-
     ../common/bazyli.nix
   ];
 
