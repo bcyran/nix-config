@@ -50,6 +50,7 @@
       audio.enable = true;
       ddcci.enable = true;
       filesystem.enable = true;
+      printing.enable = true;
     };
     programs = {
       hyprland.enable = true;
