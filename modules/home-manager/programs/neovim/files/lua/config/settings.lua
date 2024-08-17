@@ -1,7 +1,6 @@
-
 local settings = {
-  copilot_enabled = false,
-  codeium_enabled = true,
+  copilot_enabled = true,
+  codeium_enabled = false,
 }
 
 return settings

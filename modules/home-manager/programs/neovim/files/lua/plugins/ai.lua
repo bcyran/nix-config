@@ -38,6 +38,7 @@ return {
         python = true,
         bash = true,
         lua = true,
+        nix = true,
         ["*"] = false,
       },
     },
