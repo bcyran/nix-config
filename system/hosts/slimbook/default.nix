@@ -54,6 +54,7 @@
       hyprland.enable = true;
       btrbk.enable = true;
       greetd.enable = true;
+      logiops.enable = true;
     };
   };
 
