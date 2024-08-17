@@ -48,6 +48,7 @@
       console.enable = true;
       locale.enable = true;
       bluetooth.enable = true;
+      audio.enable = true;
       ddcci.enable = true;
       filesystem.enable = true;
     };
