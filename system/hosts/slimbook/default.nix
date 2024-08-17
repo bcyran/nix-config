@@ -44,6 +44,7 @@
 
   my = {
     configurations = {
+      lanzaboote.enable = true;
       console.enable = true;
       bluetooth.enable = true;
       ddcci.enable = true;
