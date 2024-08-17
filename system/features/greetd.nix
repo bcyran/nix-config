@@ -1,16 +1,24 @@
 {
   pkgs,
+  config,
   lib,
   ...
-}: let
+}:
+with lib; let
+  cfg = config.my.programs.greetd;
+
   tuigreetBin = lib.getExe pkgs.greetd.tuigreet;
 in {
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${tuigreetBin} --time --cmd Hyprland --asterisks --remember";
-        user = "bazyli";
+  options.my.programs.greetd.enable = mkEnableOption "greetd";
+
+  config = mkIf cfg.enable {
+    services.greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${tuigreetBin} --time --cmd Hyprland --asterisks --remember";
+          user = "bazyli";
+        };
       };
     };
   };

@@ -52,6 +52,7 @@
     programs = {
       hyprland.enable = true;
       btrbk.enable = true;
+      greetd.enable = true;
     };
   };
 
