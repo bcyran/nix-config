@@ -27,7 +27,7 @@
     ../../features/greetd.nix
     ../../features/networking.nix
     ../../features/hyprland
-    ../../features/pipewire.nix
+    ../../features/audio.nix
     ../../features/filesystem.nix
     ../../features/bluetooth.nix
     ../../features/virtualisation.nix
