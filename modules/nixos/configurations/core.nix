@@ -49,6 +49,8 @@ in {
       })
       config.nix.registry;
 
+    programs.fish.enable = true;
+
     environment.systemPackages = with pkgs; [
       e2fsprogs
       lsof

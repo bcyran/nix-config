@@ -44,7 +44,6 @@
 
   networking.hostName = "slimbook";
 
-  programs.fish.enable = true;
   programs.light.enable = true;
 
   services.hardware.bolt.enable = true;
