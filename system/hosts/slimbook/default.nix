@@ -37,7 +37,6 @@
     ../../features/ddcci.nix
     ../../features/btrbk.nix
     ../../features/tlp.nix
-    ../../features/polkit.nix
     ../../features/upower.nix
   ];
 
@@ -64,11 +63,12 @@
 
   programs.fish.enable = true;
   programs.light.enable = true;
+
   services.hardware.bolt.enable = true;
-  # Required for `lock.target` in user's systemd
-  services.systemd-lock-handler.enable = true;
-  # Required by `hyprlock`
-  security.pam.services.hyprlock.text = "auth include login";
+  services.systemd-lock-handler.enable = true; # Required for `lock.target` in user's systemd
+
+  security.pam.services.hyprlock.text = "auth include login"; # Required by `hyprlock`
+  security.polkit.enable = true;
 
   environment.systemPackages = with pkgs; [
     neovim
