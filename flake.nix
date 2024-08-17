@@ -50,11 +50,6 @@
     self,
     nixpkgs,
     home-manager,
-    nix-colors,
-    lanzaboote,
-    disko,
-    nix-index-database,
-    anyrun,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -98,21 +93,11 @@
     nixosConfigurations = {
       slimbook = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs lib;};
-        modules = [
-          # > Our main nixos configuration file <
-          lanzaboote.nixosModules.lanzaboote
-          disko.nixosModules.disko
-          ./hosts/slimbook
-        ];
+        modules = [./hosts/slimbook];
       };
       nixtest = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs lib;};
-        modules = [
-          # > Our main nixos configuration file <
-          lanzaboote.nixosModules.lanzaboote
-          disko.nixosModules.disko
-          ./hosts/nixtest
-        ];
+        modules = [./hosts/nixtest];
       };
     };
 
@@ -122,16 +107,12 @@
       "bazyli@slimbook" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs lib;};
-        modules = [
-          ./home/users/bazyli/slimbook.nix
-        ];
+        modules = [./home/users/bazyli/slimbook.nix];
       };
       "bazyli@nixtest" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs lib;};
-        modules = [
-          ./home/users/bazyli/nixtest.nix
-        ];
+        modules = [./home/users/bazyli/nixtest.nix];
       };
     };
   };

@@ -6,11 +6,15 @@
   imports = [
     outputs.nixosModules.default
 
-    ./disks.nix
-    ./hardware-configuration.nix
+    inputs.lanzaboote.nixosModules.lanzaboote
+    inputs.disko.nixosModules.disko
+
     inputs.hardware.nixosModules.common-cpu-intel
     inputs.hardware.nixosModules.common-pc-ssd
     inputs.hardware.nixosModules.common-pc-laptop
+
+    ./disks.nix
+    ./hardware-configuration.nix
   ];
 
   my = {
