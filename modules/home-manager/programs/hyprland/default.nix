@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   ...
@@ -14,6 +15,15 @@ in {
       systemd = {
         enable = true;
         enableXdgAutostart = true;
+      };
+    };
+
+    programs.hyprcursor-phinger.enable = true;
+    home = {
+      packages = [pkgs.hyprcursor];
+      sessionVariables = {
+        HYPRCURSOR_THEME = "phinger-cursors-dark-hyprcursor";
+        HYPRCURSOR_SIZE = "24";
       };
     };
   };

@@ -22,7 +22,6 @@ in {
       "$monitorC" = monitorId (monitorByIdx 1);
       "$monitorR" = monitorId (monitorByIdx 2);
       env = [
-        "XCURSOR_SIZE,24"
         "QT_QPA_PLATFORM,wayland"
       ];
       monitor = let

@@ -67,9 +67,9 @@ in {
     };
 
     home.pointerCursor = {
-      package = pkgs.numix-cursor-theme;
-      name = "Numix-Cursor-Light";
-      size = 16;
+      package = pkgs.phinger-cursors;
+      name = "phinger-cursors-dark";
+      size = 24;
       gtk.enable = true;
       x11.enable = true;
     };
