@@ -34,6 +34,8 @@ in {
         stylua
         yaml-language-server
         vscode-langservers-extracted
+        marksman
+        markdownlint-cli2
       ];
     };
 
