@@ -58,6 +58,7 @@
       btrbk.enable = true;
       greetd.enable = true;
       logiops.enable = true;
+      tlp.enable = true;
     };
   };
 
