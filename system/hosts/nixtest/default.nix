@@ -6,20 +6,17 @@
   imports = [
     outputs.nixosModules.default
 
-    # Hardware
     ./disks.nix
     ./hardware-configuration.nix
     inputs.hardware.nixosModules.common-cpu-intel
     inputs.hardware.nixosModules.common-pc-ssd
     inputs.hardware.nixosModules.common-pc-laptop
-
-    # Presets
-    ../../presets/users/bazyli.nix
   ];
 
   my = {
     configurations = {
       core.enable = true;
+      user.enable = true;
       lanzaboote.enable = true;
       networking.enable = true;
       console.enable = true;
