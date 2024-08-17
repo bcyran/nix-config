@@ -46,6 +46,7 @@
     configurations = {
       console.enable = true;
       bluetooth.enable = true;
+      ddcci.enable = true;
     };
     programs = {
       hyprland.enable = true;
