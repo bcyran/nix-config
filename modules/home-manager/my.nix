@@ -4,6 +4,6 @@
     ./programs
     ./presets
     ./hardware.nix
-    ./user.nix
+    ../common/user.nix
   ];
 }
