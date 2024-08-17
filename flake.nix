@@ -93,11 +93,11 @@
     nixosConfigurations = {
       slimbook = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs lib;};
-        modules = [./hosts/slimbook];
+        modules = [./hosts/slimbook/nixos];
       };
       nixtest = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs lib;};
-        modules = [./hosts/nixtest];
+        modules = [./hosts/nixtest/nixos];
       };
     };
 
@@ -107,12 +107,12 @@
       "bazyli@slimbook" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs lib;};
-        modules = [./hosts/slimbook/users/bazyli.nix];
+        modules = [./hosts/slimbook/home-manager/bazyli.nix];
       };
       "bazyli@nixtest" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs lib;};
-        modules = [./hosts/nixtest/users/bazyli.nix];
+        modules = [./hosts/nixtest/home-manager/bazyli.nix];
       };
     };
   };
