@@ -16,10 +16,10 @@
     inputs.hardware.nixosModules.common-pc-laptop
 
     # Presets
-    ../../presets/core.nix
     ../../presets/users/bazyli.nix
 
     # Features
+    ../../features/core.nix
     ../../features/lanzaboote.nix
     ../../features/locale.nix
     ../../features/console.nix
@@ -42,6 +42,7 @@
 
   my = {
     configurations = {
+      core.enable = true;
       lanzaboote.enable = true;
       networking.enable = true;
       console.enable = true;
