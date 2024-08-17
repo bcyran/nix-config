@@ -18,9 +18,6 @@ in {
       my.backlight
       my.wallpaper
       my.scr
-      file-roller
-      gnome-calculator
-      gnome-font-viewer
       my.philipstv
       my.philipstv-gui
       my.timewall
@@ -29,14 +26,6 @@ in {
     my = {
       programs = {
         alacritty.enable = true;
-        hyprland.enable = true;
-        waybar.enable = true;
-        anyrun.enable = true;
-        swaync.enable = true;
-        hypridle.enable = true;
-        hyprlock.enable = true;
-        swww.enable = true;
-        wlsunset.enable = true;
         keepassxc.enable = true;
         firefox.enable = true;
         spotify.enable = true;
@@ -53,6 +42,5 @@ in {
     };
 
     programs.chromium.enable = true;
-    services.poweralertd.enable = true;
   };
 }
