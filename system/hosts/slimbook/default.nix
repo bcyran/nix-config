@@ -27,7 +27,6 @@
     ../../features/greetd.nix
     ../../features/networking.nix
     ../../features/hyprland
-    ../../features/lock.nix
     ../../features/pipewire.nix
     ../../features/filesystem.nix
     ../../features/bluetooth.nix
@@ -63,6 +62,10 @@
   programs.fish.enable = true;
   programs.light.enable = true;
   services.hardware.bolt.enable = true;
+  # Required for `lock.target` in user's systemd
+  services.systemd-lock-handler.enable = true;
+  # Required by `hyprlock`
+  security.pam.services.hyprlock.text = "auth include login";
 
   environment.systemPackages = with pkgs; [
     neovim
