@@ -42,6 +42,12 @@
     ../../features/upower.nix
   ];
 
+  my = {
+    programs = {
+      hyprland.enable = true;
+    };
+  };
+
   networking.hostName = "slimbook";
 
   programs.fish.enable = true;
