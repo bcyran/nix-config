@@ -18,4 +18,17 @@
       builtins.filter (filename: filename != "default.nix")
       (listDir dir)
     );
+
+  # isFalsy :: anything -> bool
+  #
+  # Returns true if `x` is falsy, false otherwise.
+  isFalsy = x: x == false || x == null || x == "" || x == 0 || x == [] || x == {};
+
+  # makeRequiredAssertion :: string -> string -> string -> attrs
+  #
+  # Returns an assertion that checks if `attrset.attr` is set (not falsy).
+  makeRequiredAssertion = attrset: attrsetPath: attr: {
+    assertion = !(isFalsy attrset.${attr});
+    message = "Required attribute '${attrsetPath}.${attr}' is missing.";
+  };
 }
