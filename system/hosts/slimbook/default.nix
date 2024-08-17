@@ -47,6 +47,7 @@
       console.enable = true;
       bluetooth.enable = true;
       ddcci.enable = true;
+      filesystem.enable = true;
     };
     programs = {
       hyprland.enable = true;
