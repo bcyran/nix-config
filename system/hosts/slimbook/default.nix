@@ -52,6 +52,7 @@
       filesystem.enable = true;
       printing.enable = true;
       silentboot.enable = true;
+      virtualisation.enable = true;
     };
     programs = {
       hyprland.enable = true;
