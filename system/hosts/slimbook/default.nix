@@ -43,6 +43,9 @@
   ];
 
   my = {
+    configurations = {
+      bluetooth.enable = true;
+    };
     programs = {
       hyprland.enable = true;
     };
