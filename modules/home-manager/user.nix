@@ -30,6 +30,12 @@ in {
       example = "/home/bazyli";
       default = "";
     };
+    shell = mkOption {
+      type = types.package;
+      description = "Packate providing the user's shell";
+      example = "pkgs.fish";
+      default = "";
+    };
     uid = mkOption {
       type = types.int;
       description = "Linux user ID";
