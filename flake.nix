@@ -102,7 +102,7 @@
           # > Our main nixos configuration file <
           lanzaboote.nixosModules.lanzaboote
           disko.nixosModules.disko
-          ./system/hosts/slimbook
+          ./hosts/slimbook
         ];
       };
       nixtest = nixpkgs.lib.nixosSystem {
@@ -111,7 +111,7 @@
           # > Our main nixos configuration file <
           lanzaboote.nixosModules.lanzaboote
           disko.nixosModules.disko
-          ./system/hosts/nixtest
+          ./hosts/nixtest
         ];
       };
     };

@@ -42,7 +42,7 @@ if [[ ${REPLY} != "YES" ]]; then
 fi
 
 echo -e "${BLUE}Wiping and partitioning the disk${ENDCOLOR}"
-sudo disko --mode disko "${flake_dir}/system/hosts/${target_host}/disks.nix"
+sudo disko --mode disko "${flake_dir}/hosts/${target_host}/disks.nix"
 
 echo -e "${BLUE}Creating secureboot keys${ENDCOLOR}"
 sudo mkdir -p ${SECUREBOOT_DIR}
