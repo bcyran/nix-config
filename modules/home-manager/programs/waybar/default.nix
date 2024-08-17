@@ -87,7 +87,11 @@ in {
       source = ./files/style.css;
     };
 
-    xdg.configFile."waybar/colors.css" = {
+    xdg.configFile."waybar/common.css" = let
+      defaultFonts = config.fonts.fontconfig.defaultFonts;
+      sansSerifFont = builtins.elemAt defaultFonts.sansSerif 0;
+      monospaceFont = builtins.elemAt defaultFonts.monospace 0;
+    in {
       text = ''
         @define-color base00 #${palette.base00};
         @define-color base01 #${palette.base01};
@@ -118,6 +122,10 @@ in {
         @define-color accent_secondary #${palette.accentSecondary};
         @define-color warning #${palette.warning};
         @define-color error #${palette.error};
+
+        * {
+          font-family: "${sansSerifFont}", "${monospaceFont}";
+        }
       '';
     };
 

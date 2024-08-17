@@ -11,11 +11,10 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      roboto
       inter
+      (nerdfonts.override {fonts = ["JetBrainsMono"];})
       libnotify
       wl-clipboard
-      (nerdfonts.override {fonts = ["JetBrainsMono"];})
       my.backlight
       my.wallpaper
       my.scr
@@ -43,5 +42,13 @@ in {
     };
 
     programs.chromium.enable = true;
+
+    fonts.fontconfig = {
+      enable = true;
+      defaultFonts = {
+        sansSerif = ["Inter"];
+        monospace = ["JetBrainsMonoNL NF"];
+      };
+    };
   };
 }

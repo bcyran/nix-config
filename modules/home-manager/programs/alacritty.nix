@@ -45,7 +45,7 @@ in {
         };
         font = {
           size = 14;
-          normal.family = "JetBrainsMonoNL NF";
+          normal.family = builtins.elemAt config.fonts.fontconfig.defaultFonts.monospace 0;
         };
         window.padding = {
           x = 5;

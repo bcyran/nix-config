@@ -101,6 +101,10 @@ in {
         @define-color warning #${palette.warning};
         @define-color error #${palette.error};
 
+        * {
+          font-family: "${builtins.elemAt config.fonts.fontconfig.defaultFonts.sansSerif 0}";
+        }
+
         ${styleSheet}
       '';
     };

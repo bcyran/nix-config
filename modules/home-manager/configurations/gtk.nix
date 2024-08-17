@@ -50,8 +50,7 @@ in {
       enable = true;
 
       font = {
-        name = "Inter";
-        package = pkgs.inter;
+        name = builtins.elemAt config.fonts.fontconfig.defaultFonts.sansSerif 0;
         size = 12;
       };
 

@@ -21,7 +21,7 @@ in {
       options = {
         window-title-basename = true;
         selection-clipboard = "clipboard";
-        font = "JetBrainsMono Nerd Font normal 14";
+        font = "${builtins.elemAt config.fonts.fontconfig.defaultFonts.monospace 0} normal 14";
         scroll-step = 100;
 
         default-bg = "#${palette.base00}";

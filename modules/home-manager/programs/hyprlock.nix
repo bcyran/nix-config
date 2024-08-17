@@ -8,7 +8,7 @@ with lib; let
   inherit (config.colorscheme) palette;
   cfg = config.my.programs.hyprlock;
 
-  font = "Inter";
+  fontName = builtins.elemAt config.fonts.fontconfig.defaultFonts.sansSerif 0;
   lockServiceScript = pkgs.writeShellApplication {
     name = "hyprlock-sd-notify";
     runtimeInputs = with pkgs; [hyprlock systemd];
@@ -46,7 +46,7 @@ in {
             monitor = "";
             text = "$TIME";
             font_size = 100;
-            font_family = font;
+            font_family = fontName;
             color = "rgb(${palette.base05})";
             position = "0, 50";
             valign = "center";
@@ -63,8 +63,8 @@ in {
             dots_center = true;
             fade_on_empty = true;
             fade_timeout = 3000;
-            placeholder_text = ''<span font_family="${font}" font_style="italic">$PROMPT</span>'';
-            fail_text = ''<span font_family="${font}" font_style="italic">$FAIL <b>($ATTEMPTS)</b></span>'';
+            placeholder_text = ''<span font_family="${fontName}" font_style="italic">$PROMPT</span>'';
+            fail_text = ''<span font_family="${fontName}" font_style="italic">$FAIL <b>($ATTEMPTS)</b></span>'';
             font_color = "rgb(${palette.base00})";
             inner_color = "rgb(${palette.base05})";
             check_color = "rgb(${palette.accentPrimary})";
