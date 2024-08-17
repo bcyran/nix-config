@@ -44,6 +44,7 @@
 
   my = {
     configurations = {
+      console.enable = true;
       bluetooth.enable = true;
     };
     programs = {
