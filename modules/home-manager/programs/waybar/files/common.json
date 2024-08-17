@@ -3,7 +3,7 @@
   "spacing": 15,
   "hyprland/workspaces": {
     "all-outputs": false,
-    "format": "{name} <span rise='-800'>{icon} </span>",
+    "format": "{name} {icon} ",
     "format-icons": {
       "1": "󰖟",
       "2": "",
@@ -22,13 +22,13 @@
     "max-length": 60
   },
   "clock": {
-    "format": "<span rise='-800'> </span>  {:L%H:%M, %a %e %B}",
+    "format": "   {:L%H:%M, %a %e %B}",
     "tooltip-format": "<big>{:%Y %b}</big>\n<tt><small>{calendar}</small></tt>"
   },
   "custom/mpris": {
     "exec": "waybar-mpris",
     "return-type": "json",
-    "format": "<span rise='-800'>{icon} </span> {}",
+    "format": "{icon}  {}",
     "format-icons": {
       "playing": "󰐍",
       "paused": "󰏦"
@@ -39,7 +39,7 @@
   "custom/philipstv": {
     "exec": "waybar-philipstv",
     "interval": 60,
-    "format": "<span rise='-800'>󰻅</span> {}",
+    "format": "󰻅 {}",
     "on-click": "philipstv key pause",
     "on-click-right": "philipstv key play",
     "on-click-middle": "philipstv key mute",
@@ -50,7 +50,7 @@
   },
   "custom/backlight": {
     "exec": "waybar-backlight",
-    "format": "<span rise='-800'>󰃟 </span>  {}",
+    "format": "󰃟   {}",
     "on-scroll-up": "waybar-backlight inc",
     "on-scroll-down": "waybar-backlight dec",
     "tooltip": false
@@ -58,14 +58,14 @@
   "bluetooth": {
     "format": "",
     "tooltip-format": "",
-    "format-connected": "<span rise='-800'>󰂯</span> {num_connections}",
+    "format-connected": "󰂯 {num_connections}",
     "tooltip-format-connected": "{num_connections} connected:\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "• {device_alias}",
     "tooltip-format-enumerate-connected-battery": "• {device_alias} ({device_battery_percentage}%)"
   },
   "pulseaudio": {
-    "format": "<span rise='-800'>{icon}</span>  {volume}%",
-    "format-muted": "<span rise='-800'>󰝟</span>  {volume}%",
+    "format": "{icon}  {volume}%",
+    "format-muted": "󰝟  {volume}%",
     "format-icons": {
       "default": [
         "󰕿",
@@ -79,7 +79,7 @@
   },
   "network": {
     "interface": "@wirelessNetworkInterface@",
-    "format-wifi": "<span rise='-800'>{icon}</span>   {essid}",
+    "format-wifi": "{icon}   {essid}",
     "format-icons": [
       "󰤯",
       "󰤟",
@@ -91,9 +91,9 @@
     "format-disconnected": ""
   },
   "battery": {
-    "format": "<span rise='-800'>{icon}</span> {capacity}%",
-    "format-charging": "<span rise='-800'>󰂄</span> {capacity}%",
-    "format-plugged": "<span rise='-800'>󰂄</span> {capacity}%",
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰂄 {capacity}%",
     "format-icons": [
       "󰂎",
       "󰁺",
@@ -116,14 +116,14 @@
     "tooltip": false,
     "format": "{icon}",
     "format-icons": {
-      "notification": "<span rise='-800'>󰂚</span><span foreground='red'><sup></sup></span>",
-      "none": "<span rise='-800'>󰂚</span><sup>  </sup>",
-      "dnd-notification": "<span rise='-800'>󰂛</span><span foreground='red'><sup></sup></span>",
-      "dnd-none": "<span rise='-800'>󰂛</span><sup>  </sup>",
-      "inhibited-notification": "<span rise='-800'>󰂚</span><span foreground='red'><sup></sup></span>",
-      "inhibited-none": "<span rise='-800'>󰂚</span><sup>  </sup>",
-      "dnd-inhibited-notification": "<span rise='-800'>󰂛</span><span foreground='red'><sup></sup></span>",
-      "dnd-inhibited-none": "<span rise='-800'>󰂛</span><sup>  </sup>"
+      "notification": "󰂚<span foreground='red'><sup></sup></span>",
+      "none": "󰂚<sup>  </sup>",
+      "dnd-notification": "󰂛<span foreground='red'><sup></sup></span>",
+      "dnd-none": "󰂛<sup>  </sup>",
+      "inhibited-notification": "󰂚<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "󰂚<sup>  </sup>",
+      "dnd-inhibited-notification": "󰂛<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": "󰂛<sup>  </sup>"
     },
     "return-type": "json",
     "exec-if": "which swaync-client",

@@ -33,7 +33,7 @@ in {
           separator_color = "frame";
           sort = "yes";
           idle_threshold = "120";
-          font = "Roboto Condensed 14";
+          font = "Inter 14";
           line_height = 0;
           markup = "full";
           format = "<b>%s</b>\n%b";

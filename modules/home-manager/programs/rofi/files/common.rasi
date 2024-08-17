@@ -39,7 +39,7 @@ window {
     border: 2px solid;
     border-color: @base01;
     background-color: @base10;
-    font: "RobotoCondensed 14";
+    font: "Inter 14";
     border-radius: 3px;
 }
 

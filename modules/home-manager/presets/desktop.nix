@@ -12,6 +12,7 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       roboto
+      inter
       libnotify
       wl-clipboard
       (nerdfonts.override {fonts = ["JetBrainsMono"];})

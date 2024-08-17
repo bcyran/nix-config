@@ -8,7 +8,7 @@ with lib; let
   inherit (config.colorscheme) palette;
   cfg = config.my.programs.hyprlock;
 
-  font = "Roboto Condensed";
+  font = "Inter";
   lockServiceScript = pkgs.writeShellApplication {
     name = "hyprlock-sd-notify";
     runtimeInputs = with pkgs; [hyprlock systemd];
