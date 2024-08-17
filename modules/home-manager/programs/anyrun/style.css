@@ -32,7 +32,7 @@ list#main {
   padding: 2px;
   border-radius: 8px;
   background: @base10;
-  transition: 100ms ease-out;
+  transition: 50ms;
 }
 
 #match:selected, #match:selected box {

@@ -1,5 +1,5 @@
 * {
-  transition: 100ms;
+  transition: 50ms;
   box-shadow: unset;
   color: @base07;
 }
