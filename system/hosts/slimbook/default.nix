@@ -48,6 +48,7 @@
     };
     programs = {
       hyprland.enable = true;
+      btrbk.enable = true;
     };
   };
 
