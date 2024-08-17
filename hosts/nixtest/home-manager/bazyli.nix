@@ -1,7 +1,6 @@
 {
   inputs,
   outputs,
-  pkgs,
   ...
 }: {
   imports = [
@@ -9,18 +8,11 @@
     inputs.nix-index-database.hmModules.nix-index
     inputs.anyrun.homeManagerModules.default
     outputs.homeManagerModules.default
+
+    ../common/bazyli.nix
   ];
 
   my = {
-    user = {
-      name = "bazyli";
-      fullName = "Bazyli Cyran";
-      email = "bazyli@cyran.dev";
-      home = "/home/bazyli";
-      shell = pkgs.fish;
-      uid = 1000;
-      groups = ["networkmanager" "wheel" "video"];
-    };
     configurations = {
       core.enable = true;
       user.enable = true;
