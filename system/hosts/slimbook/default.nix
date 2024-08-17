@@ -23,7 +23,6 @@
     ../../features/lanzaboote.nix
     ../../features/locale.nix
     ../../features/console.nix
-    ../../features/utilities.nix
     ../../features/greetd.nix
     ../../features/networking.nix
     ../../features/hyprland
@@ -75,8 +74,4 @@
 
   security.pam.services.hyprlock.text = "auth include login"; # Required by `hyprlock`
   security.polkit.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    neovim
-  ];
 }

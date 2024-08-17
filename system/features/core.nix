@@ -1,5 +1,6 @@
 {
   inputs,
+  pkgs,
   outputs,
   lib,
   config,
@@ -47,6 +48,17 @@ in {
         value.source = value.flake;
       })
       config.nix.registry;
+
+    environment.systemPackages = with pkgs; [
+      e2fsprogs
+      lsof
+      lm_sensors
+      curl
+      usbutils
+      pciutils
+      gparted
+      neovim
+    ];
 
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     system.stateVersion = "23.11";
