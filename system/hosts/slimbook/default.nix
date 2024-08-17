@@ -44,6 +44,7 @@
   my = {
     configurations = {
       lanzaboote.enable = true;
+      networking.enable = true;
       console.enable = true;
       locale.enable = true;
       bluetooth.enable = true;

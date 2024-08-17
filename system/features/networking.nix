@@ -1,8 +1,12 @@
 {
   pkgs,
+  config,
   lib,
   ...
-}: let
+}:
+with lib; let
+  cfg = config.my.configurations.networking;
+
   wifiWiredExclusiveDispatcher = pkgs.writeShellApplication {
     name = "wifi-wired-exclusive.sh";
     runtimeInputs = with pkgs; [networkmanager gnugrep];
@@ -26,18 +30,22 @@
       esac
     '';
   };
-  wifiWiredExclusiveDispatcherBin = lib.getExe wifiWiredExclusiveDispatcher;
+  wifiWiredExclusiveDispatcherBin = getExe wifiWiredExclusiveDispatcher;
 in {
-  networking = {
-    networkmanager = {
-      enable = true;
-      dispatcherScripts = [
-        {
-          source = wifiWiredExclusiveDispatcherBin;
-          type = "basic";
-        }
-      ];
+  options.my.configurations.networking.enable = mkEnableOption "networking";
+
+  config = mkIf cfg.enable {
+    networking = {
+      networkmanager = {
+        enable = true;
+        dispatcherScripts = [
+          {
+            source = wifiWiredExclusiveDispatcherBin;
+            type = "basic";
+          }
+        ];
+      };
     };
+    systemd.services.NetworkManager-dispatcher.enable = true;
   };
-  systemd.services.NetworkManager-dispatcher.enable = true;
 }
