@@ -1,9 +1,9 @@
-{inputs, ...}: {
+{my, ...}: {
   imports = [
-    inputs.nix-colors.homeManagerModules.default
-    inputs.nix-index-database.hmModules.nix-index
-    inputs.anyrun.homeManagerModules.default
-    inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
+    my.inputs.nix-colors.homeManagerModules.default
+    my.inputs.nix-index-database.hmModules.nix-index
+    my.inputs.anyrun.homeManagerModules.default
+    my.inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
 
     ./configurations
     ./programs

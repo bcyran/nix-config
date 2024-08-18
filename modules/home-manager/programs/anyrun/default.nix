@@ -1,7 +1,7 @@
 {
+  my,
   pkgs,
   myPkgs,
-  inputs,
   config,
   lib,
   ...
@@ -19,7 +19,7 @@ in {
     programs.anyrun = {
       enable = true;
       config = {
-        plugins = with inputs.anyrun.packages.${pkgs.system};
+        plugins = with my.inputs.anyrun.packages.${pkgs.system};
           [
             applications
             shell
@@ -28,7 +28,7 @@ in {
             websearch
             kidex
           ]
-          ++ [inputs.anyrun-powermenu.packages.${pkgs.system}.default];
+          ++ [my.inputs.anyrun-powermenu.packages.${pkgs.system}.default];
         x = {fraction = 0.5;};
         y = {fraction = 0.3;};
         width = {absolute = 700;};
