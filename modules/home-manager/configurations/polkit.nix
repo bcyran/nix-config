@@ -3,15 +3,14 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.polkit;
 
   polkitAgentBin = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
 in {
-  options.my.configurations.polkit.enable = mkEnableOption "polkit";
+  options.my.configurations.polkit.enable = lib.mkEnableOption "polkit";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
       Unit = {
         Description = "PolicyKit Authentication Agent";

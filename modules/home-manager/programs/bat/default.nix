@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   inherit (config.colorScheme) slug name author palette;
   cfg = config.my.programs.bat;
 
@@ -17,9 +16,9 @@ with lib; let
     }
     // palette);
 in {
-  options.my.programs.bat.enable = mkEnableOption "bat";
+  options.my.programs.bat.enable = lib.mkEnableOption "bat";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.bat = {
       enable = true;
       config = {

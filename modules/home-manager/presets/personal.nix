@@ -3,13 +3,13 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkDefault;
   cfg = config.my.presets.personal;
 in {
-  options.my.presets.personal.enable = mkEnableOption "personal";
+  options.my.presets.personal.enable = lib.mkEnableOption "personal";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       portfolio
       gnucash

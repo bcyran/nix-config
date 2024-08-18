@@ -33,10 +33,10 @@ buildPythonApplication rec {
     ttkbootstrap
   ];
 
-  meta = with lib; {
+  meta = {
     description = "GUI remote for Philips Android-powered TVs.";
     homepage = "https://github.com/bcyran/philipstv-gui";
-    license = licenses.mit;
+    license = lib.licenses.mit;
     mainProgram = "philipstv-gui";
   };
 }

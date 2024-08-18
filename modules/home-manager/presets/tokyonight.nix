@@ -2,13 +2,13 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.presets.tokyonight;
 in {
-  options.my.presets.tokyonight.enable = mkEnableOption "tokyonight";
+  inherit (lib) mkDefault;
+  options.my.presets.tokyonight.enable = lib.mkEnableOption "tokyonight";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     # Based on: https://github.com/folke/tokyonight.nvim
     colorScheme = {
       slug = "tokyo-night-moon";

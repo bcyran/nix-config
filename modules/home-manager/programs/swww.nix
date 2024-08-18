@@ -3,8 +3,7 @@
   pkgs,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.swww;
 
   swww = pkgs.swww;
@@ -12,9 +11,9 @@ with lib; let
   wallpaperBin = lib.getExe pkgs.my.wallpaper;
   sleepBin = "${pkgs.coreutils}/bin/sleep";
 in {
-  options.my.programs.swww.enable = mkEnableOption "swww";
+  options.my.programs.swww.enable = lib.mkEnableOption "swww";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = [swww];
 
     systemd.user.services.swww = {

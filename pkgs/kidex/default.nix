@@ -16,10 +16,10 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-3oSRdXuFThJ8RBsUwwgqkadJKwK53FyTvVfO6PZaDLw=";
 
-  meta = with lib; {
+  meta = {
     description = "A simple file indexing service for looking up file locations ";
     homepage = "https://github.com/Kirottu/kidex";
-    license = licenses.gpl3Only;
+    license = lib.licenses.gpl3Only;
     mainProgram = pname;
   };
 }

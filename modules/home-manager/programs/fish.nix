@@ -3,14 +3,13 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.fish;
 in {
-  options.my.programs.fish.enable = mkEnableOption "fish";
+  options.my.programs.fish.enable = lib.mkEnableOption "fish";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.fish = {
       enable = true;
       shellAbbrs = {

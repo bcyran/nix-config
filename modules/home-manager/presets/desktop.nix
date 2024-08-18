@@ -3,13 +3,13 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkDefault;
   cfg = config.my.presets.desktop;
 in {
-  options.my.presets.desktop.enable = mkEnableOption "desktop";
+  options.my.presets.desktop.enable = lib.mkEnableOption "desktop";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       inter
       (nerdfonts.override {fonts = ["JetBrainsMono"];})

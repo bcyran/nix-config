@@ -4,13 +4,12 @@
   outputs,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.core;
 in {
-  options.my.configurations.core.enable = mkEnableOption "core";
+  options.my.configurations.core.enable = lib.mkEnableOption "core";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     nixpkgs = {
       overlays = [
         outputs.overlays.additions

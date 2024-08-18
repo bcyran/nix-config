@@ -2,16 +2,15 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.lanzaboote;
 in {
-  options.my.configurations.lanzaboote.enable = mkEnableOption "lanzaboote";
+  options.my.configurations.lanzaboote.enable = lib.mkEnableOption "lanzaboote";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     boot = {
       initrd.systemd.enable = true;
-      loader.systemd-boot.enable = mkForce false;
+      loader.systemd-boot.enable = lib.mkForce false;
       bootspec.enable = true;
       lanzaboote = {
         enable = true;

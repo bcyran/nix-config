@@ -3,16 +3,15 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.neovim;
 
   alacrittyBin = "${pkgs.alacritty}/bin/alacritty";
   nvimBin = "${pkgs.neovim}/bin/nvim";
 in {
-  options.my.programs.neovim.enable = mkEnableOption "neovim";
+  options.my.programs.neovim.enable = lib.mkEnableOption "neovim";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.neovim = {
       enable = true;
       defaultEditor = true;

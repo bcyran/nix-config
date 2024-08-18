@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.networking;
 
   wifiWiredExclusiveDispatcher = pkgs.writeShellApplication {
@@ -30,11 +29,11 @@ with lib; let
       esac
     '';
   };
-  wifiWiredExclusiveDispatcherBin = getExe wifiWiredExclusiveDispatcher;
+  wifiWiredExclusiveDispatcherBin = lib.getExe wifiWiredExclusiveDispatcher;
 in {
-  options.my.configurations.networking.enable = mkEnableOption "networking";
+  options.my.configurations.networking.enable = lib.mkEnableOption "networking";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     networking = {
       networkmanager = {
         enable = true;

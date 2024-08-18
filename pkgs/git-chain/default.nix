@@ -31,10 +31,10 @@ rustPlatform.buildRustPackage rec {
     git
   ];
 
-  meta = with lib; {
+  meta = {
     description = "Tool for rebasing a chain of local git branches.";
     homepage = "https://github.com/dashed/git-chain";
-    license = licenses.mit;
+    license = lib.licenses.mit;
     mainProgram = pname;
   };
 }

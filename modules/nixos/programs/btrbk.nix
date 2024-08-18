@@ -2,13 +2,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.btrbk;
 in {
-  options.my.programs.btrbk.enable = mkEnableOption "btrbk";
+  options.my.programs.btrbk.enable = lib.mkEnableOption "btrbk";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.btrbk.instances = {
       home = {
         onCalendar = "hourly";

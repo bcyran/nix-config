@@ -3,15 +3,14 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.greetd;
 
   tuigreetBin = lib.getExe pkgs.greetd.tuigreet;
 in {
-  options.my.programs.greetd.enable = mkEnableOption "greetd";
+  options.my.programs.greetd.enable = lib.mkEnableOption "greetd";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.greetd = {
       enable = true;
       settings = {

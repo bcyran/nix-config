@@ -2,16 +2,15 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.btop;
 
   themeFileName = "${config.colorScheme.slug}.theme";
 in {
-  options.my.programs.btop.enable = mkEnableOption "btop";
+  options.my.programs.btop.enable = lib.mkEnableOption "btop";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.btop = {
       enable = true;
       settings = {

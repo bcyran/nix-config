@@ -2,14 +2,13 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.alacritty;
 in {
-  options.my.programs.alacritty.enable = mkEnableOption "alacritty";
+  options.my.programs.alacritty.enable = lib.mkEnableOption "alacritty";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.alacritty = {
       enable = true;
       settings = {

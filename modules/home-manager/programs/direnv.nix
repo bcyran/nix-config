@@ -2,13 +2,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.direnv;
 in {
-  options.my.programs.direnv.enable = mkEnableOption "direnv";
+  options.my.programs.direnv.enable = lib.mkEnableOption "direnv";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.direnv = {
       enable = true;
       config = {

@@ -4,8 +4,7 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.anyrun;
 
@@ -13,9 +12,9 @@ with lib; let
   kidexPackage = pkgs.my.kidex;
   kidexBin = "${kidexPackage}/bin/kidex";
 in {
-  options.my.programs.anyrun.enable = mkEnableOption "anyrun";
+  options.my.programs.anyrun.enable = lib.mkEnableOption "anyrun";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.anyrun = {
       enable = true;
       config = {

@@ -3,17 +3,16 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.hyprland;
 
   xdph = pkgs.xdg-desktop-portal-hyprland.overrideAttrs (finalAttrs: previousAttrs: {
     patches = [./xdph-service.patch];
   });
 in {
-  options.my.programs.hyprland.enable = mkEnableOption "hyprland";
+  options.my.programs.hyprland.enable = lib.mkEnableOption "hyprland";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.hyprland = {
       enable = true;
       portalPackage = xdph;

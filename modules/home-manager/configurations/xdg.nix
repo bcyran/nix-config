@@ -2,8 +2,7 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.xdg;
 
   textEditor = "nvim.desktop";
@@ -51,9 +50,9 @@ with lib; let
     ]
     // makeAssociations pdfViewer "application" ["pdf"];
 in {
-  options.my.configurations.xdg.enable = mkEnableOption "xdg";
+  options.my.configurations.xdg.enable = lib.mkEnableOption "xdg";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     xdg = {
       enable = true;
 

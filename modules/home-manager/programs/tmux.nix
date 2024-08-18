@@ -3,14 +3,13 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.tmux;
 in {
-  options.my.programs.tmux.enable = mkEnableOption "tmux";
+  options.my.programs.tmux.enable = lib.mkEnableOption "tmux";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.tmux = {
       enable = true;
       sensibleOnTop = true;

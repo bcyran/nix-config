@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.waybar;
 
@@ -78,9 +77,9 @@ with lib; let
   };
   launcherBin = lib.getExe launcher;
 in {
-  options.my.programs.waybar.enable = mkEnableOption "waybar";
+  options.my.programs.waybar.enable = lib.mkEnableOption "waybar";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.waybar.enable = true;
 
     xdg.configFile."waybar/style.css" = {

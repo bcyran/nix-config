@@ -3,8 +3,7 @@
   pkgs,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.hypridle;
 
   backlightBin = lib.getExe pkgs.my.backlight;
@@ -12,9 +11,9 @@ with lib; let
   loginctlBin = "${pkgs.systemd}/bin/loginctl";
   sleepBin = "${pkgs.coreutils}/bin/sleep";
 in {
-  options.my.programs.hypridle.enable = mkEnableOption "hypridle";
+  options.my.programs.hypridle.enable = lib.mkEnableOption "hypridle";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.hypridle = {
       enable = true;
       settings = {

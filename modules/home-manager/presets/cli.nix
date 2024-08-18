@@ -3,13 +3,13 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkDefault;
   cfg = config.my.presets.cli;
 in {
-  options.my.presets.cli.enable = mkEnableOption "cli";
+  options.my.presets.cli.enable = lib.mkEnableOption "cli";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       wget
       curl

@@ -2,13 +2,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.silentboot;
 in {
-  options.my.configurations.silentboot.enable = mkEnableOption "silentboot";
+  options.my.configurations.silentboot.enable = lib.mkEnableOption "silentboot";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     boot = {
       plymouth = {
         enable = true;

@@ -2,13 +2,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.bluetooth;
 in {
-  options.my.configurations.bluetooth.enable = mkEnableOption "bluetooth";
+  options.my.configurations.bluetooth.enable = lib.mkEnableOption "bluetooth";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;

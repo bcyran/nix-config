@@ -3,13 +3,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.hyprland;
 in {
-  options.my.programs.hyprland.enable = mkEnableOption "hyprland";
+  options.my.programs.hyprland.enable = lib.mkEnableOption "hyprland";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
       systemd = {

@@ -3,15 +3,14 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.logiops;
 
   logiopsBin = lib.getExe pkgs.logiops;
 in {
-  options.my.programs.logiops.enable = mkEnableOption "logiops";
+  options.my.programs.logiops.enable = lib.mkEnableOption "logiops";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     # This is in process of being added to nixpkgs: https://github.com/NixOS/nixpkgs/issues/226575
     systemd = {
       services.logiops = {

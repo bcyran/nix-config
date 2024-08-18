@@ -2,13 +2,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.nix-index;
 in {
-  options.my.programs.nix-index.enable = mkEnableOption "nix-index";
+  options.my.programs.nix-index.enable = lib.mkEnableOption "nix-index";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.nix-index = {
       enable = true;
       enableFishIntegration = true;

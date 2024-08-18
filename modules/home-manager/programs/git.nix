@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.git;
 
   # NOTE: Would be nice to find a way to derive this from base16 theme colors
@@ -24,9 +23,9 @@ with lib; let
       line-numbers-zero-style       = "#3b4261"
   '';
 in {
-  options.my.programs.git.enable = mkEnableOption "git";
+  options.my.programs.git.enable = lib.mkEnableOption "git";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.git = {
       enable = true;
       userName = config.my.user.name;

@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   inherit (config.colorScheme) palette;
   cfg = config.my.configurations.gtk;
 
@@ -43,9 +42,9 @@ with lib; let
     @define-color destructive_color @destructive_bg_color;
   '';
 in {
-  options.my.configurations.gtk.enable = mkEnableOption "gtk";
+  options.my.configurations.gtk.enable = lib.mkEnableOption "gtk";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     gtk = {
       enable = true;
 

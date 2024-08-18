@@ -3,15 +3,14 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.console;
 
   terminusFont = pkgs.terminus_font;
 in {
-  options.my.configurations.console.enable = mkEnableOption "console";
+  options.my.configurations.console.enable = lib.mkEnableOption "console";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     console = {
       enable = true;
       earlySetup = true;

@@ -2,11 +2,10 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.hyprland;
 in {
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
       windowrulev2 = [
         # Workspace placement

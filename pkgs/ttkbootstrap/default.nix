@@ -28,9 +28,9 @@ buildPythonPackage rec {
     pillow
   ];
 
-  meta = with lib; {
+  meta = {
     description = "A supercharged theme extension for tkinter that enables on-demand modern flat style themes inspired by Bootstrap.";
     homepage = "https://github.com/israel-dryer/ttkbootstrap";
-    license = licenses.mit;
+    license = lib.licenses.mit;
   };
 }

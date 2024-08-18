@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.hyprland;
 
   thunar = pkgs.xfce.thunar.override {thunarPlugins = with pkgs; [xfce.thunar-volman xfce.thunar-archive-plugin];};
@@ -34,7 +33,7 @@ with lib; let
   in
     binds;
 in {
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       settings = {
         bind =

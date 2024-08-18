@@ -2,15 +2,14 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.user;
 
   userCfg = config.my.user;
 in {
-  options.my.configurations.user.enable = mkEnableOption "user";
+  options.my.configurations.user.enable = lib.mkEnableOption "user";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     users = {
       users = {
         ${config.my.user.name} = {

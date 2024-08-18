@@ -3,13 +3,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.udiskie;
 in {
-  options.my.programs.udiskie.enable = mkEnableOption "udiskie";
+  options.my.programs.udiskie.enable = lib.mkEnableOption "udiskie";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = [pkgs.udiskie];
 
     services.udiskie = {

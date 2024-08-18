@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   inherit (config.colorscheme) palette;
   cfg = config.my.programs.hyprlock;
 
@@ -23,9 +22,9 @@ with lib; let
   };
   lockServiceScriptBin = lib.getExe lockServiceScript;
 in {
-  options.my.programs.hyprlock.enable = mkEnableOption "hyprlock";
+  options.my.programs.hyprlock.enable = lib.mkEnableOption "hyprlock";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.hyprlock = {
       enable = true;
 

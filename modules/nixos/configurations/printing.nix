@@ -3,13 +3,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.printing;
 in {
-  options.my.configurations.printing.enable = mkEnableOption "printing";
+  options.my.configurations.printing.enable = lib.mkEnableOption "printing";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.printing = {
       enable = true;
       drivers = with pkgs; [gutenprint cups-brother-hl1210w];

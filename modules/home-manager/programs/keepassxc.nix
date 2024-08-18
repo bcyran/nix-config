@@ -3,8 +3,7 @@
   pkgs,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.keepassxc;
 
   keepassxcPackage = pkgs.keepassxc;
@@ -12,9 +11,9 @@ with lib; let
   keepassxcDesktopName = "org.keepassxc.KeePassXC.desktop";
   # keepassxcDesktop = "${keepassxcPackage}/share/applications/${keepassxcDesktopName}";
 in {
-  options.my.programs.keepassxc.enable = mkEnableOption "keepassxc";
+  options.my.programs.keepassxc.enable = lib.mkEnableOption "keepassxc";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = [keepassxcPackage];
     xdg.configFile."keepassxc/keepassxc.ini" = {
       text = pkgs.lib.generators.toINI {} {

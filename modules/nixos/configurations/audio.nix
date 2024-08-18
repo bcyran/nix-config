@@ -3,13 +3,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.audio;
 in {
-  options.my.configurations.audio.enable = mkEnableOption "audio";
+  options.my.configurations.audio.enable = lib.mkEnableOption "audio";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;

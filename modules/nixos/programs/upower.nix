@@ -2,13 +2,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.upower;
 in {
-  options.my.programs.upower.enable = mkEnableOption "upower";
+  options.my.programs.upower.enable = lib.mkEnableOption "upower";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services = {
       upower = {
         enable = true;

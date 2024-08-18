@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.swaync;
 
@@ -15,9 +14,9 @@ with lib; let
   configFormat = pkgs.formats.json {};
   styleSheet = builtins.readFile ./style.css;
 in {
-  options.my.programs.swaync.enable = mkEnableOption "swaync";
+  options.my.programs.swaync.enable = lib.mkEnableOption "swaync";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = [pkgs.swaynotificationcenter];
 
     systemd.user.services.swaync = {

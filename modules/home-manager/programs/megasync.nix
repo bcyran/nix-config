@@ -2,13 +2,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.megasync;
 in {
-  options.my.programs.megasync.enable = mkEnableOption "megasync";
+  options.my.programs.megasync.enable = lib.mkEnableOption "megasync";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.megasync.enable = true;
     systemd.user.services.megasync.Unit = {
       Requires = ["tray.target"];

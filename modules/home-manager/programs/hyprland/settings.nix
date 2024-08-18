@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.hyprland;
 
@@ -15,7 +14,7 @@ with lib; let
     else "desc:${m.description}";
   monitorByIdx = idx: builtins.elemAt config.my.hardware.monitors idx;
 in {
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
       "$mod" = "ALT";
       "$monitorL" = monitorId (monitorByIdx 0);

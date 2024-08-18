@@ -39,10 +39,10 @@ rustPlatform.buildRustPackage rec {
       --fish ${SHELL_COMPLETIONS_DIR}/${pname}.fish
   '';
 
-  meta = with lib; {
+  meta = {
     description = "Apple dynamic HEIF wallpapers on GNU/Linux.";
     homepage = "https://github.com/bcyran/timewall";
-    license = licenses.mit;
+    license = lib.licenses.mit;
     mainProgram = "timewall";
   };
 }

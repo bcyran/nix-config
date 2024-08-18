@@ -3,17 +3,16 @@
   pkgs,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.signal;
 
   signalPackage = pkgs.signal-desktop;
   signalDesktopName = "signal-desktop.desktop";
   signalDesktop = "${signalPackage}/share/applications/${signalDesktopName}";
 in {
-  options.my.programs.signal.enable = mkEnableOption "signal";
+  options.my.programs.signal.enable = lib.mkEnableOption "signal";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = [signalPackage];
     xdg.configFile."Signal/ephemeral.json".text = ''
       {

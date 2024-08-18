@@ -3,16 +3,15 @@
   pkgs,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.ddcci;
 
   ddcutilBin = "${pkgs.ddcutil}/bin/ddcutil";
   sleepBin = "${pkgs.coreutils}/bin/sleep";
 in {
-  options.my.configurations.ddcci.enable = mkEnableOption "ddcci";
+  options.my.configurations.ddcci.enable = lib.mkEnableOption "ddcci";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     boot.kernelModules = ["i2c-dev" "ddcci_backlight"];
     boot.extraModulePackages = [config.boot.kernelPackages.ddcci-driver];
     environment.systemPackages = with pkgs; [

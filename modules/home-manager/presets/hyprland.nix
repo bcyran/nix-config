@@ -3,13 +3,13 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkDefault;
   cfg = config.my.presets.hyprland;
 in {
-  options.my.presets.hyprland.enable = mkEnableOption "hyprland";
+  options.my.presets.hyprland.enable = lib.mkEnableOption "hyprland";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       file-roller
       gnome-calculator

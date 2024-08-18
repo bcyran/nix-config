@@ -3,15 +3,14 @@
   inputs,
   lib,
   ...
-}:
-with lib; let
+}: let
   inherit (config.colorScheme) palette;
   inherit (inputs.nix-colors.lib.conversions) hexToRGBString;
   cfg = config.my.programs.zathura;
 in {
-  options.my.programs.zathura.enable = mkEnableOption "zathura";
+  options.my.programs.zathura.enable = lib.mkEnableOption "zathura";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.zathura = {
       enable = true;
       mappings = {

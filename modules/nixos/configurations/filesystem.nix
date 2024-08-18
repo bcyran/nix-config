@@ -3,13 +3,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.configurations.filesystem;
 in {
-  options.my.configurations.filesystem.enable = mkEnableOption "filesystem";
+  options.my.configurations.filesystem.enable = lib.mkEnableOption "filesystem";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services = {
       udisks2.enable = true;
       gvfs.enable = true;

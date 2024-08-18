@@ -51,10 +51,10 @@ buildPythonPackage rec {
       --fish <(_PHILIPSTV_COMPLETE=fish_source $out/bin/philipstv)
   '';
 
-  meta = with lib; {
+  meta = {
     description = "CLI and library to control Philips Android-powered TVs.";
     homepage = "https://github.com/bcyran/philipstv";
-    license = licenses.mit;
+    license = lib.licenses.mit;
     mainProgram = "philipstv";
   };
 }

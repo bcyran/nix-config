@@ -2,13 +2,12 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.tlp;
 in {
-  options.my.programs.tlp.enable = mkEnableOption "tlp";
+  options.my.programs.tlp.enable = lib.mkEnableOption "tlp";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.tlp = {
       enable = true;
       settings = {

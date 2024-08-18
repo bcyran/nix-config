@@ -3,13 +3,12 @@
   pkgs,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.my.programs.syncthing;
 in {
-  options.my.programs.syncthing.enable = mkEnableOption "syncthing";
+  options.my.programs.syncthing.enable = lib.mkEnableOption "syncthing";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.syncthing = {
       enable = true;
       tray = {

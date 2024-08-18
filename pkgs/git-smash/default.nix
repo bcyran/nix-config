@@ -36,10 +36,10 @@ rustPlatform.buildRustPackage rec {
       --zsh <($out/bin/$pname completions zsh)
   '';
 
-  meta = with lib; {
+  meta = {
     description = "Smash staged changes into previous commits to support your Git workflow, pull request and feature branch maintenance.";
     homepage = "https://github.com/anthraxx/git-smash";
-    license = licenses.mit;
+    license = lib.licenses.mit;
     mainProgram = pname;
   };
 }
