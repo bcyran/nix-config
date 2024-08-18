@@ -32,12 +32,46 @@
     message = "Required attribute '${attrsetPath}.${attr}' is missing.";
   };
 
-  # mmkMy :: attrs -> string -> attrs
+  # mkMy :: attrs -> string -> attrs
   #
   # Returns a new `my` attrset with system specific `pkgs` from `my.packages.{system}`.
-  mkMyForSystem = my: system:
+  mkMyForSystem = {
+    my,
+    system,
+  }:
     my
     // {
       pkgs = my.packages.${system};
+    };
+
+  # Creates a NixOS system configuration.
+  mkNixosSystem = {
+    inputs,
+    my,
+    system,
+    modules,
+  }:
+    inputs.nixpkgs.lib.nixosSystem {
+      inherit modules;
+      specialArgs = {
+        inherit inputs;
+        my = mkMyForSystem {inherit my system;};
+      };
+    };
+
+  # Creates a Home Manager configuration.
+  mkHomeManagerConfiguration = {
+    inputs,
+    my,
+    system,
+    modules,
+  }:
+    inputs.home-manager.lib.homeManagerConfiguration {
+      inherit modules;
+      pkgs = inputs.nixpkgs.legacyPackages."${system}";
+      extraSpecialArgs = {
+        inherit inputs;
+        my = mkMyForSystem {inherit my system;};
+      };
     };
 }
