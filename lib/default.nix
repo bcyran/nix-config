@@ -31,4 +31,13 @@
     assertion = !(isFalsy attrset.${attr});
     message = "Required attribute '${attrsetPath}.${attr}' is missing.";
   };
+
+  # mmkMy :: attrs -> string -> attrs
+  #
+  # Returns a new `my` attrset with system specific `pkgs` from `my.packages.{system}`.
+  mkMyForSystem = my: system:
+    my
+    // {
+      pkgs = my.packages.${system};
+    };
 }

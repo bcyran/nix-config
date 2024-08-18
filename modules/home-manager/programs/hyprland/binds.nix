@@ -1,6 +1,6 @@
 {
   pkgs,
-  myPkgs,
+  my,
   config,
   lib,
   ...
@@ -15,9 +15,9 @@
   swayncClientBin = "${pkgs.swaynotificationcenter}/bin/swaync-client";
   firefoxBin = lib.getExe pkgs.firefox;
   thunarBin = "${thunar}/bin/thunar";
-  backlightBin = lib.getExe myPkgs.backlight;
-  volumeBin = lib.getExe myPkgs.volume;
-  scrBin = lib.getExe myPkgs.scr;
+  backlightBin = lib.getExe my.pkgs.backlight;
+  volumeBin = lib.getExe my.pkgs.volume;
+  scrBin = lib.getExe my.pkgs.scr;
 
   workspaceBinds = let
     # Keys: 1 - 9, 0, -

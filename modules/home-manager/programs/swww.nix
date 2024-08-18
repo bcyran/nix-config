@@ -1,5 +1,5 @@
 {
-  myPkgs,
+  my,
   config,
   pkgs,
   lib,
@@ -9,7 +9,7 @@
   cfg = config.my.programs.swww;
 
   swwwDaemonBin = "${swww}/bin/swww-daemon"; # `lib.getBin` doesn't work here
-  wallpaperBin = lib.getExe myPkgs.wallpaper;
+  wallpaperBin = lib.getExe my.pkgs.wallpaper;
   sleepBin = "${pkgs.coreutils}/bin/sleep";
 in {
   options.my.programs.swww.enable = lib.mkEnableOption "swww";

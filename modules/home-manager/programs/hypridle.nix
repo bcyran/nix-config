@@ -1,13 +1,13 @@
 {
+  my,
   config,
   pkgs,
-  myPkgs,
   lib,
   ...
 }: let
   cfg = config.my.programs.hypridle;
 
-  backlightBin = lib.getExe myPkgs.backlight;
+  backlightBin = lib.getExe my.pkgs.backlight;
   hyprctlBin = "${pkgs.hyprland}/bin/hyprctl";
   loginctlBin = "${pkgs.systemd}/bin/loginctl";
   sleepBin = "${pkgs.coreutils}/bin/sleep";

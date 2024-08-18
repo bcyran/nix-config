@@ -64,16 +64,14 @@
       slimbook = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
-          my = self;
-          myPkgs = self.packages.x86_64-linux;
+          my = self.lib.mkMyForSystem self "x86_64-linux";
         };
         modules = [./hosts/slimbook/nixos];
       };
       nixtest = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
-          my = self;
-          myPkgs = self.packages.x86_64-linux;
+          my = self.lib.mkMyForSystem self "x86_64-linux";
         };
         modules = [./hosts/nixtest/nixos];
       };
@@ -84,8 +82,7 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs;
-          my = self;
-          myPkgs = self.packages.x86_64-linux;
+          my = self.lib.mkMyForSystem self "x86_64-linux";
         };
         modules = [./hosts/slimbook/home-manager/bazyli.nix];
       };
@@ -93,8 +90,7 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs;
-          my = self;
-          myPkgs = self.packages.x86_64-linux;
+          my = self.lib.mkMyForSystem self "x86_64-linux";
         };
         modules = [./hosts/nixtest/home-manager/bazyli.nix];
       };

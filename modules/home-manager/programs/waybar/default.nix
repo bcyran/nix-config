@@ -1,6 +1,6 @@
 {
+  my,
   pkgs,
-  myPkgs,
   config,
   lib,
   ...
@@ -37,7 +37,7 @@
   # Module scripts
   backlightModule = pkgs.writeShellApplication {
     name = "waybar-backlight";
-    runtimeInputs = with pkgs; [myPkgs.backlight inotifyTools];
+    runtimeInputs = with pkgs; [my.pkgs.backlight inotifyTools];
     text = builtins.readFile ./files/modules/light.sh;
   };
   mprisModule = pkgs.writeShellApplication {
@@ -47,7 +47,7 @@
   };
   philipstvModule = pkgs.writeShellApplication {
     name = "waybar-philipstv";
-    runtimeInputs = with pkgs; [myPkgs.philipstv];
+    runtimeInputs = with pkgs; [my.pkgs.philipstv];
     text = builtins.readFile ./files/modules/philipstv.sh;
   };
   # Launcher script
@@ -71,8 +71,8 @@
       playerctl
       philipstvModule
       swaynotificationcenter
-      myPkgs.philipstv
-      myPkgs.philipstv-gui
+      my.pkgs.philipstv
+      my.pkgs.philipstv-gui
     ];
     text = builtins.readFile launcherRendered;
   };

@@ -1,6 +1,6 @@
 {
+  my,
   pkgs,
-  myPkgs,
   config,
   lib,
   ...
@@ -38,7 +38,7 @@ in {
       neofetch
       alejandra
       statix
-      myPkgs.volume
+      my.pkgs.volume
     ];
   };
 }
