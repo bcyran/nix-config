@@ -25,29 +25,29 @@ in {
 
     my = {
       programs = {
-        alacritty.enable = true;
-        keepassxc.enable = true;
-        firefox.enable = true;
-        spotify.enable = true;
-        syncthing.enable = true;
-        megasync.enable = true;
-        udiskie.enable = true;
-        zathura.enable = true;
+        alacritty.enable = mkDefault true;
+        keepassxc.enable = mkDefault true;
+        firefox.enable = mkDefault true;
+        spotify.enable = mkDefault true;
+        syncthing.enable = mkDefault true;
+        megasync.enable = mkDefault true;
+        udiskie.enable = mkDefault true;
+        zathura.enable = mkDefault true;
       };
       configurations = {
-        gtk.enable = true;
-        xdg.enable = true;
-        polkit.enable = true;
+        gtk.enable = mkDefault true;
+        xdg.enable = mkDefault true;
+        polkit.enable = mkDefault true;
       };
     };
 
-    programs.chromium.enable = true;
+    programs.chromium.enable = mkDefault true;
 
     fonts.fontconfig = {
-      enable = true;
+      enable = mkDefault true;
       defaultFonts = {
-        sansSerif = ["Inter"];
-        monospace = ["JetBrainsMonoNL NF"];
+        sansSerif = mkDefault ["Inter"];
+        monospace = mkDefault ["JetBrainsMonoNL NF"];
       };
     };
   };

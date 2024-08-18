@@ -22,19 +22,19 @@ in {
 
     my = {
       programs = {
-        fish.enable = true;
-        neovim.enable = true;
-        git.enable = true;
-        tmux.enable = true;
-        bat.enable = true;
-        btop.enable = true;
-        direnv.enable = true;
-        nix-index.enable = true;
+        fish.enable = mkDefault true;
+        neovim.enable = mkDefault true;
+        git.enable = mkDefault true;
+        tmux.enable = mkDefault true;
+        bat.enable = mkDefault true;
+        btop.enable = mkDefault true;
+        direnv.enable = mkDefault true;
+        nix-index.enable = mkDefault true;
       };
     };
 
-    programs.eza.enable = true;
-    programs.ripgrep.enable = true;
-    programs.fd.enable = true;
+    programs.eza.enable = mkDefault true;
+    programs.ripgrep.enable = mkDefault true;
+    programs.fd.enable = mkDefault true;
   };
 }

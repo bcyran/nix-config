@@ -27,7 +27,7 @@ in {
 
     my = {
       programs = {
-        signal.enable = true;
+        signal.enable = mkDefault true;
       };
     };
   };

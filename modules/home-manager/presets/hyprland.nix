@@ -18,17 +18,17 @@ in {
 
     my = {
       programs = {
-        hyprland.enable = true;
-        waybar.enable = true;
-        anyrun.enable = true;
-        swaync.enable = true;
-        hypridle.enable = true;
-        hyprlock.enable = true;
-        swww.enable = true;
-        wlsunset.enable = true;
+        hyprland.enable = mkDefault true;
+        waybar.enable = mkDefault true;
+        anyrun.enable = mkDefault true;
+        swaync.enable = mkDefault true;
+        hypridle.enable = mkDefault true;
+        hyprlock.enable = mkDefault true;
+        swww.enable = mkDefault true;
+        wlsunset.enable = mkDefault true;
       };
     };
 
-    services.poweralertd.enable = true;
+    services.poweralertd.enable = mkDefault true;
   };
 }
