@@ -14,11 +14,13 @@ in {
       gvfs.enable = true;
       tumbler.enable = true;
     };
-    programs.thunar = {
-      enable = true;
-      plugins = with pkgs.xfce; [thunar-volman thunar-archive-plugin];
+    programs = {
+      thunar = {
+        enable = true;
+        plugins = with pkgs.xfce; [thunar-volman thunar-archive-plugin];
+      };
+      xfconf.enable = true;
+      file-roller.enable = true;
     };
-    programs.xfconf.enable = true;
-    programs.file-roller.enable = true;
   };
 }

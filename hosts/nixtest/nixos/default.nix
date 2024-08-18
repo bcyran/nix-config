@@ -18,6 +18,8 @@
     ../common/bazyli.nix
   ];
 
+  networking.hostName = "nixtest";
+
   my = {
     configurations = {
       core.enable = true;
@@ -44,20 +46,23 @@
     };
   };
 
-  networking.hostName = "nixtest";
+  programs = {
+    light.enable = true;
+  };
 
-  programs.light.enable = true;
-
-  services.hardware.bolt.enable = true;
-  services.systemd-lock-handler.enable = true; # Required for `lock.target` in user's systemd
-
-  security.pam.services.hyprlock.text = "auth include login"; # Required by `hyprlock`
-  security.polkit.enable = true;
-
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
+  services = {
+    hardware.bolt.enable = true;
+    systemd-lock-handler.enable = true; # Required for `lock.target` in user's systemd
+    openssh = {
+      enable = true;
+      settings = {
+        PermitRootLogin = "no";
+      };
     };
+  };
+
+  security = {
+    pam.services.hyprlock.text = "auth include login"; # Required by `hyprlock`
+    polkit.enable = true;
   };
 }

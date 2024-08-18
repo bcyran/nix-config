@@ -16,8 +16,8 @@ in {
           isNormalUser = true;
           description = userCfg.fullName;
           extraGroups = userCfg.groups;
-          shell = userCfg.shell;
-          uid = userCfg.uid;
+          inherit (userCfg) shell;
+          inherit (userCfg) uid;
         };
       };
       groups = {

@@ -21,25 +21,28 @@ in {
       };
     };
 
-    nix.settings = {
-      experimental-features = "nix-command flakes";
-      auto-optimise-store = true;
-      warn-dirty = false;
-      trusted-substituters = [
-        "https://devenv.cachix.org"
-      ];
-      trusted-public-keys = [
-        "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-      ];
+    nix = {
+      settings = {
+        experimental-features = "nix-command flakes";
+        auto-optimise-store = true;
+        warn-dirty = false;
+        trusted-substituters = [
+          "https://devenv.cachix.org"
+        ];
+        trusted-public-keys = [
+          "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+        ];
+      };
+
+      # This will add each flake input as a registry
+      # To make nix3 commands consistent with your flake
+      registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+
+      # This will additionally add your inputs to the system's legacy channels
+      # Making legacy nix commands consistent as well, awesome!
+      nixPath = ["/etc/nix/path"];
     };
 
-    # This will add each flake input as a registry
-    # To make nix3 commands consistent with your flake
-    nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-
-    # This will additionally add your inputs to the system's legacy channels
-    # Making legacy nix commands consistent as well, awesome!
-    nix.nixPath = ["/etc/nix/path"];
     environment.etc =
       lib.mapAttrs'
       (name: value: {

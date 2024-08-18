@@ -1,0 +1,4 @@
+disabled = [
+  # This may cause false positives when we don't know if compared value is a bool.
+  "bool_comparison"
+]

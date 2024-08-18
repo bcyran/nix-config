@@ -36,6 +36,7 @@ in {
       dust
       neofetch
       alejandra
+      statix
       my.volume
     ];
   };

@@ -87,7 +87,7 @@ in {
     };
 
     xdg.configFile."waybar/common.css" = let
-      defaultFonts = config.fonts.fontconfig.defaultFonts;
+      inherit (config.fonts.fontconfig) defaultFonts;
       sansSerifFont = builtins.elemAt defaultFonts.sansSerif 0;
       monospaceFont = builtins.elemAt defaultFonts.monospace 0;
     in {

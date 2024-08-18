@@ -4,9 +4,9 @@
   lib,
   ...
 }: let
+  inherit (pkgs) swww;
   cfg = config.my.programs.swww;
 
-  swww = pkgs.swww;
   swwwDaemonBin = "${swww}/bin/swww-daemon"; # `lib.getBin` doesn't work here
   wallpaperBin = lib.getExe pkgs.my.wallpaper;
   sleepBin = "${pkgs.coreutils}/bin/sleep";

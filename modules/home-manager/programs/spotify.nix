@@ -4,9 +4,9 @@
   lib,
   ...
 }: let
+  inherit (pkgs) spotify;
   cfg = config.my.programs.spotify;
 
-  spotify = pkgs.spotify;
   spotifyDesktopName = "spotify.desktop";
   spotifyDesktop = "${spotify}/share/applications/${spotifyDesktopName}";
 in {

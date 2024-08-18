@@ -1,4 +1,4 @@
-{...}: {
+_: {
   # This one brings our custom packages from the 'pkgs' directory.
   # They will be accessible through `pkgs.my.packagename`.
   additions = final: _prev: {
