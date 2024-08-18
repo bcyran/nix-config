@@ -1,3 +1,5 @@
+# This module is imported by both NixOS and Home Manager modules.
+# It needs to be compatible with both.
 {
   lib,
   config,

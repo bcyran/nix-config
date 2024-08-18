@@ -5,7 +5,6 @@
 }: let
   cfg = config.my.presets.tokyonight;
 in {
-  inherit (lib) mkDefault;
   options.my.presets.tokyonight.enable = lib.mkEnableOption "tokyonight";
 
   config = lib.mkIf cfg.enable {

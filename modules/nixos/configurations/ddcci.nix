@@ -12,11 +12,13 @@ in {
   options.my.configurations.ddcci.enable = lib.mkEnableOption "ddcci";
 
   config = lib.mkIf cfg.enable {
-    boot.kernelModules = ["i2c-dev" "ddcci_backlight"];
-    boot.extraModulePackages = [config.boot.kernelPackages.ddcci-driver];
-    environment.systemPackages = with pkgs; [
-      ddcutil
-    ];
+    boot = {
+      kernelModules = ["i2c-dev" "ddcci_backlight"];
+      extraModulePackages = [config.boot.kernelPackages.ddcci-driver];
+    };
+
+    environment.systemPackages = [pkgs.ddcutil];
+
     # Source: https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/15
     services.udev.extraRules = ''
       SUBSYSTEM=="i2c-dev", ACTION=="add",\
@@ -24,6 +26,7 @@ in {
         TAG+="systemd",\
         ENV{SYSTEMD_WANTS}+="ddcci@$kernel.service"
     '';
+
     systemd.services."ddcci@" = {
       description = "Force DDC/CI device detection";
       scriptArgs = "%i";

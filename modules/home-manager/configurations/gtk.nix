@@ -71,6 +71,8 @@ in {
       gtk.enable = true;
       x11.enable = true;
     };
+
+    # For `adw-gtk3-dark` theme.
     xdg.configFile = {
       "gtk-4.0/gtk.css".text = themeCSS;
       "gtk-3.0/gtk.css".text = themeCSS;

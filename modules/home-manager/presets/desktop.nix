@@ -10,19 +10,6 @@ in {
   options.my.presets.desktop.enable = lib.mkEnableOption "desktop";
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      inter
-      (nerdfonts.override {fonts = ["JetBrainsMono"];})
-      libnotify
-      wl-clipboard
-      my.backlight
-      my.wallpaper
-      my.scr
-      my.philipstv
-      my.philipstv-gui
-      my.timewall
-    ];
-
     my = {
       programs = {
         alacritty.enable = mkDefault true;
@@ -41,7 +28,22 @@ in {
       };
     };
 
-    programs.chromium.enable = mkDefault true;
+    programs = {
+      chromium.enable = mkDefault true;
+    };
+
+    home.packages = with pkgs; [
+      inter
+      (nerdfonts.override {fonts = ["JetBrainsMono"];})
+      libnotify
+      wl-clipboard
+      my.backlight
+      my.wallpaper
+      my.scr
+      my.philipstv
+      my.philipstv-gui
+      my.timewall
+    ];
 
     fonts.fontconfig = {
       enable = mkDefault true;

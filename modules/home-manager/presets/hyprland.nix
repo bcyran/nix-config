@@ -10,12 +10,6 @@ in {
   options.my.presets.hyprland.enable = lib.mkEnableOption "hyprland";
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      file-roller
-      gnome-calculator
-      gnome-font-viewer
-    ];
-
     my = {
       programs = {
         hyprland.enable = mkDefault true;
@@ -29,6 +23,14 @@ in {
       };
     };
 
-    services.poweralertd.enable = mkDefault true;
+    services = {
+      poweralertd.enable = mkDefault true;
+    };
+
+    home.packages = with pkgs; [
+      file-roller
+      gnome-calculator
+      gnome-font-viewer
+    ];
   };
 }

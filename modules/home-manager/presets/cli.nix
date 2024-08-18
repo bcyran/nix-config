@@ -10,16 +10,6 @@ in {
   options.my.presets.cli.enable = lib.mkEnableOption "cli";
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      wget
-      curl
-      ranger
-      dust
-      neofetch
-      alejandra
-      my.volume
-    ];
-
     my = {
       programs = {
         fish.enable = mkDefault true;
@@ -33,8 +23,20 @@ in {
       };
     };
 
-    programs.eza.enable = mkDefault true;
-    programs.ripgrep.enable = mkDefault true;
-    programs.fd.enable = mkDefault true;
+    programs = {
+      eza.enable = mkDefault true;
+      ripgrep.enable = mkDefault true;
+      fd.enable = mkDefault true;
+    };
+
+    home.packages = with pkgs; [
+      wget
+      curl
+      ranger
+      dust
+      neofetch
+      alejandra
+      my.volume
+    ];
   };
 }

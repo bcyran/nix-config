@@ -10,6 +10,12 @@ in {
   options.my.presets.personal.enable = lib.mkEnableOption "personal";
 
   config = lib.mkIf cfg.enable {
+    my = {
+      programs = {
+        signal.enable = mkDefault true;
+      };
+    };
+
     home.packages = with pkgs; [
       portfolio
       gnucash
@@ -24,11 +30,5 @@ in {
       tor-browser
       gnome.gnome-boxes
     ];
-
-    my = {
-      programs = {
-        signal.enable = mkDefault true;
-      };
-    };
   };
 }

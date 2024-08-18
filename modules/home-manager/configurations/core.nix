@@ -17,7 +17,6 @@ in {
       ];
 
       config = {
-        # Disable if you don't want unfree packages
         allowUnfree = true;
         # Workaround for https://github.com/nix-community/home-manager/issues/2942
         allowUnfreePredicate = _: true;
@@ -37,7 +36,7 @@ in {
     services.ssh-agent.enable = true;
     systemd.user = {
       enable = true;
-      # Nicely reload system units when changing configs
+      # Reload system units when changing configs
       startServices = "sd-switch";
       # This makes the tray.target stop when logging out and start again when logging in.
       # It's important because otherwise it's constantly active and thus services relying on it
