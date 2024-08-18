@@ -1,3 +1,3 @@
-{lib, ...}: {
-  imports = lib.my.listDirModules ./.;
+{my, ...}: {
+  imports = my.lib.listDirModules ./.;
 }

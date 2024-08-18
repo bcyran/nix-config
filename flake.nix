@@ -52,24 +52,18 @@
   } @ inputs: let
     systems = ["x86_64-linux"];
     forAllSystems = nixpkgs.lib.genAttrs systems;
-
-    # Extend `nixpkgs.lib` with `my` custom lib and return it.
-    # Example usage: `lib.my.listDir <dir>`.
-    extendLibWithMy = nixpkgs:
-      nixpkgs.lib.extend
-      (final: prev: {my = import ./lib {lib = final;};} // home-manager.lib);
-    lib = extendLibWithMy nixpkgs;
   in {
     packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
     overlays = import ./overlays {inherit inputs;};
     nixosModules = import ./modules/nixos;
     homeManagerModules = import ./modules/home-manager;
+    lib = import ./lib {inherit (nixpkgs) lib;};
 
     nixosConfigurations = {
       slimbook = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs lib;
+          inherit inputs;
           my = self;
           myPkgs = self.packages.x86_64-linux;
         };
@@ -77,7 +71,7 @@
       };
       nixtest = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs lib;
+          inherit inputs;
           my = self;
           myPkgs = self.packages.x86_64-linux;
         };
@@ -89,7 +83,7 @@
       "bazyli@slimbook" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {
-          inherit inputs lib;
+          inherit inputs;
           my = self;
           myPkgs = self.packages.x86_64-linux;
         };
@@ -98,7 +92,7 @@
       "bazyli@nixtest" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {
-          inherit inputs lib;
+          inherit inputs;
           my = self;
           myPkgs = self.packages.x86_64-linux;
         };

@@ -1,6 +1,7 @@
 # This module is imported by both NixOS and Home Manager modules.
 # It needs to be compatible with both.
 {
+  my,
   lib,
   config,
   ...
@@ -54,7 +55,7 @@ in {
 
   config = {
     assertions =
-      map (attr: lib.my.makeRequiredAssertion config.my.user "my.user" attr)
+      map (attr: my.lib.makeRequiredAssertion config.my.user "my.user" attr)
       (lib.attrNames config.my.user);
   };
 }
