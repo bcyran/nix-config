@@ -1,5 +1,6 @@
 {
   pkgs,
+  myPkgs,
   inputs,
   config,
   lib,
@@ -9,7 +10,7 @@
   cfg = config.my.programs.anyrun;
 
   styleSheet = builtins.readFile ./style.css;
-  kidexPackage = pkgs.my.kidex;
+  kidexPackage = myPkgs.kidex;
   kidexBin = "${kidexPackage}/bin/kidex";
 in {
   options.my.programs.anyrun.enable = lib.mkEnableOption "anyrun";

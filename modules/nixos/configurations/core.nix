@@ -1,7 +1,7 @@
 {
   inputs,
   pkgs,
-  outputs,
+  my,
   lib,
   config,
   ...
@@ -13,8 +13,7 @@ in {
   config = lib.mkIf cfg.enable {
     nixpkgs = {
       overlays = [
-        outputs.overlays.additions
-        outputs.overlays.modifications
+        my.overlays.modifications
       ];
       config = {
         allowUnfree = true;

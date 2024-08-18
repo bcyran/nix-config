@@ -50,7 +50,6 @@
     home-manager,
     ...
   } @ inputs: let
-    inherit (self) outputs;
     systems = ["x86_64-linux"];
     forAllSystems = nixpkgs.lib.genAttrs systems;
 
@@ -69,11 +68,19 @@
 
     nixosConfigurations = {
       slimbook = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs lib;};
+        specialArgs = {
+          inherit inputs lib;
+          my = self;
+          myPkgs = self.packages.x86_64-linux;
+        };
         modules = [./hosts/slimbook/nixos];
       };
       nixtest = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs lib;};
+        specialArgs = {
+          inherit inputs lib;
+          my = self;
+          myPkgs = self.packages.x86_64-linux;
+        };
         modules = [./hosts/nixtest/nixos];
       };
     };
@@ -81,12 +88,20 @@
     homeConfigurations = {
       "bazyli@slimbook" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        extraSpecialArgs = {inherit inputs outputs lib;};
+        extraSpecialArgs = {
+          inherit inputs lib;
+          my = self;
+          myPkgs = self.packages.x86_64-linux;
+        };
         modules = [./hosts/slimbook/home-manager/bazyli.nix];
       };
       "bazyli@nixtest" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        extraSpecialArgs = {inherit inputs outputs lib;};
+        extraSpecialArgs = {
+          inherit inputs lib;
+          my = self;
+          myPkgs = self.packages.x86_64-linux;
+        };
         modules = [./hosts/nixtest/home-manager/bazyli.nix];
       };
     };

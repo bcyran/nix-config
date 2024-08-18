@@ -1,6 +1,6 @@
-{outputs, ...}: {
+{my, ...}: {
   imports = [
-    outputs.homeManagerModules.default
+    my.homeManagerModules.default
     ../common/bazyli.nix
   ];
 

@@ -1,10 +1,10 @@
 {
   inputs,
-  outputs,
+  my,
   ...
 }: {
   imports = [
-    outputs.nixosModules.default
+    my.nixosModules.default
 
     inputs.lanzaboote.nixosModules.lanzaboote
     inputs.disko.nixosModules.disko

@@ -1,5 +1,6 @@
 {
   pkgs,
+  myPkgs,
   config,
   lib,
   ...
@@ -37,12 +38,12 @@ in {
       (nerdfonts.override {fonts = ["JetBrainsMono"];})
       libnotify
       wl-clipboard
-      my.backlight
-      my.wallpaper
-      my.scr
-      my.philipstv
-      my.philipstv-gui
-      my.timewall
+      myPkgs.backlight
+      myPkgs.wallpaper
+      myPkgs.scr
+      myPkgs.philipstv
+      myPkgs.philipstv-gui
+      myPkgs.timewall
     ];
 
     fonts.fontconfig = {
