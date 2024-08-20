@@ -132,7 +132,7 @@ in {
     systemd.user.services.waybar = {
       Unit = {
         Description = "Waybar panels";
-        PartOf = ["tray.target"];
+        PartOf = ["graphical-session.target" "tray.target"];
         After = ["graphical-session-pre.target"];
         StartLimitBurst = 15;
       };
@@ -147,6 +147,7 @@ in {
         KillMode = "mixed";
       };
       Install = {
+        WantedBy = ["graphical-session.target"];
         RequiredBy = ["tray.target"];
       };
     };
