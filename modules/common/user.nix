@@ -33,6 +33,12 @@ in {
       example = "/home/bazyli";
       default = "";
     };
+    dotfilesDir = mkOption {
+      type = types.str;
+      description = "Path to the user's dotfiles directory";
+      example = "/home/bazyli/dotfiles";
+      default = "";
+    };
     shell = mkOption {
       type = types.package;
       description = "Packate providing the user's shell";
