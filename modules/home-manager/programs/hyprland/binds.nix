@@ -1,23 +1,9 @@
 {
-  pkgs,
-  my,
   config,
   lib,
   ...
 }: let
   cfg = config.my.programs.hyprland;
-
-  thunar = pkgs.xfce.thunar.override {thunarPlugins = with pkgs; [xfce.thunar-volman xfce.thunar-archive-plugin];};
-
-  hyprctlBin = "${pkgs.hyprland}/bin/hyprctl";
-  alacrittyBin = lib.getExe pkgs.alacritty;
-  playerctlBin = lib.getExe pkgs.playerctl;
-  swayncClientBin = "${pkgs.swaynotificationcenter}/bin/swaync-client";
-  firefoxBin = lib.getExe pkgs.firefox;
-  thunarBin = "${thunar}/bin/thunar";
-  backlightBin = lib.getExe my.pkgs.backlight;
-  volumeBin = lib.getExe my.pkgs.volume;
-  scrBin = lib.getExe my.pkgs.scr;
 
   workspaceBinds = let
     # Keys: 1 - 9, 0, -
@@ -47,8 +33,8 @@ in {
             "$mod SHIFT, p, pseudo,"
             "$mod SHIFT, x, pin,"
             "$mod, v, togglesplit,"
-            "$mod, d, exec, ${hyprctlBin} keyword general:layout dwindle"
-            "$mod SHIFT, d, exec, ${hyprctlBin} keyword general:layout master"
+            "$mod, d, exec, hyprctl keyword general:layout dwindle"
+            "$mod SHIFT, d, exec, hyprctl keyword general:layout master"
             "$mod, o, changegroupactive, b"
             "$mod, p, changegroupactive, f"
             "$mod, t, togglegroup"
@@ -76,29 +62,29 @@ in {
             "$mod, mouse_left, changegroupactive, b"
             "$mod, mouse_right, changegroupactive, f"
 
-            "$mod, s, exec, ${scrBin} output"
-            "$mod CONTROL, s, exec, ${scrBin} area"
-            "$mod SHIFT, s, exec, ${scrBin} active"
+            "$mod, s, exec, src output"
+            "$mod CONTROL, s, exec, src area"
+            "$mod SHIFT, s, exec, src active"
 
-            "$mod, slash, exec, ${playerctlBin} play-pause"
-            "$mod, comma, exec, ${playerctlBin} previous"
-            "$mod, period, exec, ${playerctlBin} next"
+            "$mod, slash, exec, playerctl play-pause"
+            "$mod, comma, exec, playerctl previous"
+            "$mod, period, exec, playerctl next"
 
-            ",XF86AudioRaiseVolume, exec, ${volumeBin} up"
-            ",XF86AudioLowerVolume, exec, ${volumeBin} down"
-            ",XF86AudioMute, exec, ${volumeBin} toggle"
+            ",XF86AudioRaiseVolume, exec, volume up"
+            ",XF86AudioLowerVolume, exec, volume down"
+            ",XF86AudioMute, exec, volume toggle"
 
-            ",XF86MonBrightnessDown, exec, ${backlightBin} down 10"
-            ",XF86MonBrightnessUp, exec, ${backlightBin} up 10"
+            ",XF86MonBrightnessDown, exec, backlight down 10"
+            ",XF86MonBrightnessUp, exec, backlight up 10"
 
-            "CONTROL, space, exec, ${swayncClientBin} --toggle-panel"
-            "CONTROL, escape, exec, ${swayncClientBin} --close-latest"
+            "CONTROL, space, exec, swaync-client --toggle-panel"
+            "CONTROL, escape, exec, swaync-client --close-latest"
 
             "$mod, space, exec, anyrun"
-            "$mod, return, exec, ${alacrittyBin}"
-            "$mod SHIFT, return, exec, ${alacrittyBin} --class terminal-floating"
-            "$mod, Y, exec, ${firefoxBin}"
-            "$mod, N, exec, ${thunarBin}"
+            "$mod, return, exec, alacritty"
+            "$mod SHIFT, return, exec, alacritty --class terminal-floating"
+            "$mod, Y, exec, firefox"
+            "$mod, N, exec, thunar"
           ]
           ++ workspaceBinds;
         bindm = [
