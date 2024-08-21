@@ -2,7 +2,7 @@
 
 set +o nounset
 
-SCR_DIR="${PRIV_SCREENSHOTS_DIR:-$(xdg-user-dir PICTURES)/Screenshots}"
+SCR_DIR="${MY_SCREENSHOTS_DIR:-$(xdg-user-dir PICTURES)/Screenshots}"
 
 get_shot_path() {
     echo "${SCR_DIR}/$(date '+%Y-%m-%d_%H:%M:%S').png"

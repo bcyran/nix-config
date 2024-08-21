@@ -12,6 +12,11 @@ in {
     home = {
       username = userCfg.name;
       homeDirectory = userCfg.home;
+
+      sessionVariables = {
+        MY_WALLPAPERS_DIR = "${userCfg.home}/Obrazy/Tapety";
+        MY_SCREENSHOTS_DIR = "${userCfg.home}/Obrazy/Zrzuty ekranu";
+      };
     };
   };
 }

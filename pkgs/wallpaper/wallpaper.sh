@@ -2,7 +2,7 @@
 
 set +o nounset
 
-WALL_DIR="${PRIV_WALLPAPERS_DIR:-${HOME}/Obrazy/Tapety}"
+WALL_DIR="${MY_WALLPAPERS_DIR:-${HOME}/Obrazy/Tapety}"
 SYMLINK_PATH="${WALL_DIR}/wallpaper"
 SET_COMMAND="swww img -t wipe ${SYMLINK_PATH}"
 
