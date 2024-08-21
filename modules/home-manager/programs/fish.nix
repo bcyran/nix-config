@@ -116,7 +116,7 @@ in {
           set -gx fish_cursor_replace_one underscore
           set -gx fish_cursor_visual block
 
-          set -gx tide_right_prompt_items status cmd_duration context jobs node python rustc java go
+          set -gx tide_right_prompt_items status cmd_duration context jobs node python rustc java go nix_shell direnv
 
           # Syntax Highlighting Colors
           set -g fish_color_normal ${palette.base05}
