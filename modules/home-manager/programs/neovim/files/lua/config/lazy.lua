@@ -6,27 +6,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
--- Modules to be imported only if given executable is available
-local imports_by_executable = {
-  nix = { "plugins.lang.nix" },
-  flutter = { "plugins.lang.flutter" },
-  python = { "plugins.lang.python" },
-  rustc = { "plugins.lang.rust" },
-  go = { "lazyvim.plugins.extras.lang.go" },
-}
-
-local get_optional_specs = function()
-  local specs = {}
-  for executable, imports in pairs(imports_by_executable) do
-    if vim.fn.executable(executable) == 1 then
-      for _, import in ipairs(imports) do
-        table.insert(specs, { import = import })
-      end
-    end
-  end
-  return specs
-end
-
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
@@ -43,8 +22,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.markdown" },
     -- import/override with your plugins
     { import = "plugins" },
-    { import = "plugins.lang.shell" },
-    unpack(get_optional_specs()),
+    { import = "plugins.lang" },
     { import = "plugins.override" },
   },
   defaults = {
