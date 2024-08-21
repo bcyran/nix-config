@@ -38,6 +38,8 @@ in {
       (nerdfonts.override {fonts = ["JetBrainsMono"];})
       libnotify
       wl-clipboard
+      playerctl
+      my.pkgs.volume
       my.pkgs.backlight
       my.pkgs.wallpaper
       my.pkgs.scr
