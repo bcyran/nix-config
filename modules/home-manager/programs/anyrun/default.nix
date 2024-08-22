@@ -68,6 +68,14 @@ in {
             ],
           )
         '';
+        "powermenu.ron".text = ''
+          Config(
+            logout: (
+              command: "hyprctl dispatch exit",
+              confirm: true,
+            ),
+          )
+        '';
       };
       extraCss = ''
         @define-color base00 #${palette.base00};
