@@ -59,4 +59,6 @@
     pam.services.hyprlock.text = "auth include login"; # Required by `hyprlock`
     polkit.enable = true;
   };
+
+  boot.tmp.useTmpfs = true;
 }
