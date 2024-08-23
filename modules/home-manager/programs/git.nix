@@ -29,7 +29,7 @@ in {
   config = lib.mkIf cfg.enable {
     programs.git = {
       enable = true;
-      userName = config.my.user.name;
+      userName = config.my.user.fullName;
       userEmail = config.my.user.email;
       delta = {
         enable = true;
