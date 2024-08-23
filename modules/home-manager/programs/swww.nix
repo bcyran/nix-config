@@ -44,7 +44,7 @@ in {
       };
       Service = {
         Type = "oneshot";
-        ExecStartPre = "${sleepBin} 2";
+        ExecStartPre = "${sleepBin} 3";
         ExecStart = wallpaperBin;
       };
       Install = {
