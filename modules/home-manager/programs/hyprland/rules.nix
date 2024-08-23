@@ -10,8 +10,8 @@ in {
       windowrulev2 = [
         # Workspace placement
         "workspace 2 silent, class:terminal-workspace"
-        "workspace 10 silent, class:Spotify"
-        "workspace 8 silent, class:Signal"
+        "workspace 11 silent, class:Spotify"
+        "workspace 9 silent, class:Signal"
 
         # Various float, size, position tweaks
         "float, class:terminal-floating"

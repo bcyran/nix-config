@@ -120,13 +120,13 @@ in {
         "2, monitor:$monitorC"
         "3, monitor:$monitorC"
         "4, monitor:$monitorC"
-        "5, monitor:$monitorR, default:true"
-        "6, monitor:$monitorR"
+        "5, monitor:$monitorC"
+        "6, monitor:$monitorR, default:true"
         "7, monitor:$monitorR"
-        "8, monitor:$monitorL, default:true"
-        "9, monitor:$monitorL"
+        "8, monitor:$monitorR"
+        "9, monitor:$monitorL, default:true"
         "10, monitor:$monitorL"
-        "11, monitor:$monitorC"
+        "11, monitor:$monitorL"
       ];
       exec-once = [
         "${alacrittyBin} --class terminal-workspace"
