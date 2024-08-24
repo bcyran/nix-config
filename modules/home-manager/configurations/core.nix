@@ -29,6 +29,11 @@ in {
         auto-optimise-store = true;
         warn-dirty = false;
       };
+      # TODO: Use something like `agenix` or `sops` instead of providing GitHub API key in the
+      #       `nix-local.conf` file.
+      extraOptions = ''
+        !include nix-local.conf
+      '';
     };
 
     programs.home-manager.enable = true;

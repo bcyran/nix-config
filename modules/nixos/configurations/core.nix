@@ -32,6 +32,11 @@ in {
           "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
         ];
       };
+      # TODO: Use something like `agenix` or `sops` instead of providing GitHub API key in the
+      #       `nix-local.conf` file.
+      extraOptions = ''
+        !include nix-local.conf
+      '';
 
       # This will add each flake input as a registry
       # To make nix3 commands consistent with your flake
