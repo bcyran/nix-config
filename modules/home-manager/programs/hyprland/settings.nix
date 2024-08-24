@@ -24,9 +24,17 @@ in {
         "QT_QPA_PLATFORM,wayland"
       ];
       monitor = let
-        mon = m: "${monitorId m}, ${toString m.width}x${toString m.height}@${toString m.refreshRate}, ${toString m.x}x${toString m.y}, ${toString m.scale}, transform, ${toString m.transform}";
+        monOpts = m: [
+          "${monitorId m}"
+          "${toString m.width}x${toString m.height}@${toString m.refreshRate}"
+          "${toString m.x}x${toString m.y}"
+          "${toString m.scale}"
+          "transform, ${toString m.transform}"
+          "bitdepth, 10"
+        ];
+        monOptsStr = m: builtins.concatStringsSep ", " (monOpts m);
       in
-        (map mon config.my.hardware.monitors)
+        (map monOptsStr config.my.hardware.monitors)
         ++ [
           ",preferred, auto, 1"
         ];
