@@ -8,8 +8,6 @@
 
   keepassxcPackage = pkgs.keepassxc;
   keepassxcBin = "${keepassxcPackage}/bin/keepassxc";
-  keepassxcDesktopName = "org.keepassxc.KeePassXC.desktop";
-  # keepassxcDesktop = "${keepassxcPackage}/share/applications/${keepassxcDesktopName}";
 in {
   options.my.programs.keepassxc.enable = lib.mkEnableOption "keepassxc";
 
@@ -51,30 +49,24 @@ in {
         };
       };
     };
-    xdg.configFile."autostart/${keepassxcDesktopName}" = {
-      # source = keepassxcDesktop;
-      # FIXME: For some reason SSH_AUTH_SOCK env is not available to keepassxc if not set explictly.
-      #        Setting AuthSockOverride in the config does not work too.
-      text = ''
-        [Desktop Entry]
-        Name=KeePassXC
-        GenericName=Password Manager
-        GenericName[pl]=Menedżer haseł
-        Comment=Community-driven port of the Windows application “KeePass Password Safe”
-        Exec=env QT_QPA_PLATFORM=wayland SSH_AUTH_SOCK=/run/user/${toString config.my.user.uid}/ssh-agent ${keepassxcBin} %f
-        TryExec=keepassxc
-        Icon=keepassxc
-        StartupWMClass=keepassxc
-        StartupNotify=true
-        Terminal=false
-        Type=Application
-        Version=1.5
-        Categories=Utility;Security;Qt;
-        MimeType=application/x-keepass2;
-        SingleMainWindow=true
-        X-GNOME-SingleWindow=true
-        Keywords=security;privacy;password-manager;yubikey;password;keepass;
-      '';
-    };
+    xdg.configFile."autostart/org.keepassxc.KeePassXC.desktop".source = let
+      sshAgentSock = "/run/user/${toString config.my.user.uid}/ssh-agent";
+      desktopItem = pkgs.makeDesktopItem {
+        name = "org.keepassxc.KeePassXC";
+        desktopName = "KeePassXC";
+        genericName = "Password Manager";
+        comment = "Community-driven port of the Windows application “KeePass Password Safe”";
+        exec = "env QT_QPA_PLATFORM=wayland SSH_AUTH_SOCK=${sshAgentSock} ${keepassxcBin} %f";
+        tryExec = keepassxcBin;
+        icon = "keepassxc";
+        startupWMClass = "keepassxc";
+        startupNotify = true;
+        terminal = false;
+        type = "Application";
+        categories = ["Utility" "Security" "Qt"];
+        mimeTypes = ["application/x-keepass2"];
+        keywords = ["security" "privacy" "password-manager" "yubikey" "password" "keepass"];
+      };
+    in "${desktopItem}/share/applications/org.keepassxc.KeePassXC.desktop";
   };
 }
