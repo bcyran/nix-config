@@ -6,6 +6,8 @@
 
 set +o nounset
 
+SAVE_FILE='/tmp/backlight_save'
+
 progname="$(basename "$0")"
 mapfile -t devices < <(light -L | grep 'auto\|ddcci' | sed 's/[[:blank:]]*//')
 readonly progname devices
@@ -24,14 +26,35 @@ is_number() {
     fi
 }
 
+save_value() {
+    light -G > ${SAVE_FILE}
+}
+
+restore_value() {
+    if [[ -f ${SAVE_FILE} ]]; then
+        light_all -S "$(cat ${SAVE_FILE})"
+    else
+        err 'no saved value'
+    fi
+}
+
+forget_value() {
+    rm -f ${SAVE_FILE}
+}
+
 print_help() {
-    echo "Usage: ${progname} [-h|--help] {set|get|up|down} [VALUE]"
+    echo "Usage: ${progname} [-h|--help] {set|get|up|down|save|restore|forget} [VALUE]"
     echo "Set backlight intensity of all available displays."
 }
 
 usage_err() {
     echo "${progname}: $1" >&2
     print_help
+    exit 1
+}
+
+err() {
+    echo "${progname}: $1" >&2
     exit 1
 }
 
@@ -55,6 +78,15 @@ case "${command}" in
     down)
         is_number "${value:-10}" || usage_err 'VALUE must be a number'
         light_all -U "${value:-10}"
+        ;;
+    save)
+        save_value
+        ;;
+    restore)
+        restore_value
+        ;;
+    forget)
+        forget_value
         ;;
     -h | ?-help)
         print_help
