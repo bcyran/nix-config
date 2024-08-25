@@ -17,7 +17,7 @@ in {
         anyrun.enable = mkDefault true;
         swaync.enable = mkDefault true;
         hypridle.enable = mkDefault true;
-        hyprlock.enable = mkDefault true;
+        swaylock.enable = mkDefault true;
         swww.enable = mkDefault true;
         wlsunset.enable = mkDefault true;
       };
