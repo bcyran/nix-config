@@ -21,8 +21,8 @@ in {
         listener = [
           {
             timeout = 5 * 60;
-            on-timeout = "${backlightBin} set 10";
-            on-resume = "${backlightBin} set 100";
+            on-timeout = "${backlightBin} save && ${backlightBin} set 10";
+            on-resume = "${backlightBin} restore";
           }
           {
             timeout = 15 * 60;
