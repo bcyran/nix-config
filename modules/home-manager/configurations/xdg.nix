@@ -9,6 +9,7 @@
   webBrowser = "firefox.desktop";
   pdfViewer = "org.pwmt.zathura-pdf-mupdf.desktop";
   imageViewer = "org.gnome.gThumb.desktop";
+  fileManager = "thunar.desktop";
 
   makeAssociations = program: type: subtypes:
     builtins.listToAttrs (map (subtype: {
@@ -48,7 +49,8 @@
       "gif"
       "svg"
     ]
-    // makeAssociations pdfViewer "application" ["pdf"];
+    // makeAssociations pdfViewer "application" ["pdf"]
+    // makeAssociations fileManager "inode" ["directory"];
 in {
   options.my.configurations.xdg.enable = lib.mkEnableOption "xdg";
 
