@@ -146,19 +146,6 @@ in {
       };
 
       zoxide.enable = true;
-
-      atuin = {
-        enable = true;
-        flags = [
-          "--disable-up-arrow"
-          "--disable-ctrl-r"
-        ];
-        settings = {
-          inline_height = 15;
-          ctrl_n_shortcuts = true;
-          enter_accept = true;
-        };
-      };
     };
   };
 }
