@@ -58,6 +58,7 @@ in {
     programs.fish.enable = true;
 
     environment.systemPackages = with pkgs; [
+      file
       e2fsprogs
       lsof
       lm_sensors
