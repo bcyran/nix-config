@@ -46,10 +46,6 @@
     };
   };
 
-  programs = {
-    light.enable = true;
-  };
-
   services = {
     hardware.bolt.enable = true;
     systemd-lock-handler.enable = true; # Required for `lock.target` in user's systemd
