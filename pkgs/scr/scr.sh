@@ -9,7 +9,17 @@ get_shot_path() {
 }
 
 notify() {
-    notify-send -a scr -i "$1" "Screenshot taken" "Saved as $1"
+    local notif_action
+    notif_action="$(notify-send --app-name scr --action='open_image=Open the image' --action='open_dir=Open the directory' --icon "$1" 'Screenshot taken' "Saved as $1")"
+    case ${notif_action} in
+        "open_image")
+            gio open "$1"
+            ;;
+        "open_dir")
+            gio open "$(dirname "$1")"
+            ;;
+    esac
+
 }
 
 notify_if_saved() {
@@ -22,14 +32,14 @@ annotate_fullscreen() {
     hyprctl keyword windowrulev2 'fullscreen,title:^(satty)$' > /dev/null
     hyprctl keyword windowrulev2 'float,title:^(satty)$' > /dev/null
     hyprctl keyword windowrulev2 'noanim,title:^(satty)$' > /dev/null
-    satty --filename - --fullscreen --save-after-copy --early-exit --output-filename "$1"
+    satty --disable-notifications --filename - --fullscreen --save-after-copy --early-exit --output-filename "$1"
     hyprctl keyword windowrulev2 'unset,title:^(satty)$' > /dev/null
 }
 
 annotate_floating() {
     hyprctl keyword windowrulev2 'float,title:^(satty)$' > /dev/null
     hyprctl keyword windowrulev2 'noanim,title:^(satty)$' > /dev/null
-    satty --filename - --save-after-copy --early-exit --output-filename "$1"
+    satty --disable-notifications --filename - --save-after-copy --early-exit --output-filename "$1"
     hyprctl keyword windowrulev2 'unset,title:^(satty)$' > /dev/null
 }
 
