@@ -117,6 +117,7 @@ in {
         key_press_enables_dpms = false;
         force_default_wallpaper = 0;
         animate_manual_resizes = true;
+        focus_on_activate = true;
       };
       cursor = {
         inactive_timeout = 60;
