@@ -93,7 +93,7 @@ in {
         ];
       };
       extraConfig = ''
-        bind=ALT,R,submap,resize
+        bind=SUPER,R,submap,resize
         submap=resize
         binde=,l,resizeactive,20 0
         binde=,h,resizeactive,-20 0
@@ -102,7 +102,7 @@ in {
         bind=,escape,submap,reset
         submap=reset
 
-        bind=ALT,M,submap,move
+        bind=SUPER,M,submap,move
         submap=move
         binde=,l,moveactive,20 0
         binde=,h,moveactive,-20 0
@@ -111,9 +111,9 @@ in {
         bind=,escape,submap,reset
         submap=reset
 
-        bind=ALT,escape,submap,passthrough
+        bind=SUPER,escape,submap,passthrough
         submap=passthrough
-        bind=ALT,escape,submap,reset
+        bind=SUPER,escape,submap,reset
         submap=reset
       '';
     };

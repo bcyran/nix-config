@@ -16,7 +16,7 @@
 in {
   config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
-      "$mod" = "ALT";
+      "$mod" = "SUPER";
       "$monitorL" = monitorId (monitorByIdx 0);
       "$monitorC" = monitorId (monitorByIdx 1);
       "$monitorR" = monitorId (monitorByIdx 2);
