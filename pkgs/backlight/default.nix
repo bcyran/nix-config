@@ -1,12 +1,10 @@
 {
   writeShellApplication,
-  light,
   coreutils,
-  gnugrep,
-  gnused,
+  brillo,
 }:
 writeShellApplication {
   name = "backlight";
-  runtimeInputs = [light coreutils gnugrep gnused];
+  runtimeInputs = [coreutils brillo];
   text = builtins.readFile ./backlight.sh;
 }

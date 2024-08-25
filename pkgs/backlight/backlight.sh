@@ -1,22 +1,11 @@
 #!/usr/bin/env bash
-#
-# A script for setting backlight on multiple devices at once
-# External monitors exposed via sysfs using https://aur.archlinux.org/packages/ddcci-driver-linux-dkms/
-# Uses `light` as a backend: https://github.com/haikarainen/light
 
 set +o nounset
 
 SAVE_FILE='/tmp/backlight_save'
 
 progname="$(basename "$0")"
-mapfile -t devices < <(light -L | grep 'auto\|ddcci' | sed 's/[[:blank:]]*//')
-readonly progname devices
-
-light_all() {
-    for device in "${devices[@]}"; do
-        light -s "${device}" "$@"
-    done
-}
+readonly progname
 
 is_number() {
     if [[ $1 =~ ^[0-9]+$ ]]; then
@@ -26,13 +15,45 @@ is_number() {
     fi
 }
 
+get_value() {
+    local raw_value
+    raw_value=$(brillo -G)
+    echo "${raw_value%.*}"
+}
+
+set_value() {
+    brillo -e -S "$1"
+}
+
+increment_value() {
+    local current_value new_value
+    current_value=$(get_value)
+    new_value=$((current_value + $1))
+    if [[ new_value -le 100 ]]; then
+        set_value ${new_value}
+    else
+        err "can't set value greater than 100"
+    fi
+}
+
+decrement_value() {
+    local current_value new_value
+    current_value=$(get_value)
+    new_value=$((current_value - $1))
+    if [[ new_value -ge 0 ]]; then
+        set_value ${new_value}
+    else
+        err "can't set value less than 0"
+    fi
+}
+
 save_value() {
-    light -G > ${SAVE_FILE}
+    get_value > ${SAVE_FILE}
 }
 
 restore_value() {
     if [[ -f ${SAVE_FILE} ]]; then
-        light_all -S "$(cat ${SAVE_FILE})"
+        set_value "$(cat ${SAVE_FILE})"
     else
         err 'no saved value'
     fi
@@ -66,18 +87,18 @@ case "${command}" in
     set)
         [[ -n "${value}" ]] || usage_err 'missing VALUE'
         is_number "${value}" || usage_err 'VALUE must be a number'
-        light_all -S "${value}"
+        set_value "${value}"
         ;;
     get)
-        light -G
+        get_value
         ;;
     up)
         is_number "${value:-10}" || usage_err 'VALUE must be a number'
-        light_all -A "${value:-10}"
+        increment_value "${value:-10}"
         ;;
     down)
         is_number "${value:-10}" || usage_err 'VALUE must be a number'
-        light_all -U "${value:-10}"
+        decrement_value "${value:-10}"
         ;;
     save)
         save_value
