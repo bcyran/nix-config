@@ -4,7 +4,7 @@ return {
   -- Base copilot plugin
   {
     "zbirenbaum/copilot.lua",
-    enabled = settings.copilot_enabled,
+    enabled = settings.copilot_enabled and not settings.copilot_official,
     cmd = "Copilot",
     event = "InsertEnter",
     keys = {
@@ -170,6 +170,41 @@ return {
       vim.keymap.set("i", "<C-e>", function()
         return vim.fn["codeium#Clear"]()
       end, { expr = true, silent = true })
+    end,
+  },
+
+  {
+    "github/copilot.vim",
+    enabled = settings.copilot_enabled and settings.copilot_official,
+    lazy = false,
+    init = function()
+      -- Dismiss copilot suggestion when cmp menu is opened
+      local cmp_status_ok, cmp = pcall(require, "cmp")
+      if cmp_status_ok then
+        cmp.event:on("menu_opened", function()
+          vim.cmd([[
+            if copilot#Enabled()
+              call copilot#Dismiss()
+            endif
+          ]])
+        end)
+      end
+      -- Settings
+      vim.g.copilot_filetypes = {
+        ["*"] = false,
+        rust = true,
+        python = true,
+        bash = true,
+        lua = true,
+        nix = true,
+      }
+      vim.g.copilot_no_tab_map = true
+      -- Keymaps
+      vim.keymap.set("i", "<C-y>", 'copilot#Accept("\\<CR>")', { expr = true, replace_keycodes = false })
+      vim.keymap.set("i", "<C-n>", "<Plug>(copilot-next)")
+      vim.keymap.set("i", "<C-p>", "<Plug>(copilot-next)")
+      vim.keymap.set("i", "<C-e>", "<Plug>(copilot-dismiss)")
+      vim.keymap.set("i", "<C-a>", "<Plug>(copilot-suggest)")
     end,
   },
 

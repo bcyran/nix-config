@@ -4,12 +4,26 @@
   lib,
   ...
 }: let
+  inherit (lib) types;
+  inherit (lib.trivial) boolToString;
   cfg = config.my.programs.neovim;
 
   alacrittyBin = "${pkgs.alacritty}/bin/alacritty";
   nvimBin = "${pkgs.neovim}/bin/nvim";
 in {
-  options.my.programs.neovim.enable = lib.mkEnableOption "neovim";
+  options.my.programs.neovim = {
+    enable = lib.mkEnableOption "neovim";
+    settings = {
+      codeium.enable = lib.mkEnableOption "codeium";
+      copilot = {
+        enable = lib.mkOption {
+          type = types.bool;
+          default = true;
+        };
+        useOfficialPlugin = lib.mkEnableOption "copilot official plugin";
+      };
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     programs.neovim = {
@@ -38,7 +52,22 @@ in {
       ];
     };
 
-    xdg.configFile."nvim/lua".source = ./files/lua;
+    xdg.configFile = {
+      "nvim/lua" = {
+        source = ./files/lua;
+        recursive = true;
+      };
+
+      "nvim/lua/config/settings.lua".text = ''
+        local settings = {
+          copilot_enabled = ${boolToString cfg.settings.copilot.enable},
+          copilot_official = ${boolToString cfg.settings.copilot.useOfficialPlugin},
+          codeium_enabled = ${boolToString cfg.settings.codeium.enable},
+        }
+
+        return settings
+      '';
+    };
 
     xdg.desktopEntries.nvim = {
       type = "Application";
