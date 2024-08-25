@@ -26,6 +26,7 @@ in {
     };
 
     programs = {
+      zoxide.enable = true;
       eza.enable = mkDefault true;
       ripgrep.enable = mkDefault true;
       fd.enable = mkDefault true;

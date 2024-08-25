@@ -144,8 +144,6 @@ in {
           }
         ];
       };
-
-      zoxide.enable = true;
     };
   };
 }
