@@ -62,9 +62,9 @@ in {
             "$mod, mouse_left, changegroupactive, b"
             "$mod, mouse_right, changegroupactive, f"
 
-            "$mod, s, exec, src output"
-            "$mod CONTROL, s, exec, src area"
-            "$mod SHIFT, s, exec, src active"
+            "$mod, s, exec, scr output"
+            "$mod CONTROL, s, exec, scr area"
+            "$mod SHIFT, s, exec, scr active"
 
             "$mod, slash, exec, playerctl play-pause"
             "$mod, comma, exec, playerctl previous"
