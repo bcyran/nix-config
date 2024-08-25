@@ -104,8 +104,6 @@ in {
           '';
         };
         interactiveShellInit = ''
-          set -gx ATUIN_NOBIND true
-          atuin init fish | source
           bind / _atuin_search
 
           fish_vi_key_bindings
@@ -146,16 +144,15 @@ in {
           }
         ];
       };
-      zoxide = {
-        enable = true;
-        enableFishIntegration = true;
-      };
+
+      zoxide.enable = true;
+
       atuin = {
         enable = true;
-        enableBashIntegration = false;
-        enableFishIntegration = false;
-        enableNushellIntegration = false;
-        enableZshIntegration = false;
+        flags = [
+          "--disable-up-arrow"
+          "--disable-ctrl-r"
+        ];
         settings = {
           inline_height = 15;
           ctrl_n_shortcuts = true;
