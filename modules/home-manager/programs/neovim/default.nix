@@ -49,6 +49,7 @@ in {
         vscode-langservers-extracted
         marksman
         markdownlint-cli2
+        taplo-lsp
       ];
     };
 
