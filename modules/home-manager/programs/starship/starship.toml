@@ -1,0 +1,113 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$username\
+$hostname\
+$shlvl\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$character
+"""
+
+right_format = """
+$dart\
+$golang\
+$kotlin\
+$lua\
+$nodejs\
+$python\
+$rust\
+$nix_shell\
+$cmd_duration\
+$jobs\
+$status\
+"""
+
+add_newline = false
+
+[username]
+format = "[$user]($style)"
+style_user = "bold yellow"
+style_root = "bold red"
+show_always = false
+
+[hostname]
+format = "@[$hostname$ssh_symbol]($style) in "
+ssh_symbol = " "
+style = "bold blue"
+ssh_only = true
+
+[directory]
+read_only = " 󰌾"
+truncate_to_repo = false
+fish_style_pwd_dir_length = 1
+style = "bold cyan"
+
+[git_branch]
+style = "green"
+symbol = " "
+truncation_length = 20
+
+[git_commit]
+style = "green"
+tag_disabled = false
+
+[git_state]
+style = "bold purple"
+
+[git_status]
+format = "([\\[$all_status$ahead_behind\b\\]]($style) )"
+style = "white"
+conflicted = "[!${count}](red) "
+ahead = "[⇡${count}](purple) "
+behind = "[⇣${count}](purple) "
+diverged = "[⇡${ahead_count} ⇣${behind_count}](purple) "
+up_to_date = ""
+untracked = "[?${count}](cyan) "
+stashed = '[\$${count}](blue) '
+modified = "[*${count}](yellow) "
+staged = "[+${count}](green) "
+renamed = "[➜${count}](yellow) "
+deleted = "[-${count}](red) "
+
+[dart]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[kotlin]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[python]
+symbol = " "
+
+[rust]
+symbol = "󱘗 "
+
+[nix_shell]
+format = 'via [$symbol$state]($style) '
+symbol = " "
+pure_msg = "[▲](green)"
+impure_msg = "[▼](yellow)"
+
+[cmd_duration]
+style = "yellow"
+
+[status]
+disabled = false
+pipestatus = true
+pipestatus_format = '$pipestatus'
+symbol = "❌"
+not_executable_symbol = ""
+not_found_symbol = "?"
+sigint_symbol = "󱐋"

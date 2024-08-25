@@ -13,6 +13,7 @@ in {
     my = {
       programs = {
         fish.enable = mkDefault true;
+        starship.enable = mkDefault true;
         neovim.enable = mkDefault true;
         git.enable = mkDefault true;
         tmux.enable = mkDefault true;
