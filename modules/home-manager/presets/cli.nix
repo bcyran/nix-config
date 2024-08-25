@@ -18,6 +18,7 @@ in {
         neovim.enable = mkDefault true;
         git.enable = mkDefault true;
         tmux.enable = mkDefault true;
+        zellij.enable = mkDefault true;
         bat.enable = mkDefault true;
         btop.enable = mkDefault true;
         direnv.enable = mkDefault true;
