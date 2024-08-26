@@ -121,18 +121,21 @@ in {
     xdg.configFile."kidex.ron".text = ''
       Config(
         ignored: [
-          "*/.*",
-          "*.git*",
-          "*.node_modules*",
-          "*.cache*",
-          "*build/*",
-          "*__pycache__*",
+          ".*",
+          "__pycache__",
+          "node_modules",
+          "build",
+          "target",
+          "go",
         ],
         directories: [
           WatchDir(
             path: "${config.my.user.home}",
             recurse: true,
-            ignored: [],
+            ignored: [
+              "qmk_firmware",
+              "nixpkgs",
+            ],
           ),
         ],
       )
