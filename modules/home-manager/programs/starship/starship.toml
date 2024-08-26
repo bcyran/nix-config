@@ -9,10 +9,7 @@ $git_branch\
 $git_commit\
 $git_state\
 $git_status\
-$character
-"""
-
-right_format = """
+$fill\
 $dart\
 $golang\
 $kotlin\
@@ -24,20 +21,25 @@ $nix_shell\
 $cmd_duration\
 $jobs\
 $status\
+$line_break\
+$character
 """
 
 add_newline = false
 
+[fill]
+symbol = " "
+
 [username]
 format = "[$user]($style)"
-style_user = "bold yellow"
+style_user = "bold blue"
 style_root = "bold red"
 show_always = false
 
 [hostname]
 format = "@[$hostname$ssh_symbol]($style) in "
 ssh_symbol = " "
-style = "bold blue"
+style = "bold yellow"
 ssh_only = true
 
 [directory]
@@ -47,7 +49,7 @@ fish_style_pwd_dir_length = 1
 style = "bold cyan"
 
 [git_branch]
-style = "green"
+style = "bold green"
 symbol = " "
 truncation_length = 20
 
@@ -73,41 +75,55 @@ staged = "[+${count}](green) "
 renamed = "[➜${count}](yellow) "
 deleted = "[-${count}](red) "
 
+# We need to define `format` for each module on the right side to get rid of the trailing space.
+# We put the space at the start of each module instead.
 [dart]
-symbol = " "
+format = " via [$symbol( $version)]($style)"
+symbol = ""
 
 [golang]
-symbol = " "
+format = " via [$symbol( $version)]($style)"
+symbol = ""
 
 [kotlin]
-symbol = " "
+format = " via [$symbol( $version)]($style)"
+symbol = ""
 
 [lua]
-symbol = " "
+format = " via [$symbol( $version)]($style)"
+symbol = ""
 
 [nodejs]
-symbol = " "
+format = " via [$symbol( $version)]($style)"
+symbol = ""
 
 [python]
-symbol = " "
+format = ' via [${symbol}( ${version})( \($virtualenv\))]($style)'
+symbol = ""
 
 [rust]
-symbol = "󱘗 "
+format = " via [$symbol( $version)]($style)"
+symbol = "󱘗"
 
 [nix_shell]
-format = 'via [$symbol$state]($style) '
-symbol = " "
+format = " via [$symbol $state]($style)"
+symbol = ""
 pure_msg = "[▲](green)"
 impure_msg = "[▼](yellow)"
 
 [cmd_duration]
+format = " took [$duration]($style)"
 style = "yellow"
 
+[jobs]
+format = " [$symbol$number]($style)"
+
 [status]
+format = " [$symbol$status]($style)"
 disabled = false
 pipestatus = true
-pipestatus_format = '$pipestatus'
-symbol = "❌"
+pipestatus_format = "$pipestatus"
+symbol = "✘ "
 not_executable_symbol = ""
 not_found_symbol = "?"
 sigint_symbol = "󱐋"
