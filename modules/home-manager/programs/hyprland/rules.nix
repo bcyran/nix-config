@@ -32,20 +32,6 @@ in {
         "float, title:splash"
         "float, title:Android Emulator"
         "noblur, class:Rofi"
-
-        # Onagre launcher
-        "noborder, class:onagre"
-        "noanim, class:onagre"
-        "rounding 5, class:onagre"
-        "opacity 0.9, class:onagre"
-
-        # Mattermost call widget
-        "pin, title:Calls Widget"
-        "float, title:Calls Widget"
-        "move 100%-292 100%-116, title:Calls Widget"
-        "monitor $monitorC, title:Calls Widget"
-        "noborder, title:Calls Widget"
-        "noshadow, title:Calls Widget"
       ];
     };
   };
