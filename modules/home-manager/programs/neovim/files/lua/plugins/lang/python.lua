@@ -43,70 +43,47 @@ return {
               },
             },
           },
+          -- Disable organize imports in favor of Ruff
+          disableOrganizeImports = true,
         },
+        ruff = {
+          cmd_env = { RUFF_TRACE = "messages" },
+          init_options = {
+            settings = {
+              logLevel = "error",
+            },
+          },
+          keys = {
+            {
+              "<leader>co",
+              LazyVim.lsp.action["source.organizeImports"],
+              desc = "Organize Imports",
+            },
+          },
+        },
+      },
+      setup = {
+        ["ruff"] = function()
+          LazyVim.lsp.on_attach(function(client, _)
+            -- Disable hover in favor of Pyright
+            client.server_capabilities.hoverProvider = false
+          end, "ruff")
+        end,
       },
     },
   },
 
-  -- Setup formatters
+  -- Formatting: Ruff LSP and import sorting
   {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
         python = {
-          "black",
-          "isort",
-        },
-      },
-      formatters = {
-        black = {
-          inherit = true,
-          prepend_args = {
-            "--line-length",
-            "100",
-          },
-        },
-        isort = {
-          inherit = true,
-          prepend_args = {
-            "--profile",
-            "black",
-            "--line-length",
-            "100",
-            "--lines-after-imports",
-            "2",
-            "--combine-as",
-          },
+          "ruff_organize_imports",
+          lsp_format = "first",
         },
       },
     },
-  },
-
-  -- Setup linters
-  {
-    "mfussenegger/nvim-lint",
-    opts = function(_, opts)
-      local lint = require("lint")
-      opts.linters_by_ft.python = {
-        "flake8",
-        -- "mypy",
-      }
-      opts.linters = opts.linters or {}
-      opts.linters.flake8 = {
-        args = {
-          "--ignore",
-          "E501,W503,E203",
-          unpack(lint.linters.flake8.args),
-        },
-      }
-      opts.linters.mypy = {
-        args = {
-          "--ignore-missing-imports",
-          unpack(lint.linters.mypy.args),
-        },
-      }
-      return opts
-    end,
   },
 
   -- Virutalenv selector
