@@ -1,4 +1,15 @@
 {lib}: rec {
+  # NixOS and Home Manager configuration utilities.
+  config = import ./config.nix;
+
+  # forEachSystemPkgs :: [<system>] -> <nixpkgs> -> (<packages> -> <attrs>) -> <attrs>
+  #
+  # Generates attributes for each system in `systems` using `f` with packages for that system
+  # passed as an argument.
+  forEachSystemPkgs = systems: nixpkgs: f:
+    nixpkgs.lib.genAttrs systems
+    (system: f nixpkgs.legacyPackages.${system});
+
   # listDir :: path -> [string]
   #
   # Returns a list of names of files (and dirs) in the given directory.
@@ -31,47 +42,4 @@
     assertion = !(isFalsy attrset.${attr});
     message = "Required attribute '${attrsetPath}.${attr}' is missing.";
   };
-
-  # mkMy :: attrs -> string -> attrs
-  #
-  # Returns a new `my` attrset with system specific `pkgs` from `my.packages.{system}`.
-  mkMyForSystem = {
-    my,
-    system,
-  }:
-    my
-    // {
-      pkgs = my.packages.${system};
-    };
-
-  # Creates a NixOS system configuration.
-  mkNixosSystem = {
-    inputs,
-    my,
-    system,
-    modules,
-  }:
-    inputs.nixpkgs.lib.nixosSystem {
-      inherit modules;
-      specialArgs = {
-        inherit inputs;
-        my = mkMyForSystem {inherit my system;};
-      };
-    };
-
-  # Creates a Home Manager configuration.
-  mkHomeManagerConfiguration = {
-    inputs,
-    my,
-    system,
-    modules,
-  }:
-    inputs.home-manager.lib.homeManagerConfiguration {
-      inherit modules;
-      pkgs = inputs.nixpkgs.legacyPackages."${system}";
-      extraSpecialArgs = {
-        inherit inputs;
-        my = mkMyForSystem {inherit my system;};
-      };
-    };
 }
