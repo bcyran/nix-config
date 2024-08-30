@@ -34,8 +34,14 @@ in {
     };
 
     home.packages = with pkgs; [
+      # Fonts
       inter
+      corefonts
+      noto-fonts
+      noto-fonts-emoji
+      noto-fonts-cjk
       (nerdfonts.override {fonts = ["JetBrainsMono"];})
+
       libnotify
       wl-clipboard
       playerctl
@@ -52,7 +58,9 @@ in {
       enable = mkDefault true;
       defaultFonts = {
         sansSerif = mkDefault ["Inter"];
+        serif = mkDefault ["Noto Serif"];
         monospace = mkDefault ["JetBrainsMonoNL NF"];
+        emoji = mkDefault ["Noto Color Emoji"];
       };
     };
   };
