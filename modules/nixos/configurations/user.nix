@@ -20,9 +20,6 @@ in {
           inherit (userCfg) uid;
         };
       };
-      groups = {
-        video = {};
-      };
     };
   };
 }

@@ -31,6 +31,7 @@
       bluetooth.enable = true;
       audio.enable = true;
       ddcci.enable = true;
+      backlight.enable = true;
       filesystem.enable = true;
       printing.enable = true;
       silentboot.enable = true;

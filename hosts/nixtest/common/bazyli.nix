@@ -8,7 +8,7 @@
       dotfilesDir = "${home}/dotfiles-nix";
       shell = pkgs.fish;
       uid = 1000;
-      groups = ["networkmanager" "wheel" "video"];
+      groups = ["networkmanager" "wheel"];
     };
   };
 }
