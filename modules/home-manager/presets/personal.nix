@@ -29,6 +29,7 @@ in {
       vlc
       tor-browser
       gnome.gnome-boxes
+      quickemu
     ];
   };
 }
