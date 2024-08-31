@@ -15,7 +15,7 @@ in {
         audio.enable = mkDefault true;
         ddcci.enable = mkDefault true;
         backlight.enable = mkDefault true;
-        filesystem.enable = mkDefault true;
+        fileManagement.enable = mkDefault true;
         silentboot.enable = mkDefault true;
       };
       programs = {

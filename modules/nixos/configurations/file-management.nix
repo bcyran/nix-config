@@ -4,9 +4,9 @@
   lib,
   ...
 }: let
-  cfg = config.my.configurations.filesystem;
+  cfg = config.my.configurations.fileManagement;
 in {
-  options.my.configurations.filesystem.enable = lib.mkEnableOption "filesystem";
+  options.my.configurations.fileManagement.enable = lib.mkEnableOption "file management";
 
   config = lib.mkIf cfg.enable {
     services = {
