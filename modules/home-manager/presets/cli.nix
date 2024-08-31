@@ -20,6 +20,7 @@ in {
         tmux.enable = mkDefault true;
         zellij.enable = mkDefault true;
         bat.enable = mkDefault true;
+        fzf.enable = mkDefault true;
         btop.enable = mkDefault true;
         direnv.enable = mkDefault true;
         nix-index.enable = mkDefault true;
