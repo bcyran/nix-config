@@ -18,7 +18,7 @@
     ../common/bazyli.nix
   ];
 
-  networking.hostName = "nixtest";
+  networking.hostName = "t480";
 
   my = {
     presets = {

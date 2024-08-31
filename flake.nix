@@ -82,11 +82,11 @@
         system = "x86_64-linux";
         modules = [./hosts/slimbook/nixos];
       };
-      nixtest = lib.config.mkSystem {
+      t480 = lib.config.mkSystem {
         inherit inputs;
         my = inputs.self;
         system = "x86_64-linux";
-        modules = [./hosts/nixtest/nixos];
+        modules = [./hosts/t480/nixos];
       };
     };
 
@@ -100,11 +100,11 @@
         system = "x86_64-linux";
         modules = [./hosts/slimbook/home-manager/bazyli.nix];
       };
-      "bazyli@nixtest" = lib.config.mkHome {
+      "bazyli@t480" = lib.config.mkHome {
         inherit inputs;
         my = inputs.self;
         system = "x86_64-linux";
-        modules = [./hosts/slimbook/nixtest/bazyli.nix];
+        modules = [./hosts/t480/home-manager/bazyli.nix];
       };
     };
   };
