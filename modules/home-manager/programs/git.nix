@@ -59,7 +59,7 @@ in {
         sw = "switch";
         swc = "switch -c";
         sl = "switch -";
-        sr = "!f() { git for-each-ref --count=10 --sort=-committerdate --format='%(refname:short)|%(committerdate:relative)|%(subject)|%(authorname)' refs/heads | column -ts'|' | fzf +m | cut -d ' ' -f 1 | xargs -o git switch; }; f";
+        sr = "!f() { git for-each-ref --count=30 --sort=-committerdate --format='%(refname:short)|%(committerdate:relative)|%(subject)|%(authorname)' refs/heads | column -ts'|' | fzf +m | cut -d ' ' -f 1 | xargs -o git switch; }; f";
         br = "branch";
         aa = "add --all";
         sa = "stash --all";
@@ -75,7 +75,7 @@ in {
         dfc = "diff --cached";
         pf = "push --force-with-lease";
         prom = "pull --rebase origin master";
-        ria = "rebase --interactive --autosquash --autostash";
+        ria = "rebase --interactive";
         r = "restore";
         rs = "restore --staged";
         cf = "chain first";
@@ -90,6 +90,14 @@ in {
         };
         merge.conflictstyle = "diff3";
         pull.ff = "only";
+        push = {
+          default = "current";
+          autoSetupRemote = true;
+        };
+        rebase = {
+          autoStash = true;
+          autoSquash = true;
+        };
         rerere.enable = true;
         branch.sort = "-committerdate";
         column.ui = "auto";
