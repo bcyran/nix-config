@@ -87,7 +87,6 @@ in {
       extraConfig = {
         core = {
           editor = "nvim";
-          excludesfile = "~/.gitignore";
         };
         merge.conflictstyle = "diff3";
         pull.ff = "only";
@@ -96,27 +95,18 @@ in {
         column.ui = "auto";
         diff.colorMoved = "default";
       };
+      ignores = [
+        "local"
+        ".venv"
+        "*.egg-info"
+        ".mypy_cache"
+        "pyrightconfig.json"
+        "Session.vim"
+        ".vim"
+        ".rgignore"
+        ".direnv"
+      ];
     };
-    home.file.".gitignore".text = ''
-      # for keeping some random stuff in project dirs without cluttering git
-      local
-
-      # Python
-      .venv
-      *.egg-info
-      .mypy_cache
-      pyrightconfig.json
-
-      # Vim
-      Session.vim
-      .vim
-
-      # ripgrep
-      .rgignore
-
-      # direnv
-      .direnv
-    '';
     home.packages = [
       my.pkgs.git-smash
       my.pkgs.git-chain
