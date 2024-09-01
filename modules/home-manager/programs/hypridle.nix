@@ -22,12 +22,12 @@ in {
           {
             timeout = 5 * 60;
             on-timeout = "${backlightBin} save && ${backlightBin} set 10";
-            on-resume = "${backlightBin} restore";
+            on-resume = "${sleepBin} 1 && ${backlightBin} restore";
           }
           {
             timeout = 15 * 60;
             on-timeout = "${hyprctlBin} dispatch dpms off";
-            on-resume = "${hyprctlBin} dispatch dpms on && ${sleepBin} 1";
+            on-resume = "${hyprctlBin} dispatch dpms on";
           }
           {
             timeout = 30 * 60;
