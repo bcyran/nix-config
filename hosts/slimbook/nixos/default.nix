@@ -35,6 +35,7 @@
       hyprland.enable = true;
       greetd.enable = true;
       btrbk.enable = true;
+      openssh.enable = true;
     };
   };
 

@@ -33,16 +33,11 @@
       hyprland.enable = true;
       greetd.enable = true;
       btrbk.enable = true;
+      openssh.enable = true;
     };
   };
 
   services = {
     hardware.bolt.enable = true;
-    openssh = {
-      enable = true;
-      settings = {
-        PermitRootLogin = "no";
-      };
-    };
   };
 }
