@@ -12,7 +12,7 @@ in {
     my = {
       configurations = {
         core.enable = mkDefault true;
-        user.enable = mkDefault true;
+        users.enable = mkDefault true;
         networking.enable = mkDefault true;
         console.enable = mkDefault true;
         locale.enable = mkDefault true;

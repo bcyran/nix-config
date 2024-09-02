@@ -4,12 +4,12 @@
   ...
 }: let
   inherit (lib) types;
-  cfg = config.my.configurations.user;
+  cfg = config.my.configurations.users;
 
   userCfg = config.my.user;
 in {
-  options.my.configurations.user = {
-    enable = lib.mkEnableOption "user";
+  options.my.configurations.users = {
+    enable = lib.mkEnableOption "users";
     hashedPasswordFile = lib.mkOption {
       type = types.nullOr types.str;
       default = null;
@@ -25,6 +25,7 @@ in {
   config = lib.mkIf cfg.enable {
     users = {
       mutableUsers = cfg.hashedPasswordFile == null || cfg.rootHashedPasswordFile == null;
+
       users = {
         root = {
           hashedPasswordFile = cfg.rootHashedPasswordFile;

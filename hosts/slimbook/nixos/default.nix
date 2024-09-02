@@ -39,7 +39,7 @@
       laptop.enable = true;
     };
     configurations = {
-      user = {
+      users = {
         enable = true;
         hashedPasswordFile = config.sops.secrets.hashed_password.path;
         rootHashedPasswordFile = config.sops.secrets.root_hashed_password.path;
