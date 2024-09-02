@@ -6,7 +6,14 @@
 }: let
   cfg = config.my.programs.udiskie;
 in {
-  options.my.programs.udiskie.enable = lib.mkEnableOption "udiskie";
+  options.my.programs.udiskie = {
+    enable = lib.mkEnableOption "udiskie";
+
+    deviceConfig = lib.mkOption {
+      type = lib.types.listOf lib.types.attrs;
+      default = [];
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     home.packages = [pkgs.udiskie];
@@ -20,14 +27,7 @@ in {
           file_manager = "thunar";
           terminal = "alacritty --working-directory";
         };
-        device_config = [
-          {
-            id_uuid = "e028f76b-e2a1-4a92-89a5-2fc5aeac615b";
-            keyfile = "${config.my.user.home}/.backup_key";
-            automount = true;
-            ignore = false;
-          }
-        ];
+        device_config = cfg.deviceConfig;
       };
     };
   };

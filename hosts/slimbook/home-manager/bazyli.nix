@@ -1,8 +1,20 @@
-{my, ...}: {
+{
+  inputs,
+  config,
+  my,
+  ...
+}: {
   imports = [
     my.homeManagerModules.default
     ../common/bazyli.nix
   ];
+
+  sops = {
+    age.keyFile = "${config.my.user.home}/.config/sops/age/keys.txt";
+    secrets = {
+      backup_key.sopsFile = "${inputs.my-secrets}/bazyli.yaml";
+    };
+  };
 
   my = {
     configurations = {
@@ -15,6 +27,18 @@
       hyprland.enable = true;
       personal.enable = true;
       tokyonight.enable = true;
+    };
+    programs = {
+      udiskie = {
+        deviceConfig = [
+          {
+            id_uuid = "e028f76b-e2a1-4a92-89a5-2fc5aeac615b";
+            keyfile = config.sops.secrets.backup_key.path;
+            automount = true;
+            ignore = false;
+          }
+        ];
+      };
     };
     hardware = {
       monitors = [
