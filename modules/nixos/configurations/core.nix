@@ -6,9 +6,18 @@
   config,
   ...
 }: let
+  inherit (lib) types;
   cfg = config.my.configurations.core;
 in {
-  options.my.configurations.core.enable = lib.mkEnableOption "core";
+  options.my.configurations.core = {
+    enable = lib.mkEnableOption "core";
+
+    nixExtraOptionsFile = lib.mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = "Path to the file with extra Nix options.";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     nixpkgs = {
@@ -32,11 +41,10 @@ in {
           "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
         ];
       };
-      # TODO: Use something like `agenix` or `sops` instead of providing GitHub API key in the
-      #       `nix-local.conf` file.
-      extraOptions = ''
-        !include nix-local.conf
-      '';
+      extraOptions =
+        if (cfg.nixExtraOptionsFile != null)
+        then "!include ${cfg.nixExtraOptionsFile}"
+        else "";
 
       # This will add each flake input as a registry
       # To make nix3 commands consistent with your flake

@@ -30,6 +30,7 @@
       sopsFile = "${inputs.my-secrets}/slimbook.yaml";
       neededForUsers = true;
     };
+    nix_extra_options.sopsFile = "${inputs.my-secrets}/bazyli.yaml";
   };
 
   my = {
@@ -39,6 +40,10 @@
       laptop.enable = true;
     };
     configurations = {
+      core = {
+        enable = true;
+        nixExtraOptionsFile = config.sops.secrets.nix_extra_options.path;
+      };
       users = {
         enable = true;
         hashedPasswordFile = config.sops.secrets.hashed_password.path;
