@@ -337,6 +337,24 @@
         "type": "github"
       }
     },
+    "my-secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1725291657,
+        "narHash": "sha256-GdQbA5CdDpSUWdAquTpLLXZj3v2ezsn3YbPSQCbdaG0=",
+        "ref": "main",
+        "rev": "1caa70970193ff0242e650aede76bce67d595b58",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/bcyran/secrets-nix.git"
+      },
+      "original": {
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/bcyran/secrets-nix.git"
+      }
+    },
     "nix-colors": {
       "inputs": {
         "base16-schemes": "base16-schemes",
@@ -423,6 +441,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable_2": {
+      "locked": {
+        "lastModified": 1721524707,
+        "narHash": "sha256-5NctRsoE54N86nWd0psae70YSLfrOek3Kv1e8KoXe/0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "556533a23879fc7e5f98dd2e0b31a6911a213171",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "release-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks-nix": {
       "inputs": {
         "flake-compat": [
@@ -459,9 +493,11 @@
         "home-manager": "home-manager",
         "hyprcursor-phinger": "hyprcursor-phinger",
         "lanzaboote": "lanzaboote",
+        "my-secrets": "my-secrets",
         "nix-colors": "nix-colors",
         "nix-index-database": "nix-index-database",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "sops-nix": "sops-nix"
       }
     },
     "rust-overlay": {
@@ -486,6 +522,27 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-stable": "nixpkgs-stable_2"
+      },
+      "locked": {
+        "lastModified": 1723501126,
+        "narHash": "sha256-N9IcHgj/p1+2Pvk8P4Zc1bfrMwld5PcosVA0nL6IGdE=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "be0eec2d27563590194a9206f551a6f73d52fa34",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
         "type": "github"
       }
     },

@@ -1,6 +1,7 @@
 {
   inputs,
   my,
+  config,
   ...
 }: {
   imports = [
@@ -20,6 +21,17 @@
 
   networking.hostName = "slimbook";
 
+  sops.secrets = {
+    hashed_password = {
+      sopsFile = "${inputs.my-secrets}/bazyli.yaml";
+      neededForUsers = true;
+    };
+    root_hashed_password = {
+      sopsFile = "${inputs.my-secrets}/slimbook.yaml";
+      neededForUsers = true;
+    };
+  };
+
   my = {
     presets = {
       base.enable = true;
@@ -27,7 +39,13 @@
       laptop.enable = true;
     };
     configurations = {
+      user = {
+        enable = true;
+        hashedPasswordFile = config.sops.secrets.hashed_password.path;
+        rootHashedPasswordFile = config.sops.secrets.root_hashed_password.path;
+      };
       lanzaboote.enable = true;
+      sops.enable = true;
       printing.enable = true;
       virtualisation.enable = true;
     };

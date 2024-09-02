@@ -42,6 +42,16 @@
       url = "github:jappie3/hyprcursor-phinger";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Secret management
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    my-secrets = {
+      url = "git+ssh://git@github.com/bcyran/secrets-nix.git?ref=main&shallow=1";
+      flake = false;
+    };
   };
 
   outputs = inputs: let
