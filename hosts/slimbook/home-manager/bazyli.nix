@@ -10,7 +10,6 @@
   ];
 
   sops = {
-    age.sshKeyPaths = ["${config.my.user.home}/.ssh/id_ed25519"];
     defaultSopsFile = "${inputs.my-secrets}/slimbook.yaml";
     secrets = {
       backup_key = {};
@@ -20,6 +19,7 @@
 
   my = {
     configurations = {
+      sops.enable = true;
       core = {
         enable = true;
         nixExtraOptionsFile = config.sops.secrets.nix_extra_options.path;
