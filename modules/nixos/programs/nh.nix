@@ -10,7 +10,7 @@ in {
   config = lib.mkIf cfg.enable {
     programs.nh = {
       enable = true;
-      flake = config.my.user.dotfilesDir;
+      flake = config.my.user.configDir;
       clean = {
         enable = true;
         dates = "weekly";

@@ -33,10 +33,10 @@ in {
       example = "/home/bazyli";
       default = "";
     };
-    dotfilesDir = mkOption {
+    configDir = mkOption {
       type = types.str;
       description = "Path to the user's dotfiles directory";
-      example = "/home/bazyli/dotfiles";
+      example = "/home/bazyli/nix-config";
       default = "";
     };
     shell = mkOption {

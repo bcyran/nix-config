@@ -49,7 +49,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     my-secrets = {
-      url = "git+ssh://git@github.com/bcyran/secrets-nix.git?ref=main&shallow=1";
+      url = "git+ssh://git@github.com/bcyran/nix-secrets.git?ref=main&shallow=1";
       flake = false;
     };
   };

@@ -346,13 +346,13 @@
         "rev": "40f2aaf8c98d7bc9606ea14cedcf7fa3f3bd604a",
         "shallow": true,
         "type": "git",
-        "url": "ssh://git@github.com/bcyran/secrets-nix.git"
+        "url": "ssh://git@github.com/bcyran/nix-secrets.git"
       },
       "original": {
         "ref": "main",
         "shallow": true,
         "type": "git",
-        "url": "ssh://git@github.com/bcyran/secrets-nix.git"
+        "url": "ssh://git@github.com/bcyran/nix-secrets.git"
       }
     },
     "nix-colors": {
