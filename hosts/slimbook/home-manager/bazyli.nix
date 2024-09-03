@@ -10,9 +10,10 @@
   ];
 
   sops = {
-    age.keyFile = "${config.my.user.home}/.config/sops/age/keys.txt";
+    age.sshKeyPaths = ["${config.my.user.home}/.ssh/id_ed25519"];
+    defaultSopsFile = "${inputs.my-secrets}/slimbook.yaml";
     secrets = {
-      backup_key.sopsFile = "${inputs.my-secrets}/bazyli.yaml";
+      backup_key = {};
     };
   };
 

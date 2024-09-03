@@ -21,16 +21,13 @@
 
   networking.hostName = "slimbook";
 
-  sops.secrets = {
-    hashed_password = {
-      sopsFile = "${inputs.my-secrets}/bazyli.yaml";
-      neededForUsers = true;
+  sops = {
+    defaultSopsFile = "${inputs.my-secrets}/slimbook.yaml";
+    secrets = {
+      bazyli_hashed_password.neededForUsers = true;
+      root_hashed_password.neededForUsers = true;
+      nix_extra_options = {};
     };
-    root_hashed_password = {
-      sopsFile = "${inputs.my-secrets}/slimbook.yaml";
-      neededForUsers = true;
-    };
-    nix_extra_options.sopsFile = "${inputs.my-secrets}/bazyli.yaml";
   };
 
   my = {
@@ -46,7 +43,7 @@
       };
       users = {
         enable = true;
-        hashedPasswordFile = config.sops.secrets.hashed_password.path;
+        hashedPasswordFile = config.sops.secrets.bazyli_hashed_password.path;
         rootHashedPasswordFile = config.sops.secrets.root_hashed_password.path;
       };
       lanzaboote.enable = true;
