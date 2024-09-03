@@ -14,12 +14,16 @@
     defaultSopsFile = "${inputs.my-secrets}/slimbook.yaml";
     secrets = {
       backup_key = {};
+      nix_extra_options = {};
     };
   };
 
   my = {
     configurations = {
-      core.enable = true;
+      core = {
+        enable = true;
+        nixExtraOptionsFile = config.sops.secrets.nix_extra_options.path;
+      };
       user.enable = true;
     };
     presets = {

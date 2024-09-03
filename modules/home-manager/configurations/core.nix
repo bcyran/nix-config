@@ -5,9 +5,18 @@
   lib,
   ...
 }: let
+  inherit (lib) types;
   cfg = config.my.configurations.core;
 in {
-  options.my.configurations.core.enable = lib.mkEnableOption "core";
+  options.my.configurations.core = {
+    enable = lib.mkEnableOption "core";
+
+    nixExtraOptionsFile = lib.mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = "Path to the file with extra Nix options.";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     nixpkgs = {
@@ -29,11 +38,10 @@ in {
         auto-optimise-store = true;
         warn-dirty = false;
       };
-      # TODO: Use something like `agenix` or `sops` instead of providing GitHub API key in the
-      #       `nix-local.conf` file.
-      extraOptions = ''
-        !include nix-local.conf
-      '';
+      extraOptions =
+        if (cfg.nixExtraOptionsFile != null)
+        then "!include ${cfg.nixExtraOptionsFile}"
+        else "";
     };
 
     programs.home-manager.enable = true;
