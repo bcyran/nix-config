@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   ...
@@ -7,7 +6,6 @@
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.hyprland;
 
-  alacrittyBin = lib.getExe pkgs.alacritty;
   monitorId = m:
     if m.id_by_output
     then "${m.output}"
@@ -125,8 +123,8 @@ in {
         persistent_warps = true;
       };
       workspace = [
-        "1, monitor:$monitorC, default:true"
-        "2, monitor:$monitorC"
+        "1, monitor:$monitorC, default:true, on-created-empty:firefox"
+        "2, monitor:$monitorC, on-created-empty:alacritty"
         "3, monitor:$monitorC"
         "4, monitor:$monitorC"
         "5, monitor:$monitorC"
