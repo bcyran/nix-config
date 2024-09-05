@@ -135,8 +135,11 @@ in {
         "10, monitor:$monitorL"
         "11, monitor:$monitorL"
       ];
-      exec-once = [
-        "${alacrittyBin} --class terminal-workspace"
+      device = [
+        {
+          name = "at-translated-set-2-keyboard";
+          kb_options = "caps:swapescape";
+        }
       ];
     };
   };
