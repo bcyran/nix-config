@@ -55,23 +55,25 @@
   };
 
   outputs = inputs: let
+    inherit (inputs.nixpkgs) lib;
+
     # Systems supported by this flake.
     systems = ["x86_64-linux"];
 
     # Our custom lib.
-    lib = import ./lib {inherit (inputs.nixpkgs) lib;};
+    myLib = import ./lib {inherit lib;};
   in {
     # Pakcages exported by this flake. Build using `nix build .#package`.
-    packages = lib.forEachSystemPkgs systems inputs.nixpkgs (pkgs: import ./pkgs pkgs);
+    packages = myLib.forEachSystemPkgs systems inputs.nixpkgs (pkgs: import ./pkgs pkgs);
 
     # We use `alejandra` as a formatter. Format using `nix fmt`.
-    formatter = lib.forEachSystemPkgs systems inputs.nixpkgs (pkgs: pkgs.alejandra);
+    formatter = myLib.forEachSystemPkgs systems inputs.nixpkgs (pkgs: pkgs.alejandra);
 
     # Overlays exported by this flake. Accessible as `my.overlays`.
     overlays = import ./overlays {inherit inputs;};
 
     # Lib exported by this flake. Accessible as `my.lib`.
-    inherit lib;
+    lib = myLib;
 
     # NixOS modules exported by this flake. Accessible as `my.nixosModules`.
     # They don't contain specific machine configurations, but rather generic, reusable modules,
@@ -85,37 +87,37 @@
     # NixOS configurations exported by this flake.
     # Those configurations mostly just enable selected stuff from `my.nixosModules`.
     # Example usage: `nixos-rebuild switch --flake .#slimbook`.
-    nixosConfigurations = {
-      slimbook = lib.config.mkSystem {
+    nixosConfigurations = lib.mergeAttrsList [
+      (myLib.config.mkSystem {
+        name = "slimbook";
+        system = "x86_64-linux";
         inherit inputs;
         my = inputs.self;
+      })
+      (myLib.config.mkSystem {
+        name = "t480";
         system = "x86_64-linux";
-        modules = [./hosts/slimbook/nixos];
-      };
-      t480 = lib.config.mkSystem {
         inherit inputs;
         my = inputs.self;
-        system = "x86_64-linux";
-        modules = [./hosts/t480/nixos];
-      };
-    };
+      })
+    ];
 
     # Home Manager configurations exported by this flake.
     # Those configurations mostly just enable selected stuff from `my.homeManagerModules`.
     # Example usage: `home-manager switch --flake .#bazyli@slimbook`.
-    homeConfigurations = {
-      "bazyli@slimbook" = lib.config.mkHome {
+    homeConfigurations = lib.mergeAttrsList [
+      (myLib.config.mkHome {
+        name = "bazyli@slimbook";
+        system = "x86_64-linux";
         inherit inputs;
         my = inputs.self;
+      })
+      (myLib.config.mkHome {
+        name = "bazyli@t480";
         system = "x86_64-linux";
-        modules = [./hosts/slimbook/home-manager/bazyli.nix];
-      };
-      "bazyli@t480" = lib.config.mkHome {
         inherit inputs;
         my = inputs.self;
-        system = "x86_64-linux";
-        modules = [./hosts/t480/home-manager/bazyli.nix];
-      };
-    };
+      })
+    ];
   };
 }

@@ -6,7 +6,7 @@
 }: {
   imports = [
     my.homeManagerModules.default
-    ../common/bazyli.nix
+    ../common/user.nix
   ];
 
   sops = {

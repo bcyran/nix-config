@@ -1,6 +1,6 @@
 {lib}: rec {
   # NixOS and Home Manager configuration utilities.
-  config = import ./config.nix;
+  config = import ./config.nix {inherit lib;};
 
   # forEachSystemPkgs :: [<system>] -> <nixpkgs> -> (<packages> -> <attrs>) -> <attrs>
   #

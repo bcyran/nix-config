@@ -6,17 +6,21 @@
 #
 # `my` should always refer to this flake. In this flake it's just `self`, but in other flakes
 # it will by `inputs.my`.
-{
+{lib, ...}: {
   # Creates a NixOS system configuration.
   mkSystem = {
     inputs,
-    my,
+    name,
     system,
-    modules,
+    my,
+    extraModules ? [],
+    extraInstallerModules ? [],
     specialArgs ? {},
-  }:
-    inputs.nixpkgs.lib.nixosSystem {
-      inherit modules;
+  }: {
+    ${name} = inputs.nixpkgs.lib.nixosSystem {
+      modules =
+        [./../hosts/${name}/nixos/configuration.nix]
+        ++ extraModules;
       specialArgs =
         {
           inherit inputs;
@@ -24,18 +28,36 @@
         }
         // specialArgs;
     };
+    "${name}-installer" = inputs.nixpkgs.lib.nixosSystem {
+      modules =
+        [
+          ./../hosts/${name}/common/user.nix
+          ./../hosts/${name}/nixos/disks.nix
+          ./../hosts/${name}/nixos/hardware-configuration.nix
+        ]
+        ++ extraInstallerModules;
+      specialArgs = {inherit inputs;} // specialArgs;
+    };
+  };
 
   # Creates a Home Manager configuration.
   mkHome = {
     inputs,
-    my,
+    name,
     system,
-    modules,
+    my,
+    extraModules ? [],
     specialArgs ? {},
-  }:
-    inputs.home-manager.lib.homeManagerConfiguration {
-      inherit modules;
+  }: let
+    nameSplit = lib.strings.splitString "@" name;
+    user = builtins.elemAt nameSplit 0;
+    host = builtins.elemAt nameSplit 1;
+  in {
+    ${name} = inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages."${system}";
+      modules =
+        [./../hosts/${host}/home-manager/${user}.nix]
+        ++ extraModules;
       extraSpecialArgs =
         {
           inherit inputs;
@@ -43,4 +65,5 @@
         }
         // specialArgs;
     };
+  };
 }

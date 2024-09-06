@@ -15,7 +15,7 @@
 
     ./disks.nix
     ./hardware-configuration.nix
-    ../common/bazyli.nix
+    ../common/user.nix
   ];
 
   networking.hostName = "t480";
