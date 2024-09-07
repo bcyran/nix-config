@@ -14,6 +14,7 @@ in {
       gvfs.enable = true;
       tumbler.enable = true;
     };
+
     programs = {
       thunar = {
         enable = true;
@@ -22,5 +23,7 @@ in {
       xfconf.enable = true;
       file-roller.enable = true;
     };
+
+    boot.supportedFilesystems = ["ntfs"];
   };
 }
