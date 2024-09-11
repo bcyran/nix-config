@@ -13,6 +13,11 @@ in {
       keyboards = {
         default = {
           devices = [];
+          extraDefCfg = ''
+            linux-dev-names-exclude (
+              "Brian Low Sofle Choc"
+            )
+          '';
           config = ''
             (defsrc
               caps lmeta lalt)
