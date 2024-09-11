@@ -25,6 +25,7 @@ in {
 
     services = {
       poweralertd.enable = mkDefault true;
+      network-manager-applet.enable = mkDefault true;
     };
 
     home.packages = with pkgs; [
