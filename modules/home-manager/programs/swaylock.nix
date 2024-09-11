@@ -7,7 +7,7 @@
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.swaylock;
 
-  swaylockPkg = pkgs.swaylock-effects;
+  swaylockPkg = pkgs.swaylock;
   swaylockBin = "${swaylockPkg}/bin/swaylock";
 in {
   options.my.programs.swaylock.enable = lib.mkEnableOption "swaylock";
@@ -21,12 +21,7 @@ in {
 
         font = builtins.elemAt config.fonts.fontconfig.defaultFonts.sansSerif 0;
         font-size = 50;
-        clock = true;
-        timestr = "%H:%M";
-        datestr = "";
-        indicator = true;
         indicator-idle-visible = true;
-        fade-in = 1;
 
         text-color = "#${palette.base05}";
         inside-color = "#${palette.base00}";
