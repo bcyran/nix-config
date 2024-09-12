@@ -42,4 +42,34 @@
     assertion = !(isFalsy attrset.${attr});
     message = "Required attribute '${attrsetPath}.${attr}' is missing.";
   };
+
+  # makeNetworkmanagerWifiProfile :: { id, ssid, psk } -> attrs
+  #
+  # Returns a NetworkManager profile for a WiFi connection with the given `id`, `ssid`, and `psk`.
+  makeNetworkManagerWifiProfile = {
+    id,
+    ssid,
+    psk,
+  }: {
+    connection = {
+      inherit id;
+      type = "wifi";
+    };
+    wifi = {
+      inherit ssid;
+      mode = "infrastructure";
+    };
+    wifi-security = {
+      inherit psk;
+      auth-alg = "open";
+      key-mgmt = "wpa-psk";
+    };
+    ipv4 = {
+      method = "auto";
+    };
+    ipv6 = {
+      method = "auto";
+      addr-gen-mode = "default";
+    };
+  };
 }

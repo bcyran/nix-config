@@ -21,12 +21,17 @@
 
   networking.hostName = "slimbook";
 
-  sops = {
-    defaultSopsFile = "${inputs.my-secrets}/slimbook.yaml";
+  sops = let
+    slimbookSopsFile = "${inputs.my-secrets}/slimbook.yaml";
+    wifiSopsFile = "${inputs.my-secrets}/wifi.yaml";
+  in {
+    defaultSopsFile = slimbookSopsFile;
     secrets = {
       bazyli_hashed_password.neededForUsers = true;
       root_hashed_password.neededForUsers = true;
       nix_extra_options = {};
+      home_wifi_env_file.sopsFile = wifiSopsFile;
+      mobile_wifi_env_file.sopsFile = wifiSopsFile;
     };
   };
 
@@ -64,4 +69,23 @@
   };
 
   boot.tmp.useTmpfs = true;
+
+  networking.networkmanager.ensureProfiles = {
+    environmentFiles = with config.sops.secrets; [
+      home_wifi_env_file.path
+      mobile_wifi_env_file.path
+    ];
+    profiles = {
+      home = my.lib.makeNetworkManagerWifiProfile {
+        id = "home";
+        ssid = "$HOME_WIFI_SSID";
+        psk = "$HOME_WIFI_PSK";
+      };
+      mobile = my.lib.makeNetworkManagerWifiProfile {
+        id = "mobile";
+        ssid = "$MOBILE_WIFI_SSID";
+        psk = "$MOBILE_WIFI_PSK";
+      };
+    };
+  };
 }
