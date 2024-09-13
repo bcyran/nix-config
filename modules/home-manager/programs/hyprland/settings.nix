@@ -7,7 +7,7 @@
   cfg = config.my.programs.hyprland;
 
   monitorId = m:
-    if m.id_by_output
+    if m.idByOutput
     then "${m.output}"
     else "desc:${m.description}";
   monitorByIdx = idx: builtins.elemAt config.my.hardware.monitors idx;

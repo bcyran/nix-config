@@ -55,7 +55,7 @@ in {
               type = types.bool;
               default = true;
             };
-            id_by_output = mkOption {
+            idByOutput = mkOption {
               type = types.bool;
               default = false;
             };
