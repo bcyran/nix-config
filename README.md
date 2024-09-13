@@ -13,6 +13,12 @@ My NixOS and Home Manager config.
 - The entire configuration is modularized and exported from the flake.
   This allows using selected (or all) parts in other flakes.
 
+## Screenshots
+
+![Screenshot of desktop with tiled terminal windows running neovim, neofetch and eza](./docs/images/screenshot_1.png)
+![Screenshot of desktop with floating terminal window and sway notification center](./docs/images/screenshot_2.png)
+![Screenshot of desktop with tiled firefox and terminal emulator running btop windows](./docs/images/screenshot_3.png)
+
 ## Installation
 
 > [!WARNING]
