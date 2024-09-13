@@ -59,6 +59,10 @@ in {
               type = types.bool;
               default = false;
             };
+            bitDepth = mkOption {
+              type = types.int;
+              default = 8;
+            };
           };
         }
       );

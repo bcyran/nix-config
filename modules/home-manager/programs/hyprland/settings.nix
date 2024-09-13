@@ -28,7 +28,7 @@ in {
           "${toString m.x}x${toString m.y}"
           "${toString m.scale}"
           "transform, ${toString m.transform}"
-          "bitdepth, 10"
+          "bitdepth, ${toString m.bitDepth}"
         ];
         monOptsStr = m: builtins.concatStringsSep ", " (monOpts m);
       in
