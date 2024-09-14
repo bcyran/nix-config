@@ -58,6 +58,7 @@ in {
       config.nix.registry;
 
     programs.fish.enable = true;
+    programs.git.enable = true;
 
     environment.systemPackages = with pkgs; [
       file
@@ -67,6 +68,7 @@ in {
       curl
       usbutils
       pciutils
+      sbctl
       gparted
       neovim
     ];

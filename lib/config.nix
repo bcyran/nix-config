@@ -31,12 +31,33 @@
     "${name}-installer" = inputs.nixpkgs.lib.nixosSystem {
       modules =
         [
+          inputs.disko.nixosModules.disko
+          inputs.lanzaboote.nixosModules.lanzaboote
+          my.nixosModules.default
+
           ./../hosts/${name}/common/user.nix
           ./../hosts/${name}/nixos/disks.nix
           ./../hosts/${name}/nixos/hardware-configuration.nix
+
+          ({pkgs, ...}: {
+            networking.hostName = name;
+            boot.loader.systemd-boot.enable = true;
+            services.openssh = {
+              enable = true;
+              settings = {
+                PermitRootLogin = "yes";
+              };
+            };
+            my.presets.base.enable = true;
+          })
         ]
         ++ extraInstallerModules;
-      specialArgs = {inherit inputs;} // specialArgs;
+      specialArgs =
+        {
+          inherit inputs;
+          my = my // {pkgs = my.packages.${system};};
+        }
+        // specialArgs;
     };
   };
 
