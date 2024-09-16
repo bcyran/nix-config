@@ -26,12 +26,12 @@ in {
           }
           {
             timeout = 15 * 60;
-            on-timeout = "${hyprctlBin} dispatch dpms off";
-            on-resume = "${hyprctlBin} dispatch dpms on";
+            on-timeout = "${loginctlBin} lock-session";
           }
           {
-            timeout = 30 * 60;
-            on-timeout = "${loginctlBin} lock-session";
+            timeout = 20 * 60;
+            on-timeout = "${hyprctlBin} dispatch dpms off";
+            on-resume = "${hyprctlBin} dispatch dpms on";
           }
         ];
       };
