@@ -19,7 +19,7 @@
   }: {
     ${name} = inputs.nixpkgs.lib.nixosSystem {
       modules =
-        [./../hosts/${name}/nixos/configuration.nix]
+        ["${inputs.self}/hosts/${name}/nixos/configuration.nix"]
         ++ extraModules;
       specialArgs =
         {
@@ -35,9 +35,9 @@
           inputs.lanzaboote.nixosModules.lanzaboote
           my.nixosModules.default
 
-          ./../hosts/${name}/common/user.nix
-          ./../hosts/${name}/nixos/disks.nix
-          ./../hosts/${name}/nixos/hardware-configuration.nix
+          "${inputs.self}/hosts/${name}/common/user.nix"
+          "${inputs.self}/hosts/${name}/nixos/disks.nix"
+          "${inputs.self}/hosts/${name}/nixos/hardware-configuration.nix"
 
           ({pkgs, ...}: {
             networking.hostName = name;
@@ -77,7 +77,7 @@
     ${name} = inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages."${system}";
       modules =
-        [./../hosts/${host}/home-manager/${user}.nix]
+        ["${inputs.self}/hosts/${host}/home-manager/${user}.nix"]
         ++ extraModules;
       extraSpecialArgs =
         {
