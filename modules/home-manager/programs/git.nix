@@ -101,7 +101,6 @@ in {
         rerere.enable = true;
         branch.sort = "-committerdate";
         column.ui = "auto";
-        diff.colorMoved = "default";
       };
       ignores = [
         "local"
