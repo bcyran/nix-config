@@ -13,13 +13,13 @@ in {
     my = {
       programs = {
         signal.enable = mkDefault true;
+        obsidian.enable = mkDefault true;
       };
     };
 
     home.packages = with pkgs; [
       portfolio
       gnucash
-      obsidian
       gimp
       libreoffice-fresh
       anydesk
