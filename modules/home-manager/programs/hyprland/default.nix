@@ -21,6 +21,7 @@ in {
     home = {
       packages = [pkgs.hyprcursor];
       sessionVariables = {
+        NIXOS_OZONE_WL = "1";
         HYPRCURSOR_THEME = "phinger-cursors-dark-hyprcursor";
         HYPRCURSOR_SIZE = "24";
       };
