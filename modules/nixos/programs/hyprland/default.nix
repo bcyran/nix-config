@@ -7,7 +7,7 @@
   cfg = config.my.programs.hyprland;
 
   xdph = pkgs.xdg-desktop-portal-hyprland.overrideAttrs (finalAttrs: previousAttrs: {
-    patches = previousAttrs.patches ++ [./xdph-service.patch ./xdph-screencopy.patch];
+    patches = [./xdph-service.patch];
   });
 in {
   options.my.programs.hyprland.enable = lib.mkEnableOption "hyprland";
