@@ -33,6 +33,7 @@ in {
       quickemu
       anytype
       appflowy
+      notesnook
     ];
   };
 }
