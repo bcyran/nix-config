@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  my,
   ...
 }: let
   inherit (lib) mkDefault;
@@ -25,6 +26,7 @@ in {
       anydesk
       calibre
       gthumb
+      my.pkgs.ente-photos-desktop
       protonvpn-gui
       vlc
       tor-browser

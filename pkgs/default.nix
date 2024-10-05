@@ -22,4 +22,5 @@ in rec {
   git-smash = pkgs.callPackage ./git-smash {};
   git-chain = pkgs.callPackage ./git-chain {};
   kidex = pkgs.callPackage ./kidex {};
+  ente-photos-desktop = pkgs.callPackage ./ente-photos-desktop {};
 }
