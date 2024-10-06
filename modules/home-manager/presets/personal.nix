@@ -15,6 +15,7 @@ in {
       programs = {
         signal.enable = mkDefault true;
         obsidian.enable = mkDefault true;
+        rclone.enable = mkDefault true;
       };
     };
 
