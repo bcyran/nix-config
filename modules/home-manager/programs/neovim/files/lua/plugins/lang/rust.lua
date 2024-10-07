@@ -40,12 +40,12 @@ return {
         default_settings = {
           ["rust-analyzer"] = {
             cargo = {
-              allFeatures = true,
-              loadOutDirsFromCheck = true,
-              runBuildScripts = true,
+              buildScripts = {
+                enable = true,
+              },
             },
-            checkOnSave = {
-              allFeatures = true,
+            checkOnSave = true,
+            check = {
               command = "clippy",
               extraArgs = {
                 "--no-deps",
@@ -70,10 +70,11 @@ return {
             },
           },
         },
+        load_vscode_settings = true,
       },
     },
     config = function(_, opts)
-      vim.g.rustaceanvim = vim.tbl_deep_extend("force", {}, opts or {})
+      vim.g.rustaceanvim = vim.tbl_deep_extend("force", vim.g.rustaceanvim or {}, opts or {})
     end,
   },
 
