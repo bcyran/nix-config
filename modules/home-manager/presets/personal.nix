@@ -32,8 +32,6 @@ in {
       vlc
       tor-browser
       quickemu
-      anytype
-      appflowy
       notesnook
     ];
   };
