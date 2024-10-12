@@ -64,6 +64,7 @@ in {
           Wants = ["network-online.target"];
           StartLimitIntervalSec = 60;
           StartLimitBurst = 1;
+          X-SwitchMethod = "reload";
         };
         Service = {
           Type = "oneshot";
