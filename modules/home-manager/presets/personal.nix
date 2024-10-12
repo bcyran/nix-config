@@ -19,6 +19,10 @@ in {
       };
     };
 
+    programs = {
+      yt-dlp.enable = mkDefault true;
+    };
+
     home.packages = with pkgs; [
       portfolio
       gnucash
