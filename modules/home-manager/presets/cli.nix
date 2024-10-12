@@ -17,6 +17,7 @@ in {
         atuin.enable = mkDefault true;
         neovim.enable = mkDefault true;
         git.enable = mkDefault true;
+        gh.enable = mkDefault true;
         tmux.enable = mkDefault true;
         zellij.enable = mkDefault true;
         bat.enable = mkDefault true;
