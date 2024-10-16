@@ -5,17 +5,17 @@
   lib,
   ...
 }: let
-  inherit (pkgs) swww;
   cfg = config.my.programs.swww;
 
-  swwwDaemonBin = "${swww}/bin/swww-daemon"; # `lib.getBin` doesn't work here
+  swwwPkg = my.inputs.swww.packages.${pkgs.system}.swww;
+  swwwDaemonBin = "${swwwPkg}/bin/swww-daemon";
   wallpaperBin = lib.getExe my.pkgs.wallpaper;
   sleepBin = "${pkgs.coreutils}/bin/sleep";
 in {
   options.my.programs.swww.enable = lib.mkEnableOption "swww";
 
   config = lib.mkIf cfg.enable {
-    home.packages = [swww];
+    home.packages = [swwwPkg];
 
     systemd.user.services.swww = {
       Unit = {
