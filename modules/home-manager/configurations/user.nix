@@ -15,7 +15,7 @@ in {
 
       sessionVariables = {
         MY_WALLPAPERS_DIR = "${userCfg.home}/Obrazy/Tapety";
-        MY_SCREENSHOTS_DIR = "${userCfg.home}/Obrazy/Zrzuty ekranu";
+        MY_SCREENSHOTS_DIR = "${userCfg.home}/Obrazy/Screenshots";
         MY_CONFIG_DIR = userCfg.configDir;
       };
     };
