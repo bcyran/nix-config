@@ -21,7 +21,7 @@ in {
   config = lib.mkIf cfg.enable {
     nixpkgs = {
       overlays = [
-        my.overlays.modifications
+        my.overlays.stable-packages
       ];
 
       config = {

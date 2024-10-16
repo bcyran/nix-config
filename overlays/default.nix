@@ -1,8 +1,8 @@
-_: {
-  # https://nixos.wiki/wiki/Overlays
-  modifications = final: prev: {
-    # example = prev.example.overrideAttrs (oldAttrs: rec {
-    # ...
-    # });
+{inputs, ...}: {
+  stable-packages = final: prev: {
+    stable = import inputs.nixpkgs-stable {
+      inherit (final) system;
+      config.allowUnfree = true;
+    };
   };
 }
