@@ -38,6 +38,7 @@ in {
       '';
       extraPackages = with pkgs; [
         gcc # for treesitter
+        nodejs_22
         wl-clipboard
         lua-language-server
         dockerfile-language-server-nodejs
