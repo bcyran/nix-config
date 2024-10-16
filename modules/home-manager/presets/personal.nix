@@ -28,8 +28,9 @@ in {
       gimp
       libreoffice-fresh
       anydesk
-      # FIXME: Uncomment once the package is fixed: https://github.com/NixOS/nixpkgs/issues/348845
-      # calibre
+      # FIXME: Switch to unstable when the package is fixed.
+      #        See: https://github.com/NixOS/nixpkgs/issues/348845.
+      stable.calibre
       gthumb
       my.pkgs.ente-photos-desktop
       protonvpn-gui
