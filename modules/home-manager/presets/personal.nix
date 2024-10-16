@@ -28,7 +28,8 @@ in {
       gimp
       libreoffice-fresh
       anydesk
-      calibre
+      # FIXME: Uncomment once the package is fixed: https://github.com/NixOS/nixpkgs/issues/348845
+      # calibre
       gthumb
       my.pkgs.ente-photos-desktop
       protonvpn-gui
