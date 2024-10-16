@@ -20,8 +20,11 @@
     "--suffix-keep-extension"
     "--resilient"
     "--recover"
-    "--no-slow-hash"
+    "--checksum"
     "--fix-case"
+    # Proton Drive specific options
+    "--no-update-modtime"
+    "--protondrive-replace-existing-draft=true"
   ];
   rcloneOptionsStr = lib.concatStringsSep " " rcloneOptions;
 in {
