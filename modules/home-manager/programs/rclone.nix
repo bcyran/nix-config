@@ -56,23 +56,30 @@ in {
     };
 
     systemd.user = lib.mkIf cfgBisyncEnabled {
-      services.rclone-bisync = {
-        Unit = {
-          Description = "Rclone bidirectional synchronization";
-          Documentation = "man:rclone(1)";
-          After = ["network-online.target"];
-          Wants = ["network-online.target"];
-          StartLimitIntervalSec = 60;
-          StartLimitBurst = 1;
-          X-SwitchMethod = "reload";
+      services = let
+        makeRcloneBisyncServiceUnit = additionalOptions: {
+          Unit = {
+            Description = "Rclone bidirectional synchronization";
+            Documentation = "man:rclone(1)";
+            After = ["network-online.target"];
+            Wants = ["network-online.target"];
+            StartLimitIntervalSec = 60;
+            StartLimitBurst = 1;
+            X-SwitchMethod = "reload";
+          };
+          Service = let
+            additionalOptionsStr = lib.concatStringsSep " " additionalOptions;
+          in {
+            Type = "oneshot";
+            ExecStart =
+              lib.mapAttrsToList
+              (src: dst: "${rcloneBin} bisync ${src} ${dst} ${rcloneOptionsStr} ${additionalOptionsStr}")
+              cfg.bisyncPairs;
+          };
         };
-        Service = {
-          Type = "oneshot";
-          ExecStart =
-            lib.mapAttrsToList
-            (src: dst: "${rcloneBin} bisync ${src} ${dst} ${rcloneOptionsStr}")
-            cfg.bisyncPairs;
-        };
+      in {
+        rclone-bisync = makeRcloneBisyncServiceUnit [];
+        rclone-bisync-resync = makeRcloneBisyncServiceUnit ["--resync"];
       };
 
       timers.rclone-bisync = {
