@@ -44,16 +44,6 @@
           }
         ];
       };
-      rclone = {
-        enable = true;
-        bisyncPairs = let
-          homeDir = config.my.user.home;
-        in {
-          "${homeDir}/Dokumenty/" = "proton:/Dokumenty/";
-          "${homeDir}/Archiwum/" = "proton:/Archiwum/";
-          "${homeDir}/Backup/" = "proton:/Backup/";
-        };
-      };
     };
     hardware = {
       monitors = [

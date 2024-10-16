@@ -14,7 +14,6 @@ in {
     my = {
       programs = {
         signal.enable = mkDefault true;
-        rclone.enable = mkDefault true;
       };
     };
 
