@@ -38,8 +38,9 @@
   my = {
     presets = {
       base.enable = true;
-      desktop.enable = true;
       laptop.enable = true;
+      desktop.enable = true;
+      hyprland.enable = true;
     };
     configurations = {
       core = {
@@ -55,8 +56,6 @@
       sops.enable = true;
     };
     programs = {
-      hyprland.enable = true;
-      greetd.enable = true;
       btrbk.enable = true;
       openssh.enable = true;
     };
