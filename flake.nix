@@ -20,6 +20,10 @@
     hardware = {
       url = "github:nixos/nixos-hardware";
     };
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Home Manager dependencies.
     home-manager = {
