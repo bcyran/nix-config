@@ -15,6 +15,9 @@
       personal.enable = true;
       tokyonight.enable = true;
     };
+    programs = {
+      syncthing.enable = false;
+    };
     hardware = {
       monitors = [
         {
