@@ -40,7 +40,7 @@
       base.enable = true;
       laptop.enable = true;
       desktop.enable = true;
-      hyprland.enable = true;
+      cosmic.enable = true;
     };
     configurations = {
       core = {
@@ -56,6 +56,7 @@
       sops.enable = true;
     };
     programs = {
+      tlp.enable = false;
       btrbk.enable = true;
       openssh.enable = true;
     };

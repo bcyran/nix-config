@@ -12,7 +12,6 @@
     presets = {
       cli.enable = true;
       desktop.enable = true;
-      hyprland.enable = true;
       personal.enable = true;
       tokyonight.enable = true;
     };
