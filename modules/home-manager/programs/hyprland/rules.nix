@@ -10,6 +10,7 @@ in {
       windowrulev2 = [
         "float, class:terminal-floating"
         "size 800 500, class:terminal-floating"
+        "workspace 2 silent, class:terminal-workspace"
 
         "float, title:PhilipsTV GUI"
         "monitor $monitorC, class:PhilipsTV GUI"

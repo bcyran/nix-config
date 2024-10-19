@@ -123,8 +123,8 @@ in {
         persistent_warps = true;
       };
       workspace = [
-        "1, monitor:$monitorC, default:true, on-created-empty:firefox"
-        "2, monitor:$monitorC, on-created-empty:alacritty"
+        "1, monitor:$monitorC, default:true"
+        "2, monitor:$monitorC"
         "3, monitor:$monitorC"
         "4, monitor:$monitorC"
         "5, monitor:$monitorC"
@@ -134,6 +134,9 @@ in {
         "9, monitor:$monitorL, default:true"
         "10, monitor:$monitorL"
         "11, monitor:$monitorL"
+      ];
+      exec-once = [
+        "alacritty --class terminal-workspace"
       ];
     };
   };
