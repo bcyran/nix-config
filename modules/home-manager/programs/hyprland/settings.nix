@@ -18,9 +18,6 @@ in {
       "$monitorL" = monitorId (monitorByIdx 0);
       "$monitorC" = monitorId (monitorByIdx 1);
       "$monitorR" = monitorId (monitorByIdx 2);
-      env = [
-        "QT_QPA_PLATFORM,wayland"
-      ];
       monitor = let
         monOpts = m: [
           "${monitorId m}"
