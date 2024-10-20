@@ -37,6 +37,7 @@ in {
       tor-browser
       quickemu
       notesnook
+      webcord
     ];
   };
 }
