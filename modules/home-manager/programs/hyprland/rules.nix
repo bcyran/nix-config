@@ -39,8 +39,9 @@ in {
         "move 100%-420 100%-520, class:org.gnome.Calculator"
 
         "workspace 11 silent, class:Spotify"
+        "workspace 11 silent, title:Spotify Premium"
         "workspace 9 silent, class:Signal"
-        "workspace 8, class:Obsidian"
+        "workspace 9 silent, class:signal"
         "float, title:Postęp działań na plikach"
       ];
     };
