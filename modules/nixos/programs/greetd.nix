@@ -15,8 +15,8 @@ in {
       enable = true;
       settings = {
         default_session = {
-          command = "${tuigreetBin} --time --cmd Hyprland --asterisks --remember";
-          user = config.my.user.name;
+          command = "${tuigreetBin} --time --remember --remember-session --asterisks";
+          user = "greeter";
         };
       };
     };
