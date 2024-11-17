@@ -38,7 +38,7 @@ in {
       corefonts
       noto-fonts
       noto-fonts-emoji
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       (nerdfonts.override {fonts = ["JetBrainsMono"];})
 
       libnotify
