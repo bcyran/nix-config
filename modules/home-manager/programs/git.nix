@@ -115,8 +115,8 @@ in {
       ];
     };
     home.packages = [
+      pkgs.git-chain
       my.pkgs.git-smash
-      my.pkgs.git-chain
     ];
   };
 }
