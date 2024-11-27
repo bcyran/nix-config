@@ -44,13 +44,13 @@ in {
       libnotify
       wl-clipboard
       playerctl
+      timewall
       my.pkgs.volume
       my.pkgs.backlight
       my.pkgs.wallpaper
       my.pkgs.scr
       my.pkgs.philipstv
       my.pkgs.philipstv-gui
-      my.pkgs.timewall
     ];
 
     fonts.fontconfig = {
