@@ -1,6 +1,5 @@
 {
   pkgs,
-  my,
   config,
   lib,
   ...
@@ -114,9 +113,9 @@ in {
         ".direnv"
       ];
     };
-    home.packages = [
-      pkgs.git-chain
-      my.pkgs.git-smash
+    home.packages = with pkgs; [
+      git-chain
+      git-smash
     ];
   };
 }
