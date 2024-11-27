@@ -44,10 +44,6 @@ in {
     };
 
     programs.home-manager.enable = true;
-    # FIXME: Disable when not necessary anymore, see:
-    #        - https://github.com/nix-community/home-manager/issues/5453
-    #        - https://github.com/nix-community/home-manager/issues/5931
-    home.enableNixpkgsReleaseCheck = false;
     services.ssh-agent.enable = true;
     systemd.user = {
       enable = true;
