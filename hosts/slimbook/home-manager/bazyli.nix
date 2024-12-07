@@ -45,6 +45,7 @@
           }
         ];
       };
+      timewall.enable = true;
     };
     hardware = {
       monitors = [

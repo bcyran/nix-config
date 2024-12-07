@@ -44,7 +44,6 @@ in {
       libnotify
       wl-clipboard
       playerctl
-      timewall
       my.pkgs.volume
       my.pkgs.backlight
       my.pkgs.wallpaper
