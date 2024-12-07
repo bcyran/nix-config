@@ -14,5 +14,6 @@ in {
       upower.enable = mkDefault true;
       kanata.enable = mkDefault true;
     };
+    services.logind.lidSwitchExternalPower = mkDefault "ignore";
   };
 }
