@@ -19,14 +19,20 @@ in {
       "$monitorC" = monitorId (monitorByIdx 1);
       "$monitorR" = monitorId (monitorByIdx 2);
       monitor = let
-        monOpts = m: [
-          "${monitorId m}"
-          "${toString m.width}x${toString m.height}@${toString m.refreshRate}"
-          "${toString m.x}x${toString m.y}"
-          "${toString m.scale}"
-          "transform, ${toString m.transform}"
-          "bitdepth, ${toString m.bitDepth}"
-        ];
+        monOpts = m:
+          if m.enabled
+          then [
+            "${monitorId m}"
+            "${toString m.width}x${toString m.height}@${toString m.refreshRate}"
+            "${toString m.x}x${toString m.y}"
+            "${toString m.scale}"
+            "transform, ${toString m.transform}"
+            "bitdepth, ${toString m.bitDepth}"
+          ]
+          else [
+            "${monitorId m}"
+            "disable"
+          ];
         monOptsStr = m: builtins.concatStringsSep ", " (monOpts m);
       in
         (map monOptsStr config.my.hardware.monitors)

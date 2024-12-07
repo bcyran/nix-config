@@ -14,6 +14,10 @@ in {
               type = types.str;
               example = "Dell Inc. DELL P2421D ...";
             };
+            enable = mkOption {
+              type = types.bool;
+              default = true;
+            };
             output = mkOption {
               type = types.str;
               example = "DP-1";
