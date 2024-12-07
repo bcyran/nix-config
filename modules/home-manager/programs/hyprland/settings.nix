@@ -127,6 +127,9 @@ in {
         hide_on_key_press = true;
         persistent_warps = true;
       };
+      xwayland = {
+        force_zero_scaling = true;
+      };
       workspace = [
         "1, monitor:$monitorC, default:true"
         "2, monitor:$monitorC"
