@@ -28,6 +28,7 @@
     };
     presets = {
       cli.enable = true;
+      laptop.enable = true;
       desktop.enable = true;
       hyprland.enable = true;
       personal.enable = true;
@@ -83,9 +84,9 @@
           scale = 1.0;
           transform = 3;
         }
-        # Builtin
+        # Builtin (must be last)
         {
-          description = "California Institute of Technology 0x1402";
+          description = "California Institute of Technology 0x1402 Unknown";
           output = "eDP-1";
           width = 2880;
           height = 1800;
