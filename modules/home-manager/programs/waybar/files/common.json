@@ -51,8 +51,11 @@
   "custom/backlight": {
     "exec": "waybar-backlight",
     "format": "󰃟   {}",
-    "on-scroll-up": "waybar-backlight inc",
-    "on-scroll-down": "waybar-backlight dec",
+    "on-scroll-up": "backlight up 10",
+    "on-scroll-down": "backlight down 10",
+    "on-click": "backlight set 100",
+    "on-click-middle": "backlight set 70",
+    "on-click-right": "backlight set 10",
     "tooltip": false
   },
   "bluetooth": {

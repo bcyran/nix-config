@@ -71,6 +71,7 @@
       playerctl
       philipstvModule
       swaynotificationcenter
+      my.pkgs.backlight
       my.pkgs.philipstv
       my.pkgs.philipstv-gui
     ];

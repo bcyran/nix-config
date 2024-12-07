@@ -9,14 +9,4 @@ light_print() {
     done
 }
 
-case "${1-''}" in
-    dec)
-        "${backlight}" down 10
-        ;;
-    inc)
-        "${backlight}" up 10
-        ;;
-    *)
-        light_print
-        ;;
-esac
+light_print
