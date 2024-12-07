@@ -20,7 +20,7 @@ in {
       "$monitorR" = monitorId (monitorByIdx 2);
       monitor = let
         monOpts = m:
-          if m.enabled
+          if m.enable
           then [
             "${monitorId m}"
             "${toString m.width}x${toString m.height}@${toString m.refreshRate}"

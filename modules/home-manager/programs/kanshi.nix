@@ -18,7 +18,7 @@ in {
           then m.output
           else m.description;
         monitorStatus = m:
-          if m.enabled
+          if m.enable
           then "enable"
           else "disable";
         monitorTransform = t:

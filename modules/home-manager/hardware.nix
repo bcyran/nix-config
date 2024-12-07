@@ -14,10 +14,6 @@ in {
               type = types.str;
               example = "Dell Inc. DELL P2421D ...";
             };
-            enable = mkOption {
-              type = types.bool;
-              default = true;
-            };
             output = mkOption {
               type = types.str;
               example = "DP-1";
@@ -26,6 +22,10 @@ in {
               type = types.nullOr types.str;
               default = null;
               example = "DP-7";
+            };
+            enable = mkOption {
+              type = types.bool;
+              default = true;
             };
             width = mkOption {
               type = types.int;
@@ -54,10 +54,6 @@ in {
             transform = mkOption {
               type = types.int;
               default = 0;
-            };
-            enabled = mkOption {
-              type = types.bool;
-              default = true;
             };
             idByOutput = mkOption {
               type = types.bool;

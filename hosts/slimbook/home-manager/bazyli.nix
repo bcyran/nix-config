@@ -91,7 +91,7 @@
           output = "eDP-1";
           width = 2880;
           height = 1800;
-          enabled = false;
+          enable = false;
           idByOutput = true;
         }
       ];
