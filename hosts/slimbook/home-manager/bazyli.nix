@@ -47,39 +47,50 @@
     };
     hardware = {
       monitors = [
-        # Left (builtin)
+        # Left
+        {
+          description = "Dell Inc. DELL P2421D FJWHGC3";
+          output = "DP-7";
+          width = 2560;
+          height = 1440;
+          refreshRate = 60;
+          x = 0;
+          y = 0;
+          scale = 1.0;
+          transform = 1;
+        }
+        # Center
+        {
+          description = "Dell Inc. DELL U2723QE 3H7KF34";
+          output = "DP-5";
+          width = 3840;
+          height = 2160;
+          refreshRate = 60;
+          x = 1440;
+          y = 250;
+          scale = 1.25;
+          transform = 0;
+        }
+        # Right
+        {
+          description = "Dell Inc. DELL P2421D CGSHL93";
+          output = "DP-6";
+          width = 2560;
+          height = 1440;
+          refreshRate = 60;
+          x = 4512;
+          y = 0;
+          scale = 1.0;
+          transform = 3;
+        }
+        # Builtin
         {
           description = "California Institute of Technology 0x1402";
           output = "eDP-1";
           width = 2880;
           height = 1800;
-          refreshRate = 90;
-          x = 0;
-          y = 325;
-          scale = 1.5;
-        }
-        # Center
-        {
-          description = "Dell Inc. DELL P2421D FJWHGC3";
-          output = "DP-6";
-          altOutput = "DP-8";
-          width = 2560;
-          height = 1440;
-          refreshRate = 60;
-          x = 1920;
-          y = 325;
-        }
-        # Right
-        {
-          description = "Dell Inc. DELL P2421D CGSHL93";
-          output = "DP-7";
-          altOutput = "DP-9";
-          width = 2560;
-          height = 1440;
-          refreshRate = 60;
-          x = 4480;
-          y = 0;
-          transform = 3;
+          enabled = false;
+          idByOutput = true;
         }
       ];
       networkInterfaces = {

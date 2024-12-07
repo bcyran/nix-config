@@ -83,12 +83,4 @@ in {
       };
     };
   };
-  config = {
-    assertions = [
-      {
-        assertion = (lib.length config.my.hardware.monitors) == 3;
-        message = "Exactly 3 monitors are required.";
-      }
-    ];
-  };
 }
