@@ -8,15 +8,12 @@ in rec {
   volume = pkgs.callPackage ./volume {};
   wallpaper = pkgs.callPackage ./wallpaper {};
   scr = pkgs.callPackage ./scr {};
-  philipstv = pkgs.callPackage ./philipstv {
-    inherit (python3Packages) buildPythonPackage pythonOlder poetry-core poetry-dynamic-versioning pytestCheckHook requests-mock requests pydantic click appdirs;
-  };
   ttkbootstrap = pkgs.callPackage ./ttkbootstrap {
     inherit (python3Packages) buildPythonPackage pythonOlder tkinter pillow;
   };
   philipstv-gui = pkgs.callPackage ./philipstv-gui {
-    inherit (python3Packages) buildPythonApplication pythonOlder poetry-core poetry-dynamic-versioning appdirs;
-    inherit philipstv ttkbootstrap;
+    inherit (python3Packages) buildPythonApplication pythonOlder poetry-core poetry-dynamic-versioning appdirs philipstv;
+    inherit ttkbootstrap;
   };
   kidex = pkgs.callPackage ./kidex {};
   ente-photos-desktop = pkgs.callPackage ./ente-photos-desktop {};

@@ -47,7 +47,7 @@
   };
   philipstvModule = pkgs.writeShellApplication {
     name = "waybar-philipstv";
-    runtimeInputs = with pkgs; [my.pkgs.philipstv];
+    runtimeInputs = [pkgs.philipstv];
     text = builtins.readFile ./files/modules/philipstv.sh;
   };
   # Launcher script
@@ -71,8 +71,8 @@
       playerctl
       philipstvModule
       swaynotificationcenter
+      philipstv
       my.pkgs.backlight
-      my.pkgs.philipstv
       my.pkgs.philipstv-gui
     ];
     text = builtins.readFile launcherRendered;
