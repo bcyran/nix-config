@@ -89,10 +89,12 @@
         {
           description = "California Institute of Technology 0x1402 Unknown";
           output = "eDP-1";
+          idByOutput = true;
           width = 2880;
           height = 1800;
+          refreshRate = 90;
+          scale = 1.5;
           enable = false;
-          idByOutput = true;
         }
       ];
       networkInterfaces = {
