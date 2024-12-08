@@ -20,6 +20,7 @@ in {
         swaylock.enable = mkDefault true;
         swww.enable = mkDefault true;
         wlsunset.enable = mkDefault true;
+        kanshi.enable = mkDefault true;
       };
     };
 

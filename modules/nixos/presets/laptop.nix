@@ -13,7 +13,6 @@ in {
       tlp.enable = mkDefault true;
       upower.enable = mkDefault true;
       kanata.enable = mkDefault true;
-      kanshi.enable = mkDefault true;
     };
     services.logind.lidSwitchExternalPower = mkDefault "ignore";
   };

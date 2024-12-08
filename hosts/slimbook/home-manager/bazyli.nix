@@ -28,7 +28,6 @@
     };
     presets = {
       cli.enable = true;
-      laptop.enable = true;
       desktop.enable = true;
       hyprland.enable = true;
       personal.enable = true;
