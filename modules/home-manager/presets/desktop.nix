@@ -39,7 +39,7 @@ in {
       noto-fonts
       noto-fonts-emoji
       noto-fonts-cjk-sans
-      (nerdfonts.override {fonts = ["JetBrainsMono"];})
+      nerd-fonts.jetbrains-mono
 
       libnotify
       wl-clipboard

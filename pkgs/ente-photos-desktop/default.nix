@@ -15,14 +15,12 @@
     hash = "sha256-AV2LJv/xjkeP8BkE5Whm8UlRPUqxWBjfkmpFu08NG4M=";
   };
 
-  appimageContents = appimageTools.extractType2 {inherit name src;};
+  appimageContents = appimageTools.extractType2 {inherit pname version src;};
 in
   appimageTools.wrapType2 {
-    inherit name src;
+    inherit pname version src;
 
     extraInstallCommands = ''
-      mv $out/bin/${name} $out/bin/${pname}
-
       install -m 444 -D ${appimageContents}/${shortName}.desktop $out/share/applications/${pname}.desktop
       substituteInPlace $out/share/applications/${pname}.desktop \
         --replace 'Exec=AppRun' "Exec=$out/bin/${pname}"
