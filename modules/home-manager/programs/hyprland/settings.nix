@@ -5,12 +5,34 @@
 }: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.hyprland;
+  kanshiCfg = config.my.programs.kanshi;
 
   monitorId = m:
     if m.idByOutput
     then "${m.output}"
     else "desc:${m.description}";
   monitorByIdx = idx: builtins.elemAt config.my.hardware.monitors idx;
+  monitorConfig = let
+    monOpts = m:
+      if m.enable
+      then [
+        "${monitorId m}"
+        "${toString m.width}x${toString m.height}@${toString m.refreshRate}"
+        "${toString m.x}x${toString m.y}"
+        "${toString m.scale}"
+        "transform, ${toString m.transform}"
+        "bitdepth, ${toString m.bitDepth}"
+      ]
+      else [
+        "${monitorId m}"
+        "disable"
+      ];
+    monOptsStr = m: builtins.concatStringsSep ", " (monOpts m);
+  in
+    (map monOptsStr config.my.hardware.monitors)
+    ++ [
+      ",preferred, auto, 1"
+    ];
 in {
   config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
@@ -18,27 +40,10 @@ in {
       "$monitorL" = monitorId (monitorByIdx 0);
       "$monitorC" = monitorId (monitorByIdx 1);
       "$monitorR" = monitorId (monitorByIdx 2);
-      monitor = let
-        monOpts = m:
-          if m.enable
-          then [
-            "${monitorId m}"
-            "${toString m.width}x${toString m.height}@${toString m.refreshRate}"
-            "${toString m.x}x${toString m.y}"
-            "${toString m.scale}"
-            "transform, ${toString m.transform}"
-            "bitdepth, ${toString m.bitDepth}"
-          ]
-          else [
-            "${monitorId m}"
-            "disable"
-          ];
-        monOptsStr = m: builtins.concatStringsSep ", " (monOpts m);
-      in
-        (map monOptsStr config.my.hardware.monitors)
-        ++ [
-          ",preferred, auto, 1"
-        ];
+      monitor =
+        if !kanshiCfg.enable
+        then monitorConfig
+        else [];
       input = {
         kb_layout = "pl";
         follow_mouse = 1;

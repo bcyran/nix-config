@@ -11,7 +11,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.kanshi = {
       enable = true;
-      systemdTarget = "graphical-session.target";
+      systemdTarget = "graphical-session-pre.target";
       settings = let
         monitorId = m:
           if m.idByOutput
