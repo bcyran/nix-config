@@ -1,10 +1,18 @@
 {
+  pkgs,
   config,
   lib,
   ...
 }: let
   inherit (config.my.hardware) monitors;
+
   cfg = config.my.programs.kanshi;
+  timewallCfg = config.my.programs.timewall;
+
+  wallpaperSetCommand =
+    if timewallCfg.enable
+    then "timewall set"
+    else "wallpaper";
 in {
   options.my.programs.kanshi.enable = lib.mkEnableOption "kanshi";
 
@@ -43,6 +51,7 @@ in {
           profile = {
             name = "docked";
             outputs = map monitorConfig monitors;
+            exec = [wallpaperSetCommand];
           };
         }
         {
@@ -51,6 +60,7 @@ in {
             outputs = [
               (monitorConfig (lib.last monitors) // {status = "enable";})
             ];
+            exec = [wallpaperSetCommand];
           };
         }
       ];
