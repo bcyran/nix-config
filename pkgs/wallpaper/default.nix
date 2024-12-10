@@ -1,10 +1,9 @@
 {
   writeShellApplication,
   coreutils,
-  swww,
 }:
 writeShellApplication {
   name = "wallpaper";
-  runtimeInputs = [coreutils swww];
+  runtimeInputs = [coreutils];
   text = builtins.readFile ./wallpaper.sh;
 }

@@ -4,7 +4,6 @@ set +o nounset
 
 WALL_DIR="${MY_WALLPAPERS_DIR:-${HOME}/Obrazy/Tapety}"
 SYMLINK_PATH="${WALL_DIR}/wallpaper"
-SET_COMMAND="swww img -t wipe ${SYMLINK_PATH}"
 
 progname="$(basename "$0")"
 readonly progname
@@ -19,7 +18,7 @@ save_wallpaper() {
 
 do_set_wallpaper() {
     if [[ -f ${SYMLINK_PATH} ]]; then
-        eval "${SET_COMMAND}"
+        hyprpaperset "${SYMLINK_PATH}"
         echo "Wallpaper set."
     else
         echo "No saved wallpaper. Please specify wallpaper to set."

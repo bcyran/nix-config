@@ -22,7 +22,7 @@ in {
         lon = 17.02;
       };
       setter = {
-        command = ["swww" "img" "%f"];
+        command = ["hyprpaperset" "%f"];
       };
     };
 
@@ -30,8 +30,8 @@ in {
       Unit = {
         Description = "Dynamic wallpaper daemon";
         PartOf = ["graphical-session.target"];
-        After = ["swww.service"];
-        Requires = ["swww.service"];
+        After = ["hyprpaper.service"];
+        Requires = ["hyprpaper.service"];
       };
       Service = {
         Type = "simple";

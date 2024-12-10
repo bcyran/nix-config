@@ -18,7 +18,7 @@ in {
         swaync.enable = mkDefault true;
         hypridle.enable = mkDefault true;
         swaylock.enable = mkDefault true;
-        swww.enable = mkDefault true;
+        hyprpaper.enable = mkDefault true;
         wlsunset.enable = mkDefault true;
         kanshi.enable = mkDefault true;
       };
