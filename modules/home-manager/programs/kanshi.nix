@@ -9,6 +9,10 @@ in {
   options.my.programs.kanshi.enable = lib.mkEnableOption "kanshi";
 
   config = lib.mkIf cfg.enable {
+    home.packages = [
+      pkgs.kanshi
+    ];
+
     services.kanshi = {
       enable = true;
       systemdTarget = "graphical-session-pre.target";
