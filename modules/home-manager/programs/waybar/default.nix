@@ -8,8 +8,8 @@
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.waybar;
 
-  killBin = "${lib.getBin pkgs.coreutils}/bin/kill";
-  sleepBin = "${lib.getBin pkgs.coreutils}/bin/sleep";
+  killBin = "${pkgs.coreutils}/bin/kill";
+  sleepBin = "${pkgs.coreutils}/bin/sleep";
   # Config files: common, default, multi-monitor
   configCommon = pkgs.substituteAll {
     name = "config-common.json";
