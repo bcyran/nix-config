@@ -9,8 +9,6 @@
   cfg = config.my.programs.anyrun;
 
   styleSheet = builtins.readFile ./style.css;
-  kidexPackage = my.pkgs.kidex;
-  kidexBin = "${kidexPackage}/bin/kidex";
 in {
   options.my.programs.anyrun.enable = lib.mkEnableOption "anyrun";
 
@@ -25,7 +23,6 @@ in {
             rink
             translate
             websearch
-            kidex
           ]
           ++ [my.inputs.anyrun-powermenu.packages.${pkgs.system}.default];
         x = {fraction = 0.5;};
@@ -114,45 +111,6 @@ in {
 
         ${styleSheet}
       '';
-    };
-
-    home.packages = [kidexPackage];
-
-    xdg.configFile."kidex.ron".text = ''
-      Config(
-        ignored: [
-          ".*",
-          "__pycache__",
-          "node_modules",
-          "build",
-          "target",
-          "go",
-        ],
-        directories: [
-          WatchDir(
-            path: "${config.my.user.home}",
-            recurse: true,
-            ignored: [
-              "qmk_firmware",
-              "nixpkgs",
-            ],
-          ),
-        ],
-      )
-    '';
-
-    systemd.user.services.kidex = {
-      Unit = {
-        Description = "A simple file indexing service for looking up file locations ";
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = kidexBin;
-        Restart = "on-failure";
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
     };
   };
 }
