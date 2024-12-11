@@ -49,10 +49,6 @@
       url = "github:jappie3/hyprcursor-phinger";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    swww = {
-      url = "github:LGFae/swww";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # Secret management
     sops-nix = {
