@@ -25,12 +25,13 @@
 
       mapfile -t monitors < <(hyprctl monitors | awk '/Monitor/ {print $2}')
 
-      hyprctl hyprpaper unload all > /dev/null
       hyprctl hyprpaper preload "$1" > /dev/null
 
       for monitor in "''${monitors[@]}"; do
           hyprctl hyprpaper wallpaper "''${monitor},$1" > /dev/null
       done
+
+      hyprctl hyprpaper unload unused > /dev/null
     '';
   };
 
