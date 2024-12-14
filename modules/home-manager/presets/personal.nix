@@ -27,6 +27,7 @@ in {
       gimp
       libreoffice-fresh
       anydesk
+      rustdesk
       calibre
       gthumb
       my.pkgs.ente-photos-desktop
