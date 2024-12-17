@@ -23,9 +23,8 @@ return {
       suggestion = {
         enabled = true,
         auto_trigger = true,
-        debounce = 75,
         keymap = {
-          accept = "<C-y>",
+          accept = false,
           accept_word = false,
           accept_line = "<C-m>",
           prev = "<C-p>",
@@ -43,17 +42,24 @@ return {
       },
     },
     init = function()
-      local cmp_status_ok, cmp = pcall(require, "cmp")
-      if cmp_status_ok then
-        cmp.event:on("menu_opened", function()
-          ---@diagnostic disable-next-line: inject-field
-          vim.b.copilot_suggestion_hidden = true
-        end)
-        cmp.event:on("menu_closed", function()
-          ---@diagnostic disable-next-line: inject-field
-          vim.b.copilot_suggestion_hidden = false
-        end)
+      -- Define suggestion accept function
+      LazyVim.cmp.actions.ai_accept = function()
+        if require("copilot.suggestion").is_visible() then
+          LazyVim.create_undo()
+          require("copilot.suggestion").accept()
+          return true
+        end
       end
+
+      -- Dismiss copilot suggestion when cmp menu is opened
+      local cmp = require("blink.cmp.completion.list")
+      cmp.show_emitter:on(function()
+        require("copilot.suggestion").dismiss()
+        vim.api.nvim_buf_set_var(0, "copilot_suggestion_hidden", true)
+      end)
+      cmp.hide_emitter:on(function()
+        vim.api.nvim_buf_set_var(0, "copilot_suggestion_hidden", false)
+      end)
     end,
   },
 
@@ -178,17 +184,6 @@ return {
     enabled = settings.copilot_enabled and settings.copilot_official,
     lazy = false,
     init = function()
-      -- Dismiss copilot suggestion when cmp menu is opened
-      local cmp_status_ok, cmp = pcall(require, "cmp")
-      if cmp_status_ok then
-        cmp.event:on("menu_opened", function()
-          vim.cmd([[
-            if copilot#Enabled()
-              call copilot#Dismiss()
-            endif
-          ]])
-        end)
-      end
       -- Settings
       vim.g.copilot_filetypes = {
         ["*"] = false,
@@ -200,11 +195,29 @@ return {
       }
       vim.g.copilot_no_tab_map = true
       -- Keymaps
-      vim.keymap.set("i", "<C-y>", 'copilot#Accept("\\<CR>")', { expr = true, replace_keycodes = false })
       vim.keymap.set("i", "<C-n>", "<Plug>(copilot-next)")
       vim.keymap.set("i", "<C-p>", "<Plug>(copilot-next)")
       vim.keymap.set("i", "<C-e>", "<Plug>(copilot-dismiss)")
       vim.keymap.set("i", "<C-a>", "<Plug>(copilot-suggest)")
+
+      -- Dismiss copilot suggestion when cmp menu is opened
+      local cmp = require("blink.cmp.completion.list")
+      cmp.show_emitter:on(function()
+        vim.cmd([[
+          if copilot#Enabled()
+            call copilot#Dismiss()
+          endif
+        ]])
+      end)
+
+      -- Define suggestion accept function
+      LazyVim.cmp.actions.ai_accept = function()
+        if vim.fn["copilot#GetDisplayedSuggestion"]().text ~= "" then
+          LazyVim.create_undo()
+          vim.fn.feedkeys(vim.fn["copilot#Accept"]())
+          return true
+        end
+      end
     end,
   },
 
@@ -212,39 +225,18 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
-      local Util = require("lazyvim.util")
-
       if settings.copilot_enabled then
-        local colors = {
-          [""] = Util.ui.fg("Special"),
-          ["Normal"] = Util.ui.fg("Special"),
-          ["Warning"] = Util.ui.fg("DiagnosticError"),
-          ["InProgress"] = Util.ui.fg("DiagnosticWarn"),
-        }
-        table.insert(opts.sections.lualine_x, 2, {
-          function()
-            local icon = require("lazyvim.config").icons.kinds.Copilot
-            local status = require("copilot.api").status.data
-            return icon .. (status.message or "")
-          end,
-          cond = function()
-            if not package.loaded["copilot"] then
-              return
+        table.insert(
+          opts.sections.lualine_x,
+          2,
+          LazyVim.lualine.status(LazyVim.config.icons.kinds.Copilot, function()
+            local clients = package.loaded["copilot"] and LazyVim.lsp.get_clients({ name = "copilot", bufnr = 0 }) or {}
+            if #clients > 0 then
+              local status = require("copilot.api").status.data.status
+              return (status == "InProgress" and "pending") or (status == "Warning" and "error") or "ok"
             end
-            local ok, clients = pcall(require("lazyvim.util").lsp.get_clients, { name = "copilot", bufnr = 0 })
-            if not ok then
-              return false
-            end
-            return ok and #clients > 0
-          end,
-          color = function()
-            if not package.loaded["copilot"] then
-              return
-            end
-            local status = require("copilot.api").status.data
-            return colors[status.status] or colors[""]
-          end,
-        })
+          end)
+        )
       end
 
       if settings.codeium_enabled then
@@ -254,7 +246,6 @@ return {
             local status = vim.api.nvim_call_function("codeium#GetStatusString", {})
             return icon .. status
           end,
-          color = Util.ui.fg("Special"),
         })
       end
     end,

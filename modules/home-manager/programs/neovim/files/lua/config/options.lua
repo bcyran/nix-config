@@ -25,3 +25,5 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
   },
   severity_sort = true,
 })
+
+vim.g.ai_cmp = false

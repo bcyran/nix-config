@@ -1,9 +1,5 @@
 return {
   {
-    "nvimdev/dashboard-nvim",
-    enabled = false,
-  },
-  {
     "rafamadriz/friendly-snippets",
     enabled = false,
   },
