@@ -19,6 +19,7 @@ in {
 
     programs = {
       yt-dlp.enable = mkDefault true;
+      cava.enable = mkDefault true;
     };
 
     home.packages = with pkgs; [
