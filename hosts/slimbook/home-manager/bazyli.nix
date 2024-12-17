@@ -44,7 +44,6 @@
           }
         ];
       };
-      timewall.enable = true;
       cameractrls.enable = true;
     };
     hardware = {
