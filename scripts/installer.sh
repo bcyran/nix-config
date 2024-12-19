@@ -144,8 +144,8 @@ bootstrap() {
   log_info "Staring the installation"
   mkdir -p "${extra_files_dir}/root/.ssh"
   cat ~/.ssh/id_ed25519.pub > "${extra_files_dir}/root/.ssh/authorized_keys"
-  nix run github:nix-community/nixos-anywhere/69ad3f4a50cfb711048f54013404762c9a8e201e -- \
-    --no-reboot \
+  nix run github:nix-community/nixos-anywhere -- \
+    --phases kexec,disko,install \
     --extra-files "${extra_files_dir}" \
     --flake ".#${target_hostname}-installer" \
     "nixos@${target_ip}"
@@ -232,11 +232,15 @@ install() {
     fi
 EOF
 
-  log_info "Rebuilding the system"
   # Copying the config to the temporary directory because we run rebuild as a root
   # so we will mess up git files permissions.
+  log_info "Copying the config into temporary directory"
+  ssh_cmd root << EOF
+    rsync -a --no-o --info=progress2 --filter=':- .gitignore' "${target_config_dir}/" "${tmp_config_dir}"
+EOF
+
+  log_info "Rebuilding the system"
   ssh_cmd root -o ForwardAgent=yes << EOF
-    cp -r "${target_config_dir}" "${tmp_config_dir}"
     cd "${tmp_config_dir}"
     nixos-rebuild switch --flake .
 EOF
@@ -248,6 +252,9 @@ EOF
 # HOME
 #
 home() {
+  log_info "Syncing the configuration to ${target_config_dir}"
+  sync_dir "${target_user}" "${config_dir}/" "${target_config_dir}"
+
   log_info "Rebuilding user's home"
   ssh_cmd "${target_user}" -o ForwardAgent=yes << EOF
     cd "${target_config_dir}"
