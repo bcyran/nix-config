@@ -56,7 +56,6 @@
       sops.enable = true;
     };
     programs = {
-      tlp.enable = false;
       btrbk.enable = true;
       openssh.enable = true;
     };

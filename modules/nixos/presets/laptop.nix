@@ -10,10 +10,12 @@ in {
 
   config = lib.mkIf cfg.enable {
     my.programs = {
-      tlp.enable = mkDefault true;
       upower.enable = mkDefault true;
       kanata.enable = mkDefault true;
     };
-    services.logind.lidSwitchExternalPower = mkDefault "ignore";
+    services = {
+      tlp.enable = mkDefault true;
+      logind.lidSwitchExternalPower = mkDefault "ignore";
+    };
   };
 }
