@@ -39,8 +39,6 @@
     presets = {
       base.enable = true;
       laptop.enable = true;
-      desktop.enable = true;
-      cosmic.enable = true;
     };
     configurations = {
       core = {
