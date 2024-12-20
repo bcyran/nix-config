@@ -1,6 +1,7 @@
 {
   my,
   inputs,
+  lib,
   config,
   ...
 }: {
@@ -35,10 +36,23 @@
     };
   };
 
+  # Server-specific
+  # Disable the screen after 2 minutes of inactivity
+  boot.kernelParams = [
+    "consoleblank=120"
+  ];
+  # Disable the lid switch completely
+  services.logind = {
+    lidSwitch = "ignore";
+    lidSwitchExternalPower = "ignore";
+    lidSwitchDocked = "ignore";
+  };
+  # Disable the suspend target completely
+  systemd.targets.sleep.enable = false;
+
   my = {
     presets = {
       base.enable = true;
-      laptop.enable = true;
     };
     configurations = {
       core = {
@@ -56,6 +70,9 @@
     programs = {
       btrbk.enable = true;
       openssh.enable = true;
+    };
+    services = {
+      blocky.enable = true;
     };
   };
 
