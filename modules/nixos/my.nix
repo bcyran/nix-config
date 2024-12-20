@@ -5,6 +5,7 @@
 
     ./configurations
     ./programs
+    ./services
     ./presets
     ../common/user.nix
   ];
