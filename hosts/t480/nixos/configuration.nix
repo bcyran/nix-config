@@ -1,7 +1,6 @@
 {
   my,
   inputs,
-  lib,
   config,
   ...
 }: {
@@ -25,6 +24,7 @@
   sops = let
     t480SopsFile = "${inputs.my-secrets}/t480.yaml";
     wifiSopsFile = "${inputs.my-secrets}/wifi.yaml";
+    homelabSopsFile = "${inputs.my-secrets}/homelab.yaml";
   in {
     defaultSopsFile = t480SopsFile;
     secrets = {
@@ -33,6 +33,7 @@
       nix_extra_options = {};
       home_wifi_env_file.sopsFile = wifiSopsFile;
       mobile_wifi_env_file.sopsFile = wifiSopsFile;
+      ovh_api_env_file.sopsFile = homelabSopsFile;
     };
   };
 
@@ -71,8 +72,23 @@
       btrbk.enable = true;
       openssh.enable = true;
     };
-    services = {
-      blocky.enable = true;
+    services = let
+      intraDomain = "intra.cyran.dev";
+    in {
+      blocky = {
+        enable = true;
+        customDNSMappings = {
+          ${intraDomain} = "192.168.0.130";
+        };
+      };
+      caddy = {
+        enable = true;
+        environmentFiles = [config.sops.secrets.ovh_api_env_file.path];
+      };
+      grafana = {
+        enable = true;
+        domain = "grafana.${intraDomain}";
+      };
     };
   };
 
