@@ -34,6 +34,7 @@
       home_wifi_env_file.sopsFile = wifiSopsFile;
       mobile_wifi_env_file.sopsFile = wifiSopsFile;
       ovh_api_env_file.sopsFile = homelabSopsFile;
+      tailscale_auth_key.sopsFile = homelabSopsFile;
     };
   };
 
@@ -74,11 +75,12 @@
     };
     services = let
       intraDomain = "intra.cyran.dev";
+      intraIP = "192.168.0.130";
     in {
       blocky = {
         enable = true;
         customDNSMappings = {
-          ${intraDomain} = "192.168.0.130";
+          ${intraDomain} = intraIP;
         };
       };
       caddy = {
@@ -88,6 +90,11 @@
       grafana = {
         enable = true;
         domain = "grafana.${intraDomain}";
+      };
+      tailscale = {
+        enable = true;
+        advertiseRoutes = ["${intraIP}/32"];
+        authKeyFile = config.sops.secrets.tailscale_auth_key.path;
       };
     };
   };
