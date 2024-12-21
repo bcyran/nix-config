@@ -8,6 +8,12 @@ in {
   options.my.services.blocky = {
     enable = lib.mkEnableOption "blocky";
 
+    customDNSMappings = lib.mkOption {
+      type = with lib.types; attrsOf str;
+      default = {};
+      description = "Custom DNS mappings.";
+    };
+
     port = lib.mkOption {
       type = lib.types.int;
       default = 53;
@@ -47,6 +53,7 @@ in {
           maxTime = "30m";
           prefetching = true;
         };
+        customDNS.mapping = cfg.customDNSMappings;
       };
     };
   };
