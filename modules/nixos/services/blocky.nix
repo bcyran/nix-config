@@ -14,23 +14,31 @@ in {
       description = "Custom DNS mappings.";
     };
 
-    port = lib.mkOption {
+    dnsPort = lib.mkOption {
       type = lib.types.int;
       default = 53;
       description = "The port on which the DNS server listens.";
+    };
+    httpPort = lib.mkOption {
+      type = lib.types.int;
+      default = 4000;
+      description = "The port on which the HTTP server listens.";
     };
   };
 
   config = lib.mkIf cfg.enable {
     networking.firewall = {
-      allowedTCPPorts = [cfg.port];
-      allowedUDPPorts = [cfg.port];
+      allowedTCPPorts = [cfg.dnsPort];
+      allowedUDPPorts = [cfg.dnsPort];
     };
 
     services.blocky = {
       enable = true;
       settings = {
-        ports.dns = cfg.port;
+        ports = {
+          dns = cfg.dnsPort;
+          http = cfg.httpPort;
+        };
         upstreams.groups.default = [
           "https://cloudflare-dns.com/dns-query"
         ];
@@ -54,6 +62,7 @@ in {
           prefetching = true;
         };
         customDNS.mapping = cfg.customDNSMappings;
+        prometheus.enable = true;
       };
     };
   };
