@@ -271,6 +271,21 @@
         "type": "github"
       }
     },
+    "grafana-dashboards": {
+      "locked": {
+        "lastModified": 1695623910,
+        "narHash": "sha256-bUq3cN6o/m4JCwnwC6wg2qXdsTvxKcf1zL3zevywnp4=",
+        "owner": "blackheaven",
+        "repo": "grafana-dashboards.nix",
+        "rev": "f64094eda27a307ddd990e147dc2d5595d0f2801",
+        "type": "github"
+      },
+      "original": {
+        "owner": "blackheaven",
+        "repo": "grafana-dashboards.nix",
+        "type": "github"
+      }
+    },
     "hardware": {
       "locked": {
         "lastModified": 1733481457,
@@ -544,6 +559,7 @@
         "anyrun": "anyrun",
         "anyrun-powermenu": "anyrun-powermenu",
         "disko": "disko",
+        "grafana-dashboards": "grafana-dashboards",
         "hardware": "hardware",
         "home-manager": "home-manager",
         "hyprcursor-phinger": "hyprcursor-phinger",

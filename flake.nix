@@ -24,6 +24,9 @@
       url = "github:lilyinstarlight/nixos-cosmic";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    grafana-dashboards = {
+      url = "github:blackheaven/grafana-dashboards.nix";
+    };
 
     # Home Manager dependencies.
     home-manager = {

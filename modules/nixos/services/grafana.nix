@@ -1,8 +1,11 @@
 {
+  inputs,
+  pkgs,
   config,
   lib,
   ...
 }: let
+  grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
   cfg = config.my.services.grafana;
 in {
   options.my.services.grafana = {
@@ -27,6 +30,7 @@ in {
     services = {
       grafana = {
         enable = true;
+
         settings = {
           server = {
             http_addr = "127.0.0.1";
@@ -36,6 +40,31 @@ in {
             inherit (cfg) domain;
           };
           analytics.reporting_enabled = false;
+        };
+
+        provision = {
+          enable = true;
+
+          datasources.settings.datasources = [
+            {
+              name = "Prometheus";
+              type = "prometheus";
+              url = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
+              default = true;
+            }
+          ];
+
+          dashboards.settings.providers = [
+            (grafanaDashboardsLib.dashboardEntry {
+              name = "node-exporter-full";
+              path = grafanaDashboardsLib.fetchDashboard {
+                name = "node-exporter-full";
+                id = 1860;
+                version = 37;
+                hash = "sha256-PS9pNh3AqDpBMabZWjqsj1pgp7asuyGeJInP9Bdbpr0=";
+              };
+            })
+          ];
         };
       };
     };
