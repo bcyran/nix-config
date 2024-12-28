@@ -19,7 +19,10 @@
     ../common/user.nix
   ];
 
-  networking.hostName = "t480";
+  networking = {
+    hostName = "t480";
+    nameservers = ["127.0.0.1"];
+  };
 
   sops = let
     t480SopsFile = "${inputs.my-secrets}/t480.yaml";
@@ -101,6 +104,10 @@
           srv = "K755SJE-WJVQQNY-M3RSJP7-RYLNIOF-TJNMR3H-32WAY53-KPX5BFM-5RZSRQL";
         };
         folders = ["KeePass" "Portfolio" "Signal backup" "Sync"];
+      };
+      homepage = {
+        enable = true;
+        domain = "home.${intraDomain}";
       };
     };
   };
