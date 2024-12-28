@@ -35,6 +35,8 @@
       mobile_wifi_env_file.sopsFile = wifiSopsFile;
       ovh_api_env_file.sopsFile = homelabSopsFile;
       tailscale_auth_key.sopsFile = homelabSopsFile;
+      syncthing_key_file.sopsFile = homelabSopsFile;
+      syncthing_cert_file.sopsFile = homelabSopsFile;
     };
   };
 
@@ -87,6 +89,18 @@
         enable = true;
         advertiseRoutes = ["${intraIP}/32"];
         authKeyFile = config.sops.secrets.tailscale_auth_key.path;
+      };
+      syncthing = {
+        enable = true;
+        domain = "syncthing.${intraDomain}";
+        keyFile = config.sops.secrets.syncthing_key_file.path;
+        certFile = config.sops.secrets.syncthing_cert_file.path;
+        devices = {
+          slimbook = "ADH7KVP-ATNX6XY-VSBFKEW-U7A4TAI-2YA6JQG-DZHNGRR-2DZOIXW-KAS6AQX";
+          pixel7 = "WCA3ZM5-ZELYQWF-VAWS425-OPG5Q4R-O4J3ARM-IOPGI7Z-BTE2TY5-EZ36AAI";
+          srv = "K755SJE-WJVQQNY-M3RSJP7-RYLNIOF-TJNMR3H-32WAY53-KPX5BFM-5RZSRQL";
+        };
+        folders = ["KeePass" "Portfolio" "Signal backup" "Sync"];
       };
     };
   };
