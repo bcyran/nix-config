@@ -4,11 +4,15 @@
   ...
 }: let
   cfg = config.my.services.syncthing;
-
-  guiPort = 8384;
 in {
   options.my.services.syncthing = {
     enable = lib.mkEnableOption "syncthing";
+
+    guiPort = lib.mkOption {
+      type = lib.types.int;
+      default = 8384;
+      description = "The port on which the Syncthing web UI is accessible.";
+    };
 
     domain = lib.mkOption {
       type = lib.types.str;
@@ -43,13 +47,13 @@ in {
 
   config = lib.mkIf cfg.enable {
     networking.firewall = {
-      allowedTCPPorts = [guiPort];
+      allowedTCPPorts = [cfg.guiPort];
     };
 
     services.syncthing = {
       enable = true;
       openDefaultPorts = true;
-      guiAddress = "0.0.0.0:${toString guiPort}";
+      guiAddress = "0.0.0.0:${toString cfg.guiPort}";
 
       settings = {
         devices = lib.mapAttrs (name: id: {inherit id;}) cfg.devices;
@@ -74,7 +78,7 @@ in {
 
     my.services.reverseProxy.virtualHosts.${cfg.domain} = {
       backendAddress = "127.0.0.1";
-      backendPort = guiPort;
+      backendPort = cfg.guiPort;
     };
   };
 }
