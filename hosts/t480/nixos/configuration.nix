@@ -87,6 +87,10 @@
         enable = true;
         environmentFiles = [config.sops.secrets.ovh_api_env_file.path];
       };
+      prometheus = {
+        enable = true;
+        domain = "prometheus.${intraDomain}";
+      };
       grafana = {
         enable = true;
         domain = "grafana.${intraDomain}";
