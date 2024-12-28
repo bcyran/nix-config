@@ -109,6 +109,10 @@
         enable = true;
         domain = "home.${intraDomain}";
       };
+      home-assistant = {
+        enable = true;
+        domain = "ha.${intraDomain}";
+      };
     };
   };
 

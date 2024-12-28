@@ -46,6 +46,14 @@ in {
                 siteMonitor = href;
               };
             }
+            {
+              "Home Assistant" = rec {
+                description = "Home automation service.";
+                icon = "home-assistant";
+                href = "https://${config.my.services.home-assistant.domain}";
+                siteMonitor = href;
+              };
+            }
           ];
         }
         {
