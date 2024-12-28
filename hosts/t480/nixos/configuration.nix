@@ -91,6 +91,7 @@
         enable = true;
         domain = "prometheus.${intraDomain}";
       };
+      loki.enable = true;
       grafana = {
         enable = true;
         domain = "grafana.${intraDomain}";
