@@ -23,5 +23,15 @@ in {
 
     # Disable the suspend target completely
     systemd.targets.sleep.enable = mkDefault false;
+
+    # Disable the screen backlight
+    systemd.services.backlight = {
+      description = "Disable the screen backlight";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "/bin/sh -c 'echo 0 > /sys/class/backlight/intel_backlight/brightness'";
+      };
+      wantedBy = ["multi-user.target"];
+    };
   };
 }
