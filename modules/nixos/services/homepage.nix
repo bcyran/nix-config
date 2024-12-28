@@ -32,6 +32,7 @@ in {
       settings = {
         hideVersion = true;
         statusStyle = "dot";
+        theme = "dark";
       };
 
       services = [
@@ -123,6 +124,31 @@ in {
               };
             }
           ];
+        }
+      ];
+
+      widgets = [
+        {
+          resources = {
+            cpu = true;
+            memory = true;
+            disk = "/";
+            cputemp = true;
+            uptime = true;
+            units = "metric";
+            refresh = 5000;
+            diskUnits = "bbytes";
+            network = true;
+          };
+        }
+        {
+          datetime = {
+            text_size = "xl";
+            format = {
+              timeStyle = "short";
+              hourCycle = "h23";
+            };
+          };
         }
       ];
     };
