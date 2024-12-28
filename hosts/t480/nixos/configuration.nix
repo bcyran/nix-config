@@ -38,23 +38,10 @@
     };
   };
 
-  # Server-specific
-  # Disable the screen after 2 minutes of inactivity
-  boot.kernelParams = [
-    "consoleblank=120"
-  ];
-  # Disable the lid switch completely
-  services.logind = {
-    lidSwitch = "ignore";
-    lidSwitchExternalPower = "ignore";
-    lidSwitchDocked = "ignore";
-  };
-  # Disable the suspend target completely
-  systemd.targets.sleep.enable = false;
-
   my = {
     presets = {
       base.enable = true;
+      laptopServer.enable = true;
     };
     configurations = {
       core = {
