@@ -30,6 +30,12 @@ in {
   options.my.services.caddy = {
     enable = lib.mkEnableOption "caddy";
 
+    adminPort = lib.mkOption {
+      type = lib.types.int;
+      default = 2019;
+      description = "The port on which the Caddy admin interface is accessible.";
+    };
+
     environmentFiles = lib.mkOption {
       type = with lib.types; listOf path;
       default = [];
@@ -39,7 +45,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     networking.firewall = {
-      allowedTCPPorts = [reverseProxyCfg.HTTPPort reverseProxyCfg.HTTPSPort];
+      allowedTCPPorts = [reverseProxyCfg.HTTPPort reverseProxyCfg.HTTPSPort cfg.adminPort];
     };
 
     services.caddy = {
@@ -49,6 +55,7 @@ in {
       globalConfig = ''
         http_port ${toString reverseProxyCfg.HTTPPort}
         https_port ${toString reverseProxyCfg.HTTPSPort}
+        admin :${toString cfg.adminPort}
       '';
 
       virtualHosts = lib.attrsets.concatMapAttrs makeVirtualHost reverseProxyCfg.virtualHosts;
