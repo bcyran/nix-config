@@ -21,6 +21,7 @@ in {
         owner = "hass";
         restartUnits = ["home-assistant.service"];
       };
+      speedtest_tracker_env_file.sopsFile = homelabSopsFile;
     };
   };
 
@@ -73,6 +74,11 @@ in {
     uptime-kuma = {
       enable = true;
       domain = "uptime.${intraDomain}";
+    };
+    speedtest-tracker = {
+      enable = true;
+      environmentFile = config.sops.secrets.speedtest_tracker_env_file.path;
+      domain = "speedtest.${intraDomain}";
     };
   };
 }

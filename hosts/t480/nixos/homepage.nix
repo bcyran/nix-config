@@ -68,6 +68,18 @@
               };
             };
           }
+          {
+            "Speedtest Tracker" = rec {
+              description = "Continuous internet speed monitoring.";
+              icon = "myspeed";
+              href = "https://${config.my.services.speedtest-tracker.domain}";
+              siteMonitor = href;
+              widget = {
+                type = "speedtest";
+                url = href;
+              };
+            };
+          }
         ];
       }
       {
