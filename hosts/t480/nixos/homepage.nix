@@ -29,6 +29,30 @@
               icon = "syncthing";
               href = "https://${config.my.services.syncthing.domain}";
               siteMonitor = href;
+              widget = {
+                type = "customapi";
+                url = "https://${config.my.services.syncthing.domain}/rest/db/completion";
+                headers = {
+                  "X-API-Key" = "{{HOMEPAGE_VAR_SYNCTHING_API_KEY}}";
+                };
+                mappings = [
+                  {
+                    field = "completion";
+                    label = "Sync progress";
+                    format = "percent";
+                  }
+                  {
+                    field = "needBytes";
+                    label = "Unsynced data";
+                    format = "bytes";
+                  }
+                  {
+                    field = "globalBytes";
+                    label = "Total data";
+                    format = "bytes";
+                  }
+                ];
+              };
             };
           }
         ];
