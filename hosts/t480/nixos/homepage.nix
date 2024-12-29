@@ -75,6 +75,20 @@
               siteMonitor = href;
             };
           }
+          {
+            Loki = {
+              description = "Log aggregation service.";
+              icon = "https://grafana.com/static/img/logos/logo-loki.svg";
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.loki.lokiPort}/ready";
+            };
+          }
+          {
+            Promtail = {
+              description = "Log collector.";
+              icon = "https://grafana.com/static/img/logos/logo-loki.svg";
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.loki.promtailPort}/ready";
+            };
+          }
         ];
       }
       {
