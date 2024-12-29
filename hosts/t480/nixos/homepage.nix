@@ -78,6 +78,13 @@
               icon = "https://upload.wikimedia.org/wikipedia/commons/archive/a/a1/20230113183100%21Grafana_logo.svg";
               href = "https://${config.my.services.grafana.domain}";
               siteMonitor = href;
+              widget = {
+                type = "grafana";
+                url = href;
+                username = "{{HOMEPAGE_VAR_GRAFANA_USERNAME}}";
+                fields = ["alertstriggered" "datasources"];
+                password = "{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}";
+              };
             };
           }
           {
@@ -86,6 +93,11 @@
               icon = "prometheus";
               href = "https://${config.my.services.prometheus.domain}";
               siteMonitor = href;
+              widget = {
+                type = "prometheus";
+                url = href;
+                fields = ["targets_up" "targets_down"];
+              };
             };
           }
           {
