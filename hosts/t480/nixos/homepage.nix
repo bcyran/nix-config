@@ -8,7 +8,7 @@
 
     services = [
       {
-        "Services" = [
+        "Application services" = [
           {
             "Home Assistant" = rec {
               description = "Home automation service.";
@@ -92,7 +92,7 @@
         ];
       }
       {
-        "Server" = [
+        "Core services" = [
           {
             Caddy = {
               description = "Reverse proxy and TLS termination.";
@@ -143,6 +143,17 @@
                     };
                   }
                 ];
+              };
+            };
+          }
+          {
+            Tailscale = {
+              description = "VPN service.";
+              icon = "tailscale";
+              widget = {
+                type = "tailscale";
+                deviceid = "nqHmw1Tgjs11CNTRL";
+                key = "{{HOMEPAGE_VAR_TAILSCALE_API_TOKEN}}";
               };
             };
           }
