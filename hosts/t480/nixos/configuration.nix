@@ -111,7 +111,7 @@
       };
       home-assistant = {
         enable = true;
-        domain = "ha.${intraDomain}";
+        domain = "hass.${intraDomain}";
       };
     };
   };

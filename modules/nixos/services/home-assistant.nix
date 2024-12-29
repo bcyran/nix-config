@@ -16,7 +16,7 @@ in {
 
     domain = lib.mkOption {
       type = lib.types.str;
-      example = "ha.intra.my.tld";
+      example = "hass.intra.my.tld";
       description = "The domain on which the Home Assistant server listens.";
     };
   };
