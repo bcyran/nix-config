@@ -33,80 +33,14 @@ in {
           country = "PL";
           unit_system = "metric";
           internal_url = "https://${cfg.domain}";
-
-          customize = {
-            "light.192_168_0_228" = {
-              icon = "mdi:light-flood-up";
-            };
-            "light.192_168_0_227" = {
-              icon = "mdi:light-flood-up";
-            };
-            "light.192_168_0_164" = {
-              icon = "mdi:light-flood-up";
-            };
-            "light.192_168_0_80" = {
-              icon = "mdi:desk";
-            };
-            "light.all_lights" = {
-              icon = "mdi:lightbulb-group";
-              friendly_name = "Wszystkie światła";
-            };
-            "light.mood_lights" = {
-              icon = "mdi:lightbulb-group";
-              friendly_name = "Mood lights";
-            };
-            "media_player.tv" = {
-              icon = "mdi:television";
-            };
-          };
         };
         http = {
           use_x_forwarded_for = true;
           server_port = cfg.port;
           trusted_proxies = ["127.0.0.1"];
         };
+        scene = "!include scenes.yaml";
         mobile_app = {};
-        yeelight = {
-          devices = {
-            "192.168.0.228" = {
-              name = "Podłoga";
-              model = "color4";
-            };
-            "192.168.0.227" = {
-              name = "Łóżko";
-              model = "colorb";
-            };
-            "192.168.0.164" = {
-              name = "Stół";
-              model = "color4";
-            };
-            "192.168.0.80" = {
-              name = "Biurko";
-              model = "strip8";
-            };
-          };
-        };
-        light = [
-          {
-            platform = "group";
-            name = "all_lights";
-            entities = [
-              "light.192_168_0_228"
-              "light.192_168_0_227"
-              "light.192_168_0_164"
-              "light.192_168_0_80"
-            ];
-          }
-          {
-            platform = "group";
-            name = "mood_lights";
-            entities = [
-              "light.192_168_0_228"
-              "light.192_168_0_227"
-              "light.192_168_0_164"
-            ];
-          }
-        ];
       };
 
       extraComponents = [
