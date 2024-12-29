@@ -70,5 +70,9 @@ in {
       enable = true;
       domain = "hass.${intraDomain}";
     };
+    uptime-kuma = {
+      enable = true;
+      domain = "uptime.${intraDomain}";
+    };
   };
 }

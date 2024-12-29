@@ -55,6 +55,19 @@
               };
             };
           }
+          {
+            "Uptime Kuma" = rec {
+              description = "Service uptime monitoring.";
+              icon = "uptime-kuma";
+              href = "https://${config.my.services.uptime-kuma.domain}/status/external";
+              siteMonitor = href;
+              widget = {
+                type = "uptimekuma";
+                url = "https://${config.my.services.uptime-kuma.domain}";
+                slug = "external";
+              };
+            };
+          }
         ];
       }
       {
