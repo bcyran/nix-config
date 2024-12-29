@@ -9,6 +9,12 @@ in {
   options.my.services.homepage = {
     enable = lib.mkEnableOption "homepage";
 
+    environmentFile = lib.mkOption {
+      type = with lib.types; nullOr path;
+      default = null;
+      description = "The path to the environment file.";
+    };
+
     port = lib.mkOption {
       type = lib.types.int;
       default = 8080;
@@ -26,6 +32,7 @@ in {
     services.homepage-dashboard = {
       enable = true;
       package = my.pkgs.homepage-dashboard;
+      inherit (cfg) environmentFile;
       openFirewall = true;
       listenPort = cfg.port;
 
@@ -39,18 +46,24 @@ in {
         {
           "Services" = [
             {
-              Syncthing = rec {
-                description = "File synchronization service.";
-                icon = "syncthing";
-                href = "https://${config.my.services.syncthing.domain}";
-                siteMonitor = href;
-              };
-            }
-            {
               "Home Assistant" = rec {
                 description = "Home automation service.";
                 icon = "home-assistant";
                 href = "https://${config.my.services.home-assistant.domain}";
+                siteMonitor = href;
+                widget = {
+                  type = "homeassistant";
+                  url = "https://${config.my.services.home-assistant.domain}";
+                  key = "{{HOMEPAGE_VAR_HASS_API_TOKEN}}";
+                  fields = ["people_home" "lights_on"];
+                };
+              };
+            }
+            {
+              Syncthing = rec {
+                description = "File synchronization service.";
+                icon = "syncthing";
+                href = "https://${config.my.services.syncthing.domain}";
                 siteMonitor = href;
               };
             }

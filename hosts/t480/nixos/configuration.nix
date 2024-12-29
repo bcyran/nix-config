@@ -40,6 +40,13 @@
       tailscale_auth_key.sopsFile = homelabSopsFile;
       syncthing_key_file.sopsFile = homelabSopsFile;
       syncthing_cert_file.sopsFile = homelabSopsFile;
+      homepage_env_file.sopsFile = homelabSopsFile;
+      hass_secrets_file = {
+        sopsFile = homelabSopsFile;
+        path = "${config.services.home-assistant.configDir}/secrets.yaml";
+        owner = "hass";
+        restartUnits = ["home-assistant.service"];
+      };
     };
   };
 
@@ -107,6 +114,7 @@
       };
       homepage = {
         enable = true;
+        environmentFile = config.sops.secrets.homepage_env_file.path;
         domain = "home.${intraDomain}";
       };
       home-assistant = {
