@@ -89,5 +89,8 @@ in {
       enable = true;
       masterKeyEnvironmentFile = config.sops.secrets.meilisearch_env_file.path;
     };
+    chromium = {
+      enable = true;
+    };
   };
 }
