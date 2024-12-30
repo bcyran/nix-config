@@ -233,19 +233,10 @@
         ];
       }
     ];
-
     widgets = [
       {
-        resources = {
-          cpu = true;
-          memory = true;
-          disk = "/";
-          cputemp = true;
-          uptime = true;
-          units = "metric";
-          refresh = 5000;
-          diskUnits = "bbytes";
-          network = true;
+        greeting = {
+          text = "intra.cyran.dev status";
         };
       }
       {
