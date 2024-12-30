@@ -23,6 +23,7 @@ in {
       };
       speedtest_tracker_env_file.sopsFile = homelabSopsFile;
       meilisearch_env_file.sopsFile = homelabSopsFile;
+      hoarder_env_file.sopsFile = homelabSopsFile;
     };
   };
 
@@ -91,6 +92,14 @@ in {
     };
     chromium = {
       enable = true;
+    };
+    hoarder = {
+      enable = true;
+      environmentFiles = with config.sops.secrets; [
+        hoarder_env_file.path
+        meilisearch_env_file.path
+      ];
+      domain = "hoarder.${intraDomain}";
     };
   };
 }
