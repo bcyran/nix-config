@@ -141,6 +141,14 @@
             };
           }
           {
+            Glances = rec {
+              description = "Live resources usage monitoring.";
+              icon = "glances";
+              href = "https://${config.my.services.glances.domain}";
+              siteMonitor = href;
+            };
+          }
+          {
             Loki = {
               description = "Log aggregation service.";
               icon = "https://grafana.com/static/img/logos/logo-loki.svg";
