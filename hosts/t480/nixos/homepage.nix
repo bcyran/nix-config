@@ -4,9 +4,37 @@
       hideVersion = true;
       statusStyle = "dot";
       theme = "dark";
+
+      layout = {
+        "Hardware status" = {
+          style = "row";
+          columns = 3;
+        };
+      };
     };
 
     services = [
+      {
+        "Hardware status" = let
+          makeGlancesWidget = title: metricName: {
+            "${title}" = {
+              widget = {
+                type = "glances";
+                url = "http://127.0.0.1:${toString config.my.services.glances.port}";
+                version = "4";
+                metric = metricName;
+              };
+            };
+          };
+        in [
+          (makeGlancesWidget "CPU" "cpu")
+          (makeGlancesWidget "Memory" "memory")
+          (makeGlancesWidget "Network" "network:enp0s31f6")
+          (makeGlancesWidget "Processes" "process")
+          (makeGlancesWidget "Disk I/O" "disk:nvme0n1")
+          (makeGlancesWidget "Root FS" "fs:/")
+        ];
+      }
       {
         "Application services" = [
           {
