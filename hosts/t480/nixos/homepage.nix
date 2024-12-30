@@ -38,11 +38,11 @@
       {
         "Application services" = [
           {
-            "Home Assistant" = rec {
+            "Home Assistant" = {
               description = "Home automation service.";
               icon = "home-assistant";
               href = "https://${config.my.services.home-assistant.domain}";
-              siteMonitor = href;
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.home-assistant.port}";
               widget = {
                 type = "homeassistant";
                 url = "https://${config.my.services.home-assistant.domain}";
@@ -52,11 +52,11 @@
             };
           }
           {
-            Syncthing = rec {
+            Syncthing = {
               description = "File synchronization service.";
               icon = "syncthing";
               href = "https://${config.my.services.syncthing.domain}";
-              siteMonitor = href;
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.syncthing.guiPort}";
               widget = {
                 type = "customapi";
                 url = "https://${config.my.services.syncthing.domain}/rest/db/completion";
@@ -84,27 +84,27 @@
             };
           }
           {
-            "Uptime Kuma" = rec {
+            "Uptime Kuma" = {
               description = "Service uptime monitoring.";
               icon = "uptime-kuma";
               href = "https://${config.my.services.uptime-kuma.domain}/status/external";
-              siteMonitor = href;
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.uptime-kuma.port}";
               widget = {
                 type = "uptimekuma";
-                url = "https://${config.my.services.uptime-kuma.domain}";
+                url = "http://127.0.0.1:${toString config.my.services.uptime-kuma.port}";
                 slug = "external";
               };
             };
           }
           {
-            "Speedtest Tracker" = rec {
+            "Speedtest Tracker" = {
               description = "Continuous internet speed monitoring.";
               icon = "myspeed";
               href = "https://${config.my.services.speedtest-tracker.domain}";
-              siteMonitor = href;
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.speedtest-tracker.port}";
               widget = {
                 type = "speedtest";
-                url = href;
+                url = "http://127.0.0.1:${toString config.my.services.speedtest-tracker.port}";
               };
             };
           }
@@ -117,10 +117,10 @@
               description = "Server metrics visualization.";
               icon = "https://upload.wikimedia.org/wikipedia/commons/archive/a/a1/20230113183100%21Grafana_logo.svg";
               href = "https://${config.my.services.grafana.domain}";
-              siteMonitor = href;
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.grafana.port}";
               widget = {
                 type = "grafana";
-                url = href;
+                url = siteMonitor;
                 username = "{{HOMEPAGE_VAR_GRAFANA_USERNAME}}";
                 fields = ["alertstriggered" "datasources"];
                 password = "{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}";
@@ -132,20 +132,20 @@
               description = "Server metrics collection.";
               icon = "prometheus";
               href = "https://${config.my.services.prometheus.domain}";
-              siteMonitor = href;
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.prometheus.port}";
               widget = {
                 type = "prometheus";
-                url = href;
+                url = siteMonitor;
                 fields = ["targets_up" "targets_down"];
               };
             };
           }
           {
-            Glances = rec {
+            Glances = {
               description = "Live resources usage monitoring.";
               icon = "glances";
               href = "https://${config.my.services.glances.domain}";
-              siteMonitor = href;
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.glances.port}";
             };
           }
           {
@@ -184,7 +184,7 @@
               siteMonitor = "http://127.0.0.1:${toString config.my.services.blocky.httpPort}";
               widget = {
                 type = "prometheusmetric";
-                url = "https://${config.my.services.prometheus.domain}";
+                url = "http://127.0.0.1:${toString config.my.services.prometheus.port}";
                 metrics = let
                   range = "1h";
                 in [
