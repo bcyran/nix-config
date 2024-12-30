@@ -1,9 +1,13 @@
 {
+  inputs,
+  pkgs,
   my,
   config,
   lib,
   ...
 }: let
+  grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
+
   cfg = config.my.services.caddy;
   reverseProxyCfg = config.my.services.reverseProxy;
   lokiCfg = config.my.services.loki;
@@ -67,6 +71,10 @@ in {
           http_port ${toString reverseProxyCfg.HTTPPort}
           https_port ${toString reverseProxyCfg.HTTPSPort}
           admin :${toString cfg.adminPort}
+
+          servers {
+            metrics
+          }
         '';
 
         virtualHosts = lib.attrsets.concatMapAttrs makeVirtualHost reverseProxyCfg.virtualHosts;
@@ -102,6 +110,43 @@ in {
           ];
         }
       ];
+
+      prometheus.scrapeConfigs = lib.mkIf config.services.prometheus.enable [
+        {
+          job_name = "caddy";
+          static_configs = [
+            {
+              targets = ["127.0.0.1:${toString cfg.adminPort}"];
+            }
+          ];
+        }
+      ];
+
+      grafana = lib.mkIf config.services.grafana.enable {
+        settings.panels.disable_sanitize_html = true;
+
+        provision.dashboards.settings.providers = [
+          (grafanaDashboardsLib.dashboardEntry {
+            name = "caddy";
+            path = grafanaDashboardsLib.fetchDashboard {
+              name = "caddy";
+              id = 20802;
+              version = 1;
+              hash = "sha256-36tLF4VJJLs6SkTp9RJI84EsixgKYarOH2AOGNArK3E=";
+            };
+            transformations = grafanaDashboardsLib.fillTemplating [
+              {
+                key = "DS_PROMETHEUS-INDUMIA";
+                value = "Prometheus";
+              }
+              {
+                key = "DS_LOKI-INDUMIA";
+                value = "Loki";
+              }
+            ];
+          })
+        ];
+      };
     };
 
     systemd.services.caddy.serviceConfig.EnvironmentFile = cfg.environmentFiles;
