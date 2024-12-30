@@ -6,6 +6,7 @@
 }: let
   cfg = config.my.services.caddy;
   reverseProxyCfg = config.my.services.reverseProxy;
+  lokiCfg = config.my.services.loki;
 
   caddyWithOvhDnsPlugin = my.pkgs.caddy.withPlugins {
     plugins = ["github.com/caddy-dns/ovh@v0.0.3"];
@@ -15,6 +16,15 @@
   makeVirtualHost = domain: vhost: {
     ${domain}.extraConfig = ''
       reverse_proxy ${vhost.backendAddress}:${toString vhost.backendPort}
+
+      log {
+        output file /var/log/caddy/access-${domain}.log {
+          roll_size 100MiB
+          roll_keep 5
+          roll_keep_for 2160h
+          mode 644
+        }
+      }
 
       tls {
         dns ovh {
@@ -48,17 +58,50 @@ in {
       allowedTCPPorts = [reverseProxyCfg.HTTPPort reverseProxyCfg.HTTPSPort cfg.adminPort];
     };
 
-    services.caddy = {
-      enable = true;
-      package = caddyWithOvhDnsPlugin;
+    services = {
+      caddy = {
+        enable = true;
+        package = caddyWithOvhDnsPlugin;
 
-      globalConfig = ''
-        http_port ${toString reverseProxyCfg.HTTPPort}
-        https_port ${toString reverseProxyCfg.HTTPSPort}
-        admin :${toString cfg.adminPort}
-      '';
+        globalConfig = ''
+          http_port ${toString reverseProxyCfg.HTTPPort}
+          https_port ${toString reverseProxyCfg.HTTPSPort}
+          admin :${toString cfg.adminPort}
+        '';
 
-      virtualHosts = lib.attrsets.concatMapAttrs makeVirtualHost reverseProxyCfg.virtualHosts;
+        virtualHosts = lib.attrsets.concatMapAttrs makeVirtualHost reverseProxyCfg.virtualHosts;
+      };
+
+      promtail.configuration.scrape_configs = lib.mkIf lokiCfg.enable [
+        {
+          job_name = "caddy";
+          static_configs = [
+            {
+              targets = ["localhost:${toString cfg.adminPort}"];
+              labels = {
+                job = "caddy-access";
+                agent = "caddy-promtail";
+                __path__ = "/var/log/caddy/*.log";
+              };
+            }
+          ];
+          pipeline_stages = [
+            {
+              json = {
+                expressions = {
+                  timestamp = "ts";
+                };
+              };
+            }
+            {
+              timestamp = {
+                source = "timestamp";
+                format = "Unix";
+              };
+            }
+          ];
+        }
+      ];
     };
 
     systemd.services.caddy.serviceConfig.EnvironmentFile = cfg.environmentFiles;
