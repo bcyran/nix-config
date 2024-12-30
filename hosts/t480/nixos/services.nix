@@ -22,6 +22,7 @@ in {
         restartUnits = ["home-assistant.service"];
       };
       speedtest_tracker_env_file.sopsFile = homelabSopsFile;
+      meilisearch_env_file.sopsFile = homelabSopsFile;
     };
   };
 
@@ -83,6 +84,10 @@ in {
     glances = {
       enable = true;
       domain = "glances.${intraDomain}";
+    };
+    meilisearch = {
+      enable = true;
+      masterKeyEnvironmentFile = config.sops.secrets.meilisearch_env_file.path;
     };
   };
 }
