@@ -80,5 +80,9 @@ in {
       environmentFile = config.sops.secrets.speedtest_tracker_env_file.path;
       domain = "speedtest.${intraDomain}";
     };
+    glances = {
+      enable = true;
+      domain = "glances.${intraDomain}";
+    };
   };
 }
