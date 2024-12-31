@@ -24,6 +24,6 @@ in {
       file-roller.enable = true;
     };
 
-    boot.supportedFilesystems = ["ntfs"];
+    boot.supportedFilesystems = ["ntfs" "exfat"];
   };
 }
