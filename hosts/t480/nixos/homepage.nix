@@ -36,7 +36,7 @@
         ];
       }
       {
-        "Application services" = [
+        "Applications" = [
           {
             "Home Assistant" = {
               description = "Home automation service.";
@@ -108,6 +108,14 @@
               };
             };
           }
+          {
+            Hoarder = {
+              description = "Bookmark manager.";
+              icon = "hoarder";
+              href = "https://${config.my.services.hoarder.domain}";
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.hoarder.port}";
+            };
+          }
         ];
       }
       {
@@ -165,7 +173,7 @@
         ];
       }
       {
-        "Core services" = [
+        "Backend" = [
           {
             Caddy = {
               description = "Reverse proxy and TLS termination.";
@@ -228,6 +236,20 @@
                 deviceid = "nqHmw1Tgjs11CNTRL";
                 key = "{{HOMEPAGE_VAR_TAILSCALE_API_TOKEN}}";
               };
+            };
+          }
+          {
+            Meilisearch = {
+              description = "Search engine service.";
+              icon = "https://raw.githubusercontent.com/meilisearch/meilisearch/372f4fc924f36319c921fd36fbdc354d96b1d974/assets/logo.svg";
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.meilisearch.port}";
+            };
+          }
+          {
+            Chromium = {
+              description = "Headless browser service.";
+              icon = "chromium";
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.chromium.internalPort}";
             };
           }
         ];
