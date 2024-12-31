@@ -239,6 +239,24 @@
             };
           }
           {
+            Ollama = {
+              description = "LLM API service.";
+              icon = "ollama";
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.ollama.port}";
+              widget = {
+                type = "customapi";
+                url = "http://127.0.0.1:${toString config.my.services.ollama.port}/api/ps";
+                mappings = [
+                  {
+                    field = "models";
+                    label = "Running models";
+                    format = "size";
+                  }
+                ];
+              };
+            };
+          }
+          {
             Meilisearch = {
               description = "Search engine service.";
               icon = "https://raw.githubusercontent.com/meilisearch/meilisearch/372f4fc924f36319c921fd36fbdc354d96b1d974/assets/logo.svg";
