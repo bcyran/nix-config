@@ -23,6 +23,7 @@
                 url = "http://127.0.0.1:${toString config.my.services.glances.port}";
                 version = "4";
                 metric = metricName;
+                refreshInterval = 3000;
               };
             };
           };
@@ -114,6 +115,24 @@
               icon = "hoarder";
               href = "https://${config.my.services.hoarder.domain}";
               siteMonitor = "http://127.0.0.1:${toString config.my.services.hoarder.port}";
+              widget = {
+                type = "customapi";
+                url = "http://127.0.0.1:${toString config.my.services.hoarder.port}/api/v1/bookmarks?limit=1";
+                headers = {
+                  "Authorization" = "Bearer {{HOMEPAGE_VAR_HOARDER_API_KEY}}";
+                };
+                mappings = [
+                  {
+                    field = {
+                      bookmarks = {
+                        "0" = "createdAt";
+                      };
+                    };
+                    format = "relativeDate";
+                    label = "Last bookmark";
+                  }
+                ];
+              };
             };
           }
         ];
@@ -261,6 +280,25 @@
               description = "Search engine service.";
               icon = "https://raw.githubusercontent.com/meilisearch/meilisearch/372f4fc924f36319c921fd36fbdc354d96b1d974/assets/logo.svg";
               siteMonitor = "http://127.0.0.1:${toString config.my.services.meilisearch.port}";
+              widget = {
+                type = "customapi";
+                url = "http://127.0.0.1:${toString config.my.services.meilisearch.port}/stats";
+                headers = {
+                  "Authorization" = "Bearer {{HOMEPAGE_VAR_MEILISEARCH_API_KEY}}";
+                };
+                mappings = [
+                  {
+                    field = "indexes";
+                    label = "Indexes";
+                    format = "size";
+                  }
+                  {
+                    field = "databaseSize";
+                    label = "Total size";
+                    format = "bytes";
+                  }
+                ];
+              };
             };
           }
           {
@@ -268,6 +306,16 @@
               description = "Headless browser service.";
               icon = "chromium";
               siteMonitor = "http://127.0.0.1:${toString config.my.services.chromium.internalPort}";
+              widget = {
+                type = "customapi";
+                url = "http://127.0.0.1:${toString config.my.services.chromium.internalPort}/json";
+                mappings = [
+                  {
+                    label = "Open tabs";
+                    format = "size";
+                  }
+                ];
+              };
             };
           }
         ];
