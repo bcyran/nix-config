@@ -6,6 +6,7 @@
   cfg = config.my.services.hoarder;
   meiliCfg = config.my.services.meilisearch;
   chromiumCfg = config.my.services.chromium;
+  ollamaCfg = config.my.services.ollama;
 
   hoarderVersion = "0.20.0";
   containerName = "hoarder";
@@ -32,6 +33,13 @@ in {
         type = with lib.types; listOf path;
         example = ["/path/to/env/file"];
         description = "The paths to the environment file.";
+      };
+
+      llm = lib.mkOption {
+        type = with lib.types; nullOr str;
+        default = null;
+        example = "gemma:2b";
+        description = "The model to use for tags inference.";
       };
     };
   };
@@ -63,6 +71,13 @@ in {
         }
         // lib.optionalAttrs chromiumCfg.enable {
           BROWSER_WEB_URL = "http://host.containers.internal:${toString chromiumCfg.externalPort}";
+        }
+        // lib.optionalAttrs (cfg.llm != null && ollamaCfg.enable) {
+          OLLAMA_BASE_URL = "http://host.containers.internal:${toString ollamaCfg.port}";
+          OLLAMA_KEEP_ALIVE = "1m";
+          INFERENCE_TEXT_MODEL = cfg.llm;
+          INFERENCE_JOB_TIMEOUT_SEC = "180";
+          INFERENCE_CONTEXT_LENGTH = "2048";
         };
       extraOptions = [
         "--add-host=host.containers.internal:host-gateway"

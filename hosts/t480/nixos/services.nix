@@ -101,5 +101,9 @@ in {
       ];
       domain = "hoarder.${intraDomain}";
     };
+    ollama = {
+      enable = true;
+      domain = "ollama.${intraDomain}";
+    };
   };
 }
