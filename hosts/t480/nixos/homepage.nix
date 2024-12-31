@@ -135,6 +135,14 @@
               };
             };
           }
+          {
+            "Open WebUI" = {
+              description = "OpenAI API service.";
+              icon = "https://docs.openwebui.com/img/logo-dark.png";
+              href = "https://${config.my.services.open-webui.domain}";
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.open-webui.port}";
+            };
+          }
         ];
       }
       {
