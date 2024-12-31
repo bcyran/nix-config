@@ -71,6 +71,8 @@ in {
       sbctl
       gparted
       neovim
+      socat
+      dig
     ];
 
     boot.tmp.cleanOnBoot = !config.boot.tmp.useTmpfs;
