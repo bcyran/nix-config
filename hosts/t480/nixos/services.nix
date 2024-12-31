@@ -105,5 +105,9 @@ in {
       enable = true;
       domain = "ollama.${intraDomain}";
     };
+    open-webui = {
+      enable = true;
+      domain = "openwebui.${intraDomain}";
+    };
   };
 }
