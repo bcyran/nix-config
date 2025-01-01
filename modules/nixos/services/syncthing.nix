@@ -1,35 +1,32 @@
 {
+  my,
   config,
   lib,
   ...
 }: let
   cfg = config.my.services.syncthing;
 in {
-  options.my.services.syncthing = {
-    enable = lib.mkEnableOption "syncthing";
-
-    guiPort = lib.mkOption {
-      type = lib.types.int;
-      default = 8384;
-      description = "The port on which the Syncthing web UI is accessible.";
-    };
-
-    domain = lib.mkOption {
-      type = lib.types.str;
-      example = "syncthing.home.my.tld";
-      description = "The domain on which the web UI is accessible.";
-    };
+  options.my.services.syncthing = let
+    serviceName = "Syncthing";
+  in {
+    enable = lib.mkEnableOption serviceName;
+    guiAddress = my.lib.options.mkAddressOption "${serviceName} GUI";
+    guiPort = my.lib.options.mkPortOption "${serviceName} GUI" 8384;
+    openFirewallGui = my.lib.options.mkOpenFirewallOption "${serviceName} GUI";
+    openFirewallTransfer = my.lib.options.mkOpenFirewallOption "${serviceName} file transfer and discovery";
+    domain = my.lib.options.mkDomainOption "${serviceName} GUI";
+    environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
 
     keyFile = lib.mkOption {
       type = with lib.types; nullOr path;
       default = null;
-      description = "Path to the Syncthing key file.";
+      description = "Path to the key file.";
     };
 
     certFile = lib.mkOption {
       type = with lib.types; nullOr path;
       default = null;
-      description = "Path to the Syncthing certificate file.";
+      description = "Path to the certificate file.";
     };
 
     devices = lib.mkOption {
@@ -43,17 +40,22 @@ in {
       description = "List of folders to sync.";
       default = [];
     };
+
+    # TODO: Use a secret file once merged: https://github.com/NixOS/nixpkgs/pull/290485.
+    hashedPassword = lib.mkOption {
+      type = with lib.types; nullOr str;
+      description = "Hashed password for the GUI.";
+      default = null;
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall = {
-      allowedTCPPorts = [cfg.guiPort];
-    };
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewallGui [cfg.guiPort];
 
     services.syncthing = {
       enable = true;
-      openDefaultPorts = true;
-      guiAddress = "0.0.0.0:${toString cfg.guiPort}";
+      openDefaultPorts = cfg.openFirewallTransfer;
+      guiAddress = "${cfg.guiAddress}:${toString cfg.guiPort}";
 
       settings = {
         devices = lib.mapAttrs (name: id: {inherit id;}) cfg.devices;
@@ -65,18 +67,29 @@ in {
             };
           })
           cfg.folders);
-        gui = {
-          theme = "dark";
-          user = config.my.user.name;
-          # TODO: Use a secret file once merged: https://github.com/NixOS/nixpkgs/pull/290485.
-          password = "$2a$12$16cl3sRqqpClYhSn/Q1rsuA2gsPI0sYPEk6Zs8QTU5oWwlAY0Y8wC";
-        };
+        gui =
+          {
+            theme = "dark";
+            user = config.my.user.name;
+            password = cfg.hashedPassword;
+          }
+          // lib.optionalAttrs (cfg.guiAddress == "127.0.0.1") {
+            # See: https://github.com/kozec/syncthing-gtk/issues/321 and
+            # https://docs.syncthing.net/users/reverseproxy.html#caddy-v2.
+            # We could get rid of this by properly configuring Caddy but this doesn't work well
+            # with my abstracted reverse proxy setup...
+            # But also, is it really wrong? See this: https://github.com/syncthing/docs/issues/380.
+            insecureSkipHostCheck = true;
+          };
       };
     };
 
-    systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
+    systemd.services.syncthing = {
+      environment.STNODEFAULTFOLDER = "true";
+      serviceConfig.EnvironmentFile = cfg.environmentFiles;
+    };
 
-    my.services.reverseProxy.virtualHosts.${cfg.domain} = {
+    my.services.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
       backendAddress = "127.0.0.1";
       backendPort = cfg.guiPort;
     };

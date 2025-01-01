@@ -6,34 +6,22 @@
 }: let
   cfg = config.my.services.homepage;
 in {
-  options.my.services.homepage = {
-    enable = lib.mkEnableOption "homepage";
-
-    environmentFile = lib.mkOption {
-      type = with lib.types; nullOr path;
-      default = null;
-      description = "The path to the environment file.";
-    };
-
-    port = lib.mkOption {
-      type = lib.types.int;
-      default = 8080;
-      description = "The port on which the homepage is accessible.";
-    };
-
-    domain = lib.mkOption {
-      type = lib.types.str;
-      example = "homepage.home.my.tld";
-      description = "The domain on which the homepage is accessible.";
-    };
+  options.my.services.homepage = let
+    serviceName = "Homepage dashboard";
+  in {
+    # I couldn't find a way to configure the bind address so there's no option for it.
+    enable = lib.mkEnableOption serviceName;
+    port = my.lib.options.mkPortOption serviceName 8080;
+    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+    domain = my.lib.options.mkDomainOption serviceName;
+    environmentFile = my.lib.options.mkEnvironmentFileOption serviceName;
   };
 
   config = lib.mkIf cfg.enable {
     services.homepage-dashboard = {
       enable = true;
       package = my.pkgs.homepage-dashboard;
-      inherit (cfg) environmentFile;
-      openFirewall = true;
+      inherit (cfg) openFirewall environmentFile;
       listenPort = cfg.port;
     };
 

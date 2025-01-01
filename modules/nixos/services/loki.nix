@@ -1,32 +1,35 @@
 {
+  my,
   config,
   lib,
   ...
 }: let
   cfg = config.my.services.loki;
-in {
-  options.my.services.loki = {
-    enable = lib.mkEnableOption "loki";
+  grafanaCfg = config.my.services.grafana;
 
-    lokiPort = lib.mkOption {
-      type = lib.types.int;
-      default = 3100;
-      description = "The port on which the Loki server listens.";
-    };
-    promtailPort = lib.mkOption {
-      type = lib.types.int;
-      default = 3031;
-      description = "The port on which the Promtail server listens.";
-    };
+  lokiDataDir = "/var/lib/loki";
+in {
+  options.my.services.loki = let
+    lokiServiceName = "Loki";
+    promatilServiceName = "Promtail";
+  in {
+    enable = lib.mkEnableOption lokiServiceName;
+    lokiAddress = my.lib.options.mkAddressOption lokiServiceName;
+    lokiPort = my.lib.options.mkPortOption lokiServiceName 3100;
+    promtailAddress = my.lib.options.mkAddressOption promatilServiceName;
+    promtailPort = my.lib.options.mkPortOption promatilServiceName 3031;
   };
 
   config.services = lib.mkIf cfg.enable {
     loki = {
       enable = true;
       configuration = {
-        server.http_listen_port = cfg.lokiPort;
+        server = {
+          http_listen_address = cfg.lokiAddress;
+          http_listen_port = cfg.lokiPort;
+        };
         auth_enabled = false;
-        common.path_prefix = "/var/lib/loki";
+        common.path_prefix = lokiDataDir;
 
         ingester = {
           lifecycler = {
@@ -61,13 +64,13 @@ in {
 
         storage_config = {
           tsdb_shipper = {
-            active_index_directory = "/var/lib/loki/tsdb-shipper-active";
-            cache_location = "/var/lib/loki/tsdb-shipper-cache";
+            active_index_directory = "${lokiDataDir}/tsdb-shipper-active";
+            cache_location = "${lokiDataDir}/tsdb-shipper-cache";
             cache_ttl = "24h";
           };
 
           filesystem = {
-            directory = "/var/lib/loki/chunks";
+            directory = "${lokiDataDir}/chunks";
           };
         };
 
@@ -82,7 +85,7 @@ in {
         };
 
         compactor = {
-          working_directory = "/var/lib/loki";
+          working_directory = lokiDataDir;
           delete_request_store = "filesystem";
           compactor_ring = {
             kvstore = {
@@ -98,6 +101,7 @@ in {
 
       configuration = {
         server = {
+          http_listen_address = cfg.promtailAddress;
           http_listen_port = cfg.promtailPort;
           grpc_listen_port = 0;
         };
@@ -136,11 +140,11 @@ in {
     grafana.provision = {
       enable = true;
 
-      datasources.settings.datasources = lib.mkIf config.services.grafana.enable [
+      datasources.settings.datasources = lib.mkIf grafanaCfg.enable [
         {
           name = "Loki";
           type = "loki";
-          url = "http://127.0.0.1:${toString config.my.services.loki.lokiPort}";
+          url = "http://127.0.0.1:${toString cfg.lokiPort}";
         }
       ];
     };

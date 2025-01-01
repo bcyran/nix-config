@@ -2,6 +2,9 @@
   # NixOS and Home Manager configuration utilities.
   config = import ./config.nix {inherit lib;};
 
+  # Utilities for creating custom options.
+  options = import ./options.nix {inherit lib;};
+
   # forEachSystemPkgs :: [<system>] -> <nixpkgs> -> (<packages> -> <attrs>) -> <attrs>
   #
   # Generates attributes for each system in `systems` using `f` with packages for that system

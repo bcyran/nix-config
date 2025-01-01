@@ -1,33 +1,31 @@
 {
+  my,
   config,
   lib,
   ...
 }: let
   cfg = config.my.services.ollama;
 in {
-  options.my.services.ollama = {
-    enable = lib.mkEnableOption "ollama";
-
-    port = lib.mkOption {
-      type = lib.types.int;
-      default = 11434;
-      description = "The port on which the Ollama is accessible.";
-    };
-
-    domain = lib.mkOption {
-      type = lib.types.str;
-      example = "ollama.home.my.tld";
-      description = "The domain on which the Ollama is accessible.";
-    };
+  options.my.services.ollama = let
+    serviceName = "Ollama";
+  in {
+    enable = lib.mkEnableOption serviceName;
+    address = my.lib.options.mkAddressOption serviceName;
+    port = my.lib.options.mkPortOption serviceName 11434;
+    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+    domain = my.lib.options.mkDomainOption serviceName;
   };
 
   config = lib.mkIf cfg.enable {
     services.ollama = {
       enable = true;
-      host = "0.0.0.0";
-      inherit (cfg) port;
-      openFirewall = true;
-      acceleration = false;
+      host = cfg.address;
+      inherit (cfg) port openFirewall;
+    };
+
+    my.services.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
+      backendAddress = "127.0.0.1";
+      backendPort = cfg.port;
     };
   };
 }

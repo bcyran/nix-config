@@ -1,38 +1,32 @@
 {
+  my,
   inputs,
   pkgs,
   config,
   lib,
   ...
 }: let
-  grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
   cfg = config.my.services.prometheus;
+
+  grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
 in {
-  options.my.services.prometheus = {
-    enable = lib.mkEnableOption "prometheus";
-
-    domain = lib.mkOption {
-      type = lib.types.str;
-      example = "prometheus.home.my.tld";
-      description = "The domain on which the web UI is accessible.";
-    };
-
-    port = lib.mkOption {
-      type = lib.types.int;
-      default = 9090;
-      description = "The port on which the prometheus server listens.";
-    };
+  options.my.services.prometheus = let
+    serviceName = "Prometheus";
+  in {
+    enable = lib.mkEnableOption serviceName;
+    address = my.lib.options.mkAddressOption serviceName;
+    port = my.lib.options.mkPortOption serviceName 9090;
+    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+    domain = my.lib.options.mkDomainOption serviceName;
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall = {
-      allowedTCPPorts = [cfg.port];
-    };
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     services = {
       prometheus = {
         enable = true;
-        listenAddress = "127.0.0.1";
+        listenAddress = cfg.address;
         inherit (cfg) port;
 
         webExternalUrl = "https://${cfg.domain}";
@@ -91,11 +85,9 @@ in {
       };
     };
 
-    my.services.reverseProxy.virtualHosts.${cfg.domain} = let
-      prometheusCfg = config.services.prometheus;
-    in {
-      backendAddress = prometheusCfg.listenAddress;
-      backendPort = prometheusCfg.port;
+    my.services.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
+      backendAddress = "127.0.0.1";
+      backendPort = cfg.port;
     };
   };
 }

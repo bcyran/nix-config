@@ -1,4 +1,5 @@
 {
+  my,
   config,
   lib,
   ...
@@ -14,26 +15,15 @@
   dataDir = "/var/lib/hoarder";
 in {
   options = {
-    my.services.hoarder = {
-      enable = lib.mkEnableOption "hoarder";
-
-      port = lib.mkOption {
-        type = lib.types.int;
-        default = 8083;
-        description = "The port on which the Hoarder is accessible.";
-      };
-
-      domain = lib.mkOption {
-        type = lib.types.str;
-        example = "hoarder.home.my.tld";
-        description = "The domain on which the web UI is accessible.";
-      };
-
-      environmentFiles = lib.mkOption {
-        type = with lib.types; listOf path;
-        example = ["/path/to/env/file"];
-        description = "The paths to the environment file.";
-      };
+    my.services.hoarder = let
+      serviceName = "Hoarder";
+    in {
+      enable = lib.mkEnableOption serviceName;
+      address = my.lib.options.mkAddressOption serviceName;
+      port = my.lib.options.mkPortOption serviceName 8083;
+      domain = my.lib.options.mkDomainOption serviceName;
+      openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+      environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
 
       llm = lib.mkOption {
         type = with lib.types; nullOr str;
@@ -45,7 +35,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [cfg.port];
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     # The container doesn't have access to the host's network.
     # We could just use the host network but then we are stuck with occupying the 3000 port
@@ -57,7 +47,7 @@ in {
     virtualisation.oci-containers.containers.${containerName} = {
       image = "ghcr.io/hoarder-app/hoarder:${hoarderVersion}";
       autoStart = true;
-      ports = ["127.0.0.1:${toString cfg.port}:3000"];
+      ports = ["${cfg.address}:${toString cfg.port}:3000"];
       volumes = [
         "${dataDir}:/data"
       ];
@@ -70,7 +60,7 @@ in {
           MEILI_ADDR = "http://host.containers.internal:${toString meiliCfg.port}";
         }
         // lib.optionalAttrs chromiumCfg.enable {
-          BROWSER_WEB_URL = "http://host.containers.internal:${toString chromiumCfg.externalPort}";
+          BROWSER_WEB_URL = "http://host.containers.internal:${toString chromiumCfg.port}";
         }
         // lib.optionalAttrs (cfg.llm != null && ollamaCfg.enable) {
           OLLAMA_BASE_URL = "http://host.containers.internal:${toString ollamaCfg.port}";
@@ -89,7 +79,7 @@ in {
       mkdir -p ${dataDir}
     '';
 
-    my.services.reverseProxy.virtualHosts.${cfg.domain} = {
+    my.services.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
       backendAddress = "127.0.0.1";
       backendPort = cfg.port;
     };

@@ -1,4 +1,5 @@
 {
+  my,
   config,
   lib,
   ...
@@ -9,36 +10,25 @@
   dataDir = "/var/lib/speedtest-tracker";
 in {
   options = {
-    my.services.speedtest-tracker = {
-      enable = lib.mkEnableOption "Speedtest Tracker";
-
-      port = lib.mkOption {
-        type = lib.types.int;
-        default = 8082;
-        description = "The port on which the Speedtest Tracker is accessible.";
-      };
-
-      domain = lib.mkOption {
-        type = lib.types.str;
-        example = "speedtest-tracker.home.my.tld";
-        description = "The domain on which the web UI is accessible.";
-      };
-
-      environmentFile = lib.mkOption {
-        type = lib.types.str;
-        example = "/path/to/env/file";
-        description = "The path to the environment file.";
-      };
+    my.services.speedtest-tracker = let
+      serviceName = "Speedtest Tracker";
+    in {
+      enable = lib.mkEnableOption serviceName;
+      address = my.lib.options.mkAddressOption serviceName;
+      port = my.lib.options.mkPortOption serviceName 8082;
+      openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+      domain = my.lib.options.mkDomainOption serviceName;
+      environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
     };
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [cfg.port];
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     virtualisation.oci-containers.containers.speedtest-tracker = {
       image = "lscr.io/linuxserver/speedtest-tracker:version-${speedtestTrackerVersion}";
       autoStart = true;
-      ports = ["127.0.0.1:${builtins.toString cfg.port}:80"];
+      ports = ["${cfg.address}:${builtins.toString cfg.port}:80"];
       volumes = [
         "${dataDir}:/config"
       ];
@@ -52,7 +42,7 @@ in {
         SPEEDTEST_SCHEDULE = "0 * * * *";
         PUBLIC_DASHBOARD = "true";
       };
-      environmentFiles = [cfg.environmentFile];
+      inherit (cfg) environmentFiles;
     };
 
     users = rec {
@@ -66,7 +56,7 @@ in {
       groups.speedtest-tracker.gid = users.speedtest-tracker.uid;
     };
 
-    my.services.reverseProxy.virtualHosts.${cfg.domain} = {
+    my.services.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
       backendAddress = "127.0.0.1";
       backendPort = cfg.port;
     };

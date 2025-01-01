@@ -14,6 +14,7 @@ in {
       tailscale_auth_key.sopsFile = homelabSopsFile;
       syncthing_key_file.sopsFile = homelabSopsFile;
       syncthing_cert_file.sopsFile = homelabSopsFile;
+      syncthing_env_file.sopsFile = homelabSopsFile;
       homepage_env_file.sopsFile = homelabSopsFile;
       hass_secrets_file = {
         sopsFile = homelabSopsFile;
@@ -30,12 +31,16 @@ in {
   my.services = {
     blocky = {
       enable = true;
+      dnsAddress = "0.0.0.0";
+      openFirewall = true;
       customDNSMappings = {
         ${intraDomain} = intraIP;
       };
     };
     caddy = {
       enable = true;
+      address = "0.0.0.0";
+      openFirewall = true;
       environmentFiles = [config.sops.secrets.ovh_api_env_file.path];
     };
     prometheus = {
@@ -54,15 +59,18 @@ in {
     };
     syncthing = {
       enable = true;
+      openFirewallTransfer = true;
       domain = "syncthing.${intraDomain}";
       keyFile = config.sops.secrets.syncthing_key_file.path;
       certFile = config.sops.secrets.syncthing_cert_file.path;
+      environmentFiles = [config.sops.secrets.syncthing_env_file.path];
       devices = {
         slimbook = "ADH7KVP-ATNX6XY-VSBFKEW-U7A4TAI-2YA6JQG-DZHNGRR-2DZOIXW-KAS6AQX";
         pixel7 = "WCA3ZM5-ZELYQWF-VAWS425-OPG5Q4R-O4J3ARM-IOPGI7Z-BTE2TY5-EZ36AAI";
         srv = "K755SJE-WJVQQNY-M3RSJP7-RYLNIOF-TJNMR3H-32WAY53-KPX5BFM-5RZSRQL";
       };
       folders = ["KeePass" "Portfolio" "Signal backup" "Sync"];
+      hashedPassword = "$2a$12$16cl3sRqqpClYhSn/Q1rsuA2gsPI0sYPEk6Zs8QTU5oWwlAY0Y8wC";
     };
     homepage = {
       enable = true;
@@ -79,7 +87,7 @@ in {
     };
     speedtest-tracker = {
       enable = true;
-      environmentFile = config.sops.secrets.speedtest_tracker_env_file.path;
+      environmentFiles = [config.sops.secrets.speedtest_tracker_env_file.path];
       domain = "speedtest.${intraDomain}";
     };
     glances = {
@@ -88,10 +96,14 @@ in {
     };
     meilisearch = {
       enable = true;
+      address = "0.0.0.0"; # Needed to be accessible from the Hoarder container.
+      openFirewall = true;
       masterKeyEnvironmentFile = config.sops.secrets.meilisearch_env_file.path;
     };
     chromium = {
       enable = true;
+      address = "0.0.0.0"; # Needed to be accessible from the Hoarder container.
+      openFirewall = true;
     };
     hoarder = {
       enable = true;

@@ -46,7 +46,7 @@
               siteMonitor = "http://127.0.0.1:${toString config.my.services.home-assistant.port}";
               widget = {
                 type = "homeassistant";
-                url = "https://${config.my.services.home-assistant.domain}";
+                url = "http://127.0.0.1:${toString config.my.services.home-assistant.port}";
                 key = "{{HOMEPAGE_VAR_HASS_API_TOKEN}}";
                 fields = ["people_home" "lights_on"];
               };
@@ -60,7 +60,7 @@
               siteMonitor = "http://127.0.0.1:${toString config.my.services.syncthing.guiPort}";
               widget = {
                 type = "customapi";
-                url = "https://${config.my.services.syncthing.domain}/rest/db/completion";
+                url = "http://127.0.0.1:${toString config.my.services.syncthing.guiPort}/rest/db/completion";
                 headers = {
                   "X-API-Key" = "{{HOMEPAGE_VAR_SYNCTHING_API_KEY}}";
                 };
@@ -313,10 +313,10 @@
             Chromium = {
               description = "Headless browser service.";
               icon = "chromium";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.chromium.internalPort}";
+              siteMonitor = "http://127.0.0.1:${toString config.my.services.chromium.port}";
               widget = {
                 type = "customapi";
-                url = "http://127.0.0.1:${toString config.my.services.chromium.internalPort}/json";
+                url = "http://127.0.0.1:${toString config.my.services.chromium.port}/json";
                 mappings = [
                   {
                     label = "Open tabs";

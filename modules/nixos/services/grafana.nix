@@ -1,28 +1,23 @@
 {
+  my,
   config,
   lib,
   ...
 }: let
   cfg = config.my.services.grafana;
 in {
-  options.my.services.grafana = {
-    enable = lib.mkEnableOption "grafana";
-
-    domain = lib.mkOption {
-      type = lib.types.str;
-      example = "grafana.home.my.tld";
-      description = "The domain on which the Grafana server listens.";
-    };
-
-    port = lib.mkOption {
-      type = lib.types.int;
-      default = 3000;
-      description = "The port on which the Grafana server listens.";
-    };
+  options.my.services.grafana = let
+    serviceName = "Grafana";
+  in {
+    enable = lib.mkEnableOption serviceName;
+    address = my.lib.options.mkAddressOption serviceName;
+    port = my.lib.options.mkPortOption serviceName 3000;
+    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+    domain = my.lib.options.mkDomainOption serviceName;
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [cfg.port];
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     services = {
       grafana = {
@@ -30,7 +25,7 @@ in {
 
         settings = {
           server = {
-            http_addr = "127.0.0.1";
+            http_addr = cfg.address;
             http_port = cfg.port;
             enforce_domain = false;
             enable_gzip = true;
@@ -41,11 +36,9 @@ in {
       };
     };
 
-    my.services.reverseProxy.virtualHosts.${cfg.domain} = let
-      inherit (config.services.grafana.settings.server) http_addr http_port;
-    in {
-      backendAddress = http_addr;
-      backendPort = http_port;
+    my.services.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
+      backendAddress = "127.0.0.1";
+      backendPort = cfg.port;
     };
   };
 }

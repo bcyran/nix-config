@@ -1,30 +1,25 @@
 {
+  my,
   config,
   lib,
   ...
 }: let
   cfg = config.my.services.home-assistant;
 in {
-  options.my.services.home-assistant = {
-    enable = lib.mkEnableOption "home-assistant";
-
-    port = lib.mkOption {
-      type = lib.types.int;
-      default = 8123;
-      description = "The port on which the Home Assistant server listens.";
-    };
-
-    domain = lib.mkOption {
-      type = lib.types.str;
-      example = "hass.intra.my.tld";
-      description = "The domain on which the Home Assistant server listens.";
-    };
+  options.my.services.home-assistant = let
+    serviceName = "Home Assistant";
+  in {
+    enable = lib.mkEnableOption serviceName;
+    address = my.lib.options.mkAddressOption serviceName;
+    port = my.lib.options.mkPortOption serviceName 8123;
+    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+    domain = my.lib.options.mkDomainOption serviceName;
   };
 
   config = lib.mkIf cfg.enable {
     services.home-assistant = {
       enable = true;
-      openFirewall = true;
+      inherit (cfg) openFirewall;
 
       config = {
         homeassistant = {
@@ -36,6 +31,7 @@ in {
         };
         http = {
           use_x_forwarded_for = true;
+          server_host = cfg.address;
           server_port = cfg.port;
           trusted_proxies = ["127.0.0.1"];
         };
@@ -57,7 +53,7 @@ in {
       ];
     };
 
-    my.services.reverseProxy.virtualHosts.${cfg.domain} = {
+    my.services.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
       backendAddress = "127.0.0.1";
       backendPort = cfg.port;
     };

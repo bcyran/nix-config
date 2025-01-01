@@ -6,12 +6,11 @@
   lib,
   ...
 }: let
-  grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
-
   cfg = config.my.services.caddy;
   reverseProxyCfg = config.my.services.reverseProxy;
   lokiCfg = config.my.services.loki;
 
+  grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
   caddyWithOvhDnsPlugin = my.pkgs.caddy.withPlugins {
     plugins = ["github.com/caddy-dns/ovh@v0.0.3"];
     hash = "sha256-Sy9ZV/rmnfi1aaDfZo8B7dD3JoEMb9onc9swpjQfJNc=";
@@ -41,25 +40,22 @@
     '';
   };
 in {
-  options.my.services.caddy = {
-    enable = lib.mkEnableOption "caddy";
-
-    adminPort = lib.mkOption {
-      type = lib.types.int;
-      default = 2019;
-      description = "The port on which the Caddy admin interface is accessible.";
-    };
-
-    environmentFiles = lib.mkOption {
-      type = with lib.types; listOf path;
-      default = [];
-      description = "List of paths to the environment files for the service (for secrets).";
-    };
+  options.my.services.caddy = let
+    serviceName = "Caddy web server";
+  in {
+    enable = lib.mkEnableOption serviceName;
+    address = my.lib.options.mkAddressOption serviceName;
+    httpPort = my.lib.options.mkPortOption serviceName 80;
+    httpsPort = my.lib.options.mkPortOption serviceName 443;
+    adminAddress = my.lib.options.mkAddressOption serviceName;
+    adminPort = my.lib.options.mkPortOption serviceName 2019;
+    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+    environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall = {
-      allowedTCPPorts = [reverseProxyCfg.HTTPPort reverseProxyCfg.HTTPSPort cfg.adminPort];
+    networking.firewall = lib.mkIf cfg.openFirewall {
+      allowedTCPPorts = [cfg.httpPort cfg.httpsPort];
     };
 
     services = {
@@ -68,9 +64,10 @@ in {
         package = caddyWithOvhDnsPlugin;
 
         globalConfig = ''
-          http_port ${toString reverseProxyCfg.HTTPPort}
-          https_port ${toString reverseProxyCfg.HTTPSPort}
-          admin :${toString cfg.adminPort}
+          default_bind ${toString cfg.address}
+          http_port ${toString cfg.httpPort}
+          https_port ${toString cfg.httpsPort}
+          admin ${cfg.adminAddress}:${toString cfg.adminPort}
 
           servers {
             metrics
@@ -85,7 +82,7 @@ in {
           job_name = "caddy";
           static_configs = [
             {
-              targets = ["localhost:${toString cfg.adminPort}"];
+              targets = ["127.0.0.1:${toString cfg.adminPort}"];
               labels = {
                 job = "caddy-access";
                 agent = "caddy-promtail";

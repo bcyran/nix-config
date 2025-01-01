@@ -1,4 +1,5 @@
 {
+  my,
   config,
   lib,
   ...
@@ -6,14 +7,13 @@
   cfg = config.my.services.meilisearch;
 in {
   options = {
-    my.services.meilisearch = {
-      enable = lib.mkEnableOption "meilisearch";
-
-      port = lib.mkOption {
-        type = lib.types.int;
-        default = 7700;
-        description = "The port on which the Meilisearch server listens.";
-      };
+    my.services.meilisearch = let
+      serviceName = "Meilisearch";
+    in {
+      enable = lib.mkEnableOption serviceName;
+      address = my.lib.options.mkAddressOption serviceName;
+      port = my.lib.options.mkPortOption serviceName 7700;
+      openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
 
       masterKeyEnvironmentFile = lib.mkOption {
         type = lib.types.path;
@@ -24,11 +24,11 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [cfg.port];
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     services.meilisearch = {
       enable = true;
-      listenAddress = "0.0.0.0";
+      listenAddress = cfg.address;
       listenPort = cfg.port;
       noAnalytics = true;
       inherit (cfg) masterKeyEnvironmentFile;

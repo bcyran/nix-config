@@ -1,39 +1,35 @@
 {
+  my,
   inputs,
   pkgs,
   config,
   lib,
   ...
 }: let
-  grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
   cfg = config.my.services.blocky;
 
-  blockyUrl = "127.0.0.1:${toString cfg.httpPort}";
+  grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
   blockyPrometheusJobName = "blocky";
 in {
-  options.my.services.blocky = {
-    enable = lib.mkEnableOption "blocky";
+  options.my.services.blocky = let
+    serviceName = "blocky DNS proxy";
+  in {
+    enable = lib.mkEnableOption serviceName;
+    dnsAddress = my.lib.options.mkAddressOption serviceName;
+    dnsPort = my.lib.options.mkPortOption serviceName 53;
+    httpAddress = my.lib.options.mkAddressOption serviceName;
+    httpPort = my.lib.options.mkPortOption serviceName 4000;
+    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
 
     customDNSMappings = lib.mkOption {
       type = with lib.types; attrsOf str;
       default = {};
       description = "Custom DNS mappings.";
     };
-
-    dnsPort = lib.mkOption {
-      type = lib.types.int;
-      default = 53;
-      description = "The port on which the DNS server listens.";
-    };
-    httpPort = lib.mkOption {
-      type = lib.types.int;
-      default = 4000;
-      description = "The port on which the HTTP server listens.";
-    };
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall = {
+    networking.firewall = lib.mkIf cfg.openFirewall {
       allowedTCPPorts = [cfg.dnsPort];
       allowedUDPPorts = [cfg.dnsPort];
     };
@@ -43,8 +39,8 @@ in {
         enable = true;
         settings = {
           ports = {
-            dns = cfg.dnsPort;
-            http = cfg.httpPort;
+            dns = "${cfg.dnsAddress}:${toString cfg.dnsPort}";
+            http = "${cfg.httpAddress}:${toString cfg.httpPort}";
           };
           upstreams.groups.default = [
             "https://cloudflare-dns.com/dns-query"
@@ -78,7 +74,7 @@ in {
           job_name = blockyPrometheusJobName;
           static_configs = [
             {
-              targets = [blockyUrl];
+              targets = ["127.0.0.1:${toString cfg.httpPort}"];
             }
           ];
         }
