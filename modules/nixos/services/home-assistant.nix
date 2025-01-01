@@ -36,6 +36,7 @@ in {
           trusted_proxies = ["127.0.0.1"];
         };
         scene = "!include scenes.yaml";
+        automation = "!include automations.yaml";
         mobile_app = {};
       };
 
