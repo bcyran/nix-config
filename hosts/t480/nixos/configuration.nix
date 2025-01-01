@@ -60,7 +60,6 @@
     };
     programs = {
       btrbk.enable = true;
-      openssh.enable = true;
       podman.enable = true;
     };
   };

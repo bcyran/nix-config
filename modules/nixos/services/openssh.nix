@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.my.programs.openssh;
+  cfg = config.my.services.openssh;
 in {
-  options.my.programs.openssh.enable = lib.mkEnableOption "openssh";
+  options.my.services.openssh.enable = lib.mkEnableOption "openssh";
 
   config = lib.mkIf cfg.enable {
     services.openssh = {

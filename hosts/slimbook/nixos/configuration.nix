@@ -59,6 +59,8 @@
     };
     programs = {
       btrbk.enable = true;
+    };
+    services = {
       openssh.enable = true;
     };
   };

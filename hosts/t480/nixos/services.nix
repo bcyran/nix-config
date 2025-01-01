@@ -29,6 +29,7 @@ in {
   };
 
   my.services = {
+    openssh.enable = true;
     blocky = {
       enable = true;
       dnsAddress = "0.0.0.0";
