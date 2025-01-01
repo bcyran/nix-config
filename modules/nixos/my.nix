@@ -8,6 +8,6 @@
     ./programs
     ./services
     ./presets
-    ../common/user.nix
+    ../common
   ];
 }
