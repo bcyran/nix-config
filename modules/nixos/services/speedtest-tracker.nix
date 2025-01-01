@@ -56,7 +56,7 @@ in {
       groups.speedtest-tracker.gid = users.speedtest-tracker.uid;
     };
 
-    my.services.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
+    my.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
       backendAddress = "127.0.0.1";
       backendPort = cfg.port;
     };

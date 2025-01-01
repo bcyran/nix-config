@@ -7,7 +7,7 @@
   ...
 }: let
   cfg = config.my.services.caddy;
-  reverseProxyCfg = config.my.services.reverseProxy;
+  reverseProxyCfg = config.my.reverseProxy;
   lokiCfg = config.my.services.loki;
 
   grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};

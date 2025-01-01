@@ -3,7 +3,7 @@
 {lib, ...}: let
   inherit (lib) mkOption types;
 in {
-  options.my.services.reverseProxy.virtualHosts = mkOption {
+  options.my.reverseProxy.virtualHosts = mkOption {
     type = types.attrsOf (
       types.submodule {
         options = {

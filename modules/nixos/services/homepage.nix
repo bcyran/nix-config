@@ -25,7 +25,7 @@ in {
       listenPort = cfg.port;
     };
 
-    my.services.reverseProxy.virtualHosts.${cfg.domain} = {
+    my.reverseProxy.virtualHosts.${cfg.domain} = {
       backendAddress = "127.0.0.1";
       backendPort = cfg.port;
     };
