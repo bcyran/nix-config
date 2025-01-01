@@ -18,7 +18,7 @@ in {
       logind = {
         lidSwitch = mkDefault "suspend";
         lidSwitchDocked = mkDefault "ignore";
-        lidSwitchExternalPower = mkDefault "suspend";
+        lidSwitchExternalPower = mkDefault "ignore";
       };
     };
   };
