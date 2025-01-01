@@ -6,10 +6,10 @@
     my.inputs.anyrun.homeManagerModules.default
     my.inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
 
+    ./options
     ./configurations
     ./programs
     ./presets
-    ./hardware.nix
     ../common/user.nix
   ];
 }
