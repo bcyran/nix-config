@@ -1,4 +1,9 @@
-{config, ...}: {
+{config, ...}: let
+  servicesCfg = config.my.services;
+  makeServiceDomainUrl = serviceName: "https://${servicesCfg.${serviceName}.domain}";
+  makeLoopbackUrl = port: "http://127.0.0.1:${toString port}";
+  makeServiceLoopbackUrl = serviceName: makeLoopbackUrl servicesCfg.${serviceName}.port;
+in {
   services.homepage-dashboard = {
     settings = {
       hideVersion = true;
@@ -20,7 +25,7 @@
             "${title}" = {
               widget = {
                 type = "glances";
-                url = "http://127.0.0.1:${toString config.my.services.glances.port}";
+                url = makeServiceLoopbackUrl "glances";
                 version = "4";
                 metric = metricName;
                 refreshInterval = 3000;
@@ -39,28 +44,28 @@
       {
         "Applications" = [
           {
-            "Home Assistant" = {
+            "Home Assistant" = rec {
               description = "Home automation service.";
               icon = "home-assistant";
-              href = "https://${config.my.services.home-assistant.domain}";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.home-assistant.port}";
+              href = makeServiceDomainUrl "home-assistant";
+              siteMonitor = makeServiceLoopbackUrl "home-assistant";
               widget = {
                 type = "homeassistant";
-                url = "http://127.0.0.1:${toString config.my.services.home-assistant.port}";
+                url = siteMonitor;
                 key = "{{HOMEPAGE_VAR_HASS_API_TOKEN}}";
                 fields = ["people_home" "lights_on"];
               };
             };
           }
           {
-            Syncthing = {
+            Syncthing = rec {
               description = "File synchronization service.";
               icon = "syncthing";
-              href = "https://${config.my.services.syncthing.domain}";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.syncthing.guiPort}";
+              href = makeServiceDomainUrl "syncthing";
+              siteMonitor = makeLoopbackUrl servicesCfg.syncthing.guiPort;
               widget = {
                 type = "customapi";
-                url = "http://127.0.0.1:${toString config.my.services.syncthing.guiPort}/rest/db/completion";
+                url = "${siteMonitor}/rest/db/completion";
                 headers = {
                   "X-API-Key" = "{{HOMEPAGE_VAR_SYNCTHING_API_KEY}}";
                 };
@@ -85,39 +90,39 @@
             };
           }
           {
-            "Uptime Kuma" = {
+            "Uptime Kuma" = rec {
               description = "Service uptime monitoring.";
               icon = "uptime-kuma";
-              href = "https://${config.my.services.uptime-kuma.domain}/status/external";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.uptime-kuma.port}";
+              href = "${makeServiceDomainUrl "uptime-kuma"}/status/external";
+              siteMonitor = makeServiceLoopbackUrl "uptime-kuma";
               widget = {
                 type = "uptimekuma";
-                url = "http://127.0.0.1:${toString config.my.services.uptime-kuma.port}";
+                url = siteMonitor;
                 slug = "external";
               };
             };
           }
           {
-            "Speedtest Tracker" = {
+            "Speedtest Tracker" = rec {
               description = "Continuous internet speed monitoring.";
               icon = "myspeed";
-              href = "https://${config.my.services.speedtest-tracker.domain}";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.speedtest-tracker.port}";
+              href = makeServiceDomainUrl "speedtest-tracker";
+              siteMonitor = makeServiceLoopbackUrl "speedtest-tracker";
               widget = {
                 type = "speedtest";
-                url = "http://127.0.0.1:${toString config.my.services.speedtest-tracker.port}";
+                url = siteMonitor;
               };
             };
           }
           {
-            Hoarder = {
+            Hoarder = rec {
               description = "Bookmark manager.";
               icon = "hoarder";
-              href = "https://${config.my.services.hoarder.domain}";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.hoarder.port}";
+              href = makeServiceDomainUrl "hoarder";
+              siteMonitor = makeServiceLoopbackUrl "hoarder";
               widget = {
                 type = "customapi";
-                url = "http://127.0.0.1:${toString config.my.services.hoarder.port}/api/v1/bookmarks?limit=1";
+                url = "${siteMonitor}/api/v1/bookmarks?limit=1";
                 headers = {
                   "Authorization" = "Bearer {{HOMEPAGE_VAR_HOARDER_API_KEY}}";
                 };
@@ -139,8 +144,8 @@
             "Open WebUI" = {
               description = "OpenAI API service.";
               icon = "https://docs.openwebui.com/img/logo-dark.png";
-              href = "https://${config.my.services.open-webui.domain}";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.open-webui.port}";
+              href = makeServiceDomainUrl "open-webui";
+              siteMonitor = makeServiceLoopbackUrl "open-webui";
             };
           }
         ];
@@ -151,8 +156,8 @@
             Grafana = rec {
               description = "Server metrics visualization.";
               icon = "https://upload.wikimedia.org/wikipedia/commons/archive/a/a1/20230113183100%21Grafana_logo.svg";
-              href = "https://${config.my.services.grafana.domain}";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.grafana.port}";
+              href = makeServiceDomainUrl "grafana";
+              siteMonitor = makeServiceLoopbackUrl "grafana";
               widget = {
                 type = "grafana";
                 url = siteMonitor;
@@ -166,8 +171,8 @@
             Prometheus = rec {
               description = "Server metrics collection.";
               icon = "prometheus";
-              href = "https://${config.my.services.prometheus.domain}";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.prometheus.port}";
+              href = makeServiceDomainUrl "prometheus";
+              siteMonitor = makeServiceLoopbackUrl "prometheus";
               widget = {
                 type = "prometheus";
                 url = siteMonitor;
@@ -179,22 +184,22 @@
             Glances = {
               description = "Live resources usage monitoring.";
               icon = "glances";
-              href = "https://${config.my.services.glances.domain}";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.glances.port}";
+              href = makeServiceDomainUrl "glances";
+              siteMonitor = makeServiceLoopbackUrl "glances";
             };
           }
           {
             Loki = {
               description = "Log aggregation service.";
               icon = "https://grafana.com/static/img/logos/logo-loki.svg";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.loki.lokiPort}/ready";
+              siteMonitor = "${makeLoopbackUrl servicesCfg.loki.lokiPort}/ready";
             };
           }
           {
             Promtail = {
               description = "Log collector.";
               icon = "https://grafana.com/static/img/logos/logo-loki.svg";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.loki.promtailPort}/ready";
+              siteMonitor = "${makeLoopbackUrl servicesCfg.loki.promtailPort}/ready";
             };
           }
         ];
@@ -205,10 +210,10 @@
             Caddy = {
               description = "Reverse proxy and TLS termination.";
               icon = "caddy";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.caddy.adminPort}/reverse_proxy/upstreams";
+              siteMonitor = "${makeLoopbackUrl servicesCfg.caddy.adminPort}/reverse_proxy/upstreams";
               widget = {
                 type = "caddy";
-                url = "http://127.0.0.1:${toString config.my.services.caddy.adminPort}";
+                url = "${makeLoopbackUrl servicesCfg.caddy.adminPort}";
               };
             };
           }
@@ -216,10 +221,10 @@
             Blocky = {
               description = "DNS server with ad blocking.";
               icon = "blocky";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.blocky.httpPort}";
+              siteMonitor = makeLoopbackUrl servicesCfg.blocky.httpPort;
               widget = {
                 type = "prometheusmetric";
-                url = "http://127.0.0.1:${toString config.my.services.prometheus.port}";
+                url = makeServiceLoopbackUrl "prometheus";
                 metrics = let
                   range = "1h";
                 in [
@@ -266,13 +271,13 @@
             };
           }
           {
-            Ollama = {
+            Ollama = rec {
               description = "LLM API service.";
               icon = "ollama";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.ollama.port}";
+              siteMonitor = makeServiceLoopbackUrl "ollama";
               widget = {
                 type = "customapi";
-                url = "http://127.0.0.1:${toString config.my.services.ollama.port}/api/ps";
+                url = "${siteMonitor}/api/ps";
                 mappings = [
                   {
                     field = "models";
@@ -284,13 +289,13 @@
             };
           }
           {
-            Meilisearch = {
+            Meilisearch = rec {
               description = "Search engine service.";
               icon = "https://raw.githubusercontent.com/meilisearch/meilisearch/372f4fc924f36319c921fd36fbdc354d96b1d974/assets/logo.svg";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.meilisearch.port}";
+              siteMonitor = makeServiceLoopbackUrl "meilisearch";
               widget = {
                 type = "customapi";
-                url = "http://127.0.0.1:${toString config.my.services.meilisearch.port}/stats";
+                url = "${siteMonitor}/stats";
                 headers = {
                   "Authorization" = "Bearer {{HOMEPAGE_VAR_MEILISEARCH_API_KEY}}";
                 };
@@ -310,13 +315,13 @@
             };
           }
           {
-            Chromium = {
+            Chromium = rec {
               description = "Headless browser service.";
               icon = "chromium";
-              siteMonitor = "http://127.0.0.1:${toString config.my.services.chromium.port}";
+              siteMonitor = makeServiceLoopbackUrl "chromium";
               widget = {
                 type = "customapi";
-                url = "http://127.0.0.1:${toString config.my.services.chromium.port}/json";
+                url = "${siteMonitor}/json";
                 mappings = [
                   {
                     label = "Open tabs";
