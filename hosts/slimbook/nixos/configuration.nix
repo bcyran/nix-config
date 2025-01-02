@@ -58,7 +58,7 @@
       virtualisation.enable = true;
     };
     programs = {
-      btrbk.enable = true;
+      btrbk.enableHomeSnapshots = true;
     };
     services = {
       openssh.enable = true;

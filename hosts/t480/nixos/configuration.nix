@@ -59,7 +59,7 @@
       sops.enable = true;
     };
     programs = {
-      btrbk.enable = true;
+      btrbk.enableSystemSnapshots = true;
       podman.enable = true;
     };
   };
