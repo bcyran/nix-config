@@ -9,7 +9,6 @@
     snapshot_preserve = "14d";
     snapshot_preserve_min = "3d";
     archive_preserve = "14d";
-    archive_preserve_min = "3d";
   };
 in {
   options.my.programs.btrbk = {
@@ -26,6 +25,7 @@ in {
             subvolume = "/home";
             snapshot_dir = "/.snapshots";
           };
+          archive_preserve_min = "3d";
         }
         // commonSettings;
     };
@@ -43,6 +43,7 @@ in {
               snapshot_dir = "/.snapshots";
             };
           };
+          archive_preserve_min = "1d";
         }
         // commonSettings;
     };
