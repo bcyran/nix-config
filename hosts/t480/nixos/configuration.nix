@@ -29,6 +29,7 @@
   sops = let
     t480SopsFile = "${inputs.my-secrets}/t480.yaml";
     wifiSopsFile = "${inputs.my-secrets}/wifi.yaml";
+    homelabSopsFile = "${inputs.my-secrets}/homelab.yaml";
   in {
     defaultSopsFile = t480SopsFile;
     secrets = {
@@ -37,6 +38,7 @@
       nix_extra_options = {};
       home_wifi_env_file.sopsFile = wifiSopsFile;
       mobile_wifi_env_file.sopsFile = wifiSopsFile;
+      backup_key_file.sopsFile = homelabSopsFile;
     };
   };
 
@@ -85,5 +87,14 @@
         psk = "$MOBILE_WIFI_PSK";
       };
     };
+  };
+
+  environment.etc."crypttab".text = ''
+    backup /dev/disk/by-uuid/acc84836-4829-43b4-bf90-3be04063f9fd ${config.sops.secrets.backup_key_file.path} nofail
+  '';
+  fileSystems."/mnt/backup" = {
+    device = "/dev/mapper/backup";
+    fsType = "btrfs";
+    options = ["nofail"];
   };
 }
