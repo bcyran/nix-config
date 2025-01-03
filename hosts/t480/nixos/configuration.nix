@@ -61,7 +61,10 @@
       sops.enable = true;
     };
     programs = {
-      btrbk.enableSystemSnapshots = true;
+      btrbk = {
+        enableSystemSnapshots = true;
+        systemBackupTarget = "/mnt/backup/t480";
+      };
       podman.enable = true;
     };
   };
