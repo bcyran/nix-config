@@ -37,6 +37,8 @@ in {
         };
         scene = "!include scenes.yaml";
         automation = "!include automations.yaml";
+        script = "!include scripts.yaml";
+
         mobile_app = {};
       };
 
