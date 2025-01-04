@@ -30,6 +30,7 @@
       bazyli_hashed_password.neededForUsers = true;
       root_hashed_password.neededForUsers = true;
       nix_extra_options = {};
+      btrbk_ssh_key.owner = "btrbk";
       home_wifi_env_file.sopsFile = wifiSopsFile;
       mobile_wifi_env_file.sopsFile = wifiSopsFile;
     };
@@ -57,16 +58,32 @@
       printing.enable = true;
       virtualisation.enable = true;
     };
-    programs = {
-      btrbk.enableHomeSnapshots = true;
-    };
     services = {
       openssh.enable = true;
     };
   };
 
-  services = {
-    hardware.bolt.enable = true;
+  services.hardware.bolt.enable = true;
+
+  services.btrbk.instances.home = let
+    snapshotRetention = "14d";
+    snapshotRetentionMin = "3d";
+  in {
+    onCalendar = "hourly";
+    settings = {
+      volume."/" = {
+        subvolume = "/home";
+        snapshot_dir = "/.snapshots";
+        target = "ssh://intra.cyran.dev/mnt/backup/slimbook";
+        ssh_user = "btrbk";
+        ssh_identity = config.sops.secrets.btrbk_ssh_key.path;
+        stream_compress = "zstd";
+      };
+      snapshot_preserve = snapshotRetention;
+      snapshot_preserve_min = snapshotRetentionMin;
+      archive_preserve = snapshotRetention;
+      archive_preserve_min = snapshotRetentionMin;
+    };
   };
 
   boot.tmp.useTmpfs = true;
