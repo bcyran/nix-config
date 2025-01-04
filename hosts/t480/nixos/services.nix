@@ -127,6 +127,10 @@ in {
       address = "0.0.0.0";
       openFirewall = true;
     };
+    memos = {
+      enable = true;
+      domain = "memos.${intraDomain}";
+    };
   };
 
   services.btrbk.sshAccess = [
