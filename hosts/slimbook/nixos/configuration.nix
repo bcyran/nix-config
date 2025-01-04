@@ -80,7 +80,8 @@
         target = "ssh://intra.cyran.dev/mnt/backup/slimbook";
         ssh_user = "btrbk";
         ssh_identity = config.sops.secrets.btrbk_ssh_key.path;
-        stream_compress = "zstd";
+        target_preserve = snapshotRetention;
+        target_preserve_min = snapshotRetentionMin;
       };
       snapshot_preserve = snapshotRetention;
       snapshot_preserve_min = snapshotRetentionMin;
