@@ -122,5 +122,10 @@ in {
       enable = true;
       domain = "openwebui.${intraDomain}";
     };
+    iperf = {
+      enable = true;
+      address = "0.0.0.0";
+      openFirewall = true;
+    };
   };
 }
