@@ -11,8 +11,6 @@ in {
   config = lib.mkIf cfg.enable {
     programs.zellij.enable = true;
     xdg.configFile."zellij/config.kdl".text = ''
-      pane_frames false
-
       keybinds clear-defaults=true {
         normal {
           bind "Alt h" { MoveFocusOrTab "Left"; }
@@ -25,8 +23,7 @@ in {
           bind "Alt J" { Resize "Increase Down"; }
           bind "Alt K" { Resize "Increase Up"; }
 
-
-          bind "Alt Tab" { ToggleTab; }
+          bind "Alt Tab" "Ctrl Tab" { ToggleTab; }
         }
         tmux  {
           bind "Ctrl a" "Esc" { Write 2; SwitchToMode "Normal"; }
