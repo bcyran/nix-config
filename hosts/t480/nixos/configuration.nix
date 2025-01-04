@@ -110,7 +110,7 @@
   };
 
   environment.etc."crypttab".text = ''
-    backup /dev/disk/by-uuid/acc84836-4829-43b4-bf90-3be04063f9fd ${config.sops.secrets.backup_key_file.path} nofail
+    backup /dev/disk/by-uuid/e028f76b-e2a1-4a92-89a5-2fc5aeac615b ${config.sops.secrets.backup_key_file.path} nofail
   '';
   fileSystems."/mnt/backup" = {
     device = "/dev/mapper/backup";
