@@ -128,4 +128,11 @@ in {
       openFirewall = true;
     };
   };
+
+  services.btrbk.sshAccess = [
+    {
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8a552vyvnPoS/JEkSujoygzQw0cB8jO2yI8VlsLUF6 btrbk@slimbook";
+      roles = ["info" "receive"];
+    }
+  ];
 }
