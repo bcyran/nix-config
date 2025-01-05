@@ -44,6 +44,47 @@ in {
       {
         "Applications" = [
           {
+            Immich = rec {
+              description = "Photos and videos management.";
+              icon = "immich";
+              href = makeServiceDomainUrl "immich";
+              siteMonitor = makeServiceLoopbackUrl "immich";
+              widget = {
+                type = "immich";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_IMMICH_API_KEY}}";
+                version = 2;
+                fields = ["photos" "videos" "storage"];
+              };
+            };
+          }
+          {
+            Hoarder = rec {
+              description = "Bookmark manager.";
+              icon = "hoarder";
+              href = makeServiceDomainUrl "hoarder";
+              siteMonitor = makeServiceLoopbackUrl "hoarder";
+              widget = {
+                type = "customapi";
+                url = "${siteMonitor}/api/v1/bookmarks?limit=1";
+                headers = {
+                  "Authorization" = "Bearer {{HOMEPAGE_VAR_HOARDER_API_KEY}}";
+                };
+                mappings = [
+                  {
+                    field = {
+                      bookmarks = {
+                        "0" = "createdAt";
+                      };
+                    };
+                    format = "relativeDate";
+                    label = "Last bookmark";
+                  }
+                ];
+              };
+            };
+          }
+          {
             "Home Assistant" = rec {
               description = "Home automation service.";
               icon = "home-assistant";
@@ -115,29 +156,11 @@ in {
             };
           }
           {
-            Hoarder = rec {
-              description = "Bookmark manager.";
-              icon = "hoarder";
-              href = makeServiceDomainUrl "hoarder";
-              siteMonitor = makeServiceLoopbackUrl "hoarder";
-              widget = {
-                type = "customapi";
-                url = "${siteMonitor}/api/v1/bookmarks?limit=1";
-                headers = {
-                  "Authorization" = "Bearer {{HOMEPAGE_VAR_HOARDER_API_KEY}}";
-                };
-                mappings = [
-                  {
-                    field = {
-                      bookmarks = {
-                        "0" = "createdAt";
-                      };
-                    };
-                    format = "relativeDate";
-                    label = "Last bookmark";
-                  }
-                ];
-              };
+            Memos = {
+              description = "Quick notes.";
+              icon = "https://raw.githubusercontent.com/usememos/memos/refs/heads/main/web/public/logo.webp";
+              href = makeServiceDomainUrl "memos";
+              siteMonitor = makeServiceLoopbackUrl "memos";
             };
           }
           {
