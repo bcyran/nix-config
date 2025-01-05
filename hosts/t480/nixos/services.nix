@@ -131,6 +131,10 @@ in {
       enable = true;
       domain = "memos.${intraDomain}";
     };
+    immich = {
+      enable = true;
+      domain = "immich.${intraDomain}";
+    };
   };
 
   services.btrbk.sshAccess = [
