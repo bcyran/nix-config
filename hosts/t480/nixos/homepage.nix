@@ -187,6 +187,14 @@ in {
             };
           }
           {
+            "ntfy.sh" = {
+              description = "Push notifications service.";
+              icon = "ntfy";
+              href = makeServiceDomainUrl "ntfy";
+              siteMonitor = makeServiceLoopbackUrl "ntfy";
+            };
+          }
+          {
             "Open WebUI" = {
               description = "OpenAI API service.";
               icon = "https://docs.openwebui.com/img/logo-dark.png";
