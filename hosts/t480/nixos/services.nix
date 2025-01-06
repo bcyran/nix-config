@@ -139,6 +139,10 @@ in {
       enable = true;
       domain = "forgejo.${intraDomain}";
     };
+    ntfy = {
+      enable = true;
+      domain = "ntfy.${intraDomain}";
+    };
   };
 
   services.btrbk.sshAccess = [
