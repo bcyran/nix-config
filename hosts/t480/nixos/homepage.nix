@@ -345,6 +345,7 @@ in {
                 headers = {
                   "Authorization" = "Bearer {{HOMEPAGE_VAR_MEILISEARCH_API_KEY}}";
                 };
+                refreshInterval = 30000;
                 mappings = [
                   {
                     field = "indexes";
@@ -368,6 +369,7 @@ in {
               widget = {
                 type = "customapi";
                 url = "${siteMonitor}/json";
+                refreshInterval = 30000;
                 mappings = [
                   {
                     label = "Open tabs";
