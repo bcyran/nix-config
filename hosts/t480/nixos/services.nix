@@ -135,6 +135,10 @@ in {
       enable = true;
       domain = "immich.${intraDomain}";
     };
+    forgejo = {
+      enable = true;
+      domain = "forgejo.${intraDomain}";
+    };
   };
 
   services.btrbk.sshAccess = [
