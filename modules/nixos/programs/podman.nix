@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   ...
@@ -18,6 +19,9 @@ in {
       podman = {
         enable = true;
         dockerCompat = true;
+        # Used for exposing host's localhost to the container:
+        # --network=slirp4netns:allow_host_loopback=true.
+        extraPackages = [pkgs.slirp4netns];
       };
     };
   };

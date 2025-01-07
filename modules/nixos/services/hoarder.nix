@@ -37,13 +37,6 @@ in {
   config = lib.mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
-    # The container doesn't have access to the host's network.
-    # We could just use the host network but then we are stuck with occupying the 3000 port
-    # because there's not way to change it.
-    # Other option is to use a special address `host.containers.internal` that points to the
-    # host's IP. This works but we need to remember that the traffic will come through the
-    # podman's network interface. Host services will need to listen on 0.0.0.0, not loopback,
-    # and the ports need to be opened in the firewall.
     virtualisation.oci-containers.containers.${containerName} = {
       image = "ghcr.io/hoarder-app/hoarder:${hoarderVersion}";
       autoStart = true;
@@ -51,26 +44,29 @@ in {
       volumes = [
         "${dataDir}:/data"
       ];
-      environment =
+      environment = let
+        loopback = "10.0.2.2";
+      in
         {
           DATA_DIR = "/data";
           NEXTAUTH_URL = "https://${cfg.domain}";
         }
         // lib.optionalAttrs meiliCfg.enable {
-          MEILI_ADDR = "http://host.containers.internal:${toString meiliCfg.port}";
+          MEILI_ADDR = "http://${loopback}:${toString meiliCfg.port}";
         }
         // lib.optionalAttrs chromiumCfg.enable {
-          BROWSER_WEB_URL = "http://host.containers.internal:${toString chromiumCfg.port}";
+          BROWSER_WEB_URL = "http://${loopback}:${toString chromiumCfg.port}";
         }
         // lib.optionalAttrs (cfg.llm != null && ollamaCfg.enable) {
-          OLLAMA_BASE_URL = "http://host.containers.internal:${toString ollamaCfg.port}";
+          OLLAMA_BASE_URL = "http://${loopback}:${toString ollamaCfg.port}";
           OLLAMA_KEEP_ALIVE = "1m";
           INFERENCE_TEXT_MODEL = cfg.llm;
           INFERENCE_JOB_TIMEOUT_SEC = "180";
           INFERENCE_CONTEXT_LENGTH = "2048";
         };
       extraOptions = [
-        "--add-host=host.containers.internal:host-gateway"
+        # Expose host's loopback interface in the container as 10.0.2.2.
+        "--network=slirp4netns:allow_host_loopback=true"
       ];
       inherit (cfg) environmentFiles;
     };

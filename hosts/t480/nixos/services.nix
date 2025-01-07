@@ -97,14 +97,10 @@ in {
     };
     meilisearch = {
       enable = true;
-      address = "0.0.0.0"; # Needed to be accessible from the Hoarder container.
-      openFirewall = true;
       masterKeyEnvironmentFile = config.sops.secrets.meilisearch_env_file.path;
     };
     chromium = {
       enable = true;
-      address = "0.0.0.0"; # Needed to be accessible from the Hoarder container.
-      openFirewall = true;
     };
     hoarder = {
       enable = true;
