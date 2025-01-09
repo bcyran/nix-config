@@ -17,10 +17,10 @@ in {
         "size 250 700, title:PhilipsTV GUI"
         "move 100%-270 70, title:PhilipsTV GUI"
 
-        "float, class:KeePassXC"
-        "monitor $monitorC, class:KeePassXC"
-        "size 1000 700, class:KeePassXC"
-        "center, class:KeePassXC"
+        "float, class:org.keepassxc.KeePassXC"
+        "monitor $monitorC, class:org.keepassxc.KeePassXC"
+        "size 1000 700, class:org.keepassxc.KeePassXC"
+        "center, class:org.keepassxc.KeePassXC"
 
         "float, class:MEGAsync"
         "monitor $monitorC, class:MEGAsync"
