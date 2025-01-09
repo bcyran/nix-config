@@ -17,5 +17,4 @@ in rec {
   };
   kidex = pkgs.callPackage ./kidex {};
   ente-photos-desktop = pkgs.callPackage ./ente-photos-desktop {};
-  homepage-dashboard = pkgs.callPackage ./homepage-dashboard {inherit (pkgs.darwin) IOKit;};
 }

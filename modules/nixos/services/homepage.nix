@@ -20,7 +20,6 @@ in {
   config = lib.mkIf cfg.enable {
     services.homepage-dashboard = {
       enable = true;
-      package = my.pkgs.homepage-dashboard;
       inherit (cfg) openFirewall environmentFile;
       listenPort = cfg.port;
     };
