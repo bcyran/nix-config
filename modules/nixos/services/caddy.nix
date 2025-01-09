@@ -11,9 +11,9 @@
   lokiCfg = config.my.services.loki;
 
   grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
-  caddyWithOvhDnsPlugin = my.pkgs.caddy.withPlugins {
+  caddyWithOvhDnsPlugin = pkgs.caddy.withPlugins {
     plugins = ["github.com/caddy-dns/ovh@v0.0.3"];
-    hash = "sha256-Sy9ZV/rmnfi1aaDfZo8B7dD3JoEMb9onc9swpjQfJNc=";
+    hash = "sha256-Z+jRwGQRHJZFQnEoqA0IV0otsD4IC1cPZqywMj++JS0";
   };
 
   makeVirtualHost = domain: vhost: {

@@ -17,8 +17,5 @@ in rec {
   };
   kidex = pkgs.callPackage ./kidex {};
   ente-photos-desktop = pkgs.callPackage ./ente-photos-desktop {};
-  # TODO: Remove when it's merged into nixpkgs.
-  #       See: https://github.com/NixOS/nixpkgs/pull/358586.
-  caddy = pkgs.callPackage ./caddy {};
   homepage-dashboard = pkgs.callPackage ./homepage-dashboard {inherit (pkgs.darwin) IOKit;};
 }
