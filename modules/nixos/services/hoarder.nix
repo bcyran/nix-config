@@ -9,7 +9,7 @@
   chromiumCfg = config.my.services.chromium;
   ollamaCfg = config.my.services.ollama;
 
-  hoarderVersion = "0.20.0";
+  hoarderVersion = "0.21.0";
   containerName = "hoarder";
   serviceName = "${config.virtualisation.oci-containers.backend}-${containerName}";
   dataDir = "/var/lib/hoarder";
