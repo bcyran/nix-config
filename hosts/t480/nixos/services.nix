@@ -5,7 +5,7 @@
 }: let
   homelabSopsFile = "${inputs.my-secrets}/homelab.yaml";
 
-  intraIP = "192.168.0.130";
+  intraIP = "10.100.100.100";
   intraDomain = "intra.cyran.dev";
 in {
   sops = {
