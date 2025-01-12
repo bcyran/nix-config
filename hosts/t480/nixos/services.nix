@@ -25,6 +25,7 @@ in {
       speedtest_tracker_env_file.sopsFile = homelabSopsFile;
       meilisearch_env_file.sopsFile = homelabSopsFile;
       hoarder_env_file.sopsFile = homelabSopsFile;
+      transmission_credentials_file.sopsFile = homelabSopsFile;
     };
   };
 
@@ -139,6 +140,11 @@ in {
     ntfy = {
       enable = true;
       domain = "ntfy.${intraDomain}";
+    };
+    transmission = {
+      enable = true;
+      domain = "transmission.${intraDomain}";
+      credentialsFile = config.sops.secrets.transmission_credentials_file.path;
     };
   };
 
