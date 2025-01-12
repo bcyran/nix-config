@@ -19,6 +19,10 @@ in {
       podman = {
         enable = true;
         dockerCompat = true;
+        autoPrune = {
+          enable = true;
+          dates = "weekly";
+        };
         # Used for exposing host's localhost to the container:
         # --network=slirp4netns:allow_host_loopback=true.
         extraPackages = [pkgs.slirp4netns];
