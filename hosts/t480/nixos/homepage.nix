@@ -179,6 +179,20 @@ in {
             };
           }
           {
+            Transmission = rec {
+              description = "BitTorrent client.";
+              icon = "transmission";
+              href = makeServiceDomainUrl "transmission";
+              siteMonitor = makeServiceLoopbackUrl "transmission";
+              widget = {
+                type = "transmission";
+                url = siteMonitor;
+                username = "{{HOMEPAGE_VAR_TRANSMISSION_USERNAME}}";
+                password = "{{HOMEPAGE_VAR_TRANSMISSION_PASSWORD}}";
+              };
+            };
+          }
+          {
             Memos = {
               description = "Quick notes.";
               icon = "https://raw.githubusercontent.com/usememos/memos/refs/heads/main/web/public/logo.webp";
