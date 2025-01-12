@@ -95,6 +95,7 @@ in {
       enable = true;
       domain = "glances.${intraDomain}";
     };
+    postgresql.enable = true;
     meilisearch = {
       enable = true;
       masterKeyEnvironmentFile = config.sops.secrets.meilisearch_env_file.path;
