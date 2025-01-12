@@ -64,10 +64,11 @@ in {
     systemd = {
       services.caddy-log-chmod = {
         description = "Make Caddy logs world readable";
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = "${pkgs.coreutils}/bin/chmod -R 644 /var/log/caddy";
-        };
+        serviceConfig.Type = "oneshot";
+        script = ''
+          ${pkgs.coreutils}/bin/chmod 755 /var/log/caddy
+          ${pkgs.coreutils}/bin/chmod 644 /var/log/caddy/*
+        '';
       };
       timers.caddy-log-chmod = {
         wantedBy = ["timers.target"];
@@ -103,7 +104,7 @@ in {
           job_name = "caddy";
           static_configs = [
             {
-              targets = ["127.0.0.1:${toString cfg.adminPort}"];
+              targets = ["localhost"];
               labels = {
                 job = "caddy-access";
                 agent = "caddy-promtail";
