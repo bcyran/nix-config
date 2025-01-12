@@ -10,9 +10,6 @@
   cfg = config.my.services.memos;
 
   memosVersion = "0.23.0";
-  containerName = "memos";
-  serviceName = "${config.virtualisation.oci-containers.backend}-${containerName}";
-  dataDir = "/var/lib/memos";
 in {
   options = {
     my.services.memos = let
@@ -23,6 +20,7 @@ in {
       port = my.lib.options.mkPortOption serviceName 5230;
       openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
       domain = my.lib.options.mkDomainOption serviceName;
+      dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/memos";
     };
   };
 
@@ -34,13 +32,13 @@ in {
       autoStart = true;
       ports = ["${cfg.address}:${builtins.toString cfg.port}:5230"];
       volumes = [
-        "${dataDir}:/var/opt/memos"
+        "${cfg.dataDir}:/var/opt/memos"
       ];
     };
 
-    systemd.services.${serviceName}.preStart = ''
-      mkdir -p ${dataDir}
-    '';
+    systemd.tmpfiles.rules = [
+      "d '${cfg.dataDir}' 0750 root root - -"
+    ];
 
     my.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
       backendAddress = "127.0.0.1";

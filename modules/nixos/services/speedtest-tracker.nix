@@ -7,7 +7,6 @@
   cfg = config.my.services.speedtest-tracker;
 
   speedtestTrackerVersion = "v1.0.2";
-  dataDir = "/var/lib/speedtest-tracker";
 in {
   options = {
     my.services.speedtest-tracker = let
@@ -19,6 +18,7 @@ in {
       openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
       domain = my.lib.options.mkDomainOption serviceName;
       environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
+      dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/speedtest-tracker";
     };
   };
 
@@ -30,7 +30,7 @@ in {
       autoStart = true;
       ports = ["${cfg.address}:${builtins.toString cfg.port}:80"];
       volumes = [
-        "${dataDir}:/config"
+        "${cfg.dataDir}:/config"
       ];
       environment = {
         PUID = toString config.users.users.speedtest-tracker.uid;
@@ -47,7 +47,7 @@ in {
 
     users = rec {
       users.speedtest-tracker = {
-        home = dataDir;
+        home = cfg.dataDir;
         createHome = true;
         group = "speedtest-tracker";
         uid = 2001;

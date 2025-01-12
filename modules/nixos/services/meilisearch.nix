@@ -14,6 +14,7 @@ in {
       address = my.lib.options.mkAddressOption serviceName;
       port = my.lib.options.mkPortOption serviceName 7700;
       openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+      dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/meilisearch";
 
       masterKeyEnvironmentFile = lib.mkOption {
         type = lib.types.path;
@@ -32,6 +33,17 @@ in {
       listenPort = cfg.port;
       noAnalytics = true;
       inherit (cfg) masterKeyEnvironmentFile;
+    };
+
+    systemd = {
+      services.meilisearch.environment = {
+        MEILI_DB_PATH = cfg.dataDir;
+        MEILI_DUMP_DIR = "${cfg.dataDir}/dumps";
+      };
+
+      tmpfiles.rules = [
+        "d '${cfg.dataDir}' 0750 meilisearch meilisearch - -"
+      ];
     };
   };
 }

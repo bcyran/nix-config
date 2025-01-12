@@ -14,11 +14,13 @@ in {
     port = my.lib.options.mkPortOption serviceName 8085;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     domain = my.lib.options.mkDomainOption serviceName;
+    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/forgejo";
   };
 
   config = lib.mkIf cfg.enable {
     services.forgejo = {
       enable = true;
+      stateDir = cfg.dataDir;
 
       settings = {
         server = {

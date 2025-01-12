@@ -16,6 +16,7 @@ in {
     openFirewallTransfer = my.lib.options.mkOpenFirewallOption "${serviceName} file transfer and discovery";
     domain = my.lib.options.mkDomainOption "${serviceName} GUI";
     environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
+    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/syncthing";
 
     keyFile = lib.mkOption {
       type = with lib.types; nullOr path;
@@ -56,13 +57,14 @@ in {
       enable = true;
       openDefaultPorts = cfg.openFirewallTransfer;
       guiAddress = "${cfg.guiAddress}:${toString cfg.guiPort}";
+      inherit (cfg) dataDir;
 
       settings = {
         devices = lib.mapAttrs (name: id: {inherit id;}) cfg.devices;
         folders = lib.listToAttrs (map (name: {
             inherit name;
             value = {
-              path = "/var/lib/syncthing/${name}";
+              path = "${cfg.dataDir}/${name}";
               devices = builtins.attrNames cfg.devices;
             };
           })

@@ -34,7 +34,7 @@
       type = with lib.types; nullOr path;
       default = null;
       example = "/path/to/env/file";
-      description = "The path to the environment file.";
+      description = "The path to the environment file for the ${serviceName}.";
     };
 
   mkEnvironmentFilesOption = serviceName:
@@ -42,6 +42,14 @@
       type = with lib.types; listOf path;
       default = [];
       example = ["/path/to/env/file"];
-      description = "The paths to the environment files.";
+      description = "The paths to the environment files for the ${serviceName}.";
+    };
+
+  mkDataDirOption = serviceName: default:
+    lib.mkOption {
+      type = with lib.types; nullOr path;
+      example = "/path/to/data/dir";
+      description = "The path to the data directory for the ${serviceName}.";
+      inherit default;
     };
 }

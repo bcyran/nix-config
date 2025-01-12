@@ -10,9 +10,6 @@
   ollamaCfg = config.my.services.ollama;
 
   hoarderVersion = "0.21.0";
-  containerName = "hoarder";
-  serviceName = "${config.virtualisation.oci-containers.backend}-${containerName}";
-  dataDir = "/var/lib/hoarder";
 in {
   options = {
     my.services.hoarder = let
@@ -24,6 +21,7 @@ in {
       domain = my.lib.options.mkDomainOption serviceName;
       openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
       environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
+      dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/hoarder";
 
       llm = lib.mkOption {
         type = with lib.types; nullOr str;
@@ -37,12 +35,12 @@ in {
   config = lib.mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
-    virtualisation.oci-containers.containers.${containerName} = {
+    virtualisation.oci-containers.containers.hoarder = {
       image = "ghcr.io/hoarder-app/hoarder:${hoarderVersion}";
       autoStart = true;
       ports = ["${cfg.address}:${toString cfg.port}:3000"];
       volumes = [
-        "${dataDir}:/data"
+        "${cfg.dataDir}:/data"
       ];
       environment = let
         loopback = "10.0.2.2";
@@ -71,9 +69,9 @@ in {
       inherit (cfg) environmentFiles;
     };
 
-    systemd.services.${serviceName}.preStart = ''
-      mkdir -p ${dataDir}
-    '';
+    systemd.tmpfiles.rules = [
+      "d '${cfg.dataDir}' 0750 root root - -"
+    ];
 
     my.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
       backendAddress = "127.0.0.1";
