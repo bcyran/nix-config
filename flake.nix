@@ -27,6 +27,9 @@
     grafana-dashboards = {
       url = "github:blackheaven/grafana-dashboards.nix";
     };
+    vpn-confinement = {
+      url = "github:Maroka-chan/VPN-Confinement";
+    };
 
     # Home Manager dependencies.
     home-manager = {

@@ -371,10 +371,10 @@
     "my-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1736702086,
-        "narHash": "sha256-s47bxOSNkjdDzQAwxMI4iyBwCpEoWfT5VCB7e3MEmiA=",
+        "lastModified": 1736797982,
+        "narHash": "sha256-FGu6wl5hjD5HtWvQLqcUz8iwsQllP5sILGXFuF06CD0=",
         "ref": "main",
-        "rev": "064072ac8b948c77d25281c098e2d0d3b8578863",
+        "rev": "c022c9d6922b5b70e71e9fc4d775a503cecda4bc",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/bcyran/nix-secrets.git"
@@ -569,7 +569,8 @@
         "nixos-cosmic": "nixos-cosmic",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable_3",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "vpn-confinement": "vpn-confinement"
       }
     },
     "rust-overlay": {
@@ -659,6 +660,21 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "vpn-confinement": {
+      "locked": {
+        "lastModified": 1731209328,
+        "narHash": "sha256-b3jggBHZh20jUfBxoaIvew23czsw82zBc0aKxtkF3g8=",
+        "owner": "Maroka-chan",
+        "repo": "VPN-Confinement",
+        "rev": "74e6fd47804b5ca69187200efbb14cf1ecb9ea07",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Maroka-chan",
+        "repo": "VPN-Confinement",
         "type": "github"
       }
     }

@@ -26,6 +26,15 @@ in {
       meilisearch_env_file.sopsFile = homelabSopsFile;
       hoarder_env_file.sopsFile = homelabSopsFile;
       transmission_credentials_file.sopsFile = homelabSopsFile;
+      wireguard_conf_file.sopsFile = homelabSopsFile;
+    };
+  };
+
+  my.configurations = {
+    vpnConfinement = {
+      enable = true;
+      wireguardConfigFile = config.sops.secrets.wireguard_conf_file.path;
+      namespaceName = "proton";
     };
   };
 
