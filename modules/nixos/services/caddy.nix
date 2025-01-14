@@ -75,7 +75,7 @@ in {
         after = ["caddy.service"];
         requires = ["caddy.service"];
         timerConfig = {
-          OnUnitActiveSec = "1h";
+          OnCalendar = "hourly";
         };
       };
     };
