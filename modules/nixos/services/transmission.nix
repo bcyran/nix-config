@@ -6,6 +6,11 @@
   ...
 }: let
   cfg = config.my.services.transmission;
+
+  effectiveAddress =
+    if cfg.vpnNamespace != null
+    then config.vpnNamespaces.${cfg.vpnNamespace}.namespaceAddress
+    else cfg.address;
 in {
   options.my.services.transmission = let
     serviceName = "Transmission";
@@ -21,6 +26,13 @@ in {
       type = lib.types.path;
       example = "/path/to/credentials/file";
       description = "The path to the credentials JSON file for the Transmission service.";
+    };
+
+    vpnNamespace = lib.mkOption {
+      type = with lib.types; nullOr str;
+      default = null;
+      example = "proton";
+      description = "The name of the VPN namespace. VPN is disabled if not given.";
     };
   };
 
@@ -40,7 +52,7 @@ in {
         watch-dir-enabled = true;
         watch-dir = "${cfg.dataDir}/downloads/.watch";
 
-        rpc-bind-address = cfg.address;
+        rpc-bind-address = effectiveAddress;
         rpc-port = cfg.port;
         rpc-whitelist-enabled = false;
         rpc-authentication-required = true;
@@ -64,8 +76,23 @@ in {
       "d '${cfg.dataDir}/downloads/.watch'      0755 ${user} ${group} - -"
     ];
 
+    systemd.services.transmission.vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
+      enable = true;
+      inherit (cfg) vpnNamespace;
+    };
+
+    vpnNamespaces.${cfg.vpnNamespace} = lib.mkIf (cfg.vpnNamespace != null) {
+      enable = true;
+      portMappings = [
+        {
+          from = cfg.port;
+          to = cfg.port;
+        }
+      ];
+    };
+
     my.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
-      backendAddress = cfg.address;
+      backendAddress = effectiveAddress;
       backendPort = cfg.port;
     };
   };
