@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  lib,
   ...
 }: {
   sops = let
@@ -99,4 +100,17 @@
         // commonSettings;
     };
   };
+
+  systemd.services = let
+    notifyFailedServices = [
+      "btrbk-system"
+      "restic-backups-homelab-root"
+      "restic-backups-homelab-var"
+      "restic-backups-slimbook-home"
+    ];
+    mkOnFailure = serviceName: {
+      onFailure = ["ntfy-failed@${serviceName}.service"];
+    };
+  in
+    lib.genAttrs notifyFailedServices mkOnFailure;
 }

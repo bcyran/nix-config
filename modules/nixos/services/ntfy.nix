@@ -2,6 +2,7 @@
   my,
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.my.services.ntfy;
@@ -26,6 +27,18 @@ in {
         base-url = "https://${cfg.domain}";
         behind-proxy = true;
       };
+    };
+
+    systemd.services."ntfy-failed@" = {
+      description = "Send ntfy notification about %i failure";
+      scriptArgs = "%i";
+      script = ''
+        ${pkgs.curl}/bin/curl \
+          -H "Title: Systemd: unit failed" \
+          -H "Tags: warning" \
+          -d "Unit: $1.service" \
+          http://127.0.0.1:${toString cfg.port}/systemd
+      '';
     };
 
     my.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
