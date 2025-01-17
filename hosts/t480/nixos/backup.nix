@@ -2,6 +2,7 @@
   inputs,
   config,
   lib,
+  pkgs,
   ...
 }: {
   sops = let
@@ -65,7 +66,6 @@
         passwordFile = config.sops.secrets.restic_password_file.path;
         environmentFile = config.sops.secrets.restic_env_file.path;
         repositoryFile = config.sops.secrets.restic_repository_name_file.path;
-        createWrapper = true;
       };
     in {
       homelab-root = mkResticBackupFromBtrbkSnapshots {
@@ -88,6 +88,23 @@
       };
     };
   };
+
+  # Our own simple restic wrapper with B2 config.
+  environment.systemPackages = [
+    (pkgs.writeShellApplication {
+      name = "restic-b2";
+      text = ''
+        set -a # automatically export variables
+
+        # shellcheck disable=SC1091
+        source ${config.sops.secrets.restic_env_file.path}
+        export RESTIC_PASSWORD_FILE=${config.sops.secrets.restic_password_file.path}
+        export RESTIC_REPOSITORY_FILE=${config.sops.secrets.restic_repository_name_file.path}
+
+        exec ${pkgs.restic}/bin/restic "$@"
+      '';
+    })
+  ];
 
   systemd.services = let
     notifyFailedServices = [
