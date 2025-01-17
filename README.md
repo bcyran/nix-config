@@ -1,6 +1,10 @@
-# nix-config
+<h1 align="center">❄️ Bazyli's Nix config ✨</h1>
 
-My NixOS and Home Manager config.
+> Hi!
+> This repo contains NixOS and Home Manager configurations for all my machines.
+> Be warned that it's not intended to be used directly by anyone other than me and likely wouldn't work if you tried.
+> However, please feel free to look around, learn, and copy as much as you want.
+> Happy nixing!
 
 ## Features
 
@@ -16,9 +20,24 @@ My NixOS and Home Manager config.
 
 ## Screenshots
 
-![Screenshot of desktop with tiled terminal windows running neovim, neofetch and eza](./docs/images/screenshot_1.png)
-![Screenshot of desktop with floating terminal window and sway notification center](./docs/images/screenshot_2.png)
-![Screenshot of desktop with tiled firefox and terminal emulator running btop windows](./docs/images/screenshot_3.png)
+<table width="100%">
+  <tr width="100%">
+    <td colspan="2" align="center" width="100%">
+      <img src="./docs/images/screenshot_1.png" alt="Screenshot of desktop with tiled terminal windows running neovim, neofetch and eza" />
+      <i>Visible: hyprland, waybar, alacritty, neovim, neofetch, eza.</i>
+    </td>
+  </tr>
+  <tr width="100%">
+    <td align="center" width="50%">
+      <img src="./docs/images/screenshot_2.png" alt="Screenshot of desktop with floating terminal window and sway notification center" />
+      <i>Visible: hyprland, waybar, alacritty, figlet, lolcat, swaync.</i>
+    </td>
+    <td align="center" width="50%">
+      <img src="./docs/images/screenshot_3.png" alt="Screenshot of desktop with tiled firefox and terminal emulator running btop windows" />
+      <i>Visible: hyprland, waybar, firefox, alacritty, btop.</i>
+    </td>
+  </tr>
+</table>
 
 ## Installation
 
