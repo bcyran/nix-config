@@ -53,6 +53,7 @@
           "--host ${host}"
           "--tag ${tag}"
           "--group-by host,tags"
+          "--retry-lock 2h"
         ];
         pruneOpts = [
           "--keep-daily 7"
@@ -71,19 +72,19 @@
         host = "homelab";
         tag = "root";
         snapshotsGlob = "/mnt/backup/t480/ROOT.*";
-        time = "02:00";
+        time = "01:00";
       };
       homelab-var = mkResticBackupFromBtrbkSnapshots {
         host = "homelab";
         tag = "var";
         snapshotsGlob = "/mnt/backup/t480/var.*";
-        time = "02:15";
+        time = "02:00";
       };
       slimbook-home = mkResticBackupFromBtrbkSnapshots {
         host = "slimbook";
         tag = "home";
         snapshotsGlob = "/mnt/backup/slimbook/home.*";
-        time = "02:30";
+        time = "03:00";
       };
     };
   };
