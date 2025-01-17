@@ -106,5 +106,9 @@ Set the LUKS password if prompted.
 
     Enter the LUKS password when prompted.
 
+> [!WARNING]
+> Using TPM to unlock LUKS isn't fully secure, [read more here](https://oddlama.org/blog/bypassing-disk-encryption-with-tpm2-unlock/).
+> The easiest way to mitigate this issue is by adding PIN authentication: `--tpm2-with-pin=yes`.
+
 3. Reboot.
    The disk should be decrypted automatically.
