@@ -39,65 +39,52 @@
     };
 
     restic.backups = let
-      commonSettings = {
+      mkResticBackupFromBtrbkSnapshots = {
+        host,
+        tag,
+        snapshotsGlob,
+        time,
+      }: {
         initialize = true;
+        dynamicFilesFrom = ''
+          find ${snapshotsGlob} -maxdepth 0 -type d | sort | tail -n 1
+        '';
+        extraBackupArgs = [
+          "--host ${host}"
+          "--tag ${tag}"
+          "--group-by host,tags"
+        ];
+        pruneOpts = [
+          "--keep-daily 7"
+        ];
+        timerConfig = {
+          OnCalendar = time;
+          Persistent = true;
+        };
         passwordFile = config.sops.secrets.restic_password_file.path;
         environmentFile = config.sops.secrets.restic_env_file.path;
         repositoryFile = config.sops.secrets.restic_repository_name_file.path;
         createWrapper = true;
-        pruneOpts = [
-          "--keep-daily 7"
-        ];
       };
     in {
-      homelab-root =
-        {
-          dynamicFilesFrom = ''
-            find /mnt/backup/t480/ROOT.* -maxdepth 0 -type d | sort | tail -n 1
-          '';
-          extraBackupArgs = [
-            "--host homelab"
-            "--tag root"
-            "--group-by host,tags"
-          ];
-          timerConfig = {
-            OnCalendar = "02:00";
-            Persistent = true;
-          };
-        }
-        // commonSettings;
-      homelab-var =
-        {
-          dynamicFilesFrom = ''
-            find /mnt/backup/t480/var.* -maxdepth 0 -type d | sort | tail -n 1
-          '';
-          extraBackupArgs = [
-            "--host homelab"
-            "--tag var"
-            "--group-by host,tags"
-          ];
-          timerConfig = {
-            OnCalendar = "02:15";
-            Persistent = true;
-          };
-        }
-        // commonSettings;
-      slimbook-home =
-        {
-          dynamicFilesFrom = ''
-            find /mnt/backup/slimbook/home.* -maxdepth 0 -type d | sort | tail -n 1
-          '';
-          extraBackupArgs = [
-            "--host slimbook"
-            "--tag home"
-            "--group-by host,tags"
-          ];
-          timerConfig = {
-            OnCalendar = "02:30";
-            Persistent = true;
-          };
-        }
-        // commonSettings;
+      homelab-root = mkResticBackupFromBtrbkSnapshots {
+        host = "homelab";
+        tag = "root";
+        snapshotsGlob = "/mnt/backup/t480/ROOT.*";
+        time = "02:00";
+      };
+      homelab-var = mkResticBackupFromBtrbkSnapshots {
+        host = "homelab";
+        tag = "var";
+        snapshotsGlob = "/mnt/backup/t480/var.*";
+        time = "02:15";
+      };
+      slimbook-home = mkResticBackupFromBtrbkSnapshots {
+        host = "slimbook";
+        tag = "home";
+        snapshotsGlob = "/mnt/backup/slimbook/home.*";
+        time = "02:30";
+      };
     };
   };
 
