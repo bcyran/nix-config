@@ -39,6 +39,50 @@
   </tr>
 </table>
 
+## Structure
+- `hosts` - Configurations for specific machines.
+  - `<hostname>`
+    - `common` - Configurations used by both NixOS and Home Manager.
+      - `user.nix` - Definitions of options containing my user account details.
+        Those are imported by both NixOS and Home Manager.
+        This way the values are accessible both for home and system configurations and always in sync.
+    - `home-manager`
+      - `bazyli.nix` - Definitions of Home Manager options.
+        I'm mostly defining custom options declared in `modules`.
+    - `nixos`
+      - `disks.nix` - Disks, partitions and filesystems defined using `disko`.
+      - `hardware-configuration.nix` - Generated hardware configuration for the machine.
+      - `configuration.nix` - Definitions of NixOS options.
+        I'm mostly defining custom options declared in `modules`.
+      - `*.nix` - More definitions of NixOS options which are distinct enough to be extracted from `configuration.nix`.
+- `lib` - Custom helpers, used in many places or generic enough to be extracted here.
+- `modules` - Modules containing declarations of all my custom options.
+  - `common` - Declarations of options imported by both NixOS and Home Manager.
+    See `hosts/<hostname>/common` for those options' definitions.
+  - `home-manager`
+    - `configurations` - Modules with configurations not directly related to specific programs.
+    - `options` - Modules containing only options' declarations.
+      Those modules do not contain the `config` section at all.
+      The values of those options are consumed by other modules.
+    - `presets` - Modules defining presets which enable a bunch of options declared in other modules at once.
+      E.g. `cli`, `desktop`, `hyprland`.
+    - `programs` - Modules with configurations related to specific programs.
+      Usually each module configures a single program.
+  - `nixos`
+    - `configurations` - Same as in `home-manager`.
+    - `options` - Same as in `home-manager`.
+    - `presets` - Same as in `home-manager`.
+    - `programs` - Same as in `home-manager`.
+    - `services` - Modules with configurations related to services.
+      For me a "service" is a program which servers something to different machines so those modules are used almost exclusively on servers.
+      Note that it's a different definition of a "service" than what `nixpgs` modules use.
+- `overlays` - Custom overlays modifying `nixpkgs`.
+  I barely use this.
+- `pkgs` - Custom packages.
+  Those might be my personal scripts / programs, packages I found on the internet which are not in `nixpkgs`, or packages I intend to upstream into `nixpkgs`.
+- `flake.nix` - Flake entrypoint.
+  Exposes all the modules and configurations defined in the flake and allows them to be imported by other flakes.
+
 ## Installation
 
 See the [Installation instruction](/docs/installation.md).
