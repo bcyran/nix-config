@@ -1,18 +1,13 @@
 {
-  inputs,
   config,
   lib,
   pkgs,
   ...
 }: {
-  sops = let
-    homelabSopsFile = "${inputs.my-secrets}/homelab.yaml";
-  in {
-    secrets = {
-      restic_password_file.sopsFile = homelabSopsFile;
-      restic_env_file.sopsFile = homelabSopsFile;
-      restic_repository_name_file.sopsFile = homelabSopsFile;
-    };
+  sops.secrets = {
+    restic_password_file = {};
+    restic_env_file = {};
+    restic_repository_name_file = {};
   };
 
   services = {

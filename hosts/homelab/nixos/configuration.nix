@@ -28,18 +28,17 @@
   };
 
   sops = let
-    t480SopsFile = "${inputs.my-secrets}/t480.yaml";
     wifiSopsFile = "${inputs.my-secrets}/wifi.yaml";
     homelabSopsFile = "${inputs.my-secrets}/homelab.yaml";
   in {
-    defaultSopsFile = t480SopsFile;
+    defaultSopsFile = homelabSopsFile;
     secrets = {
       bazyli_hashed_password.neededForUsers = true;
       root_hashed_password.neededForUsers = true;
-      nix_extra_options = {};
       home_wifi_env_file.sopsFile = wifiSopsFile;
       mobile_wifi_env_file.sopsFile = wifiSopsFile;
-      backup_key_file.sopsFile = homelabSopsFile;
+      nix_extra_options = {};
+      backup_key_file = {};
     };
   };
 

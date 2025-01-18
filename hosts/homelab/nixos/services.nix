@@ -1,33 +1,24 @@
-{
-  inputs,
-  config,
-  ...
-}: let
-  homelabSopsFile = "${inputs.my-secrets}/homelab.yaml";
-
+{config, ...}: let
   intraIP = "10.100.100.100";
   intraDomain = "intra.cyran.dev";
 in {
-  sops = {
-    secrets = {
-      ovh_api_env_file.sopsFile = homelabSopsFile;
-      tailscale_auth_key.sopsFile = homelabSopsFile;
-      syncthing_key_file.sopsFile = homelabSopsFile;
-      syncthing_cert_file.sopsFile = homelabSopsFile;
-      syncthing_env_file.sopsFile = homelabSopsFile;
-      homepage_env_file.sopsFile = homelabSopsFile;
-      hass_secrets_file = {
-        sopsFile = homelabSopsFile;
-        path = "${config.services.home-assistant.configDir}/secrets.yaml";
-        owner = "hass";
-        restartUnits = ["home-assistant.service"];
-      };
-      speedtest_tracker_env_file.sopsFile = homelabSopsFile;
-      meilisearch_env_file.sopsFile = homelabSopsFile;
-      hoarder_env_file.sopsFile = homelabSopsFile;
-      transmission_credentials_file.sopsFile = homelabSopsFile;
-      wireguard_conf_file.sopsFile = homelabSopsFile;
+  sops.secrets = {
+    hass_secrets_file = {
+      path = "${config.services.home-assistant.configDir}/secrets.yaml";
+      owner = "hass";
+      restartUnits = ["home-assistant.service"];
     };
+    ovh_api_env_file = {};
+    tailscale_auth_key = {};
+    syncthing_key_file = {};
+    syncthing_cert_file = {};
+    syncthing_env_file = {};
+    homepage_env_file = {};
+    speedtest_tracker_env_file = {};
+    meilisearch_env_file = {};
+    hoarder_env_file = {};
+    transmission_credentials_file = {};
+    wireguard_conf_file = {};
   };
 
   my.configurations = {
