@@ -23,7 +23,7 @@
   ];
 
   networking = {
-    hostName = "t480";
+    hostName = "homelab";
     nameservers = ["127.0.0.1"];
   };
 

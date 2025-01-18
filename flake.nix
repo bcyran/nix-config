@@ -108,7 +108,7 @@
         my = inputs.self;
       })
       (myLib.config.mkSystem {
-        name = "t480";
+        name = "homelab";
         system = "x86_64-linux";
         inherit inputs;
         my = inputs.self;
@@ -126,7 +126,7 @@
         my = inputs.self;
       })
       (myLib.config.mkHome {
-        name = "bazyli@t480";
+        name = "bazyli@homelab";
         system = "x86_64-linux";
         inherit inputs;
         my = inputs.self;

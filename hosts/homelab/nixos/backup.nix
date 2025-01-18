@@ -28,7 +28,7 @@
             "/var" = {};
           };
           snapshot_dir = "/.snapshots";
-          target = "/mnt/backup/t480";
+          target = "/mnt/backup/homelab";
           target_preserve = snapshotRetention;
           target_preserve_min = snapshotRetentionMin;
         };
@@ -71,13 +71,13 @@
       homelab-root = mkResticBackupFromBtrbkSnapshots {
         host = "homelab";
         tag = "root";
-        snapshotsGlob = "/mnt/backup/t480/ROOT.*";
+        snapshotsGlob = "/mnt/backup/homelab/ROOT.*";
         time = "01:00";
       };
       homelab-var = mkResticBackupFromBtrbkSnapshots {
         host = "homelab";
         tag = "var";
-        snapshotsGlob = "/mnt/backup/t480/var.*";
+        snapshotsGlob = "/mnt/backup/homelab/var.*";
         time = "02:00";
       };
       slimbook-home = mkResticBackupFromBtrbkSnapshots {
