@@ -25,6 +25,10 @@ in {
 
     services = {
       systemd-lock-handler.enable = true; # Required for `lock.target` in user's systemd
+      geoclue2 = {
+        enable = true;
+        geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
+      };
     };
 
     security = {
