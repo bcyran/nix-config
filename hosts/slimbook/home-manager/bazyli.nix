@@ -34,6 +34,7 @@
       tokyonight.enable = true;
     };
     programs = {
+      timewall.enable = true;
       udiskie = {
         deviceConfig = [
           {

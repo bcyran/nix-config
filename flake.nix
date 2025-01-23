@@ -55,6 +55,10 @@
       url = "github:jappie3/hyprcursor-phinger";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    timewall = {
+      url = "github:bcyran/timewall";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Secret management
     sops-nix = {

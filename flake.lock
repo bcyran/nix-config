@@ -570,6 +570,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable_3",
         "sops-nix": "sops-nix",
+        "timewall": "timewall",
         "vpn-confinement": "vpn-confinement"
       }
     },
@@ -590,6 +591,27 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "rev": "6dc3e45fe4aee36efeed24d64fc68b1f989d5465",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_2": {
+      "inputs": {
+        "nixpkgs": [
+          "timewall",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1734230139,
+        "narHash": "sha256-zsp0Mz8VgyIAnU8UhP/YT1g+zlsl+NIJTBMAbY+RifQ=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "150fbc8aa2bc501041810bbc1dbfe73694a861be",
         "type": "github"
       },
       "original": {
@@ -660,6 +682,27 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "timewall": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay_2"
+      },
+      "locked": {
+        "lastModified": 1737663538,
+        "narHash": "sha256-qrCHymJGE3hbLqxVZK98PNYvw03kQItelDAR2kkwA0o=",
+        "owner": "bcyran",
+        "repo": "timewall",
+        "rev": "8c0a4bf755b714b41144bd830f8e718e5dee5afd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bcyran",
+        "repo": "timewall",
         "type": "github"
       }
     },
