@@ -1,4 +1,5 @@
 {
+  inputs,
   my,
   pkgs,
   config,
@@ -37,6 +38,7 @@
     '';
   };
 
+  timewallBin = lib.getExe inputs.timewall.packages.${pkgs.system}.timewall;
   wallpaperBin = lib.getExe my.pkgs.wallpaper;
   sleepBin = "${pkgs.coreutils}/bin/sleep";
 in {
@@ -54,7 +56,7 @@ in {
       hyprpapersetScript
     ];
 
-    systemd.user.services.wallpaper = lib.mkIf (!timewallCfg.enable) {
+    systemd.user.services.wallpaper = {
       Unit = {
         Description = "Wallpaper setter";
         PartOf = ["graphical-session.target"];
@@ -64,7 +66,10 @@ in {
       Service = {
         Type = "oneshot";
         ExecStartPre = "${sleepBin} 3";
-        ExecStart = wallpaperBin;
+        ExecStart =
+          if timewallCfg.enable
+          then "${timewallBin} set"
+          else wallpaperBin;
       };
       Install = {
         WantedBy = ["graphical-session.target"];
