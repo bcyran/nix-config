@@ -141,6 +141,10 @@ in {
       enable = true;
       domain = "ntfy.${intraDomain}";
     };
+    joplin = {
+      enable = true;
+      domain = "joplin.${intraDomain}";
+    };
     transmission = {
       enable = true;
       domain = "transmission.${intraDomain}";
