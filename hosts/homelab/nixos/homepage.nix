@@ -179,6 +179,14 @@ in {
             };
           }
           {
+            Joplin = {
+              description = "Notes synchronization.";
+              icon = "joplin";
+              href = makeServiceDomainUrl "joplin";
+              siteMonitor = makeServiceLoopbackUrl "joplin";
+            };
+          }
+          {
             Transmission = rec {
               description = "BitTorrent client.";
               icon = "transmission";
