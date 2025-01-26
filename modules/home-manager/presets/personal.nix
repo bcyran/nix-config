@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  my,
   ...
 }: let
   inherit (lib) mkDefault;
@@ -27,16 +26,14 @@ in {
       gnucash
       gimp
       libreoffice-fresh
-      anydesk
       rustdesk
       calibre
       gthumb
-      my.pkgs.ente-photos-desktop
       protonvpn-gui
       vlc
       tor-browser
       quickemu
-      notesnook
+      joplin-desktop
       webcord
     ];
   };
