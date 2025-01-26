@@ -13,7 +13,7 @@
   grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
   caddyWithOvhDnsPlugin = pkgs.caddy.withPlugins {
     plugins = ["github.com/caddy-dns/ovh@v0.0.3"];
-    hash = "sha256-Z+jRwGQRHJZFQnEoqA0IV0otsD4IC1cPZqywMj++JS0";
+    hash = "sha256-MOdzcf083FbL3Va3bISFhx4ylz9Pu7tiT6wpopOY89w";
   };
 
   makeVirtualHost = domain: vhost: {
