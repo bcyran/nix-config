@@ -16,5 +16,4 @@ in rec {
     inherit ttkbootstrap;
   };
   kidex = pkgs.callPackage ./kidex {};
-  ente-photos-desktop = pkgs.callPackage ./ente-photos-desktop {};
 }
