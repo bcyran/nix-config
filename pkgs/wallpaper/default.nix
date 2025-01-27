@@ -1,9 +1,10 @@
 {
   writeShellApplication,
   coreutils,
+  hyprpaperset,
 }:
 writeShellApplication {
   name = "wallpaper";
-  runtimeInputs = [coreutils];
+  runtimeInputs = [coreutils hyprpaperset];
   text = builtins.readFile ./wallpaper.sh;
 }

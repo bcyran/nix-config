@@ -7,7 +7,10 @@ in rec {
   backlight = pkgs.callPackage ./backlight {};
   volume = pkgs.callPackage ./volume {};
   hyprpaperset = pkgs.callPackage ./hyprpaperset {};
-  wallpaper = pkgs.callPackage ./wallpaper {};
+  wallpaper = pkgs.callPackage ./wallpaper {
+    inherit (pkgs) writeShellApplication coreutils;
+    inherit hyprpaperset;
+  };
   scr = pkgs.callPackage ./scr {};
   ttkbootstrap = pkgs.callPackage ./ttkbootstrap {
     inherit (python3Packages) buildPythonPackage pythonOlder tkinter pillow;
