@@ -6,6 +6,7 @@ in rec {
   # example = pkgs.callPackage ./example { };
   backlight = pkgs.callPackage ./backlight {};
   volume = pkgs.callPackage ./volume {};
+  hyprpaperset = pkgs.callPackage ./hyprpaperset {};
   wallpaper = pkgs.callPackage ./wallpaper {};
   scr = pkgs.callPackage ./scr {};
   ttkbootstrap = pkgs.callPackage ./ttkbootstrap {
