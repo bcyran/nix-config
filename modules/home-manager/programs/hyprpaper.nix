@@ -11,7 +11,6 @@
 
   timewallBin = lib.getExe inputs.timewall.packages.${pkgs.system}.timewall;
   wallpaperBin = lib.getExe my.pkgs.wallpaper;
-  sleepBin = "${pkgs.coreutils}/bin/sleep";
 in {
   options.my.programs.hyprpaper.enable = lib.mkEnableOption "hyprpaper";
 
@@ -34,16 +33,19 @@ in {
         After = ["hyprpaper.service"];
         Requires = ["hyprpaper.service"];
       };
-      Service = {
-        Type = "oneshot";
-        ExecStartPre = "${sleepBin} 3";
-        ExecStart =
-          if timewallCfg.enable
-          then "${timewallBin} set"
-          else wallpaperBin;
-      };
+      Service =
+        {
+          Type = "oneshot";
+          ExecStart =
+            if timewallCfg.enable
+            then "${timewallBin} set"
+            else wallpaperBin;
+        }
+        // lib.optionalAttrs timewallCfg.enable {
+          KillMode = "process"; # Do not kill the spawned wallpaper setter process
+        };
       Install = {
-        WantedBy = ["graphical-session.target"];
+        WantedBy = ["hyprpaper.service"];
       };
     };
   };

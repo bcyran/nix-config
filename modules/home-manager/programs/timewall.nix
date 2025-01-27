@@ -1,4 +1,5 @@
 {
+  my,
   config,
   lib,
   ...
@@ -11,7 +12,7 @@ in {
     services.timewall = {
       enable = true;
       config = {
-        setter.command = ["hyprpaperset" "%f"];
+        setter.command = ["${lib.getExe my.pkgs.hyprpaperset}" "%f"];
         location = {
           lat = 51.11;
           lon = 17.02;
