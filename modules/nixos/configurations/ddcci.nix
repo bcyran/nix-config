@@ -31,14 +31,21 @@ in {
       description = "Force DDC/CI device detection";
       scriptArgs = "%i";
       script = ''
+        echo "Trying to force DDC/CI device detection for $1."
         id=$(echo "$1" | cut -d "-" -f 2)
-        if ${ddcutilBin} getvcp 10 -b "$id"; then
-          echo 'ddcci 0x37' > "/sys/bus/i2c/devices/$1/new_device"
-        fi
+        for i in {1..5}; do
+          echo "Attempt $i..."
+          if ${ddcutilBin} getvcp 10 -b "$id"; then
+            echo 'ddcci 0x37' > "/sys/bus/i2c/devices/$1/new_device"
+            echo 'Success!'
+            break
+          fi
+          sleep 1
+        done
       '';
       serviceConfig = {
         Type = "oneshot";
-        ExecStartPre = "${sleepBin} 10";
+        ExecStartPre = "${sleepBin} 3";
       };
     };
   };
