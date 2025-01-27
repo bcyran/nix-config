@@ -27,6 +27,12 @@ in {
       };
     };
 
+    # Add a `udev` rule to restart `logiops` when the mouse is connected
+    # https://github.com/PixlOne/logiops/issues/239#issuecomment-1044122412
+    services.udev.extraRules = ''
+      ACTION=="add", SUBSYSTEM=="input", ATTRS{id/vendor}=="046d", RUN{program}="${config.systemd.package}/bin/systemctl --no-block try-restart logiops.service"
+    '';
+
     environment = {
       systemPackages = [pkgs.logiops];
       etc."logid.cfg" = {
