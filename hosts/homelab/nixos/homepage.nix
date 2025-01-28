@@ -412,6 +412,33 @@ in {
             };
           }
           {
+            PostgreSQL = {
+              description = "SQL database service.";
+              icon = "postgresql";
+              widget = {
+                type = "prometheusmetric";
+                url = makeServiceLoopbackUrl "prometheus";
+                metrics = [
+                  {
+                    label = "Databases";
+                    query = "count(pg_database_size_bytes)";
+                    format.type = "number";
+                  }
+                  {
+                    label = "Total size";
+                    query = "sum(pg_database_size_bytes)";
+                    format.type = "bytes";
+                  }
+                  {
+                    label = "Scrape error";
+                    query = "pg_exporter_last_scrape_error";
+                    format.type = "text";
+                  }
+                ];
+              };
+            };
+          }
+          {
             Chromium = rec {
               description = "Headless browser service.";
               icon = "chromium";
