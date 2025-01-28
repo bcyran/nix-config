@@ -10,12 +10,32 @@ in {
       statusStyle = "dot";
       theme = "dark";
 
-      layout = {
-        "Hardware status" = {
-          style = "row";
-          columns = 3;
-        };
-      };
+      layout = [
+        {
+          "Hardware status" = {
+            style = "row";
+            columns = 3;
+          };
+        }
+        {
+          Applications = {
+            style = "row";
+            columns = 3;
+          };
+        }
+        {
+          Monitoring = {
+            style = "row";
+            columns = 3;
+          };
+        }
+        {
+          Backend = {
+            style = "row";
+            columns = 3;
+          };
+        }
+      ];
     };
 
     services = [
@@ -179,14 +199,6 @@ in {
             };
           }
           {
-            Joplin = {
-              description = "Notes synchronization.";
-              icon = "joplin";
-              href = makeServiceDomainUrl "joplin";
-              siteMonitor = makeServiceLoopbackUrl "joplin";
-            };
-          }
-          {
             Transmission = rec {
               description = "BitTorrent client.";
               icon = "transmission";
@@ -201,11 +213,29 @@ in {
             };
           }
           {
-            Memos = {
-              description = "Quick notes.";
-              icon = "https://raw.githubusercontent.com/usememos/memos/refs/heads/main/web/public/logo.webp";
-              href = makeServiceDomainUrl "memos";
-              siteMonitor = makeServiceLoopbackUrl "memos";
+            Ollama = rec {
+              description = "LLM API service.";
+              icon = "ollama";
+              siteMonitor = makeServiceLoopbackUrl "ollama";
+              widget = {
+                type = "customapi";
+                url = "${siteMonitor}/api/ps";
+                mappings = [
+                  {
+                    field = "models";
+                    label = "Running models";
+                    format = "size";
+                  }
+                ];
+              };
+            };
+          }
+          {
+            Joplin = {
+              description = "Notes synchronization.";
+              icon = "joplin";
+              href = makeServiceDomainUrl "joplin";
+              siteMonitor = makeServiceLoopbackUrl "joplin";
             };
           }
           {
@@ -214,6 +244,14 @@ in {
               icon = "ntfy";
               href = makeServiceDomainUrl "ntfy";
               siteMonitor = makeServiceLoopbackUrl "ntfy";
+            };
+          }
+          {
+            Memos = {
+              description = "Quick notes.";
+              icon = "https://raw.githubusercontent.com/usememos/memos/refs/heads/main/web/public/logo.webp";
+              href = makeServiceDomainUrl "memos";
+              siteMonitor = makeServiceLoopbackUrl "memos";
             };
           }
           {
@@ -343,24 +381,6 @@ in {
                 type = "tailscale";
                 deviceid = "nqHmw1Tgjs11CNTRL";
                 key = "{{HOMEPAGE_VAR_TAILSCALE_API_TOKEN}}";
-              };
-            };
-          }
-          {
-            Ollama = rec {
-              description = "LLM API service.";
-              icon = "ollama";
-              siteMonitor = makeServiceLoopbackUrl "ollama";
-              widget = {
-                type = "customapi";
-                url = "${siteMonitor}/api/ps";
-                mappings = [
-                  {
-                    field = "models";
-                    label = "Running models";
-                    format = "size";
-                  }
-                ];
               };
             };
           }
