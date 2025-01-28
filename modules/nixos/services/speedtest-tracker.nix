@@ -6,7 +6,7 @@
 }: let
   cfg = config.my.services.speedtest-tracker;
 
-  speedtestTrackerVersion = "v1.0.2";
+  speedtestTrackerVersion = "v1.2.0";
 in {
   options = {
     my.services.speedtest-tracker = let
