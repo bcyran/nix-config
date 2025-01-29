@@ -61,7 +61,7 @@ in {
         gaps_out = 10;
         border_size = 2;
         "col.active_border" = "rgb(${palette.accentPrimary})";
-        "col.inactive_border" = "rgb(${palette.base01})";
+        "col.inactive_border" = "rgb(${palette.base10})";
       };
       plugin = {
         hy3 = {
@@ -80,11 +80,11 @@ in {
             text_padding = 8;
             text_center = true;
             "col.active" = "rgba(${palette.accentPrimary}ed)";
-            "col.text.active" = "rgba(${palette.base01}ed)";
-            "col.inactive" = "rgba(${palette.base01}ed)";
+            "col.text.active" = "rgba(${palette.base10}ed)";
+            "col.inactive" = "rgba(${palette.base10}ed)";
             "col.text.inactive" = "rgba(${palette.base05}ed)";
             "col.urgent" = "rgba(${palette.warning}ed)";
-            "col.text.urgent" = "rgba(${palette.base01}ed)";
+            "col.text.urgent" = "rgba(${palette.base10}ed)";
           };
         };
       };
@@ -92,12 +92,12 @@ in {
         focus_removed_window = true;
         insert_after_current = true;
         "col.border_active" = "rgb(${palette.accentPrimary})";
-        "col.border_inactive" = "rgb(${palette.base01})";
+        "col.border_inactive" = "rgb(${palette.base10})";
         groupbar = {
           render_titles = false;
           gradients = false;
           "col.active" = "rgb(${palette.accentPrimary})";
-          "col.inactive" = "rgb(${palette.base01})";
+          "col.inactive" = "rgb(${palette.base10})";
           text_color = "rgb(${palette.base05})";
         };
       };
