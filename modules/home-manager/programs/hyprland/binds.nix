@@ -12,7 +12,7 @@
     names = map (x: builtins.toString x) (lib.range 1 11);
     binds = builtins.concatLists (map (ws: [
         "$mod, ${ws.fst}, workspace, ${ws.snd}"
-        "$mod SHIFT, ${ws.fst}, movetoworkspace, ${ws.snd}"
+        "$mod SHIFT, ${ws.fst}, hy3:movetoworkspace, ${ws.snd}, follow"
       ])
       (lib.lists.zipLists
         keys
@@ -25,42 +25,42 @@ in {
       settings = {
         bind =
           [
-            "$mod SHIFT, q, killactive,"
-            "$mod SHIFT, e, exit, "
+            "$mod SHIFT, q, hy3:killactive,"
             "$mod, f, fullscreen"
             "$mod SHIFT, m, fullscreenstate, 1"
             "$mod SHIFT, f, togglefloating,"
             "$mod SHIFT, p, pseudo,"
             "$mod SHIFT, x, pin,"
-            "$mod, v, togglesplit,"
-            "$mod, d, exec, hyprctl keyword general:layout dwindle"
-            "$mod SHIFT, d, exec, hyprctl keyword general:layout master"
-            "$mod, o, changegroupactive, b"
-            "$mod, p, changegroupactive, f"
-            "$mod, t, togglegroup"
-            "$mod SHIFT, t, moveoutofgroup"
-            "$mod CONTROL, h, moveintogroup, l"
-            "$mod CONTROL, l, moveintogroup, r"
-            "$mod CONTROL, k, moveintogroup, u"
-            "$mod CONTROL, j, moveintogroup, d"
+            "$mod, v, hy3:makegroup, v"
+            "$mod, c, hy3:makegroup, h"
+            "$mod, x, hy3:changegroup, opposite"
+            "$mod, a, hy3:changefocus, raise"
+            "$mod, z, hy3:changefocus, lower"
+            "$mod, o, hy3:focustab, l"
+            "$mod, p, hy3:focustab, r"
+            "$mod, t, hy3:makegroup, tab"
+            "$mod SHIFT, t, hy3:changegroup, toggletab"
+            "$mod, g, hy3:togglefocuslayer"
+            "$mod, e, hy3:expand, expand"
+            "$mod SHIFT, e, hy3:expand, shrink"
 
-            "$mod, h, movefocus, l"
-            "$mod, l, movefocus, r"
-            "$mod, k, movefocus, u"
-            "$mod, j, movefocus, d"
+            "$mod, h, hy3:movefocus, l, visible"
+            "$mod, l, hy3:movefocus, r, visible"
+            "$mod, k, hy3:movefocus, u, visible"
+            "$mod, j, hy3:movefocus, d, visible"
             "$mod, u, focusmonitor, l"
             "$mod, i, focusmonitor, r"
 
-            "$mod SHIFT, h, swapwindow, l"
-            "$mod SHIFT, l, swapwindow, r"
-            "$mod SHIFT, k, swapwindow, u"
-            "$mod SHIFT, j, swapwindow, d"
+            "$mod SHIFT, h, hy3:movewindow, l"
+            "$mod SHIFT, l, hy3:movewindow, r"
+            "$mod SHIFT, k, hy3:movewindow, u"
+            "$mod SHIFT, j, hy3:movewindow, d"
 
             "$mod, mouse_down, workspace, e+1"
             "$mod, mouse_up, workspace, e-1"
 
-            "$mod, mouse_left, changegroupactive, b"
-            "$mod, mouse_right, changegroupactive, f"
+            "$mod, mouse_left, hy3:focustab, l"
+            "$mod, mouse_right, hy3:focustab, r"
 
             "$mod, s, exec, scr output"
             "$mod CONTROL, s, exec, scr area"

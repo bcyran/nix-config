@@ -56,12 +56,37 @@ in {
         repeat_delay = 300;
       };
       general = {
-        layout = "dwindle";
+        layout = "hy3";
         gaps_in = 5;
         gaps_out = 10;
         border_size = 2;
         "col.active_border" = "rgb(${palette.accentPrimary})";
         "col.inactive_border" = "rgb(${palette.base01})";
+      };
+      plugin = {
+        hy3 = {
+          group_inset = 0;
+          autotile = {
+            enable = false;
+          };
+          tabs = {
+            rounding = 3;
+            border_width = 0;
+            height = 22;
+            padding = 0;
+            render_text = true;
+            text_font = builtins.elemAt config.fonts.fontconfig.defaultFonts.sansSerif 0;
+            text_height = 11;
+            text_padding = 8;
+            text_center = true;
+            "col.active" = "rgba(${palette.accentPrimary}ed)";
+            "col.text.active" = "rgba(${palette.base01}ed)";
+            "col.inactive" = "rgba(${palette.base01}ed)";
+            "col.text.inactive" = "rgba(${palette.base05}ed)";
+            "col.urgent" = "rgba(${palette.warning}ed)";
+            "col.text.urgent" = "rgba(${palette.base01}ed)";
+          };
+        };
       };
       group = {
         focus_removed_window = true;

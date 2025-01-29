@@ -23,6 +23,9 @@ in {
         variables = ["--all"];
       };
       settings.env = lib.mapAttrsToList (name: value: "${name},${value}") envVars;
+      plugins = with pkgs.hyprlandPlugins; [
+        hy3
+      ];
     };
 
     programs.hyprcursor-phinger.enable = true;
