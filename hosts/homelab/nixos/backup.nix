@@ -40,20 +40,27 @@
         tag,
         snapshotsGlob,
         time,
-      }: {
+      }: let
+        commonArgs = [
+          "--group-by host,tags"
+          "--retry-lock 2h"
+        ];
+      in {
         initialize = true;
         dynamicFilesFrom = ''
           find ${snapshotsGlob} -maxdepth 0 -type d | sort | tail -n 1
         '';
-        extraBackupArgs = [
-          "--host ${host}"
-          "--tag ${tag}"
-          "--group-by host,tags"
-          "--retry-lock 2h"
-        ];
-        pruneOpts = [
-          "--keep-daily 7"
-        ];
+        extraBackupArgs =
+          [
+            "--host ${host}"
+            "--tag ${tag}"
+          ]
+          ++ commonArgs;
+        pruneOpts =
+          [
+            "--keep-daily 7"
+          ]
+          ++ commonArgs;
         timerConfig = {
           OnCalendar = time;
           Persistent = true;
