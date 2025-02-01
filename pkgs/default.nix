@@ -20,4 +20,5 @@ in rec {
     inherit ttkbootstrap;
   };
   kidex = pkgs.callPackage ./kidex {};
+  go-hass-agent = pkgs.callPackage ./go-hass-agent {};
 }
