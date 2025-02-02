@@ -117,6 +117,12 @@
         inherit inputs;
         my = inputs.self;
       })
+      (myLib.config.mkSystem {
+        name = "vps";
+        system = "x86_64-linux";
+        inherit inputs;
+        my = inputs.self;
+      })
     ];
 
     # Home Manager configurations exported by this flake.
@@ -131,6 +137,12 @@
       })
       (myLib.config.mkHome {
         name = "bazyli@homelab";
+        system = "x86_64-linux";
+        inherit inputs;
+        my = inputs.self;
+      })
+      (myLib.config.mkHome {
+        name = "bazyli@vps";
         system = "x86_64-linux";
         inherit inputs;
         my = inputs.self;
