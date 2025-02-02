@@ -20,6 +20,7 @@
     ./homepage.nix
     ./services.nix
     ./backup.nix
+    ./wireguard.nix
   ];
 
   networking = {
