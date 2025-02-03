@@ -1,29 +1,12 @@
-{
-  inputs,
-  config,
-  my,
-  ...
-}: {
+{my, ...}: {
   imports = [
     my.homeManagerModules.default
     ../common/user.nix
   ];
 
-  sops = {
-    defaultSopsFile = "${inputs.my-secrets}/slimbook.yaml";
-    secrets = {
-      backup_key = {};
-      nix_extra_options = {};
-    };
-  };
-
   my = {
     configurations = {
-      sops.enable = true;
-      core = {
-        enable = true;
-        nixExtraOptionsFile = config.sops.secrets.nix_extra_options.path;
-      };
+      core.enable = true;
       user.enable = true;
     };
     presets = {
@@ -35,16 +18,6 @@
     };
     programs = {
       timewall.enable = true;
-      udiskie = {
-        deviceConfig = [
-          {
-            id_uuid = "e028f76b-e2a1-4a92-89a5-2fc5aeac615b";
-            keyfile = config.sops.secrets.backup_key.path;
-            automount = true;
-            ignore = false;
-          }
-        ];
-      };
       cameractrls.enable = true;
     };
     hardware = {
