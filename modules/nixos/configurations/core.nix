@@ -73,6 +73,7 @@ in {
       neovim
       socat
       dig
+      inetutils
     ];
 
     boot.tmp.cleanOnBoot = !config.boot.tmp.useTmpfs;
