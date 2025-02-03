@@ -374,17 +374,6 @@ in {
             };
           }
           {
-            Tailscale = {
-              description = "VPN service.";
-              icon = "tailscale";
-              widget = {
-                type = "tailscale";
-                deviceid = "nqHmw1Tgjs11CNTRL";
-                key = "{{HOMEPAGE_VAR_TAILSCALE_API_TOKEN}}";
-              };
-            };
-          }
-          {
             Meilisearch = rec {
               description = "Search engine service.";
               icon = "https://raw.githubusercontent.com/meilisearch/meilisearch/372f4fc924f36319c921fd36fbdc354d96b1d974/assets/logo.svg";

@@ -9,7 +9,6 @@ in {
       restartUnits = ["home-assistant.service"];
     };
     ovh_api_env_file = {};
-    tailscale_auth_key = {};
     syncthing_key_file = {};
     syncthing_cert_file = {};
     syncthing_env_file = {};
@@ -53,11 +52,6 @@ in {
     grafana = {
       enable = true;
       domain = "grafana.${intraDomain}";
-    };
-    tailscale = {
-      enable = true;
-      advertiseRoutes = ["${intraIP}/32"];
-      authKeyFile = config.sops.secrets.tailscale_auth_key.path;
     };
     syncthing = {
       enable = true;
