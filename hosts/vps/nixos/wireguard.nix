@@ -32,6 +32,13 @@
               "10.100.200.2/32" # Pixel
             ];
           }
+          # Slimbook
+          {
+            publicKey = "znkXF+4voMh5iCCd68H5gFTFahtfsYTjsCr05Ei/+Tw=";
+            allowedIPs = [
+              "10.100.200.3/32" # Slimbook
+            ];
+          }
         ];
       };
     };
