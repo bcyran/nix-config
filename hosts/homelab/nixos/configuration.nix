@@ -74,12 +74,12 @@
       mobile_wifi_env_file.path
     ];
     profiles = {
-      home = my.lib.makeNetworkManagerWifiProfile {
+      home = my.lib.nm.mkWifiProfile {
         id = "home";
         ssid = "$HOME_WIFI_SSID";
         psk = "$HOME_WIFI_PSK";
       };
-      mobile = my.lib.makeNetworkManagerWifiProfile {
+      mobile = my.lib.nm.mkWifiProfile {
         id = "mobile";
         ssid = "$MOBILE_WIFI_SSID";
         psk = "$MOBILE_WIFI_PSK";

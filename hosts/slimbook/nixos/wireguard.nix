@@ -12,7 +12,7 @@
       wireguard_env_file.path
     ];
     profiles = {
-      vps = my.lib.makeNetworkManagerWireguardProfile {
+      vps = my.lib.nm.mkWireguardProfile {
         id = "vps";
         interfaceName = "wg0";
         address = "10.100.200.3";

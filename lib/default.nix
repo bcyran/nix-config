@@ -5,6 +5,9 @@
   # Utilities for creating custom options.
   options = import ./options.nix {inherit lib;};
 
+  # Utilities related to NetworkManager.
+  nm = import ./nm.nix;
+
   # forEachSystemPkgs :: [<system>] -> <nixpkgs> -> (<packages> -> <attrs>) -> <attrs>
   #
   # Generates attributes for each system in `systems` using `f` with packages for that system
@@ -44,70 +47,5 @@
   makeRequiredAssertion = attrset: attrsetPath: attr: {
     assertion = !(isFalsy attrset.${attr});
     message = "Required attribute '${attrsetPath}.${attr}' is missing.";
-  };
-
-  # makeNetworkmanagerWifiProfile :: { id, ssid, psk } -> attrs
-  #
-  # Returns a NetworkManager profile for a WiFi connection with the given `id`, `ssid`, and `psk`.
-  makeNetworkManagerWifiProfile = {
-    id,
-    ssid,
-    psk,
-  }: {
-    connection = {
-      inherit id;
-      type = "wifi";
-    };
-    wifi = {
-      inherit ssid;
-      mode = "infrastructure";
-    };
-    wifi-security = {
-      inherit psk;
-      auth-alg = "open";
-      key-mgmt = "wpa-psk";
-    };
-    ipv4 = {
-      method = "auto";
-    };
-    ipv6 = {
-      method = "auto";
-      addr-gen-mode = "default";
-    };
-  };
-
-  # makeNetworkManagerWireguardProfile :: { id, interfaceName, address, privateKey, peerEndpoint, peerPublicKey, peerAlloweeIPs } -> attrs
-  #
-  # Returns a NetworkManager profile for a WireGuard connection.
-  makeNetworkManagerWireguardProfile = {
-    id,
-    interfaceName,
-    address,
-    privateKey,
-    peerEndpoint,
-    peerPublicKey,
-    peerAllowedIPs,
-  }: {
-    connection = {
-      inherit id;
-      type = "wireguard";
-      interface-name = interfaceName;
-    };
-    wireguard = {
-      private-key = privateKey;
-    };
-    "wireguard-peer.${peerPublicKey}" = {
-      endpoint = peerEndpoint;
-      allowed-ips = peerAllowedIPs;
-    };
-    ipv4 = {
-      inherit address;
-      method = "manual";
-    };
-    ipv6 = {
-      addr-gen-mode = "default";
-      method = "disabled";
-    };
-    proxy = {};
   };
 }
