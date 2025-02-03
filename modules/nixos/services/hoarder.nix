@@ -9,7 +9,7 @@
   chromiumCfg = config.my.services.chromium;
   ollamaCfg = config.my.services.ollama;
 
-  hoarderVersion = "0.21.0";
+  hoarderVersion = "0.22.0";
 in {
   options = {
     my.services.hoarder = let
