@@ -75,4 +75,39 @@
       addr-gen-mode = "default";
     };
   };
+
+  # makeNetworkManagerWireguardProfile :: { id, interfaceName, address, privateKey, peerEndpoint, peerPublicKey, peerAlloweeIPs } -> attrs
+  #
+  # Returns a NetworkManager profile for a WireGuard connection.
+  makeNetworkManagerWireguardProfile = {
+    id,
+    interfaceName,
+    address,
+    privateKey,
+    peerEndpoint,
+    peerPublicKey,
+    peerAllowedIPs,
+  }: {
+    connection = {
+      inherit id;
+      type = "wireguard";
+      interface-name = interfaceName;
+    };
+    wireguard = {
+      private-key = privateKey;
+    };
+    "wireguard-peer.${peerPublicKey}" = {
+      endpoint = peerEndpoint;
+      allowed-ips = peerAllowedIPs;
+    };
+    ipv4 = {
+      inherit address;
+      method = "manual";
+    };
+    ipv6 = {
+      addr-gen-mode = "default";
+      method = "disabled";
+    };
+    proxy = {};
+  };
 }
