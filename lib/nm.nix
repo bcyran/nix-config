@@ -7,9 +7,10 @@
     id,
     ssid,
     psk,
+    autoconnect ? true,
   }: {
     connection = {
-      inherit id;
+      inherit id autoconnect;
       type = "wifi";
     };
     wifi = {
@@ -41,9 +42,10 @@
     peerEndpoint,
     peerPublicKey,
     peerAllowedIPs,
+    autoconnect ? false,
   }: {
     connection = {
-      inherit id;
+      inherit id autoconnect;
       type = "wireguard";
       interface-name = interfaceName;
     };
