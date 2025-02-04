@@ -4,7 +4,7 @@
   ...
 }: let
   inherit (my.lib.network) mkCidr;
-  inherit (my.lib.const) wg;
+  inherit (my.lib.const) wg dns;
   inherit (wg) peers;
   inherit (my.lib.const.lan) devices;
 in {
@@ -24,7 +24,7 @@ in {
         address = [(mkCidr peers.vps.ip 24)];
         listenPort = wg.port;
         privateKeyFile = config.sops.secrets.wireguard_private_key.path;
-        dns = [devices.homelab.ip "1.1.1.1"];
+        dns = [devices.homelab.ip] ++ dns.ips;
         peers = [
           # Homelab
           {

@@ -41,4 +41,19 @@ rec {
       };
     };
   };
+  # DNS resolvers
+  dns = rec {
+    resolvers = [
+      {
+        https = "https://cloudflare-dns.com/dns-query";
+        ips = ["1.1.1.1" "1.0.0.1"];
+      }
+      {
+        https = "https://dns.quad9.net/dns-query";
+        ips = ["9.9.9.9" "149.112.112.112"];
+      }
+    ];
+    https = map (resolver: resolver.https) resolvers;
+    ips = builtins.concatMap (resolver: resolver.ips) resolvers;
+  };
 }

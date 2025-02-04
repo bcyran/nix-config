@@ -6,6 +6,7 @@
   lib,
   ...
 }: let
+  inherit (my.lib.const) dns;
   cfg = config.my.services.blocky;
 
   grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
@@ -42,13 +43,13 @@ in {
             dns = "${cfg.dnsAddress}:${toString cfg.dnsPort}";
             http = "${cfg.httpAddress}:${toString cfg.httpPort}";
           };
-          upstreams.groups.default = [
-            "https://cloudflare-dns.com/dns-query"
-          ];
-          bootstrapDns = {
-            upstream = "https://cloudflare-dns.com/dns-query";
-            ips = ["1.1.1.1" "1.0.0.1"];
-          };
+          upstreams.groups.default = dns.https;
+          bootstrapDns =
+            map (resolver: {
+              upstream = resolver.https;
+              inherit (resolver) ips;
+            })
+            dns.resolvers;
           blocking = {
             denylists = {
               ads = [
