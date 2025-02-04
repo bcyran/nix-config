@@ -1,6 +1,9 @@
-{config, ...}: let
-  intraIP = "10.100.100.100";
-  intraDomain = "intra.cyran.dev";
+{
+  config,
+  my,
+  ...
+}: let
+  homelabDomain = my.lib.const.domains.homelab;
 in {
   sops.secrets = {
     hass_secrets_file = {
@@ -35,7 +38,7 @@ in {
       dnsAddress = "0.0.0.0";
       openFirewall = true;
       customDNSMappings = {
-        ${intraDomain} = intraIP;
+        ${homelabDomain} = my.lib.const.lan.devices.homelab.ip;
       };
     };
     caddy = {
@@ -46,17 +49,17 @@ in {
     };
     prometheus = {
       enable = true;
-      domain = "prometheus.${intraDomain}";
+      domain = "prometheus.${homelabDomain}";
     };
     loki.enable = true;
     grafana = {
       enable = true;
-      domain = "grafana.${intraDomain}";
+      domain = "grafana.${homelabDomain}";
     };
     syncthing = {
       enable = true;
       openFirewallTransfer = true;
-      domain = "syncthing.${intraDomain}";
+      domain = "syncthing.${homelabDomain}";
       keyFile = config.sops.secrets.syncthing_key_file.path;
       certFile = config.sops.secrets.syncthing_cert_file.path;
       environmentFiles = [config.sops.secrets.syncthing_env_file.path];
@@ -71,24 +74,24 @@ in {
     homepage = {
       enable = true;
       environmentFile = config.sops.secrets.homepage_env_file.path;
-      domain = "home.${intraDomain}";
+      domain = "home.${homelabDomain}";
     };
     home-assistant = {
       enable = true;
-      domain = "hass.${intraDomain}";
+      domain = "hass.${homelabDomain}";
     };
     uptime-kuma = {
       enable = true;
-      domain = "uptime.${intraDomain}";
+      domain = "uptime.${homelabDomain}";
     };
     speedtest-tracker = {
       enable = true;
       environmentFiles = [config.sops.secrets.speedtest_tracker_env_file.path];
-      domain = "speedtest.${intraDomain}";
+      domain = "speedtest.${homelabDomain}";
     };
     glances = {
       enable = true;
-      domain = "glances.${intraDomain}";
+      domain = "glances.${homelabDomain}";
     };
     postgresql.enable = true;
     meilisearch = {
@@ -104,15 +107,15 @@ in {
         hoarder_env_file.path
         meilisearch_env_file.path
       ];
-      domain = "hoarder.${intraDomain}";
+      domain = "hoarder.${homelabDomain}";
     };
     ollama = {
       enable = true;
-      domain = "ollama.${intraDomain}";
+      domain = "ollama.${homelabDomain}";
     };
     open-webui = {
       enable = true;
-      domain = "openwebui.${intraDomain}";
+      domain = "openwebui.${homelabDomain}";
     };
     iperf = {
       enable = true;
@@ -121,27 +124,27 @@ in {
     };
     memos = {
       enable = true;
-      domain = "memos.${intraDomain}";
+      domain = "memos.${homelabDomain}";
     };
     immich = {
       enable = true;
-      domain = "immich.${intraDomain}";
+      domain = "immich.${homelabDomain}";
     };
     forgejo = {
       enable = true;
-      domain = "forgejo.${intraDomain}";
+      domain = "forgejo.${homelabDomain}";
     };
     ntfy = {
       enable = true;
-      domain = "ntfy.${intraDomain}";
+      domain = "ntfy.${homelabDomain}";
     };
     joplin = {
       enable = true;
-      domain = "joplin.${intraDomain}";
+      domain = "joplin.${homelabDomain}";
     };
     transmission = {
       enable = true;
-      domain = "transmission.${intraDomain}";
+      domain = "transmission.${homelabDomain}";
       credentialsFile = config.sops.secrets.transmission_credentials_file.path;
     };
   };

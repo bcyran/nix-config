@@ -1,16 +1,24 @@
-{config, ...}: {
+{
+  config,
+  my,
+  ...
+}: let
+  inherit (my.lib.network) mkCidr;
+  inherit (my.lib.const) wg;
+  inherit (wg) peers;
+in {
   sops.secrets = {
     wireguard_private_key = {};
   };
 
   networking.wg-quick.interfaces.wg0 = {
-    address = ["10.100.200.100/24"];
+    address = [(mkCidr peers.homelab.ip 24)];
     privateKeyFile = config.sops.secrets.wireguard_private_key.path;
     peers = [
       {
-        endpoint = "vps.cyran.dev:51820";
-        publicKey = "8MAr05mDT16BYab0SBG9C8Muulvbibu1osFJTNZzRw8=";
-        allowedIPs = ["10.100.200.0/24"];
+        inherit (wg) endpoint;
+        inherit (peers.vps) publicKey;
+        allowedIPs = [wg.subnet];
         persistentKeepalive = 25;
       }
     ];

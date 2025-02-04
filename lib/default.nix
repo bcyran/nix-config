@@ -8,6 +8,12 @@
   # Utilities related to NetworkManager.
   nm = import ./nm.nix;
 
+  # Utilities related to networking.
+  network = import ./network.nix;
+
+  # Constant values used in the configuration.
+  const = import ./const.nix;
+
   # forEachSystemPkgs :: [<system>] -> <nixpkgs> -> (<packages> -> <attrs>) -> <attrs>
   #
   # Generates attributes for each system in `systems` using `f` with packages for that system

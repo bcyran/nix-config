@@ -50,7 +50,7 @@
     };
     "wireguard-peer.${peerPublicKey}" = {
       endpoint = peerEndpoint;
-      allowed-ips = peerAllowedIPs;
+      allowed-ips = builtins.concatStringsSep ";" peerAllowedIPs;
     };
     ipv4 = {
       inherit address;

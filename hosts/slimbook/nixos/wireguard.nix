@@ -2,7 +2,13 @@
   config,
   my,
   ...
-}: {
+}: let
+  inherit (my.lib.nm) mkWireguardProfile;
+  inherit (my.lib.network) mkCidr;
+  inherit (my.lib.const) wg;
+  inherit (wg) peers;
+  inherit (my.lib.const.lan) devices;
+in {
   sops.secrets = {
     wireguard_env_file = {};
   };
@@ -12,14 +18,17 @@
       wireguard_env_file.path
     ];
     profiles = {
-      vps = my.lib.nm.mkWireguardProfile {
+      vps = mkWireguardProfile {
         id = "vps";
         interfaceName = "wg0";
-        address = "10.100.200.3";
+        address = mkCidr peers.slimbook.ip 24;
         privateKey = "$WIREGUARD_PRIVATE_KEY";
-        peerEndpoint = "vps.cyran.dev:51820";
-        peerPublicKey = "8MAr05mDT16BYab0SBG9C8Muulvbibu1osFJTNZzRw8=";
-        peerAllowedIPs = "10.100.200.0/24;10.100.100.100/32;";
+        peerEndpoint = wg.endpoint;
+        peerPublicKey = peers.vps.publicKey;
+        peerAllowedIPs = [
+          wg.subnet
+          (mkCidr devices.homelab.ip 32)
+        ];
       };
     };
   };

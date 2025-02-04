@@ -1,4 +1,13 @@
-{config, ...}: {
+{
+  config,
+  my,
+  ...
+}: let
+  inherit (my.lib.network) mkCidr;
+  inherit (my.lib.const) wg;
+  inherit (wg) peers;
+  inherit (my.lib.const.lan) devices;
+in {
   sops.secrets = {
     wireguard_private_key = {};
   };
@@ -9,34 +18,34 @@
   };
 
   networking = {
-    firewall.allowedUDPPorts = [51820];
+    firewall.allowedUDPPorts = [wg.port];
     wg-quick.interfaces = {
       wg0 = {
-        address = ["10.100.200.1/24"];
-        listenPort = 51820;
+        address = [(mkCidr peers.vps.ip 24)];
+        listenPort = wg.port;
         privateKeyFile = config.sops.secrets.wireguard_private_key.path;
-        dns = ["10.100.100.100"];
+        dns = [devices.homelab.ip "1.1.1.1"];
         peers = [
           # Homelab
           {
-            publicKey = "hHCFLo07K0hlVbFfRA4Q4iy8qHSusK81732k/Rt2ZCM=";
+            inherit (peers.homelab) publicKey;
             allowedIPs = [
-              "10.100.200.100/24" # Wireguard subnet
-              "10.100.100.100/32" # Homelab
+              (mkCidr peers.homelab.ip 32)
+              (mkCidr devices.homelab.ip 32)
             ];
           }
           # Pixel
           {
-            publicKey = "SQIXPzLluN+Ji7s3Wzau59dzlOjebd6TxRbGm8vtDho=";
+            inherit (peers.pixel7) publicKey;
             allowedIPs = [
-              "10.100.200.2/32" # Pixel
+              (mkCidr peers.pixel7.ip 32)
             ];
           }
           # Slimbook
           {
-            publicKey = "znkXF+4voMh5iCCd68H5gFTFahtfsYTjsCr05Ei/+Tw=";
+            inherit (peers.slimbook) publicKey;
             allowedIPs = [
-              "10.100.200.3/32" # Slimbook
+              (mkCidr peers.slimbook.ip 32)
             ];
           }
         ];
