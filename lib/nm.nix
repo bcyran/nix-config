@@ -1,8 +1,6 @@
 # Helpers for generating NetworkManager profiles.
 {
-  # mkWifiProfile  :: { id, ssid, psk } -> attrs
-  #
-  # Returns a NetworkManager profile for a WiFi connection with the given `id`, `ssid`, and `psk`.
+  # Creates a NetworkManager profile for a WiFi connection.
   mkWifiProfile = {
     id,
     ssid,
@@ -31,9 +29,7 @@
     };
   };
 
-  # mkWireguardProfile  :: { id, interfaceName, address, privateKey, peerEndpoint, peerPublicKey, peerAlloweeIPs } -> attrs
-  #
-  # Returns a NetworkManager profile for a WireGuard connection.
+  # Creates a NetworkManager profile for a WireGuard VPN connection.
   mkWireguardProfile = {
     id,
     interfaceName,
