@@ -52,6 +52,10 @@ rec {
         https = "https://dns.quad9.net/dns-query";
         ips = ["9.9.9.9" "149.112.112.112"];
       }
+      {
+        https = "https://dns.mullvad.net/dns-query";
+        ips = ["194.242.2.2"];
+      }
     ];
     https = map (resolver: resolver.https) resolvers;
     ips = builtins.concatMap (resolver: resolver.ips) resolvers;
