@@ -13,5 +13,11 @@
       cli.enable = true;
       tokyonight.enable = true;
     };
+    programs = {
+      zellij = {
+        enable = true;
+        enableShellIntegration = true;
+      };
+    };
   };
 }

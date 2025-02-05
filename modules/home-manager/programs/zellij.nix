@@ -6,10 +6,24 @@
   inherit (config.colorscheme) palette;
   cfg = config.my.programs.zellij;
 in {
-  options.my.programs.zellij.enable = lib.mkEnableOption "zellij";
+  options.my.programs.zellij = {
+    enable = lib.mkEnableOption "zellij";
+    enableShellIntegration = lib.mkEnableOption "zellij auto start on shell startup";
+  };
 
   config = lib.mkIf cfg.enable {
-    programs.zellij.enable = true;
+    programs.zellij = {
+      enable = true;
+      enableFishIntegration = cfg.enableShellIntegration;
+      enableZshIntegration = cfg.enableShellIntegration;
+      enableBashIntegration = cfg.enableShellIntegration;
+    };
+
+    home.sessionVariables = lib.mkIf cfg.enableShellIntegration {
+      ZELLIJ_AUTO_ATTACH = "true";
+      ZELLIJ_AUTO_EXIT = "true";
+    };
+
     xdg.configFile."zellij/config.kdl".text = ''
       keybinds clear-defaults=true {
         normal {
