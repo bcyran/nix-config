@@ -60,6 +60,7 @@ rec {
     https = map (resolver: resolver.https) resolvers;
     ips = builtins.concatMap (resolver: resolver.ips) resolvers;
   };
+  # Public SSH keys
   sshKeys = {
     bazyliAtSlimbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFKs3m56bDR5P7TXoL/MPd5FWyueqK3QPVGc7RwLnF09 bazyli@slimbook";
     btrbkAtSlimbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8a552vyvnPoS/JEkSujoygzQw0cB8jO2yI8VlsLUF6 btrbk@slimbook";
