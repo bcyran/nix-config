@@ -20,6 +20,11 @@ in {
       default = null;
       description = "Full path to the file containing root's hashed password.";
     };
+    authorizedKeys = lib.mkOption {
+      type = with types; listOf str;
+      default = [];
+      description = "List of authorized SSH keys.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -37,6 +42,7 @@ in {
           isNormalUser = true;
           description = userCfg.fullName;
           extraGroups = userCfg.groups;
+          openssh.authorizedKeys.keys = cfg.authorizedKeys;
         };
       };
     };
