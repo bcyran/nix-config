@@ -4,8 +4,8 @@
   ...
 }: let
   inherit (my.lib.network) mkCidr;
-  inherit (my.lib.const) wg;
-  inherit (wg) peers;
+  inherit (my.lib.const) wireguard;
+  inherit (wireguard) peers;
 in {
   sops.secrets = {
     wireguard_private_key = {};
@@ -16,9 +16,9 @@ in {
     privateKeyFile = config.sops.secrets.wireguard_private_key.path;
     peers = [
       {
-        inherit (wg) endpoint;
+        inherit (wireguard) endpoint;
         inherit (peers.vps) publicKey;
-        allowedIPs = [wg.subnet];
+        allowedIPs = [wireguard.subnet];
         persistentKeepalive = 25;
       }
     ];

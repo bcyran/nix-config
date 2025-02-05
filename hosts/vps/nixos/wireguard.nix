@@ -4,8 +4,8 @@
   ...
 }: let
   inherit (my.lib.network) mkCidr;
-  inherit (my.lib.const) wg dns;
-  inherit (wg) peers;
+  inherit (my.lib.const) wireguard dns;
+  inherit (wireguard) peers;
   inherit (my.lib.const.lan) devices;
 in {
   sops.secrets = {
@@ -18,11 +18,11 @@ in {
   };
 
   networking = {
-    firewall.allowedUDPPorts = [wg.port];
+    firewall.allowedUDPPorts = [wireguard.port];
     wg-quick.interfaces = {
       wg0 = {
         address = [(mkCidr peers.vps.ip 24)];
-        listenPort = wg.port;
+        listenPort = wireguard.port;
         privateKeyFile = config.sops.secrets.wireguard_private_key.path;
         dns = [devices.homelab.ip] ++ dns.ips;
         peers = [

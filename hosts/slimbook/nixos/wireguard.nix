@@ -5,8 +5,8 @@
 }: let
   inherit (my.lib.nm) mkWireguardProfile;
   inherit (my.lib.network) mkCidr;
-  inherit (my.lib.const) wg;
-  inherit (wg) peers;
+  inherit (my.lib.const) wireguard;
+  inherit (wireguard) peers;
   inherit (my.lib.const.lan) devices;
 in {
   sops.secrets = {
@@ -23,10 +23,10 @@ in {
         interfaceName = "wg0";
         address = mkCidr peers.slimbook.ip 24;
         privateKey = "$WIREGUARD_PRIVATE_KEY";
-        peerEndpoint = wg.endpoint;
+        peerEndpoint = wireguard.endpoint;
         peerPublicKey = peers.vps.publicKey;
         peerAllowedIPs = [
-          wg.subnet
+          wireguard.subnet
           (mkCidr devices.homelab.ip 32)
         ];
       };

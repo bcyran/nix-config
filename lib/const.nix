@@ -18,7 +18,7 @@ rec {
     };
   };
   # Wireguard VPN
-  wg = rec {
+  wireguard = rec {
     port = 51820;
     endpoint = "${domains.vps}:${toString port}";
     subnet = "10.100.200.0/24";
