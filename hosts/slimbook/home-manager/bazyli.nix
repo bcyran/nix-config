@@ -1,4 +1,6 @@
-{my, ...}: {
+{my, ...}: let
+  inherit (my.lib.const) domains;
+in {
   imports = [
     my.homeManagerModules.default
     ../common/user.nix
@@ -73,6 +75,22 @@
       networkInterfaces = {
         wired = "enp44s0";
         wireless = "wlo1";
+      };
+    };
+  };
+
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      homelab = {
+        host = "homelab";
+        hostname = domains.homelab;
+        user = "bazyli";
+      };
+      vps = {
+        host = "vps";
+        hostname = domains.vps;
+        user = "bazyli";
       };
     };
   };
