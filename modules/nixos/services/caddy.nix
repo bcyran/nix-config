@@ -17,27 +17,19 @@
   };
 
   makeVirtualHost = domain: vhost: {
-    ${domain}.extraConfig = ''
-      reverse_proxy ${vhost.backendAddress}:${toString vhost.backendPort}
-
-      log {
+    ${domain} = {
+      extraConfig = ''
+        reverse_proxy ${vhost.backendAddress}:${toString vhost.backendPort}
+      '';
+      logFormat = ''
         output file /var/log/caddy/access-${domain}.log {
           roll_size 100MiB
           roll_keep 5
           roll_keep_for 2160h
           mode 644
         }
-      }
-
-      tls {
-        dns ovh {
-          endpoint {$OVH_ENDPOINT}
-          application_key {$OVH_APPLICATION_KEY}
-          application_secret {$OVH_APPLICATION_SECRET}
-          consumer_key {$OVH_CONSUMER_KEY}
-        }
-      }
-    '';
+      '';
+    };
   };
 in {
   options.my.services.caddy = let
@@ -50,7 +42,13 @@ in {
     adminAddress = my.lib.options.mkAddressOption serviceName;
     adminPort = my.lib.options.mkPortOption serviceName 2019;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
+    environmentFile = my.lib.options.mkEnvironmentFileOption serviceName;
+
+    extraConfig = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "Extra configuration to add to the Caddyfile.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -84,6 +82,7 @@ in {
       caddy = {
         enable = true;
         package = caddyWithOvhDnsPlugin;
+        inherit (cfg) environmentFile extraConfig;
 
         globalConfig = ''
           default_bind ${toString cfg.address}
@@ -91,9 +90,7 @@ in {
           https_port ${toString cfg.httpsPort}
           admin ${cfg.adminAddress}:${toString cfg.adminPort}
 
-          servers {
-            metrics
-          }
+          metrics
         '';
 
         virtualHosts = lib.attrsets.concatMapAttrs makeVirtualHost reverseProxyCfg.virtualHosts;
@@ -167,7 +164,5 @@ in {
         ];
       };
     };
-
-    systemd.services.caddy.serviceConfig.EnvironmentFile = cfg.environmentFiles;
   };
 }

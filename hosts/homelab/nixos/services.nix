@@ -45,7 +45,19 @@ in {
       enable = true;
       address = "0.0.0.0";
       openFirewall = true;
-      environmentFiles = [config.sops.secrets.ovh_api_env_file.path];
+      environmentFile = config.sops.secrets.ovh_api_env_file.path;
+      extraConfig = ''
+        *.intra.cyran.dev {
+          tls {
+            dns ovh {
+              endpoint {$OVH_ENDPOINT}
+              application_key {$OVH_APPLICATION_KEY}
+              application_secret {$OVH_APPLICATION_SECRET}
+              consumer_key {$OVH_CONSUMER_KEY}
+            }
+          }
+        }
+      '';
     };
     prometheus = {
       enable = true;
