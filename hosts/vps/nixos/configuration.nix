@@ -14,6 +14,7 @@
     ./hardware-configuration.nix
     ../common/user.nix
     ./wireguard.nix
+    ./services.nix
   ];
 
   networking.hostName = "vps";
