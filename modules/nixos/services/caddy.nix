@@ -56,28 +56,6 @@ in {
       allowedTCPPorts = [cfg.httpPort cfg.httpsPort];
     };
 
-    # NOTE: This is needed becase `mode 644` in `extraConfig` doesn't work yet in the current
-    #       version of Caddy. Remove this once it works.
-    #       We need the logs to be world readable so Promtail can read them.
-    systemd = {
-      services.caddy-log-chmod = {
-        description = "Make Caddy logs world readable";
-        serviceConfig.Type = "oneshot";
-        script = ''
-          ${pkgs.coreutils}/bin/chmod 755 /var/log/caddy
-          ${pkgs.coreutils}/bin/chmod 644 /var/log/caddy/*
-        '';
-      };
-      timers.caddy-log-chmod = {
-        wantedBy = ["timers.target"];
-        after = ["caddy.service"];
-        requires = ["caddy.service"];
-        timerConfig = {
-          OnCalendar = "hourly";
-        };
-      };
-    };
-
     services = {
       caddy = {
         enable = true;
