@@ -10,9 +10,12 @@
   lokiCfg = config.my.services.loki;
 
   grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
-  caddyWithOvhDnsPlugin = pkgs.caddy.withPlugins {
-    plugins = ["github.com/caddy-dns/ovh@v0.0.3"];
-    hash = "sha256-MOdzcf083FbL3Va3bISFhx4ylz9Pu7tiT6wpopOY89w";
+  caddyWithPlugins = pkgs.caddy.withPlugins {
+    plugins = [
+      "github.com/caddy-dns/ovh@v0.0.3"
+      "github.com/greenpau/caddy-git@v1.0.9"
+    ];
+    hash = "sha256-IX93qzCfdWqpRtWvOA3n4fV1CoZCMZ2HCBdu88b2MH0=";
   };
 in {
   options.my.services.caddy = let
@@ -42,7 +45,7 @@ in {
     services = {
       caddy = {
         enable = true;
-        package = caddyWithOvhDnsPlugin;
+        package = caddyWithPlugins;
         inherit (cfg) environmentFile extraConfig;
 
         globalConfig = ''
