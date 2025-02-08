@@ -69,20 +69,11 @@ in {
             };
           })
           cfg.folders);
-        gui =
-          {
-            theme = "dark";
-            user = config.my.user.name;
-            password = cfg.hashedPassword;
-          }
-          // lib.optionalAttrs (cfg.guiAddress == "127.0.0.1") {
-            # See: https://github.com/kozec/syncthing-gtk/issues/321 and
-            # https://docs.syncthing.net/users/reverseproxy.html#caddy-v2.
-            # We could get rid of this by properly configuring Caddy but this doesn't work well
-            # with my abstracted reverse proxy setup...
-            # But also, is it really wrong? See this: https://github.com/syncthing/docs/issues/380.
-            insecureSkipHostCheck = true;
-          };
+        gui = {
+          theme = "dark";
+          user = config.my.user.name;
+          password = cfg.hashedPassword;
+        };
       };
     };
 
@@ -91,9 +82,13 @@ in {
       serviceConfig.EnvironmentFile = cfg.environmentFiles;
     };
 
-    my.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
-      backendAddress = "127.0.0.1";
-      backendPort = cfg.guiPort;
+    services.caddy.virtualHosts = my.lib.caddy.makeReverseProxy {
+      inherit (cfg) domain;
+      address = cfg.guiAddress;
+      port = cfg.guiPort;
+      proxyExtraConfig = ''
+        header_up Host {upstream_hostport}
+      '';
     };
   };
 }

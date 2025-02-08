@@ -7,29 +7,12 @@
   ...
 }: let
   cfg = config.my.services.caddy;
-  reverseProxyCfg = config.my.reverseProxy;
   lokiCfg = config.my.services.loki;
 
   grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
   caddyWithOvhDnsPlugin = pkgs.caddy.withPlugins {
     plugins = ["github.com/caddy-dns/ovh@v0.0.3"];
     hash = "sha256-MOdzcf083FbL3Va3bISFhx4ylz9Pu7tiT6wpopOY89w";
-  };
-
-  makeVirtualHost = domain: vhost: {
-    ${domain} = {
-      extraConfig = ''
-        reverse_proxy ${vhost.backendAddress}:${toString vhost.backendPort}
-      '';
-      logFormat = ''
-        output file /var/log/caddy/access-${domain}.log {
-          roll_size 100MiB
-          roll_keep 5
-          roll_keep_for 2160h
-          mode 644
-        }
-      '';
-    };
   };
 in {
   options.my.services.caddy = let
@@ -70,8 +53,6 @@ in {
 
           metrics
         '';
-
-        virtualHosts = lib.attrsets.concatMapAttrs makeVirtualHost reverseProxyCfg.virtualHosts;
       };
 
       promtail.configuration.scrape_configs = lib.mkIf lokiCfg.enable [

@@ -91,9 +91,8 @@ in {
       ];
     };
 
-    my.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
-      backendAddress = effectiveAddress;
-      backendPort = cfg.port;
+    services.caddy.virtualHosts = my.lib.caddy.makeReverseProxy {
+      inherit (cfg) domain address port;
     };
   };
 }

@@ -85,9 +85,8 @@ in {
       };
     };
 
-    my.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
-      backendAddress = "127.0.0.1";
-      backendPort = cfg.port;
+    services.caddy.virtualHosts = my.lib.caddy.makeReverseProxy {
+      inherit (cfg) domain address port;
     };
   };
 }

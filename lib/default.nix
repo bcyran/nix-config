@@ -14,6 +14,9 @@
   # Constant values used in the configuration.
   const = import ./const.nix;
 
+  # Caddy utilities.
+  caddy = import ./caddy.nix {inherit lib;};
+
   # forEachSystemPkgs :: [<system>] -> <nixpkgs> -> (<packages> -> <attrs>) -> <attrs>
   #
   # Generates attributes for each system in `systems` using `f` with packages for that system

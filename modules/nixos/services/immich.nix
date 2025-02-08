@@ -32,9 +32,8 @@ in {
       "d '${cfg.dataDir}' 0750 ${config.services.immich.user} ${config.services.immich.group} - -"
     ];
 
-    my.reverseProxy.virtualHosts.${cfg.domain} = lib.mkIf (cfg.domain != null) {
-      backendAddress = cfg.address;
-      backendPort = cfg.port;
+    services.caddy.virtualHosts = my.lib.caddy.makeReverseProxy {
+      inherit (cfg) domain address port;
     };
   };
 }
