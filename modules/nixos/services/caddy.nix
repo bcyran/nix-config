@@ -57,7 +57,9 @@
         file_server
       }
 
-      ${my.lib.caddy.mkLogConfig domain}
+      log {
+        ${my.lib.caddy.mkLogConfig domain}
+      }
     }
   '';
   mkGitHostsConfig = staticGitHosts: lib.concatMapAttrsStringSep "\n" mkGitHostConfig staticGitHosts;
