@@ -357,11 +357,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1739213017,
-        "narHash": "sha256-AKLus2w5bWBois/AyvPwxCpx1Qs3IlZDjj/oHnhbyUU=",
+        "lastModified": 1739216558,
+        "narHash": "sha256-XUtemEaRiQnwEuc0oxfeHTRGeTs6ebLAFn7+b9dVDuk=",
         "ref": "refs/heads/main",
-        "rev": "7558cfbcc358e37abbf92fbe40e1168565f523a9",
-        "revCount": 1,
+        "rev": "b2adf3d7d22c200ca3543e38f5dc2ef86c0b34c1",
+        "revCount": 2,
         "type": "git",
         "url": "ssh://git@github.com/bcyran/nix-private"
       },
