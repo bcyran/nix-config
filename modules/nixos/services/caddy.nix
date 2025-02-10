@@ -50,11 +50,11 @@
         git update repo ${domain}
       }
 
-      handle {
+      route {
         root ${mkRepoBuildPath domain}
-        file_server
+        ${cfg.extraRouteConfig}
         encode zstd gzip
-        ${cfg.extraHandleConfig}
+        file_server
       }
 
       ${my.lib.caddy.mkLogConfig domain}
@@ -105,11 +105,11 @@ in {
               example = "Github X-Hub-Signature-256 secret";
               description = "Configuration for the webhook used to trigger updates.";
             };
-            extraHandleConfig = lib.mkOption {
+            extraRouteConfig = lib.mkOption {
               type = lib.types.lines;
               default = "";
               example = "try_files {path} /index.html";
-              description = "Extra configuration to add to the handle block for this host.";
+              description = "Extra configuration to add to the route block for this host.";
             };
           };
         }
