@@ -53,6 +53,7 @@
       handle {
         root ${mkRepoBuildPath domain}
         file_server
+        encode zstd gzip
         ${cfg.extraHandleConfig}
       }
 
