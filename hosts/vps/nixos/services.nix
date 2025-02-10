@@ -28,5 +28,6 @@ in {
         };
       };
     };
+    private.websites.enable = true;
   };
 }

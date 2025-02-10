@@ -69,6 +69,17 @@
       url = "git+ssh://git@github.com/bcyran/nix-secrets.git?ref=main&shallow=1";
       flake = false;
     };
+
+    # Private configs
+    my-private = {
+      url = "git+ssh://git@github.com/bcyran/nix-private";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        sops-nix.follows = "sops-nix";
+        my.follows = "";
+        my-secrets.follows = "my-secrets";
+      };
+    };
   };
 
   outputs = inputs: let

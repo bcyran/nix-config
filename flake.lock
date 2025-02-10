@@ -343,13 +343,40 @@
         "type": "github"
       }
     },
+    "my-private": {
+      "inputs": {
+        "my": [],
+        "my-secrets": [
+          "my-secrets"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "sops-nix": [
+          "sops-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1739213017,
+        "narHash": "sha256-AKLus2w5bWBois/AyvPwxCpx1Qs3IlZDjj/oHnhbyUU=",
+        "ref": "refs/heads/main",
+        "rev": "7558cfbcc358e37abbf92fbe40e1168565f523a9",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/bcyran/nix-private"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/bcyran/nix-private"
+      }
+    },
     "my-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1739033526,
-        "narHash": "sha256-CUjlDuY1FzsIHx+WXUs9liR9MzDR1JTIXYcxT3vCHko=",
+        "lastModified": 1739095441,
+        "narHash": "sha256-wWpK/R95lIoyDh0KDBcgQseKLk003DKa2ReTrRHxqtY=",
         "ref": "main",
-        "rev": "16abb084161e9589614a3484ccd85c8184b47c46",
+        "rev": "30ad508e8e5ccd68c0b39104125daafdd52e9122",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/bcyran/nix-secrets.git"
@@ -538,6 +565,7 @@
         "home-manager": "home-manager",
         "hyprcursor-phinger": "hyprcursor-phinger",
         "lanzaboote": "lanzaboote",
+        "my-private": "my-private",
         "my-secrets": "my-secrets",
         "nix-colors": "nix-colors",
         "nix-index-database": "nix-index-database",
