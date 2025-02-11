@@ -4,6 +4,7 @@ rec {
     root = "cyran.dev";
     homelab = "intra.${root}";
     vps = "vps.${root}";
+    wg = "wg.${root}";
   };
   # Home LAN
   lan = {
@@ -25,18 +26,22 @@ rec {
     peers = {
       homelab = {
         ip = "10.100.200.100";
+        domain = "homelab.${domains.wg}";
         publicKey = "hHCFLo07K0hlVbFfRA4Q4iy8qHSusK81732k/Rt2ZCM=";
       };
       vps = {
         ip = "10.100.200.1";
+        domain = "vps.${domains.wg}";
         publicKey = "8MAr05mDT16BYab0SBG9C8Muulvbibu1osFJTNZzRw8=";
       };
       pixel7 = {
         ip = "10.100.200.2";
+        domain = "pixel7.${domains.wg}";
         publicKey = "SQIXPzLluN+Ji7s3Wzau59dzlOjebd6TxRbGm8vtDho=";
       };
       slimbook = {
         ip = "10.100.200.3";
+        domain = "slimbook.${domains.wg}";
         publicKey = "znkXF+4voMh5iCCd68H5gFTFahtfsYTjsCr05Ei/+Tw=";
       };
     };

@@ -1,9 +1,14 @@
 {
   config,
   my,
+  lib,
   ...
 }: let
   homelabDomain = my.lib.const.domains.homelab;
+
+  wgDNSMappings =
+    lib.concatMapAttrs (_: peer: {"${peer.domain}" = peer.ip;})
+    my.lib.const.wireguard.peers;
 in {
   sops.secrets = {
     hass_secrets_file = {
@@ -40,9 +45,11 @@ in {
       enable = true;
       dnsAddress = "0.0.0.0";
       openFirewall = true;
-      customDNSMappings = {
-        ${homelabDomain} = my.lib.const.lan.devices.homelab.ip;
-      };
+      customDNSMappings =
+        {
+          ${homelabDomain} = my.lib.const.lan.devices.homelab.ip;
+        }
+        // wgDNSMappings;
     };
     caddy = {
       enable = true;
