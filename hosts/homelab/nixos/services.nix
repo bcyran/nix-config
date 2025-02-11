@@ -59,6 +59,7 @@ in {
       extraConfig = ''
         *.intra.cyran.dev {
           tls {
+            resolvers ${lib.concatStringsSep " " my.lib.const.dns.ips};
             dns ovh {
               endpoint {$OVH_CYRAN_DEV_ENDPOINT}
               application_key {$OVH_CYRAN_DEV_APPLICATION_KEY}
