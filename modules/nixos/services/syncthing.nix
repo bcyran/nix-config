@@ -82,13 +82,14 @@ in {
       serviceConfig.EnvironmentFile = cfg.environmentFiles;
     };
 
-    services.caddy.virtualHosts = my.lib.caddy.makeReverseProxy {
-      inherit (cfg) domain;
-      address = cfg.guiAddress;
-      port = cfg.guiPort;
-      proxyExtraConfig = ''
-        header_up Host {upstream_hostport}
-      '';
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
+      ${cfg.domain} = {
+        upstreamAddress = cfg.guiAddress;
+        upstreamPort = cfg.guiPort;
+        proxyExtraConfig = ''
+          header_up Host {upstream_hostport}
+        '';
+      };
     };
   };
 }

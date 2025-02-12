@@ -24,9 +24,11 @@ in {
       listenPort = cfg.port;
     };
 
-    services.caddy.virtualHosts = my.lib.caddy.makeReverseProxy {
-      inherit (cfg) domain port;
-      address = "127.0.0.1";
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
+      ${cfg.domain} = {
+        upstreamAddress = "127.0.0.1";
+        upstreamPort = cfg.port;
+      };
     };
   };
 }

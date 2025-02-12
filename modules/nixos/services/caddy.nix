@@ -19,6 +19,15 @@
     hash = "sha256-IX93qzCfdWqpRtWvOA3n4fV1CoZCMZ2HCBdu88b2MH0=";
   };
 
+  mkLogConfig = domain: ''
+    output file /var/log/caddy/access-${domain}.log {
+      roll_size 100MiB
+      roll_keep 5
+      roll_keep_for 2160h
+      mode 644
+    }
+  '';
+
   nixBin = lib.getExe pkgs.nix;
   wwwDir = "/srv/www";
   mkRepoPath = domain: "${wwwDir}/${domain}";
@@ -58,11 +67,23 @@
       }
 
       log {
-        ${my.lib.caddy.mkLogConfig domain}
+        ${mkLogConfig domain}
       }
     }
   '';
   mkGitHostsConfig = staticGitHosts: lib.concatMapAttrsStringSep "\n" mkGitHostConfig staticGitHosts;
+
+  mkReverseProxyHostConfig = domain: cfg: {
+    listenAddresses = lib.mkIf (cfg.listenAddress != null) [cfg.listenAddress];
+    extraConfig = ''
+      reverse_proxy ${cfg.upstreamAddress}:${toString cfg.upstreamPort} {
+        ${cfg.proxyExtraConfig}
+      }
+
+      ${cfg.extraConfig}
+    '';
+    logFormat = mkLogConfig domain;
+  };
 in {
   options.my.services.caddy = let
     serviceName = "Caddy web server";
@@ -119,6 +140,43 @@ in {
       default = {};
       description = "Static Git repositories to serve.";
     };
+
+    reverseProxyHosts = lib.mkOption {
+      type = lib.types.attrsOf (
+        lib.types.submodule {
+          options = {
+            upstreamAddress = lib.mkOption {
+              type = lib.types.str;
+              example = "127.0.0.1";
+              description = "Upstream server to proxy requests to.";
+            };
+            upstreamPort = lib.mkOption {
+              type = lib.types.int;
+              example = 8080;
+              description = "Port of the upstream server to proxy requests to.";
+            };
+            listenAddress = lib.mkOption {
+              type = with lib.types; nullOr str;
+              default = null;
+              example = "10.10.10.10";
+              description = "Address to listen on for this host.";
+            };
+            extraConfig = lib.mkOption {
+              type = lib.types.lines;
+              default = "";
+              description = "Extra configuration to add to the host block.";
+            };
+            proxyExtraConfig = lib.mkOption {
+              type = lib.types.lines;
+              default = "";
+              description = "Extra configuration to add to the reverse_proxy block.";
+            };
+          };
+        }
+      );
+      default = {};
+      description = "Reverse proxy hosts to serve.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -146,6 +204,8 @@ in {
 
           ${mkGitConfig cfg.staticGitHosts}
         '';
+
+        virtualHosts = builtins.mapAttrs mkReverseProxyHostConfig cfg.reverseProxyHosts;
 
         extraConfig = lib.concatStringsSep "\n" [
           cfg.extraConfig
