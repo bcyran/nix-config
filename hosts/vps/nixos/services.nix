@@ -51,6 +51,7 @@ in {
           }
         '';
       };
+      fail2ban.enable = true;
       prometheus = {
         enable = true;
         reverseProxy = {
