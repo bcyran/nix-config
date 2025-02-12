@@ -2,7 +2,7 @@ rec {
   # Domains
   domains = rec {
     root = "cyran.dev";
-    homelab = "intra.${root}";
+    intra = "intra.${root}";
     vps = "vps.${root}";
     wg = "wg.${root}";
   };
@@ -12,9 +12,11 @@ rec {
     devices = {
       homelab = {
         ip = "10.100.100.100";
+        domain = "homelab.${domains.intra}";
       };
       tv = {
         ip = "10.100.100.231";
+        domain = "tv.${domains.intra}";
       };
     };
   };

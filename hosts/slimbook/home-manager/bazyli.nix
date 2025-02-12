@@ -1,5 +1,5 @@
 {my, ...}: let
-  inherit (my.lib.const) domains;
+  inherit (my.lib.const) domains lan;
 in {
   imports = [
     my.homeManagerModules.default
@@ -84,7 +84,7 @@ in {
     matchBlocks = {
       homelab = {
         host = "homelab";
-        hostname = domains.homelab;
+        hostname = lan.devices.homelab.domain;
         user = "bazyli";
       };
       vps = {

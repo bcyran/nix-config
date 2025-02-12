@@ -4,11 +4,9 @@
   lib,
   ...
 }: let
-  homelabDomain = my.lib.const.domains.homelab;
+  intraDomain = my.lib.const.domains.intra;
 
-  wgDNSMappings =
-    lib.concatMapAttrs (_: peer: {"${peer.domain}" = peer.ip;})
-    my.lib.const.wireguard.peers;
+  mkDnsMapping = items: lib.concatMapAttrs (_: item: {${item.domain} = item.ip;}) items;
 in {
   sops.secrets = {
     hass_secrets_file = {
@@ -46,10 +44,9 @@ in {
       dnsAddress = "0.0.0.0";
       openFirewall = true;
       customDNSMappings =
-        {
-          ${homelabDomain} = my.lib.const.lan.devices.homelab.ip;
-        }
-        // wgDNSMappings;
+        {${intraDomain} = my.lib.const.lan.devices.homelab.ip;}
+        // mkDnsMapping my.lib.const.lan.devices
+        // mkDnsMapping my.lib.const.wireguard.peers;
     };
     caddy = {
       enable = true;
@@ -70,17 +67,17 @@ in {
     };
     prometheus = {
       enable = true;
-      reverseProxy.domain = "prometheus.${homelabDomain}";
+      reverseProxy.domain = "prometheus.${intraDomain}";
     };
     loki.enable = true;
     grafana = {
       enable = true;
-      reverseProxy.domain = "grafana.${homelabDomain}";
+      reverseProxy.domain = "grafana.${intraDomain}";
     };
     syncthing = {
       enable = true;
       openFirewallTransfer = true;
-      reverseProxy.domain = "syncthing.${homelabDomain}";
+      reverseProxy.domain = "syncthing.${intraDomain}";
       keyFile = config.sops.secrets.syncthing_key_file.path;
       certFile = config.sops.secrets.syncthing_cert_file.path;
       environmentFiles = [config.sops.secrets.syncthing_env_file.path];
@@ -95,24 +92,24 @@ in {
     homepage = {
       enable = true;
       environmentFile = config.sops.secrets.homepage_env_file.path;
-      reverseProxy.domain = "home.${homelabDomain}";
+      reverseProxy.domain = "home.${intraDomain}";
     };
     home-assistant = {
       enable = true;
-      reverseProxy.domain = "hass.${homelabDomain}";
+      reverseProxy.domain = "hass.${intraDomain}";
     };
     uptime-kuma = {
       enable = true;
-      reverseProxy.domain = "uptime.${homelabDomain}";
+      reverseProxy.domain = "uptime.${intraDomain}";
     };
     speedtest-tracker = {
       enable = true;
       environmentFiles = [config.sops.secrets.speedtest_tracker_env_file.path];
-      reverseProxy.domain = "speedtest.${homelabDomain}";
+      reverseProxy.domain = "speedtest.${intraDomain}";
     };
     glances = {
       enable = true;
-      reverseProxy.domain = "glances.${homelabDomain}";
+      reverseProxy.domain = "glances.${intraDomain}";
     };
     postgresql.enable = true;
     meilisearch = {
@@ -128,15 +125,15 @@ in {
         hoarder_env_file.path
         meilisearch_env_file.path
       ];
-      reverseProxy.domain = "hoarder.${homelabDomain}";
+      reverseProxy.domain = "hoarder.${intraDomain}";
     };
     ollama = {
       enable = true;
-      reverseProxy.domain = "ollama.${homelabDomain}";
+      reverseProxy.domain = "ollama.${intraDomain}";
     };
     open-webui = {
       enable = true;
-      reverseProxy.domain = "openwebui.${homelabDomain}";
+      reverseProxy.domain = "openwebui.${intraDomain}";
     };
     iperf = {
       enable = true;
@@ -145,27 +142,27 @@ in {
     };
     memos = {
       enable = true;
-      reverseProxy.domain = "memos.${homelabDomain}";
+      reverseProxy.domain = "memos.${intraDomain}";
     };
     immich = {
       enable = true;
-      reverseProxy.domain = "immich.${homelabDomain}";
+      reverseProxy.domain = "immich.${intraDomain}";
     };
     forgejo = {
       enable = true;
-      reverseProxy.domain = "forgejo.${homelabDomain}";
+      reverseProxy.domain = "forgejo.${intraDomain}";
     };
     ntfy = {
       enable = true;
-      reverseProxy.domain = "ntfy.${homelabDomain}";
+      reverseProxy.domain = "ntfy.${intraDomain}";
     };
     joplin = {
       enable = true;
-      reverseProxy.domain = "joplin.${homelabDomain}";
+      reverseProxy.domain = "joplin.${intraDomain}";
     };
     transmission = {
       enable = true;
-      reverseProxy.domain = "transmission.${homelabDomain}";
+      reverseProxy.domain = "transmission.${intraDomain}";
       credentialsFile = config.sops.secrets.transmission_credentials_file.path;
     };
   };
