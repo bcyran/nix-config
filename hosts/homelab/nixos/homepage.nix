@@ -1,6 +1,6 @@
 {config, ...}: let
   servicesCfg = config.my.services;
-  makeServiceDomainUrl = serviceName: "https://${servicesCfg.${serviceName}.domain}";
+  makeServiceDomainUrl = serviceName: "https://${servicesCfg.${serviceName}.reverseProxy.domain}";
   makeLoopbackUrl = port: "http://127.0.0.1:${toString port}";
   makeServiceLoopbackUrl = serviceName: makeLoopbackUrl servicesCfg.${serviceName}.port;
 in {

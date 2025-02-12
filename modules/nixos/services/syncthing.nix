@@ -14,7 +14,7 @@ in {
     guiPort = my.lib.options.mkPortOption "${serviceName} GUI" 8384;
     openFirewallGui = my.lib.options.mkOpenFirewallOption "${serviceName} GUI";
     openFirewallTransfer = my.lib.options.mkOpenFirewallOption "${serviceName} file transfer and discovery";
-    domain = my.lib.options.mkDomainOption "${serviceName} GUI";
+    reverseProxy = my.lib.options.mkReverseProxyOptions "${serviceName} GUI";
     environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
     dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/syncthing";
 
@@ -82,8 +82,8 @@ in {
       serviceConfig.EnvironmentFile = cfg.environmentFiles;
     };
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = cfg.guiAddress;
         upstreamPort = cfg.guiPort;
         proxyExtraConfig = ''

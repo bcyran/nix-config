@@ -13,7 +13,7 @@ in {
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 11434;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    domain = my.lib.options.mkDomainOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
   };
 
   config = lib.mkIf cfg.enable {
@@ -23,8 +23,8 @@ in {
       inherit (cfg) port openFirewall;
     };
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = cfg.address;
         upstreamPort = cfg.port;
       };

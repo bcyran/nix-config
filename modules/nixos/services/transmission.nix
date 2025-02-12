@@ -19,7 +19,7 @@ in {
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 9091;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    domain = my.lib.options.mkDomainOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
     dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/transmission";
 
     credentialsFile = lib.mkOption {
@@ -57,7 +57,7 @@ in {
         rpc-whitelist-enabled = false;
         rpc-authentication-required = true;
         rpc-host-whitelist-enabled = true;
-        rpc-host-whitelist = cfg.domain;
+        rpc-host-whitelist = cfg.reverseProxy.domain;
 
         blocklist-enabled = true;
         blocklist-url = "https://github.com/Naunter/BT_BlockLists/raw/master/bt_blocklists.gz";
@@ -91,8 +91,8 @@ in {
       ];
     };
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = cfg.address;
         upstreamPort = cfg.port;
       };

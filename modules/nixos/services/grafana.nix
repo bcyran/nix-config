@@ -13,7 +13,7 @@ in {
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 3000;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    domain = my.lib.options.mkDomainOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
   };
 
   config = lib.mkIf cfg.enable {
@@ -29,15 +29,15 @@ in {
             http_port = cfg.port;
             enforce_domain = false;
             enable_gzip = true;
-            inherit (cfg) domain;
+            inherit (cfg.reverseProxy) domain;
           };
           analytics.reporting_enabled = false;
         };
       };
     };
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = cfg.address;
         upstreamPort = cfg.port;
       };

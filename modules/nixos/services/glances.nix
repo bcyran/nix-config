@@ -14,7 +14,7 @@ in {
       address = my.lib.options.mkAddressOption serviceName;
       port = my.lib.options.mkPortOption serviceName 61208;
       openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-      domain = my.lib.options.mkDomainOption serviceName;
+      reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
     };
   };
 
@@ -25,8 +25,8 @@ in {
       extraArgs = ["-B=${cfg.address}" "--webserver"];
     };
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = cfg.address;
         upstreamPort = cfg.port;
       };

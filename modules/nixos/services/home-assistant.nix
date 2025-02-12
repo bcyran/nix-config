@@ -13,7 +13,7 @@ in {
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 8123;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    domain = my.lib.options.mkDomainOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
     dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/hass";
   };
 
@@ -29,7 +29,7 @@ in {
           longitude = "!secret home_longitude";
           country = "PL";
           unit_system = "metric";
-          internal_url = "https://${cfg.domain}";
+          internal_url = "https://${cfg.reverseProxy.domain}";
         };
         http = {
           use_x_forwarded_for = true;
@@ -58,8 +58,8 @@ in {
       ];
     };
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = cfg.address;
         upstreamPort = cfg.port;
       };

@@ -72,17 +72,17 @@ in {
     };
     prometheus = {
       enable = true;
-      domain = "prometheus.${homelabDomain}";
+      reverseProxy.domain = "prometheus.${homelabDomain}";
     };
     loki.enable = true;
     grafana = {
       enable = true;
-      domain = "grafana.${homelabDomain}";
+      reverseProxy.domain = "grafana.${homelabDomain}";
     };
     syncthing = {
       enable = true;
       openFirewallTransfer = true;
-      domain = "syncthing.${homelabDomain}";
+      reverseProxy.domain = "syncthing.${homelabDomain}";
       keyFile = config.sops.secrets.syncthing_key_file.path;
       certFile = config.sops.secrets.syncthing_cert_file.path;
       environmentFiles = [config.sops.secrets.syncthing_env_file.path];
@@ -97,24 +97,24 @@ in {
     homepage = {
       enable = true;
       environmentFile = config.sops.secrets.homepage_env_file.path;
-      domain = "home.${homelabDomain}";
+      reverseProxy.domain = "home.${homelabDomain}";
     };
     home-assistant = {
       enable = true;
-      domain = "hass.${homelabDomain}";
+      reverseProxy.domain = "hass.${homelabDomain}";
     };
     uptime-kuma = {
       enable = true;
-      domain = "uptime.${homelabDomain}";
+      reverseProxy.domain = "uptime.${homelabDomain}";
     };
     speedtest-tracker = {
       enable = true;
       environmentFiles = [config.sops.secrets.speedtest_tracker_env_file.path];
-      domain = "speedtest.${homelabDomain}";
+      reverseProxy.domain = "speedtest.${homelabDomain}";
     };
     glances = {
       enable = true;
-      domain = "glances.${homelabDomain}";
+      reverseProxy.domain = "glances.${homelabDomain}";
     };
     postgresql.enable = true;
     meilisearch = {
@@ -130,15 +130,15 @@ in {
         hoarder_env_file.path
         meilisearch_env_file.path
       ];
-      domain = "hoarder.${homelabDomain}";
+      reverseProxy.domain = "hoarder.${homelabDomain}";
     };
     ollama = {
       enable = true;
-      domain = "ollama.${homelabDomain}";
+      reverseProxy.domain = "ollama.${homelabDomain}";
     };
     open-webui = {
       enable = true;
-      domain = "openwebui.${homelabDomain}";
+      reverseProxy.domain = "openwebui.${homelabDomain}";
     };
     iperf = {
       enable = true;
@@ -147,27 +147,27 @@ in {
     };
     memos = {
       enable = true;
-      domain = "memos.${homelabDomain}";
+      reverseProxy.domain = "memos.${homelabDomain}";
     };
     immich = {
       enable = true;
-      domain = "immich.${homelabDomain}";
+      reverseProxy.domain = "immich.${homelabDomain}";
     };
     forgejo = {
       enable = true;
-      domain = "forgejo.${homelabDomain}";
+      reverseProxy.domain = "forgejo.${homelabDomain}";
     };
     ntfy = {
       enable = true;
-      domain = "ntfy.${homelabDomain}";
+      reverseProxy.domain = "ntfy.${homelabDomain}";
     };
     joplin = {
       enable = true;
-      domain = "joplin.${homelabDomain}";
+      reverseProxy.domain = "joplin.${homelabDomain}";
     };
     transmission = {
       enable = true;
-      domain = "transmission.${homelabDomain}";
+      reverseProxy.domain = "transmission.${homelabDomain}";
       credentialsFile = config.sops.secrets.transmission_credentials_file.path;
     };
   };

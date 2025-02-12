@@ -13,7 +13,7 @@ in {
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 2283;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    domain = my.lib.options.mkDomainOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
     dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/immich";
   };
 
@@ -32,8 +32,8 @@ in {
       "d '${cfg.dataDir}' 0750 ${config.services.immich.user} ${config.services.immich.group} - -"
     ];
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = cfg.address;
         upstreamPort = cfg.port;
       };

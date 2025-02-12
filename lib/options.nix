@@ -14,14 +14,6 @@
       inherit default;
     };
 
-  mkDomainOption = serviceName:
-    lib.mkOption {
-      type = with lib.types; nullOr str;
-      default = null;
-      example = "service.home.my.tld";
-      description = "The domain on which the ${serviceName} is accessible.";
-    };
-
   mkOpenFirewallOption = serviceName:
     lib.mkOption {
       type = lib.types.bool;
@@ -52,4 +44,19 @@
       description = "The path to the data directory for the ${serviceName}.";
       inherit default;
     };
+
+  mkReverseProxyOptions = serviceName: {
+    domain = lib.mkOption {
+      type = with lib.types; nullOr str;
+      default = null;
+      example = "service.home.my.tld";
+      description = "The domain on which the ${serviceName} is accessible.";
+    };
+    listenAddress = lib.mkOption {
+      type = with lib.types; nullOr str;
+      default = null;
+      example = "10.10.10.10";
+      description = "The IP address on which the reverse proxy for ${serviceName} will bind.";
+    };
+  };
 }

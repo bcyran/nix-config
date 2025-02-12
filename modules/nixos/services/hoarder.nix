@@ -18,7 +18,7 @@ in {
       enable = lib.mkEnableOption serviceName;
       address = my.lib.options.mkAddressOption serviceName;
       port = my.lib.options.mkPortOption serviceName 8083;
-      domain = my.lib.options.mkDomainOption serviceName;
+      reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
       openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
       environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
       dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/hoarder";
@@ -47,7 +47,7 @@ in {
       in
         {
           DATA_DIR = "/data";
-          NEXTAUTH_URL = "https://${cfg.domain}";
+          NEXTAUTH_URL = "https://${cfg.reverseProxy.domain}";
         }
         // lib.optionalAttrs meiliCfg.enable {
           MEILI_ADDR = "http://${loopback}:${toString meiliCfg.port}";
@@ -73,8 +73,8 @@ in {
       "d '${cfg.dataDir}' 0750 root root - -"
     ];
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = cfg.address;
         upstreamPort = cfg.port;
       };

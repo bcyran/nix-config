@@ -17,7 +17,7 @@ in {
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 9090;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    domain = my.lib.options.mkDomainOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
   };
 
   config = lib.mkIf cfg.enable {
@@ -29,7 +29,7 @@ in {
         listenAddress = cfg.address;
         inherit (cfg) port;
 
-        webExternalUrl = "https://${cfg.domain}";
+        webExternalUrl = "https://${cfg.reverseProxy.domain}";
 
         globalConfig = {
           scrape_interval = "15s";
@@ -85,8 +85,8 @@ in {
       };
     };
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = cfg.address;
         upstreamPort = cfg.port;
       };

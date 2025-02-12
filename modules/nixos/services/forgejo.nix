@@ -13,7 +13,7 @@ in {
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 8085;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    domain = my.lib.options.mkDomainOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
     dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/forgejo";
   };
 
@@ -26,8 +26,8 @@ in {
         server = {
           HTTP_ADDR = cfg.address;
           HTTP_PORT = cfg.port;
-          DOMAIN = cfg.domain;
-          ROOT_URL = "https://${cfg.domain}";
+          DOMAIN = cfg.reverseProxy.domain;
+          ROOT_URL = "https://${cfg.reverseProxy.domain}";
         };
         actions = {
           ENABLED = false;
@@ -43,8 +43,8 @@ in {
       };
     };
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = cfg.address;
         upstreamPort = cfg.port;
       };

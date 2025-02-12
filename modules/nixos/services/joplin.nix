@@ -18,7 +18,7 @@ in {
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 22300;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    domain = my.lib.options.mkDomainOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
   };
 
   config = lib.mkIf cfg.enable {
@@ -48,7 +48,7 @@ in {
         POSTGRES_PORT = toString postgresCfg.port;
         POSTGRES_DATABASE = dbName;
         POSTGRES_USER = dbUser;
-        APP_BASE_URL = "https://${cfg.domain}";
+        APP_BASE_URL = "https://${cfg.reverseProxy.domain}";
         APP_PORT = toString cfg.port;
       };
       extraOptions = [
@@ -59,8 +59,8 @@ in {
       ];
     };
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = cfg.address;
         upstreamPort = cfg.port;
       };

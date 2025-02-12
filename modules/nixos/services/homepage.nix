@@ -13,7 +13,7 @@ in {
     enable = lib.mkEnableOption serviceName;
     port = my.lib.options.mkPortOption serviceName 8080;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    domain = my.lib.options.mkDomainOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
     environmentFile = my.lib.options.mkEnvironmentFileOption serviceName;
   };
 
@@ -24,8 +24,8 @@ in {
       listenPort = cfg.port;
     };
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = "127.0.0.1";
         upstreamPort = cfg.port;
       };

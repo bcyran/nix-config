@@ -14,7 +14,7 @@ in {
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 2586;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    domain = my.lib.options.mkDomainOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
   };
 
   config = lib.mkIf cfg.enable {
@@ -24,7 +24,7 @@ in {
       enable = true;
       settings = {
         listen-http = "${cfg.address}:${toString cfg.port}";
-        base-url = "https://${cfg.domain}";
+        base-url = "https://${cfg.reverseProxy.domain}";
         behind-proxy = true;
       };
     };
@@ -41,8 +41,8 @@ in {
       '';
     };
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.domain != null) {
-      ${cfg.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
         upstreamAddress = cfg.address;
         upstreamPort = cfg.port;
       };
