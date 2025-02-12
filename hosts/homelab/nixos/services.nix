@@ -56,16 +56,14 @@ in {
       address = "0.0.0.0";
       openFirewall = true;
       environmentFile = config.sops.secrets.caddy_env_file.path;
-      extraConfig = ''
-        *.intra.cyran.dev {
-          tls {
-            resolvers ${lib.concatStringsSep " " my.lib.const.dns.ips};
-            dns ovh {
-              endpoint {$OVH_CYRAN_DEV_ENDPOINT}
-              application_key {$OVH_CYRAN_DEV_APPLICATION_KEY}
-              application_secret {$OVH_CYRAN_DEV_APPLICATION_SECRET}
-              consumer_key {$OVH_CYRAN_DEV_CONSUMER_KEY}
-            }
+      reverseProxyHostsCommonExtraConfig = ''
+        tls {
+          resolvers ${lib.concatStringsSep " " my.lib.const.dns.ips};
+          dns ovh {
+            endpoint {$OVH_CYRAN_DEV_ENDPOINT}
+            application_key {$OVH_CYRAN_DEV_APPLICATION_KEY}
+            application_secret {$OVH_CYRAN_DEV_APPLICATION_SECRET}
+            consumer_key {$OVH_CYRAN_DEV_CONSUMER_KEY}
           }
         }
       '';
