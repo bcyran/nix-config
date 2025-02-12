@@ -73,11 +73,6 @@ in {
       "d '${cfg.dataDir}' 0750 root root - -"
     ];
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
-      ${cfg.reverseProxy.domain} = {
-        upstreamAddress = cfg.address;
-        upstreamPort = cfg.port;
-      };
-    };
+    my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
   };
 }
