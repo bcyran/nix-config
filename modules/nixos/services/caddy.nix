@@ -73,14 +73,19 @@
   '';
   mkGitHostsConfig = staticGitHosts: lib.concatMapAttrsStringSep "\n" mkGitHostConfig staticGitHosts;
 
-  mkReverseProxyHostConfig = domain: cfg: {
-    listenAddresses = lib.mkIf (cfg.listenAddress != null) [cfg.listenAddress];
+  mkReverseProxyHostConfig = domain: hostCfg: let
+    hostExtraConfig = lib.concatStringsSep "\n" [
+      cfg.reverseProxyHostsCommonExtraConfig
+      hostCfg.extraConfig
+    ];
+  in {
+    listenAddresses = lib.mkIf (hostCfg.listenAddress != null) [hostCfg.listenAddress];
     extraConfig = ''
-      reverse_proxy ${cfg.upstreamAddress}:${toString cfg.upstreamPort} {
-        ${cfg.proxyExtraConfig}
+      reverse_proxy ${hostCfg.upstreamAddress}:${toString hostCfg.upstreamPort} {
+        ${hostCfg.proxyExtraConfig}
       }
 
-      ${cfg.extraConfig}
+      ${hostExtraConfig}
     '';
     logFormat = mkLogConfig domain;
   };
@@ -176,6 +181,12 @@ in {
       );
       default = {};
       description = "Reverse proxy hosts to serve.";
+    };
+
+    reverseProxyHostsCommonExtraConfig = lib.mkOption {
+      type = lib.types.lines;
+      default = "";
+      description = "Extra configuration to add to all reverse proxy host blocks.";
     };
   };
 
