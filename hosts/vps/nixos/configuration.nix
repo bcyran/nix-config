@@ -17,7 +17,19 @@
     ./services.nix
   ];
 
-  networking.hostName = "vps";
+  networking = {
+    hostName = "vps";
+    interfaces.ens3.ipv6.addresses = [
+      {
+        address = "2a03:4000:52:499::1";
+        prefixLength = 64;
+      }
+    ];
+    defaultGateway6 = {
+      address = "fe80::1";
+      interface = "ens3";
+    };
+  };
 
   sops = let
     vpsSopsFile = "${inputs.my-secrets}/vps.yaml";
