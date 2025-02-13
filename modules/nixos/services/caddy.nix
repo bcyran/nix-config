@@ -79,7 +79,7 @@
       hostCfg.extraConfig
     ];
   in {
-    listenAddresses = lib.mkIf (hostCfg.listenAddress != null) [hostCfg.listenAddress];
+    inherit (hostCfg) listenAddresses;
     extraConfig = ''
       reverse_proxy ${hostCfg.upstreamAddress}:${toString hostCfg.upstreamPort} {
         ${hostCfg.proxyExtraConfig}
@@ -160,11 +160,11 @@ in {
               example = 8080;
               description = "Port of the upstream server to proxy requests to.";
             };
-            listenAddress = lib.mkOption {
-              type = with lib.types; nullOr str;
-              default = null;
-              example = "10.10.10.10";
-              description = "Address to listen on for this host.";
+            listenAddresses = lib.mkOption {
+              type = with lib.types; listOf str;
+              default = [];
+              example = ["10.10.10.10"];
+              description = "Addresses to listen on for this host.";
             };
             extraConfig = lib.mkOption {
               type = lib.types.lines;
@@ -205,8 +205,10 @@ in {
         package = caddyWithPlugins;
         inherit (cfg) environmentFile;
 
+        # Specifying [::] here causes a crash. However, 0.0.0.0 seems to include [::].
+        # See: https://github.com/caddyserver/caddy/issues/5692.
         globalConfig = ''
-          default_bind ${toString cfg.address}
+          default_bind ${cfg.address}
           http_port ${toString cfg.httpPort}
           https_port ${toString cfg.httpsPort}
           admin ${cfg.adminAddress}:${toString cfg.adminPort}

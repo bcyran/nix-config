@@ -52,11 +52,11 @@
       example = "service.home.my.tld";
       description = "The domain on which the ${serviceName} is accessible.";
     };
-    listenAddress = lib.mkOption {
-      type = with lib.types; nullOr str;
-      default = null;
-      example = "10.10.10.10";
-      description = "The IP address on which the reverse proxy for ${serviceName} will bind.";
+    listenAddresses = lib.mkOption {
+      type = with lib.types; listOf str;
+      default = [];
+      example = ["10.10.10.10"];
+      description = "The IP addresses on which the reverse proxy for ${serviceName} will bind.";
     };
   };
 }

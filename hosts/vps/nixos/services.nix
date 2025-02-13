@@ -7,7 +7,7 @@
   caddyCfg = config.services.caddy;
 
   vpsWgDomain = my.lib.const.wireguard.peers.vps.domain;
-  vpsWgAddress = my.lib.const.wireguard.peers.vps.ip;
+  vpsWgAddresses = with my.lib.const.wireguard.peers.vps; [ip "[${ipv6}]"];
 in {
   sops.secrets = {
     caddy_env_file = {
@@ -56,7 +56,7 @@ in {
         enable = true;
         reverseProxy = {
           domain = "prometheus.${vpsWgDomain}";
-          listenAddress = vpsWgAddress;
+          listenAddresses = vpsWgAddresses;
         };
       };
       loki.enable = true;
@@ -64,7 +64,7 @@ in {
         enable = true;
         reverseProxy = {
           domain = "grafana.${vpsWgDomain}";
-          listenAddress = vpsWgAddress;
+          listenAddresses = vpsWgAddresses;
         };
       };
     };

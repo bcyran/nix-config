@@ -4,7 +4,7 @@
       ${serviceCfg.reverseProxy.domain} = {
         upstreamAddress = serviceCfg.address;
         upstreamPort = serviceCfg.port;
-        inherit (serviceCfg.reverseProxy) listenAddress;
+        inherit (serviceCfg.reverseProxy) listenAddresses;
       };
     };
   in
