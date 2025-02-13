@@ -57,4 +57,17 @@
     assertion = !(isFalsy attrset.${attr});
     message = "Required attribute '${attrsetPath}.${attr}' is missing.";
   };
+
+  # getAttrOrNull :: string -> attrs -> any
+  #
+  # Returns the value of `attrName` in `attrs` if it exists, otherwise returns null.
+  getAttrOrNull = attrName: attrs:
+    if (builtins.hasAttr attrName attrs)
+    then attrs.${attrName}
+    else null;
+
+  # filterNotNull :: [a] -> [a]
+  #
+  # Filters out null values from a list.
+  filterNotNull = items: builtins.filter (item: item != null) items;
 }
