@@ -12,13 +12,19 @@ in {
   };
 
   networking.wg-quick.interfaces.wg0 = {
-    address = [(mkCidr peers.homelab.ip 24)];
+    address = [
+      (mkCidr peers.homelab.ip 24)
+      (mkCidr peers.homelab.ipv6 80)
+    ];
     privateKeyFile = config.sops.secrets.wireguard_private_key.path;
     peers = [
       {
         inherit (wireguard) endpoint;
         inherit (peers.vps) publicKey;
-        allowedIPs = [wireguard.subnet];
+        allowedIPs = [
+          wireguard.subnet
+          wireguard.subnetv6
+        ];
         persistentKeepalive = 25;
       }
     ];

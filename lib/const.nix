@@ -25,24 +25,29 @@ rec {
     port = 51820;
     endpoint = "${domains.vps}:${toString port}";
     subnet = "10.100.200.0/24";
+    subnetv6 = "2a03:4000:52:499:ffff::/80";
     peers = {
       homelab = {
         ip = "10.100.200.100";
+        ipv6 = "2a03:4000:52:499:ffff::100";
         domain = "homelab.${domains.wg}";
         publicKey = "hHCFLo07K0hlVbFfRA4Q4iy8qHSusK81732k/Rt2ZCM=";
       };
       vps = {
         ip = "10.100.200.1";
+        ipv6 = "2a03:4000:52:499:ffff::1";
         domain = "vps.${domains.wg}";
         publicKey = "8MAr05mDT16BYab0SBG9C8Muulvbibu1osFJTNZzRw8=";
       };
       pixel7 = {
         ip = "10.100.200.2";
+        ipv6 = "2a03:4000:52:499:ffff::2";
         domain = "pixel7.${domains.wg}";
         publicKey = "SQIXPzLluN+Ji7s3Wzau59dzlOjebd6TxRbGm8vtDho=";
       };
       slimbook = {
         ip = "10.100.200.3";
+        ipv6 = "2a03:4000:52:499:ffff::3";
         domain = "slimbook.${domains.wg}";
         publicKey = "znkXF+4voMh5iCCd68H5gFTFahtfsYTjsCr05Ei/+Tw=";
       };

@@ -21,6 +21,7 @@ in {
       vpsProfileCommon = {
         interfaceName = "wg0";
         address = mkCidr peers.slimbook.ip 24;
+        addressv6 = mkCidr peers.slimbook.ipv6 80;
         privateKey = "$WIREGUARD_PRIVATE_KEY";
         peerEndpoint = wireguard.endpoint;
         peerPublicKey = peers.vps.publicKey;
@@ -32,6 +33,7 @@ in {
           id = "vps-inside";
           peerAllowedIPs = [
             wireguard.subnet
+            wireguard.subnetv6
           ];
         }
         // vpsProfileCommon);
@@ -42,6 +44,7 @@ in {
           id = "vps-outside";
           peerAllowedIPs = [
             wireguard.subnet
+            wireguard.subnetv6
             (mkCidr devices.homelab.ip 32)
           ];
         }

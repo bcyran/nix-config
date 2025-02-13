@@ -34,6 +34,7 @@
     id,
     interfaceName,
     address,
+    addressv6 ? null,
     privateKey,
     peerEndpoint,
     peerPublicKey,
@@ -56,10 +57,16 @@
       inherit address;
       method = "manual";
     };
-    ipv6 = {
-      addr-gen-mode = "default";
-      method = "disabled";
-    };
+    ipv6 =
+      if (addressv6 != null)
+      then {
+        address = addressv6;
+        method = "manual";
+      }
+      else {
+        addr-gen-mode = "default";
+        method = "disabled";
+      };
     proxy = {};
   };
 }

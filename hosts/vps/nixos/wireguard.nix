@@ -21,16 +21,25 @@ in {
     firewall.allowedUDPPorts = [wireguard.port];
     wg-quick.interfaces = {
       wg0 = {
-        address = [(mkCidr peers.vps.ip 24)];
+        address = [
+          (mkCidr peers.vps.ip 24)
+          (mkCidr peers.vps.ipv6 80)
+        ];
         listenPort = wireguard.port;
         privateKeyFile = config.sops.secrets.wireguard_private_key.path;
-        dns = [devices.homelab.ip] ++ dns.ips;
+        dns =
+          [
+            devices.homelab.ip
+            peers.homelab.ipv6
+          ]
+          ++ dns.ips;
         peers = [
           # Homelab
           {
             inherit (peers.homelab) publicKey;
             allowedIPs = [
               (mkCidr peers.homelab.ip 32)
+              (mkCidr peers.homelab.ipv6 128)
               (mkCidr devices.homelab.ip 32)
             ];
           }
@@ -39,6 +48,7 @@ in {
             inherit (peers.pixel7) publicKey;
             allowedIPs = [
               (mkCidr peers.pixel7.ip 32)
+              (mkCidr peers.pixel7.ipv6 128)
             ];
           }
           # Slimbook
@@ -46,6 +56,7 @@ in {
             inherit (peers.slimbook) publicKey;
             allowedIPs = [
               (mkCidr peers.slimbook.ip 32)
+              (mkCidr peers.slimbook.ipv6 128)
             ];
           }
         ];
