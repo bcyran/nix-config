@@ -42,6 +42,8 @@ in {
       # This way I can access my homelab using its LAN IP, like I'm at home.
       vps-outside = mkWireguardProfile ({
           id = "vps-outside";
+          dns = devices.homelab.ip;
+          dnsv6 = peers.homelab.ipv6;
           peerAllowedIPs = [
             wireguard.subnet
             wireguard.subnetv6

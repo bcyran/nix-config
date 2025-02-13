@@ -6,7 +6,7 @@
   options = import ./options.nix {inherit lib;};
 
   # Utilities related to NetworkManager.
-  nm = import ./nm.nix;
+  nm = import ./nm.nix {inherit lib;};
 
   # Utilities related to networking.
   network = import ./network.nix;
