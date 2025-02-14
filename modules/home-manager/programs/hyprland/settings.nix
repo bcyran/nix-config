@@ -80,11 +80,11 @@ in {
             text_padding = 8;
             text_center = true;
             "col.active" = "rgba(${palette.accentPrimary}ed)";
-            "col.text.active" = "rgba(${palette.base10}ed)";
+            "col.active.text" = "rgba(${palette.base10}ed)";
             "col.inactive" = "rgba(${palette.base10}ed)";
-            "col.text.inactive" = "rgba(${palette.base05}ed)";
+            "col.inactive.text" = "rgba(${palette.base05}ed)";
             "col.urgent" = "rgba(${palette.warning}ed)";
-            "col.text.urgent" = "rgba(${palette.base10}ed)";
+            "col.urgent.text" = "rgba(${palette.base10}ed)";
           };
         };
       };
