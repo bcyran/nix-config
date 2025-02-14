@@ -26,6 +26,7 @@ $character
 """
 
 add_newline = false
+command_timeout = 100
 
 [fill]
 symbol = " "
