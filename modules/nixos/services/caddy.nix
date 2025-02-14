@@ -16,7 +16,7 @@
       "github.com/caddy-dns/ovh@v0.0.3"
       "github.com/greenpau/caddy-git@v1.0.9"
     ];
-    hash = "sha256-IX93qzCfdWqpRtWvOA3n4fV1CoZCMZ2HCBdu88b2MH0=";
+    hash = "sha256-uOSf9bV8tvySAKjL+BM8+SZqijZjlAMlwwPVDokmPkg";
   };
 
   mkLogConfig = domain: ''
