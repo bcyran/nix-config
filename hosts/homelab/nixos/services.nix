@@ -25,15 +25,33 @@ in {
       owner = config.services.caddy.user;
       reloadUnits = ["caddy.service"];
     };
-    syncthing_key_file = {};
-    syncthing_cert_file = {};
-    syncthing_env_file = {};
-    homepage_env_file = {};
-    speedtest_tracker_env_file = {};
-    meilisearch_env_file = {};
-    hoarder_env_file = {};
-    transmission_credentials_file = {};
-    wireguard_conf_file = {};
+    syncthing_key_file = {
+      restartUnits = ["syncthing.service"];
+    };
+    syncthing_cert_file = {
+      restartUnits = ["syncthing.service"];
+    };
+    syncthing_env_file = {
+      restartUnits = ["syncthing.service"];
+    };
+    homepage_env_file = {
+      restartUnits = ["homepage-dashboard.service"];
+    };
+    speedtest_tracker_env_file = {
+      restartUnits = ["podman-speedtest-tracker.service"];
+    };
+    meilisearch_env_file = {
+      restartUnits = ["meilisearch.service"];
+    };
+    hoarder_env_file = {
+      restartUnits = ["podman-hoarder.service"];
+    };
+    transmission_credentials_file = {
+      reloadUnits = ["transmission.service"];
+    };
+    wireguard_conf_file = {
+      restartUnits = ["proton.service"];
+    };
   };
 
   my.configurations = {
