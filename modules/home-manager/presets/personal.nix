@@ -13,6 +13,7 @@ in {
     my = {
       programs = {
         signal.enable = mkDefault true;
+        joplin-desktop.enable = mkDefault true;
       };
     };
 
@@ -33,7 +34,6 @@ in {
       vlc
       tor-browser
       quickemu
-      joplin-desktop
       webcord
     ];
   };
