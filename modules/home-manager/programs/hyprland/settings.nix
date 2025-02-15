@@ -47,6 +47,7 @@ in {
       input = {
         kb_layout = "pl";
         follow_mouse = 1;
+        mouse_refocus = false;
         touchpad = {
           natural_scroll = "no";
         };
@@ -158,6 +159,7 @@ in {
         inactive_timeout = 60;
         hide_on_key_press = true;
         persistent_warps = true;
+        warp_on_change_workspace = 1;
       };
       xwayland = {
         force_zero_scaling = true;

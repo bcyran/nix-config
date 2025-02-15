@@ -40,7 +40,7 @@ in {
             "$mod, p, hy3:focustab, r"
             "$mod, t, hy3:makegroup, tab"
             "$mod SHIFT, t, hy3:changegroup, toggletab"
-            "$mod, g, hy3:togglefocuslayer"
+            "$mod, g, hy3:togglefocuslayer, nowarp"
             "$mod, e, hy3:expand, expand"
             "$mod SHIFT, e, hy3:expand, shrink"
 
