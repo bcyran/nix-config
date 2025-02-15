@@ -24,6 +24,9 @@ in {
           Type = "simple";
           ExecStart = logiopsBin;
         };
+        restartTriggers = [
+          config.environment.etc."logid.cfg".source
+        ];
       };
     };
 
