@@ -81,6 +81,8 @@ in {
             text_center = true;
             "col.active" = "rgba(${palette.accentPrimary}ed)";
             "col.active.text" = "rgba(${palette.base10}ed)";
+            "col.focused" = "rgba(${palette.base01}ed)";
+            "col.focused.text" = "rgba(${palette.base05}ed)";
             "col.inactive" = "rgba(${palette.base10}ed)";
             "col.inactive.text" = "rgba(${palette.base05}ed)";
             "col.urgent" = "rgba(${palette.warning}ed)";
