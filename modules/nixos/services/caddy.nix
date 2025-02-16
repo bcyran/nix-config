@@ -276,18 +276,14 @@ in {
             name = "caddy";
             path = grafanaDashboardsLib.fetchDashboard {
               name = "caddy";
-              id = 20802;
+              id = 22870;
               version = 1;
-              hash = "sha256-36tLF4VJJLs6SkTp9RJI84EsixgKYarOH2AOGNArK3E=";
+              hash = "sha256-KcIkDFrVf8/1zy5ZtcqeE5XlqZfCpbdVfmlZnXI8kU8";
             };
             transformations = grafanaDashboardsLib.fillTemplating [
               {
-                key = "DS_PROMETHEUS-INDUMIA";
+                key = "DS_PROMETHEUS";
                 value = "Prometheus";
-              }
-              {
-                key = "DS_LOKI-INDUMIA";
-                value = "Loki";
               }
             ];
           })
