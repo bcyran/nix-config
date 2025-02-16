@@ -275,10 +275,10 @@ in {
           (grafanaDashboardsLib.dashboardEntry {
             name = "caddy";
             path = grafanaDashboardsLib.fetchDashboard {
-              name = "caddy";
+              name = "caddy-dashboard";
               id = 22870;
-              version = 1;
-              hash = "sha256-KcIkDFrVf8/1zy5ZtcqeE5XlqZfCpbdVfmlZnXI8kU8";
+              version = 3;
+              hash = "sha256-MgXKJAgplsObtlpAYJs/KIHsZJeuJShMIz+R2ftQL34=";
             };
             transformations = grafanaDashboardsLib.fillTemplating [
               {
