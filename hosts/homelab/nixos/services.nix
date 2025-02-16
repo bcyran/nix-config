@@ -52,6 +52,9 @@ in {
     wireguard_conf_file = {
       restartUnits = ["proton.service"];
     };
+    nix_store_binary_cache_key = {
+      restartUnits = ["nix-serve.service"];
+    };
   };
 
   my.configurations = {
@@ -185,6 +188,11 @@ in {
       enable = true;
       reverseProxy.domain = "transmission.${intraDomain}";
       credentialsFile = config.sops.secrets.transmission_credentials_file.path;
+    };
+    nix-serve = {
+      enable = true;
+      reverseProxy.domain = "cache.${intraDomain}";
+      secretKeyFile = config.sops.secrets.nix_store_binary_cache_key.path;
     };
   };
 
