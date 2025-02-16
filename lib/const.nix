@@ -77,4 +77,12 @@ rec {
     bazyliAtSlimbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFKs3m56bDR5P7TXoL/MPd5FWyueqK3QPVGc7RwLnF09 bazyli@slimbook";
     btrbkAtSlimbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8a552vyvnPoS/JEkSujoygzQw0cB8jO2yI8VlsLUF6 btrbk@slimbook";
   };
+  # Syncthing
+  syncthing = {
+    devices = {
+      slimbook = "ADH7KVP-ATNX6XY-VSBFKEW-U7A4TAI-2YA6JQG-DZHNGRR-2DZOIXW-KAS6AQX";
+      pixel7 = "WCA3ZM5-ZELYQWF-VAWS425-OPG5Q4R-O4J3ARM-IOPGI7Z-BTE2TY5-EZ36AAI";
+      homelab = "3Z4EMEX-FDR6OGT-KYTYFCO-TDANTYU-4NLDGDG-HOGFV7Q-MXWI75O-N67EDQG";
+    };
+  };
 }

@@ -17,7 +17,6 @@ in {
         keepassxc.enable = mkDefault true;
         firefox.enable = mkDefault true;
         spotify.enable = mkDefault true;
-        syncthing.enable = mkDefault true;
         udiskie.enable = mkDefault true;
         zathura.enable = mkDefault true;
       };

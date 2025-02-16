@@ -1,4 +1,9 @@
-{my, ...}: let
+{
+  my,
+  inputs,
+  config,
+  ...
+}: let
   inherit (my.lib.const) domains lan;
 in {
   imports = [
@@ -6,10 +11,20 @@ in {
     ../common/user.nix
   ];
 
+  sops = {
+    defaultSopsFile = "${inputs.my-secrets}/slimbook_bazyli.yaml";
+    secrets = {
+      syncthing_key = {};
+      syncthing_cert = {};
+      syncthing_password = {};
+    };
+  };
+
   my = {
     configurations = {
       core.enable = true;
       user.enable = true;
+      sops.enable = true;
     };
     presets = {
       cli.enable = true;
@@ -21,6 +36,19 @@ in {
     programs = {
       timewall.enable = true;
       cameractrls.enable = true;
+      syncthing = {
+        enable = true;
+        keyFile = config.sops.secrets.syncthing_key.path;
+        certFile = config.sops.secrets.syncthing_cert.path;
+        passwordFile = config.sops.secrets.syncthing_password.path;
+        inherit (my.lib.const.syncthing) devices;
+        folders = {
+          "KeePass" = "~/Dokumenty/03 - Obszary/Tożsamość/Hasła";
+          "Portfolio" = "~/Dokumenty/03 - Obszary/Finanse/Portfolio Performance";
+          "Sync" = "~/Sync";
+          "Signal backup" = "~/Backup/Signal";
+        };
+      };
     };
     hardware = {
       monitors = [
