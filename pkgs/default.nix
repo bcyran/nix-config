@@ -40,4 +40,5 @@ in rec {
   kidex = pkgs.callPackage ./kidex {};
   go-hass-agent = pkgs.callPackage ./go-hass-agent {};
   hy3 = pkgs.callPackage ./hy3 {inherit mkHyprlandPlugin;};
+  joplin-plugins = pkgs.callPackage ./joplin-plugins {};
 }
