@@ -102,7 +102,8 @@ in {
         inherit command accelerator;
       });
       mkPluginFile = plugin: {
-        "joplin-desktop/plugins/${plugin}".source = "${my.pkgs.joplin-plugins}/${plugin}";
+        name = "joplin-desktop/plugins/${plugin}";
+        value = {source = "${my.pkgs.joplin-plugins}/${plugin}";};
       };
     in
       {
@@ -124,6 +125,6 @@ in {
           CreateBackup = null;
         });
       }
-      // lib.mergeAttrsList (map mkPluginFile plugins);
+      // my.lib.mapListToAttrs mkPluginFile plugins;
   };
 }

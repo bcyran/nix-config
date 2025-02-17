@@ -70,4 +70,10 @@
   #
   # Filters out null values from a list.
   filterNotNull = items: builtins.filter (item: item != null) items;
+
+  # mmapListToAttrs :: (a -> {name :: String; value :: any}) -> [a] -> attrs
+  #
+  # Maps a list of items to an attribute set using given function.
+  # The function should return an attribute set with `name` and `value` fields.
+  mapListToAttrs = fun: plugins: builtins.listToAttrs (map fun plugins);
 }
