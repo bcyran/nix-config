@@ -7,6 +7,21 @@
 }: let
   cfg = config.my.programs.joplin-desktop;
   jsonFormat = pkgs.formats.json {};
+
+  plugins = [
+    "com.ckant.joplin-plugin-better-code-blocks.jpl"
+    "com.github.alan-null.joplin-plugin-github-alerts.jpl"
+    "com.joplin.copy.codeBlocks.jpl"
+    "com.joplin.excalidraw.jpl"
+    "com.whatever.inline-tags.jpl"
+    "com.whatever.quick-links.jpl"
+    "io.github.personalizedrefrigerator.codemirror6-settings.jpl"
+    "joplin.plugin.benji.quick-move.jpl"
+    "net.rmusin.joplin-table-formatter.jpl"
+    "org.joplinapp.plugins.ToggleSidebars.jpl"
+    "plugin.calebjohn.MathMode.jpl"
+    "plugin.calebjohn.rich-markdown.jpl"
+  ];
 in {
   options.my.programs.joplin-desktop.enable = lib.mkEnableOption "joplin-desktop";
 
@@ -82,27 +97,33 @@ in {
       };
     };
 
-    xdg.configFile."joplin-desktop/keymap-desktop.json".source = let
+    xdg.configFile = let
       mkKeymapsList = lib.mapAttrsToList (command: accelerator: {
         inherit command accelerator;
       });
+      mkPluginFile = plugin: {
+        "joplin-desktop/plugins/${plugin}".source = "${my.pkgs.joplin-plugins}/${plugin}";
+      };
     in
-      jsonFormat.generate "keymap-desktop.json" (mkKeymapsList {
-        newNote = "Ctrl+Shift+N";
-        newTodo = null;
-        insertDateTime = null;
-        focusSearch = "Ctrl+Shift+F";
-        focusElementSideBar = "Ctrl+Shift+L";
-        focusElementNoteList = "Ctrl+L";
-        focusElementNoteTitle = "Ctrl+T";
-        focusElementNoteBody = "Ctrl+N";
-        toggleVisiblePanes = "Ctrl+E";
-        toggleExternalEditing = null;
-        setTags = "Ctrl+Shift+T";
-        "editor.richMarkdown.clickAtCursor" = "Ctrl+Enter";
-        "richMarkdown.inlineImages" = null;
-        "richMarkdown.focusMode" = null;
-        CreateBackup = null;
-      });
+      {
+        "joplin-desktop/keymap-desktop.json".source = jsonFormat.generate "keymap-desktop.json" (mkKeymapsList {
+          newNote = "Ctrl+Shift+N";
+          newTodo = null;
+          insertDateTime = null;
+          focusSearch = "Ctrl+Shift+F";
+          focusElementSideBar = "Ctrl+Shift+L";
+          focusElementNoteList = "Ctrl+L";
+          focusElementNoteTitle = "Ctrl+T";
+          focusElementNoteBody = "Ctrl+N";
+          toggleVisiblePanes = "Ctrl+E";
+          toggleExternalEditing = null;
+          setTags = "Ctrl+Shift+T";
+          "editor.richMarkdown.clickAtCursor" = "Ctrl+Enter";
+          "richMarkdown.inlineImages" = null;
+          "richMarkdown.focusMode" = null;
+          CreateBackup = null;
+        });
+      }
+      // lib.mergeAttrsList (map mkPluginFile plugins);
   };
 }
