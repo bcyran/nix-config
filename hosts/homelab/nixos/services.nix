@@ -9,11 +9,11 @@
   getDeviceIps = device:
     my.lib.filterNotNull [device.ip (my.lib.getAttrOrNull "ipv6" device)];
   mkDnsMappingItem = device: {
-    ${device.domain} = builtins.concatStringsSep "," (getDeviceIps device);
+    name = device.domain;
+    value = builtins.concatStringsSep "," (getDeviceIps device);
   };
   mkDnsMapping = attrs:
-    lib.mergeAttrsList
-    (map mkDnsMappingItem (builtins.attrValues attrs));
+    my.lib.mapListToAttrs mkDnsMappingItem (builtins.attrValues attrs);
 in {
   sops.secrets = {
     hass_secrets_file = {
