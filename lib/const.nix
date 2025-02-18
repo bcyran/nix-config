@@ -85,4 +85,8 @@ rec {
       homelab = "3Z4EMEX-FDR6OGT-KYTYFCO-TDANTYU-4NLDGDG-HOGFV7Q-MXWI75O-N67EDQG";
     };
   };
+  # Nix binary cache public keys
+  binaryCacheKeys = {
+    slimbook = "slimbook:jM8DwCMIrEPhbPqKLXhJ7niRN3kIxRitj3pT7Q5575o=";
+  };
 }

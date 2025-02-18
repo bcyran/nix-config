@@ -32,6 +32,7 @@
       root_hashed_password.neededForUsers = true;
       nix_extra_options = {};
       btrbk_ssh_key.owner = "btrbk";
+      nix_store_binary_cache_key = {};
       home_wifi_env_file.sopsFile = wifiSopsFile;
       mobile_wifi_env_file.sopsFile = wifiSopsFile;
     };
@@ -63,6 +64,10 @@
       openssh.enable = true;
     };
   };
+
+  nix.settings.secret-key-files = [
+    config.sops.secrets.nix_store_binary_cache_key.path
+  ];
 
   services.hardware.bolt.enable = true;
 
