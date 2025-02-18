@@ -88,5 +88,6 @@ rec {
   # Nix binary cache public keys
   binaryCacheKeys = {
     slimbook = "slimbook:jM8DwCMIrEPhbPqKLXhJ7niRN3kIxRitj3pT7Q5575o=";
+    homelab = "cache.intra.cyran.dev:+E/2B6YJdSqCdOmMfw8GmyPBf4Fl63t4RdIwoMBuLBk";
   };
 }

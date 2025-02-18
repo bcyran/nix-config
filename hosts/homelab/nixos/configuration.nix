@@ -67,6 +67,12 @@
     };
   };
 
+  nix.settings = {
+    trusted-public-keys = [
+      my.lib.const.binaryCacheKeys.slimbook
+    ];
+  };
+
   services.hardware.bolt.enable = true;
 
   networking.networkmanager.ensureProfiles = {
