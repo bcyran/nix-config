@@ -1,5 +1,4 @@
 {
-  my,
   pkgs,
   config,
   lib,
@@ -24,8 +23,8 @@ in {
         variables = ["--all"];
       };
       settings.env = lib.mapAttrsToList (name: value: "${name},${value}") envVars;
-      plugins = [
-        my.pkgs.hy3
+      plugins = with pkgs.hyprlandPlugins; [
+        hy3
       ];
     };
 
