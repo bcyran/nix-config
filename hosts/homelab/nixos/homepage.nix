@@ -369,7 +369,7 @@ in {
                   }
                   {
                     label = "Avg. response time [${range}]";
-                    query = "sum(increase(blocky_request_duration_ms_sum[${range}])) / sum(increase(blocky_request_duration_ms_count[${range}]))";
+                    query = "sum(increase(blocky_request_duration_seconds_sum[${range}])) / sum(increase(blocky_request_duration_seconds_count[${range}])) * 1000";
                     format = {
                       type = "number";
                       options.maximumFractionDigits = 2;
