@@ -247,6 +247,13 @@ in {
             };
           }
           {
+            "nix-serve" = {
+              description = "Nix binary cache server.";
+              icon = "https://nix.dev/_static/img/nix.svg";
+              siteMonitor = "${makeServiceLoopbackUrl "nix-serve"}/nix-cache-info";
+            };
+          }
+          {
             Memos = {
               description = "Quick notes.";
               icon = "https://raw.githubusercontent.com/usememos/memos/refs/heads/main/web/public/logo.webp";
