@@ -88,10 +88,10 @@ in {
           (grafanaDashboardsLib.dashboardEntry {
             name = "blocky";
             path = grafanaDashboardsLib.fetchDashboard {
-              name = "blocky";
+              name = "blocky-v6";
               id = 13768;
-              version = 4;
-              hash = "sha256-61Rapsit6gpG8GtnNpO3jckZwfDkzZtFFaFMVStAf6U=";
+              version = 6;
+              hash = "sha256-Kxgu2YD6MKjtAZlxiIxOgywLtfPs7cjMBUNjYsdtmE8";
             };
             transformations = grafanaDashboardsLib.fillTemplating [
               {
