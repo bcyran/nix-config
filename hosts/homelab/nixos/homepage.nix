@@ -257,7 +257,7 @@ in {
           {
             "Open WebUI" = {
               description = "OpenAI API service.";
-              icon = "https://docs.openwebui.com/img/logo-dark.png";
+              icon = "https://docs.openwebui.com/images/logo-dark.png";
               href = makeServiceDomainUrl "open-webui";
               siteMonitor = makeServiceLoopbackUrl "open-webui";
             };
