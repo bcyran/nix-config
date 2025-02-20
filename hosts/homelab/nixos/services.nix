@@ -6,6 +6,18 @@
 }: let
   intraDomain = my.lib.const.domains.intra;
 
+  caddyTlsConfig = ''
+    tls {
+      resolvers ${lib.concatStringsSep " " my.lib.const.dns.ips};
+      dns ovh {
+        endpoint {$OVH_CYRAN_DEV_ENDPOINT}
+        application_key {$OVH_CYRAN_DEV_APPLICATION_KEY}
+        application_secret {$OVH_CYRAN_DEV_APPLICATION_SECRET}
+        consumer_key {$OVH_CYRAN_DEV_CONSUMER_KEY}
+      }
+    }
+  '';
+
   getDeviceIps = device:
     my.lib.filterNotNull [device.ip (my.lib.getAttrOrNull "ipv6" device)];
   mkDnsMappingItem = device: {
@@ -55,6 +67,9 @@ in {
     nix_store_binary_cache_key = {
       restartUnits = ["nix-serve.service"];
     };
+    nextcloud_admin_pass = {
+      owner = "nextcloud";
+    };
   };
 
   my.configurations = {
@@ -81,17 +96,7 @@ in {
       address = "0.0.0.0";
       openFirewall = true;
       environmentFile = config.sops.secrets.caddy_env_file.path;
-      reverseProxyHostsCommonExtraConfig = ''
-        tls {
-          resolvers ${lib.concatStringsSep " " my.lib.const.dns.ips};
-          dns ovh {
-            endpoint {$OVH_CYRAN_DEV_ENDPOINT}
-            application_key {$OVH_CYRAN_DEV_APPLICATION_KEY}
-            application_secret {$OVH_CYRAN_DEV_APPLICATION_SECRET}
-            consumer_key {$OVH_CYRAN_DEV_CONSUMER_KEY}
-          }
-        }
-      '';
+      reverseProxyHostsCommonExtraConfig = caddyTlsConfig;
     };
     prometheus = {
       enable = true;
@@ -193,6 +198,12 @@ in {
       enable = true;
       reverseProxy.domain = "cache.${intraDomain}";
       secretKeyFile = config.sops.secrets.nix_store_binary_cache_key.path;
+    };
+    nextcloud = {
+      enable = true;
+      domain = "nextcloud.${intraDomain}";
+      adminPassFile = config.sops.secrets.nextcloud_admin_pass.path;
+      caddyExtraConfig = caddyTlsConfig;
     };
   };
 
