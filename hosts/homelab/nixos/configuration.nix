@@ -39,7 +39,7 @@
       home_wifi_env_file.sopsFile = wifiSopsFile;
       mobile_wifi_env_file.sopsFile = wifiSopsFile;
       nix_extra_options = {};
-      backup_key_file = {};
+      fast_store_key_file = {};
       slow_store_key_file = {};
     };
   };
@@ -96,14 +96,14 @@
   };
 
   environment.etc."crypttab".text = ''
-    backup /dev/disk/by-uuid/e028f76b-e2a1-4a92-89a5-2fc5aeac615b ${config.sops.secrets.backup_key_file.path} nofail
+    fast_store /dev/disk/by-uuid/e028f76b-e2a1-4a92-89a5-2fc5aeac615b ${config.sops.secrets.fast_store_key_file.path} nofail
     slow_store /dev/disk/by-uuid/2239806d-81ac-42dc-902e-1bfd4f8e3332 ${config.sops.secrets.slow_store_key_file.path} nofail
   '';
   fileSystems = let
-    inherit (my.lib.const.paths.homelab) slowStore;
+    inherit (my.lib.const.paths.homelab) fastStore slowStore;
   in {
-    "/mnt/backup" = {
-      device = "/dev/mapper/backup";
+    ${fastStore} = {
+      device = "/dev/mapper/fast_store";
       fsType = "btrfs";
       options = ["nofail"];
     };
