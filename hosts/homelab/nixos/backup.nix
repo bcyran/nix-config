@@ -1,9 +1,12 @@
 {
+  my,
   config,
   lib,
   pkgs,
   ...
-}: {
+}: let
+  backupStore = my.lib.const.paths.homelab.backup;
+in {
   sops.secrets = {
     restic_password_file = {};
     restic_env_file = {};
@@ -23,7 +26,7 @@
             "/var" = {};
           };
           snapshot_dir = "/.snapshots";
-          target = "/mnt/backup/homelab";
+          target = "${backupStore}/homelab";
           target_preserve = snapshotRetention;
           target_preserve_min = snapshotRetentionMin;
         };
@@ -73,19 +76,19 @@
       homelab-root = mkResticBackupFromBtrbkSnapshots {
         host = "homelab";
         tag = "root";
-        snapshotsGlob = "/mnt/backup/homelab/ROOT.*";
+        snapshotsGlob = "${backupStore}/homelab/ROOT.*";
         time = "01:00";
       };
       homelab-var = mkResticBackupFromBtrbkSnapshots {
         host = "homelab";
         tag = "var";
-        snapshotsGlob = "/mnt/backup/homelab/var.*";
+        snapshotsGlob = "${backupStore}/homelab/var.*";
         time = "02:00";
       };
       slimbook-home = mkResticBackupFromBtrbkSnapshots {
         host = "slimbook";
         tag = "home";
-        snapshotsGlob = "/mnt/backup/slimbook/home.*";
+        snapshotsGlob = "${backupStore}/slimbook/home.*";
         time = "03:00";
       };
     };

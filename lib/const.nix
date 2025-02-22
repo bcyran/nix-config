@@ -90,4 +90,12 @@ rec {
     slimbook = "slimbook:jM8DwCMIrEPhbPqKLXhJ7niRN3kIxRitj3pT7Q5575o=";
     intra = "cache.intra.cyran.dev:+E/2B6YJdSqCdOmMfw8GmyPBf4Fl63t4RdIwoMBuLBk";
   };
+  # Filesystem paths
+  paths = {
+    homelab = rec {
+      slowStore = "/mnt/slow_store";
+      fastStore = "/mnt/fast_store";
+      backup = "${slowStore}/backup";
+    };
+  };
 }

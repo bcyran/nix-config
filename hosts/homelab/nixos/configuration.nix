@@ -99,13 +99,15 @@
     backup /dev/disk/by-uuid/e028f76b-e2a1-4a92-89a5-2fc5aeac615b ${config.sops.secrets.backup_key_file.path} nofail
     slow_store /dev/disk/by-uuid/2239806d-81ac-42dc-902e-1bfd4f8e3332 ${config.sops.secrets.slow_store_key_file.path} nofail
   '';
-  fileSystems = {
+  fileSystems = let
+    inherit (my.lib.const.paths.homelab) slowStore;
+  in {
     "/mnt/backup" = {
       device = "/dev/mapper/backup";
       fsType = "btrfs";
       options = ["nofail"];
     };
-    "/mnt/slow_store" = {
+    ${slowStore} = {
       device = "/dev/mapper/slow_store";
       fsType = "btrfs";
       options = ["nofail"];

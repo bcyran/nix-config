@@ -72,15 +72,17 @@
   services.hardware.bolt.enable = true;
 
   services.btrbk.instances.home = let
+    inherit (my.lib.const) lan paths;
     snapshotRetention = "14d";
     snapshotRetentionMin = "3d";
+    backupStore = "ssh://${lan.devices.homelab.domain}${paths.homelab.backup}";
   in {
     onCalendar = "hourly";
     settings = {
       volume."/" = {
         subvolume = "/home";
         snapshot_dir = "/.snapshots";
-        target = "ssh://intra.cyran.dev/mnt/backup/slimbook";
+        target = "${backupStore}/slimbook";
         ssh_user = "btrbk";
         ssh_identity = config.sops.secrets.btrbk_ssh_key.path;
         target_preserve = snapshotRetention;
