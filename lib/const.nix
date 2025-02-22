@@ -96,6 +96,7 @@ rec {
       slowStore = "/mnt/slow_store";
       fastStore = "/mnt/fast_store";
       backup = "${slowStore}/backup";
+      services = "${fastStore}/services";
     };
   };
 }
