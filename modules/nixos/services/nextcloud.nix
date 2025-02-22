@@ -63,6 +63,11 @@ in {
             tasks
             whiteboard
             ;
+          theming_customcss = pkgs.fetchNextcloudApp {
+            sha256 = "sha256-MsF+im9yCt7bRNIE8ait0wxcVzMXsHMNbp+IIzY/zJI=";
+            url = "https://github.com/nextcloud-releases/theming_customcss/releases/download/v1.18.0/theming_customcss.tar.gz";
+            license = "agpl3Only";
+          };
         };
         extraAppsEnable = true;
 
