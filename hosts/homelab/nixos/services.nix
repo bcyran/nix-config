@@ -6,8 +6,6 @@
 }: let
   intraDomain = my.lib.const.domains.intra;
 
-  servicesDataDir = my.lib.const.paths.homelab.services;
-
   caddyTlsConfig = ''
     tls {
       resolvers ${lib.concatStringsSep " " my.lib.const.dns.ips};
@@ -119,7 +117,6 @@ in {
       inherit (my.lib.const.syncthing) devices;
       folders = ["KeePass" "Portfolio" "Signal backup" "Sync"];
       hashedPassword = "$2a$12$16cl3sRqqpClYhSn/Q1rsuA2gsPI0sYPEk6Zs8QTU5oWwlAY0Y8wC";
-      dataDir = "${servicesDataDir}/syncthing";
     };
     homepage = {
       enable = true;
@@ -129,7 +126,6 @@ in {
     home-assistant = {
       enable = true;
       reverseProxy.domain = "hass.${intraDomain}";
-      dataDir = "${servicesDataDir}/hass";
     };
     uptime-kuma = {
       enable = true;
@@ -139,16 +135,12 @@ in {
       enable = true;
       environmentFiles = [config.sops.secrets.speedtest_tracker_env_file.path];
       reverseProxy.domain = "speedtest.${intraDomain}";
-      dataDir = "${servicesDataDir}/speedtest-tracker";
     };
     glances = {
       enable = true;
       reverseProxy.domain = "glances.${intraDomain}";
     };
-    postgresql = {
-      enable = true;
-      dataDir = "${servicesDataDir}/postgresql";
-    };
+    postgresql.enable = true;
     meilisearch = {
       enable = true;
       masterKeyEnvironmentFile = config.sops.secrets.meilisearch_env_file.path;
@@ -163,7 +155,6 @@ in {
         meilisearch_env_file.path
       ];
       reverseProxy.domain = "hoarder.${intraDomain}";
-      dataDir = "${servicesDataDir}/hoarder";
     };
     ollama = {
       enable = true;
@@ -181,17 +172,14 @@ in {
     memos = {
       enable = true;
       reverseProxy.domain = "memos.${intraDomain}";
-      dataDir = "${servicesDataDir}/memos";
     };
     immich = {
       enable = true;
       reverseProxy.domain = "immich.${intraDomain}";
-      dataDir = "${servicesDataDir}/immich";
     };
     forgejo = {
       enable = true;
       reverseProxy.domain = "forgejo.${intraDomain}";
-      dataDir = "${servicesDataDir}/forgejo";
     };
     ntfy = {
       enable = true;
@@ -216,7 +204,6 @@ in {
       domain = "nextcloud.${intraDomain}";
       adminPassFile = config.sops.secrets.nextcloud_admin_pass.path;
       caddyExtraConfig = caddyTlsConfig;
-      dataDir = "${servicesDataDir}/nextcloud";
     };
   };
 

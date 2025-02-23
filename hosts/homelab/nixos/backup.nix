@@ -13,27 +13,46 @@ in {
     restic_repository_name_file = {};
   };
 
-  services = {
-    btrbk.instances.system = let
-      snapshotRetention = "14d";
-      snapshotRetentionMin = "1d";
-    in {
-      onCalendar = "hourly";
-      settings = {
-        volume."/" = {
-          subvolume = {
-            "/" = {};
-            "/var" = {};
+  services = let
+    snapshotRetention = "14d";
+    snapshotRetentionMin = "1d";
+  in {
+    btrbk.instances = {
+      system = {
+        onCalendar = "hourly";
+        settings = {
+          volume."/" = {
+            subvolume = {
+              "/" = {};
+            };
+            snapshot_dir = "/.snapshots";
+            target = "${backupStore}/homelab";
+            target_preserve = snapshotRetention;
+            target_preserve_min = snapshotRetentionMin;
           };
-          snapshot_dir = "/.snapshots";
-          target = "${backupStore}/homelab";
-          target_preserve = snapshotRetention;
-          target_preserve_min = snapshotRetentionMin;
+          snapshot_preserve = snapshotRetention;
+          snapshot_preserve_min = snapshotRetentionMin;
+          archive_preserve = snapshotRetention;
+          archive_preserve_min = snapshotRetentionMin;
         };
-        snapshot_preserve = snapshotRetention;
-        snapshot_preserve_min = snapshotRetentionMin;
-        archive_preserve = snapshotRetention;
-        archive_preserve_min = snapshotRetentionMin;
+      };
+      fast_store = {
+        onCalendar = "hourly";
+        settings = {
+          volume."/mnt/fast_store" = {
+            subvolume = {
+              "var_lib" = {};
+            };
+            snapshot_dir = ".snapshots";
+            target = "${backupStore}/homelab";
+            target_preserve = snapshotRetention;
+            target_preserve_min = snapshotRetentionMin;
+          };
+          snapshot_preserve = snapshotRetention;
+          snapshot_preserve_min = snapshotRetentionMin;
+          archive_preserve = snapshotRetention;
+          archive_preserve_min = snapshotRetentionMin;
+        };
       };
     };
 
@@ -79,10 +98,10 @@ in {
         snapshotsGlob = "${backupStore}/homelab/ROOT.*";
         time = "01:00";
       };
-      homelab-var = mkResticBackupFromBtrbkSnapshots {
+      homelab-var_lib = mkResticBackupFromBtrbkSnapshots {
         host = "homelab";
-        tag = "var";
-        snapshotsGlob = "${backupStore}/homelab/var.*";
+        tag = "var_lib";
+        snapshotsGlob = "${backupStore}/homelab/var_lib.*";
         time = "02:00";
       };
       slimbook-home = mkResticBackupFromBtrbkSnapshots {
@@ -114,8 +133,9 @@ in {
   systemd.services = let
     notifyFailedServices = [
       "btrbk-system"
+      "btrbk-fast_store"
       "restic-backups-homelab-root"
-      "restic-backups-homelab-var"
+      "restic-backups-homelab-var_lib"
       "restic-backups-slimbook-home"
     ];
     mkOnFailure = serviceName: {

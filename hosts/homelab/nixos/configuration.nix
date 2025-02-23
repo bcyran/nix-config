@@ -95,22 +95,44 @@
     };
   };
 
+  # /var/lib is mounted from the fast_store so we need to unlock it initrd.
+  boot.initrd = {
+    availableKernelModules = ["usbhid" "usb_storage" "uas"];
+    luks.devices.fast_store = {
+      device = "/dev/disk/by-uuid/e028f76b-e2a1-4a92-89a5-2fc5aeac615b";
+      preLVM = true;
+      allowDiscards = true;
+    };
+  };
+
+  # slow_store can be unlocked and mounted later.
   environment.etc."crypttab".text = ''
-    fast_store /dev/disk/by-uuid/e028f76b-e2a1-4a92-89a5-2fc5aeac615b ${config.sops.secrets.fast_store_key_file.path} nofail
     slow_store /dev/disk/by-uuid/2239806d-81ac-42dc-902e-1bfd4f8e3332 ${config.sops.secrets.slow_store_key_file.path} nofail
   '';
+
   fileSystems = let
     inherit (my.lib.const.paths.homelab) fastStore slowStore;
+    defaultBtrfsMountOptions = [
+      "defaults"
+      "compress=zstd:1"
+      "noatime"
+      "nodiratime"
+    ];
   in {
     ${fastStore} = {
       device = "/dev/mapper/fast_store";
       fsType = "btrfs";
-      options = ["nofail"];
+      options = defaultBtrfsMountOptions ++ ["ssd"];
+    };
+    "/var/lib" = {
+      device = "/dev/mapper/fast_store";
+      fsType = "btrfs";
+      options = defaultBtrfsMountOptions ++ ["subvol=var_lib" "ssd"];
     };
     ${slowStore} = {
       device = "/dev/mapper/slow_store";
       fsType = "btrfs";
-      options = ["nofail"];
+      options = defaultBtrfsMountOptions ++ ["nofail"];
     };
   };
 }

@@ -40,7 +40,7 @@ in {
         package = pkgs.nextcloud30;
         hostName = cfg.domain;
         https = true;
-        home = cfg.dataDir;
+        datadir = cfg.dataDir;
         maxUploadSize = "16G";
 
         config = {
