@@ -98,7 +98,7 @@ in {
         host = "homelab";
         tag = "var_lib";
         snapshotsGlob = "${backupStore}/homelab/var_lib.*";
-        time = "02:00";
+        time = "01:30";
       };
       slimbook-home = mkResticBackupFromBtrbkSnapshots {
         host = "slimbook";
