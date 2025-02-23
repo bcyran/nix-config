@@ -205,6 +205,17 @@ in {
       adminPassFile = config.sops.secrets.nextcloud_admin_pass.path;
       caddyExtraConfig = caddyTlsConfig;
     };
+    samba = {
+      enable = true;
+      openFirewall = true;
+      validUsers = [config.my.user.name];
+      shares = let
+        inherit (my.lib.const.paths.homelab) fastStore slowStore;
+      in {
+        "fast_store" = "${fastStore}/share";
+        "slow_store" = "${slowStore}/share";
+      };
+    };
   };
 
   services.btrbk.sshAccess = [
