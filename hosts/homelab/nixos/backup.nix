@@ -13,36 +13,23 @@ in {
     restic_repository_name_file = {};
   };
 
-  services = let
-    snapshotRetention = "14d";
-    snapshotRetentionMin = "1d";
-  in {
-    btrbk.instances = {
-      system = {
+  services = {
+    btrbk.instances = let
+      snapshotRetention = "14d";
+      snapshotRetentionMin = "1d";
+      mkBtrbkInstance = {
+        volume,
+        subvolumes,
+      }: {
         onCalendar = "hourly";
         settings = {
-          volume."/" = {
-            subvolume = {
-              "/" = {};
-            };
-            snapshot_dir = "/.snapshots";
-            target = "${backupStore}/homelab";
-            target_preserve = snapshotRetention;
-            target_preserve_min = snapshotRetentionMin;
-          };
-          snapshot_preserve = snapshotRetention;
-          snapshot_preserve_min = snapshotRetentionMin;
-          archive_preserve = snapshotRetention;
-          archive_preserve_min = snapshotRetentionMin;
-        };
-      };
-      fast_store = {
-        onCalendar = "hourly";
-        settings = {
-          volume."/mnt/fast_store" = {
-            subvolume = {
-              "var_lib" = {};
-            };
+          volume.${volume} = {
+            subvolume =
+              my.lib.mapListToAttrs (subvolume: {
+                name = subvolume;
+                value = {};
+              })
+              subvolumes;
             snapshot_dir = ".snapshots";
             target = "${backupStore}/homelab";
             target_preserve = snapshotRetention;
@@ -53,6 +40,15 @@ in {
           archive_preserve = snapshotRetention;
           archive_preserve_min = snapshotRetentionMin;
         };
+      };
+    in {
+      system = mkBtrbkInstance {
+        volume = "/";
+        subvolumes = ["/"];
+      };
+      fast_store = mkBtrbkInstance {
+        volume = "/mnt/fast_store";
+        subvolumes = ["var_lib"];
       };
     };
 
