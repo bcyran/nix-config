@@ -2,6 +2,7 @@
   inputs,
   my,
   config,
+  pkgs,
   ...
 }: {
   imports = [
@@ -35,6 +36,7 @@
       nix_store_binary_cache_key = {};
       home_wifi_env_file.sopsFile = wifiSopsFile;
       mobile_wifi_env_file.sopsFile = wifiSopsFile;
+      homelab_smb_credentials_file = {};
     };
   };
 
@@ -62,6 +64,32 @@
     };
     services = {
       openssh.enable = true;
+    };
+  };
+
+  environment.systemPackages = [pkgs.cifs-utils];
+  fileSystems = let
+    userCfg = config.users.users.bazyli;
+    smbOptions = [
+      "x-systemd.automount"
+      "noauto"
+      "x-systemd.idle-timeout=60"
+      "x-systemd.device-timeout=5s"
+      "x-systemd.mount-timeout=5s"
+      "credentials=${config.sops.secrets.homelab_smb_credentials_file.path}"
+      "uid=${toString userCfg.uid}"
+      "gid=${toString config.ids.gids.users}"
+    ];
+  in {
+    "/mnt/FastStore" = {
+      device = "//${my.lib.const.lan.devices.homelab.domain}/fast_store";
+      fsType = "cifs";
+      options = smbOptions;
+    };
+    "/mnt/SlowStore" = {
+      device = "//${my.lib.const.lan.devices.homelab.domain}/slow_store";
+      fsType = "cifs";
+      options = smbOptions;
     };
   };
 
