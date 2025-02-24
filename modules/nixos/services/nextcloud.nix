@@ -78,6 +78,8 @@ in {
         };
 
         phpOptions = {
+          "opcache.jit" = "tracing";
+          "opcache.jit_buffer_size" = "100M";
           "opcache.interned_strings_buffer" = "16";
         };
 
