@@ -71,6 +71,7 @@ in {
       owner = "nextcloud";
     };
     nextcloud_whiteboard_env_file = {};
+    onlyoffice_env_file = {};
   };
 
   my.configurations = {
@@ -206,6 +207,11 @@ in {
       adminPassFile = config.sops.secrets.nextcloud_admin_pass.path;
       whiteboardEnvironmentFiles = [config.sops.secrets.nextcloud_whiteboard_env_file.path];
       caddyExtraConfig = caddyTlsConfig;
+    };
+    onlyoffice = {
+      enable = true;
+      reverseProxy.domain = "onlyoffice.${intraDomain}";
+      environmentFiles = [config.sops.secrets.onlyoffice_env_file.path];
     };
     samba = {
       enable = true;
