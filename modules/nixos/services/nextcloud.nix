@@ -79,15 +79,21 @@ in {
         phpOptions = {
           "opcache.interned_strings_buffer" = "16";
         };
+
+        poolSettings = {
+          "pm" = "dynamic";
+          "pm.max_children" = "200";
+          "pm.start_servers" = "50";
+          "pm.min_spare_servers" = "25";
+          "pm.max_spare_servers" = "50";
+          "pm.max_requests" = "500";
+          "listen.owner" = lib.mkForce caddyCfg.user;
+          "listen.group" = lib.mkForce caddyCfg.group;
+        };
       };
 
       # Caddy module enables nginx by default but we want to use caddy instead.
       nginx.enable = lib.mkForce false;
-
-      phpfpm.pools.nextcloud.settings = {
-        "listen.owner" = caddyCfg.user;
-        "listen.group" = caddyCfg.group;
-      };
 
       # Sources:
       # - https://github.com/onny/nixos-nextcloud-testumgebung/blob/main/nextcloud-extras.nix#L128
