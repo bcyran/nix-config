@@ -23,6 +23,7 @@ in {
       type = lib.types.path;
       description = "Path to the file containing the admin password.";
     };
+    whiteboardEnvironmentFiles = my.lib.options.mkEnvironmentFilesOption "Nextcloud Whiteboard";
 
     caddyExtraConfig = lib.mkOption {
       type = lib.types.lines;
@@ -108,6 +109,11 @@ in {
 
             ${cfg.caddyExtraConfig}
 
+            # For nextcloud-whiteboard-server
+            handle_path /whiteboard/* {
+              reverse_proxy http://127.0.0.1:3002
+            }
+
             encode zstd gzip
 
             root * ${config.services.nginx.virtualHosts.${cfg.domain}.root}
@@ -160,6 +166,14 @@ in {
             file_server
           '';
         };
+      };
+
+      nextcloud-whiteboard-server = {
+        enable = true;
+        settings = {
+          NEXTCLOUD_URL = "https://${cfg.domain}";
+        };
+        secrets = cfg.whiteboardEnvironmentFiles;
       };
     };
   };

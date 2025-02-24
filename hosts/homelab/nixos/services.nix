@@ -70,6 +70,7 @@ in {
     nextcloud_admin_pass = {
       owner = "nextcloud";
     };
+    nextcloud_whiteboard_env_file = {};
   };
 
   my.configurations = {
@@ -203,6 +204,7 @@ in {
       enable = true;
       domain = "nextcloud.${intraDomain}";
       adminPassFile = config.sops.secrets.nextcloud_admin_pass.path;
+      whiteboardEnvironmentFiles = [config.sops.secrets.nextcloud_whiteboard_env_file.path];
       caddyExtraConfig = caddyTlsConfig;
     };
     samba = {
