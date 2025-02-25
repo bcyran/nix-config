@@ -22,6 +22,12 @@ in {
       enable = true;
       stateDir = cfg.dataDir;
 
+      database = {
+        type = "postgres";
+        name = "forgejo";
+        user = "forgejo";
+      };
+
       settings = {
         server = {
           HTTP_ADDR = cfg.address;
