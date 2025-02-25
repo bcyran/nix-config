@@ -112,9 +112,6 @@ in {
               type = "postgres";
               url = "/run/postgresql";
               user = pgDatabase;
-              secureJsonData = {
-                password = "-";
-              };
               jsonData = {
                 database = pgDatabase;
                 sslmode = "disable";
