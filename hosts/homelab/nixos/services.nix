@@ -209,11 +209,6 @@ in {
       whiteboardEnvironmentFiles = [config.sops.secrets.nextcloud_whiteboard_env_file.path];
       caddyExtraConfig = caddyTlsConfig;
     };
-    onlyoffice = {
-      enable = true;
-      reverseProxy.domain = "onlyoffice.${intraDomain}";
-      environmentFiles = [config.sops.secrets.onlyoffice_env_file.path];
-    };
     collabora = {
       enable = true;
       reverseProxy.domain = "collabora.${intraDomain}";
