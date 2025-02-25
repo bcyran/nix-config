@@ -72,6 +72,7 @@ in {
     };
     nextcloud_whiteboard_env_file = {};
     onlyoffice_env_file = {};
+    collabora_env_file = {};
   };
 
   my.configurations = {
@@ -212,6 +213,11 @@ in {
       enable = true;
       reverseProxy.domain = "onlyoffice.${intraDomain}";
       environmentFiles = [config.sops.secrets.onlyoffice_env_file.path];
+    };
+    collabora = {
+      enable = true;
+      reverseProxy.domain = "collabora.${intraDomain}";
+      environmentFiles = [config.sops.secrets.collabora_env_file.path];
     };
     samba = {
       enable = true;
