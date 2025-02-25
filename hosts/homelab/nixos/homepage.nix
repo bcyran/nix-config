@@ -64,6 +64,20 @@ in {
       {
         "Applications" = [
           {
+            Nextcloud = rec {
+              description = "Personal cloud storage and productivity suite.";
+              icon = "nextcloud";
+              href = "https://${config.my.services.nextcloud.domain}";
+              siteMonitor = href;
+              widget = {
+                type = "nextcloud";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_NEXTCLOUD_SERVERINFO_TOKEN}}";
+                fields = ["freespace" "numfiles"];
+              };
+            };
+          }
+          {
             Immich = rec {
               description = "Photos and videos management.";
               icon = "immich";
