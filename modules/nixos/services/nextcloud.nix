@@ -63,7 +63,7 @@ in {
             notes
             tasks
             whiteboard
-            onlyoffice
+            richdocuments
             ;
           theming_customcss = pkgs.fetchNextcloudApp {
             sha256 = "sha256-MsF+im9yCt7bRNIE8ait0wxcVzMXsHMNbp+IIzY/zJI=";
