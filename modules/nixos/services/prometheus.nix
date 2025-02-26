@@ -44,6 +44,10 @@ in {
               "processes"
             ];
             port = 9100;
+            disabledCollectors = [
+              # This errors out on my system and I don't really care about it.
+              "powersupplyclass"
+            ];
           };
         };
 
