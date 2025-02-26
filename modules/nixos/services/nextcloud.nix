@@ -70,6 +70,11 @@ in {
             url = "https://github.com/nextcloud-releases/theming_customcss/releases/download/v1.18.0/theming_customcss.tar.gz";
             license = "agpl3Only";
           };
+          breezedark = pkgs.fetchNextcloudApp {
+            sha256 = "sha256-wMzXOBbPpGfWnxIf6kW3ymMSF8q41CrVSHTcwVbjLoQ";
+            url = "https://github.com/bcyran/nextcloud-breeze-dark/archive/17d3343aa77845a971b9592f066787676fa76c1c.tar.gz";
+            license = "agpl3Only";
+          };
         };
         extraAppsEnable = true;
 
