@@ -61,6 +61,10 @@ in {
           user = postgresExporterUser;
           dataSourceName = "postgresql:///postgres?host=/run/postgresql";
           port = postgresExporterPort;
+          # Running as non-superuser requires additional configuration to collect some metrics (WAL).
+          # Also, some DBs can't be accessed and seem to require additional permissions.
+          # It's a PITA in general.
+          runAsLocalSuperUser = true;
         };
         scrapeConfigs = [
           {
