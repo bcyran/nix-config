@@ -2,9 +2,12 @@
   my,
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.my.services.forgejo;
+
+  dumpKeepDays = 7;
 in {
   options.my.services.forgejo = let
     serviceName = "Forgejo git server";
@@ -46,6 +49,30 @@ in {
       dump = {
         enable = true;
         type = "tar.zst";
+        interval = "00:05";
+      };
+    };
+
+    systemd = {
+      services.forgejo-dump-cleanup = {
+        description = "Cleanup Forgejo dumps";
+        serviceConfig = {
+          Type = "oneshot";
+          User = config.services.forgejo.user;
+          ExecStart = let
+            findBin = "${pkgs.findutils}/bin/find";
+            dumpDir = config.services.forgejo.dump.backupDir;
+          in "${findBin} '${dumpDir}' -type f -mtime +${builtins.toString dumpKeepDays} -delete";
+        };
+      };
+      timers.forgejo-dump-cleanup = {
+        description = "Cleanup Forgejo dumps timer";
+        partOf = ["forgejo-dump-cleanup.service"];
+        wantedBy = ["timers.target"];
+        timerConfig = {
+          OnCalendar = "00:10";
+          Persistent = true;
+        };
       };
     };
 
