@@ -214,6 +214,10 @@ in {
       reverseProxy.domain = "collabora.${intraDomain}";
       environmentFiles = [config.sops.secrets.collabora_env_file.path];
     };
+    drawio = {
+      enable = true;
+      reverseProxy.domain = "drawio.${intraDomain}";
+    };
     samba = {
       enable = true;
       openFirewall = true;
