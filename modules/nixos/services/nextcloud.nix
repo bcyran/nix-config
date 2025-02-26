@@ -65,6 +65,11 @@ in {
             whiteboard
             richdocuments
             ;
+          drawio = pkgs.fetchNextcloudApp {
+            sha256 = "sha256-PpCOhegzJ6Suy040r1XwxWzBKmL9xkgEXLaWPKGmvlE";
+            url = "https://github.com/jgraph/drawio-nextcloud/releases/download/v3.0.3/drawio-v3.0.3.tar.gz";
+            license = "agpl3Only";
+          };
           theming_customcss = pkgs.fetchNextcloudApp {
             sha256 = "sha256-MsF+im9yCt7bRNIE8ait0wxcVzMXsHMNbp+IIzY/zJI=";
             url = "https://github.com/nextcloud-releases/theming_customcss/releases/download/v1.18.0/theming_customcss.tar.gz";
