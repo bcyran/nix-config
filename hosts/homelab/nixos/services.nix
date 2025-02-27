@@ -73,6 +73,9 @@ in {
     nextcloud_whiteboard_env_file = {};
     onlyoffice_env_file = {};
     collabora_env_file = {};
+    linkwarden_env_file = {
+      restartUnits = ["podman-linkwarden.service"];
+    };
   };
 
   my.configurations = {
@@ -158,6 +161,11 @@ in {
         meilisearch_env_file.path
       ];
       reverseProxy.domain = "hoarder.${intraDomain}";
+    };
+    linkwarden = {
+      enable = true;
+      environmentFiles = [config.sops.secrets.linkwarden_env_file.path];
+      reverseProxy.domain = "linkwarden.${intraDomain}";
     };
     ollama = {
       enable = true;
