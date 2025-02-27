@@ -22,4 +22,5 @@ in rec {
   kidex = pkgs.callPackage ./kidex {};
   go-hass-agent = pkgs.callPackage ./go-hass-agent {};
   joplin-plugins = pkgs.callPackage ./joplin-plugins {};
+  linkwarden = pkgs.callPackage ./linkwarden {};
 }
