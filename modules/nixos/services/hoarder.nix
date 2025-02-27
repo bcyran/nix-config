@@ -48,6 +48,10 @@ in {
         {
           DATA_DIR = "/data";
           NEXTAUTH_URL = "https://${cfg.reverseProxy.domain}";
+          CRAWLER_FULL_PAGE_SCREENSHOT = "true";
+          CRAWLER_FULL_PAGE_ARCHIVE = "true";
+          CRAWLER_NAVIGATE_TIMEOUT_SEC = "60";
+          CRAWLER_JOB_TIMEOUT_SEC = "120";
         }
         // lib.optionalAttrs meiliCfg.enable {
           MEILI_ADDR = "http://${loopback}:${toString meiliCfg.port}";
