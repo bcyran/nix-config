@@ -166,6 +166,7 @@ in {
       enable = true;
       environmentFiles = [config.sops.secrets.linkwarden_env_file.path];
       reverseProxy.domain = "linkwarden.${intraDomain}";
+      llm = "phi3";
     };
     ollama = {
       enable = true;
