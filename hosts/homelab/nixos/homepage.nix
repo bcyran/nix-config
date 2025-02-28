@@ -93,6 +93,20 @@ in {
             };
           }
           {
+            Linkwarden = rec {
+              description = "Bookmark manager.";
+              icon = "linkwarden";
+              href = makeServiceDomainUrl "linkwarden";
+              siteMonitor = makeServiceLoopbackUrl "linkwarden";
+              widget = {
+                type = "linkwarden";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_LINKWARDEN_API_KEY}}";
+                fields = ["links" "collections" "tags"];
+              };
+            };
+          }
+          {
             Hoarder = rec {
               description = "Bookmark manager.";
               icon = "hoarder";
