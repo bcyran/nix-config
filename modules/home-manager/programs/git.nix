@@ -86,20 +86,45 @@ in {
       extraConfig = {
         core = {
           editor = "nvim";
+          fsmonitor = true;
+          untrackedCache = true;
         };
         merge.conflictstyle = "diff3";
-        pull.ff = "only";
+        pull = {
+          rebase = true;
+          ff = "only";
+        };
         push = {
-          default = "current";
+          default = "simple";
           autoSetupRemote = true;
+          followTags = "true";
         };
         rebase = {
           autoStash = true;
           autoSquash = true;
+          updateRefs = true;
         };
-        rerere.enable = true;
+        rerere = {
+          enabled = true;
+          autoupdate = true;
+        };
         branch.sort = "-committerdate";
+        tag.sort = "version:refname";
         column.ui = "auto";
+        diff = {
+          algorithm = "histogram";
+          colorMoved = "plain";
+          mnemonicPrefix = true;
+          renames = true;
+        };
+        fetch = {
+          prune = true;
+          pruneTags = true;
+          all = true;
+        };
+        commit = {
+          verbose = true;
+        };
       };
       ignores = [
         "local"
