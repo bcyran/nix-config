@@ -22,6 +22,12 @@ in {
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
     dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/transmission";
 
+    downloadsDir = lib.mkOption {
+      type = lib.types.path;
+      example = "/path/to/downloads";
+      description = "The path to the directory where Transmission should save downloaded files.";
+    };
+
     credentialsFile = lib.mkOption {
       type = lib.types.path;
       example = "/path/to/credentials/file";
@@ -46,11 +52,11 @@ in {
       inherit (cfg) credentialsFile;
 
       settings = {
-        download-dir = "${cfg.dataDir}/downloads";
+        download-dir = cfg.downloadsDir;
         incomplete-dir-enabled = true;
-        incomplete-dir = "${cfg.dataDir}/downloads/.incomplete";
+        incomplete-dir = "${cfg.downloadsDir}/.incomplete";
         watch-dir-enabled = true;
-        watch-dir = "${cfg.dataDir}/downloads/.watch";
+        watch-dir = "${cfg.downloadsDir}/.watch";
 
         rpc-bind-address = effectiveAddress;
         rpc-port = cfg.port;
@@ -70,10 +76,14 @@ in {
     systemd.tmpfiles.rules = let
       inherit (config.services.transmission) user group;
     in [
-      "d '${cfg.dataDir}'                       0750 ${user} ${group} - -"
-      "d '${cfg.dataDir}/downloads'             0755 ${user} ${group} - -"
-      "d '${cfg.dataDir}/downloads/.incomplete' 0755 ${user} ${group} - -"
-      "d '${cfg.dataDir}/downloads/.watch'      0755 ${user} ${group} - -"
+      "d '${cfg.dataDir}'                    0750 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}'               0750 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}/.incomplete'   0750 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}/.watch'        0750 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}/books'         0750 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}/movies'        0750 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}/music'         0750 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}/tv'            0750 ${user} ${group} - -"
     ];
 
     systemd.services.transmission.vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
