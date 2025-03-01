@@ -21,6 +21,12 @@ in {
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
     dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/sonarr";
 
+    mediaDir = lib.mkOption {
+      type = lib.types.path;
+      example = "/path/to/media";
+      description = "The path to the directory where Sonarr should store media files.";
+    };
+
     vpnNamespace = lib.mkOption {
       type = with lib.types; nullOr str;
       default = null;
@@ -36,6 +42,11 @@ in {
       group = "sonarr";
       inherit (cfg) dataDir openFirewall;
     };
+
+    systemd.tmpfiles.rules = [
+      "d '${cfg.dataDir}'   0750 ${user} ${group} - -"
+      "d '${cfg.mediaDir}'  0750 ${user} ${group} - -"
+    ];
 
     systemd.services.sonarr.vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
       enable = true;
