@@ -252,6 +252,11 @@ in {
       reverseProxy.domain = "prowlarr.${intraDomain}";
       vpnNamespace = "airvpn";
     };
+    bazarr = {
+      enable = true;
+      reverseProxy.domain = "bazarr.${intraDomain}";
+      vpnNamespace = "airvpn";
+    };
   };
 
   services.btrbk.sshAccess = [
