@@ -91,6 +91,11 @@ in {
       ];
     };
 
-    my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
+        upstreamAddress = effectiveAddress;
+        upstreamPort = cfg.port;
+      };
+    };
   };
 }
