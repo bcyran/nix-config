@@ -205,6 +205,7 @@ in {
       enable = true;
       reverseProxy.domain = "transmission.${intraDomain}";
       credentialsFile = config.sops.secrets.transmission_credentials_file.path;
+      vpnNamespace = "airvpn";
     };
     nix-serve = {
       enable = true;
