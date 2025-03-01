@@ -257,6 +257,10 @@ in {
       reverseProxy.domain = "bazarr.${intraDomain}";
       vpnNamespace = "airvpn";
     };
+    jellyfin = {
+      enable = true;
+      reverseProxy.domain = "jellyfin.${intraDomain}";
+    };
   };
 
   services.btrbk.sshAccess = [
