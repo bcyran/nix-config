@@ -61,8 +61,8 @@ in {
     transmission_credentials_file = {
       reloadUnits = ["transmission.service"];
     };
-    wireguard_conf_file = {
-      restartUnits = ["proton.service"];
+    airvpn_conf_file = {
+      restartUnits = ["airvpn.service"];
     };
     nix_store_binary_cache_key = {
       restartUnits = ["nix-serve.service"];
@@ -81,8 +81,8 @@ in {
   my.configurations = {
     vpnConfinement = {
       enable = true;
-      wireguardConfigFile = config.sops.secrets.wireguard_conf_file.path;
-      namespaceName = "proton";
+      wireguardConfigFile = config.sops.secrets.airvpn_conf_file.path;
+      namespaceName = "airvpn";
     };
   };
 
