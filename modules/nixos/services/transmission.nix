@@ -22,6 +22,13 @@ in {
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
     dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/transmission";
 
+    peerPort = lib.mkOption {
+      type = lib.types.int;
+      default = 51413;
+      example = 51413;
+      description = "The port that Transmission should use for incoming connections.";
+    };
+
     downloadsDir = lib.mkOption {
       type = lib.types.path;
       example = "/path/to/downloads";
@@ -58,12 +65,15 @@ in {
         watch-dir-enabled = true;
         watch-dir = "${cfg.downloadsDir}/.watch";
 
+        peer-port = cfg.peerPort;
+        port-forwarding-enabled = false;
+
         rpc-bind-address = effectiveAddress;
         rpc-port = cfg.port;
         rpc-whitelist-enabled = false;
         rpc-authentication-required = true;
         rpc-host-whitelist-enabled = true;
-        rpc-host-whitelist = cfg.reverseProxy.domain;
+        rpc-host-whitelist = builtins.concatStringsSep "," ["localhost" cfg.reverseProxy.domain];
 
         blocklist-enabled = true;
         blocklist-url = "https://github.com/Naunter/BT_BlockLists/raw/master/bt_blocklists.gz";
@@ -97,6 +107,12 @@ in {
         {
           from = cfg.port;
           to = cfg.port;
+        }
+      ];
+      openVPNPorts = [
+        {
+          port = cfg.peerPort;
+          protocol = "both";
         }
       ];
     };
