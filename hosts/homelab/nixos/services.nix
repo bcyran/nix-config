@@ -240,6 +240,11 @@ in {
         "slow_store" = "${slowStore}/share";
       };
     };
+    sonarr = {
+      enable = true;
+      reverseProxy.domain = "sonarr.${intraDomain}";
+      vpnNamespace = "airvpn";
+    };
   };
 
   services.btrbk.sshAccess = [
