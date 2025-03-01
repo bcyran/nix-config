@@ -7,6 +7,8 @@
 }: let
   cfg = config.my.services.transmission;
 
+  user = "transmission";
+  group = "servarr";
   effectiveAddress =
     if cfg.vpnNamespace != null
     then config.vpnNamespaces.${cfg.vpnNamespace}.namespaceAddress
@@ -52,6 +54,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.transmission = {
       enable = true;
+      inherit user group;
       home = cfg.dataDir;
       webHome = pkgs.flood-for-transmission;
       openPeerPorts = cfg.openFirewall;
@@ -83,9 +86,7 @@ in {
       };
     };
 
-    systemd.tmpfiles.rules = let
-      inherit (config.services.transmission) user group;
-    in [
+    systemd.tmpfiles.rules = [
       "d '${cfg.dataDir}'                    0750 ${user} ${group} - -"
       "d '${cfg.downloadsDir}'               0750 ${user} ${group} - -"
       "d '${cfg.downloadsDir}/.incomplete'   0750 ${user} ${group} - -"

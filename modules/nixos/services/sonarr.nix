@@ -6,6 +6,8 @@
 }: let
   cfg = config.my.services.sonarr;
 
+  user = "sonarr";
+  group = "servarr";
   effectiveAddress =
     if cfg.vpnNamespace != null
     then config.vpnNamespaces.${cfg.vpnNamespace}.namespaceAddress
@@ -38,8 +40,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.sonarr = {
       enable = true;
-      user = "sonarr";
-      group = "sonarr";
+      inherit user group;
       inherit (cfg) dataDir openFirewall;
     };
 
