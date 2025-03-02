@@ -267,6 +267,10 @@ in {
       enable = true;
       reverseProxy.domain = "jellyfin.${intraDomain}";
     };
+    jellyseerr = {
+      enable = true;
+      reverseProxy.domain = "jellyseerr.${intraDomain}";
+    };
   };
 
   services.btrbk.sshAccess = [
