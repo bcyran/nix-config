@@ -271,6 +271,11 @@ in {
       enable = true;
       reverseProxy.domain = "jellyseerr.${intraDomain}";
     };
+    unmanic = {
+      enable = true;
+      reverseProxy.domain = "unmanic.${intraDomain}";
+      mediaDir = "${my.lib.const.paths.homelab.slowStore}/servarr/media";
+    };
   };
 
   services.btrbk.sshAccess = [
