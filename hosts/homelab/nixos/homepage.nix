@@ -231,7 +231,7 @@ in {
               description = "BitTorrent client.";
               icon = "transmission";
               href = makeServiceDomainUrl "transmission";
-              siteMonitor = makeServiceLoopbackUrl "transmission";
+              siteMonitor = makeServiceDomainUrl "transmission";
               widget = {
                 type = "transmission";
                 url = siteMonitor;
