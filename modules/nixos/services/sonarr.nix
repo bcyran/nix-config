@@ -46,7 +46,7 @@ in {
 
     systemd.tmpfiles.rules = [
       "d '${cfg.dataDir}'   0750 ${user} ${group} - -"
-      "d '${cfg.mediaDir}'  0750 ${user} ${group} - -"
+      "d '${cfg.mediaDir}'  0770 ${user} ${group} - -"
     ];
 
     systemd.services.sonarr.vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
