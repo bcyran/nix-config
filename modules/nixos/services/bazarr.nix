@@ -21,7 +21,6 @@ in {
     port = my.lib.options.mkPortOption serviceName 6767;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/bazarr";
 
     vpnNamespace = lib.mkOption {
       type = with lib.types; nullOr str;
