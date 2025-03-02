@@ -276,6 +276,11 @@ in {
       reverseProxy.domain = "unmanic.${intraDomain}";
       mediaDir = "${my.lib.const.paths.homelab.slowStore}/servarr/media";
     };
+    flaresolverr = {
+      enable = true;
+      reverseProxy.domain = "flaresolverr.${intraDomain}";
+      vpnNamespace = "airvpn";
+    };
   };
 
   services.btrbk.sshAccess = [
