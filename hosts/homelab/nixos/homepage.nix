@@ -24,6 +24,12 @@ in {
           };
         }
         {
+          Media = {
+            style = "row";
+            columns = 3;
+          };
+        }
+        {
           Monitoring = {
             style = "row";
             columns = 3;
@@ -227,20 +233,6 @@ in {
             };
           }
           {
-            Transmission = rec {
-              description = "BitTorrent client.";
-              icon = "transmission";
-              href = makeServiceDomainUrl "transmission";
-              siteMonitor = makeServiceDomainUrl "transmission";
-              widget = {
-                type = "transmission";
-                url = siteMonitor;
-                username = "{{HOMEPAGE_VAR_TRANSMISSION_USERNAME}}";
-                password = "{{HOMEPAGE_VAR_TRANSMISSION_PASSWORD}}";
-              };
-            };
-          }
-          {
             Ollama = rec {
               description = "LLM API service.";
               icon = "ollama";
@@ -295,6 +287,110 @@ in {
               icon = "https://docs.openwebui.com/images/logo-dark.png";
               href = makeServiceDomainUrl "open-webui";
               siteMonitor = makeServiceLoopbackUrl "open-webui";
+            };
+          }
+        ];
+      }
+      {
+        "Media" = [
+          {
+            Jellyfin = rec {
+              description = "Media server.";
+              icon = "jellyfin";
+              href = makeServiceDomainUrl "jellyfin";
+              siteMonitor = makeServiceDomainUrl "jellyfin";
+              widget = {
+                type = "jellyfin";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
+                enableBlocks = true;
+                enableNowPlaying = true;
+                enableUser = true;
+                showEpisodeNumber = true;
+                expandOneStreamToTwoRows = false;
+              };
+            };
+          }
+          {
+            Jellyseerr = rec {
+              description = "Media requests manager.";
+              icon = "jellyseerr";
+              href = makeServiceDomainUrl "jellyseerr";
+              siteMonitor = makeServiceDomainUrl "jellyseerr";
+              widget = {
+                type = "jellyseerr";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_JELLYSEERR_API_KEY}}";
+                fields = ["pending" "approved" "available"];
+              };
+            };
+          }
+          {
+            Transmission = rec {
+              description = "BitTorrent client.";
+              icon = "transmission";
+              href = makeServiceDomainUrl "transmission";
+              siteMonitor = makeServiceDomainUrl "transmission";
+              widget = {
+                type = "transmission";
+                url = siteMonitor;
+                username = "{{HOMEPAGE_VAR_TRANSMISSION_USERNAME}}";
+                password = "{{HOMEPAGE_VAR_TRANSMISSION_PASSWORD}}";
+              };
+            };
+          }
+          {
+            Sonarr = rec {
+              description = "TV shows manager.";
+              icon = "sonarr";
+              href = makeServiceDomainUrl "sonarr";
+              siteMonitor = makeServiceDomainUrl "sonarr";
+              widget = {
+                type = "sonarr";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_SONARR_API_KEY}}";
+                enableQueue = true;
+              };
+            };
+          }
+          {
+            Radarr = rec {
+              description = "Movies manager.";
+              icon = "radarr";
+              href = makeServiceDomainUrl "radarr";
+              siteMonitor = makeServiceDomainUrl "radarr";
+              widget = {
+                type = "radarr";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_RADARR_API_KEY}}";
+                enableQueue = true;
+              };
+            };
+          }
+          {
+            Prowlarr = rec {
+              description = "Indexer manager.";
+              icon = "prowlarr";
+              href = makeServiceDomainUrl "prowlarr";
+              siteMonitor = makeServiceDomainUrl "prowlarr";
+              widget = {
+                type = "prowlarr";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}";
+              };
+            };
+          }
+          {
+            Bazarr = rec {
+              description = "Subtitles manager.";
+              icon = "bazarr";
+              href = makeServiceDomainUrl "bazarr";
+              siteMonitor = makeServiceDomainUrl "bazarr";
+              widget = {
+                type = "bazarr";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_BAZARR_API_KEY}}";
+              };
             };
           }
         ];
