@@ -349,7 +349,6 @@ in {
                 type = "sonarr";
                 url = siteMonitor;
                 key = "{{HOMEPAGE_VAR_SONARR_API_KEY}}";
-                enableQueue = true;
               };
             };
           }
@@ -363,7 +362,6 @@ in {
                 type = "radarr";
                 url = siteMonitor;
                 key = "{{HOMEPAGE_VAR_RADARR_API_KEY}}";
-                enableQueue = true;
               };
             };
           }
