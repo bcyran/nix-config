@@ -247,6 +247,12 @@ in {
       vpnNamespace = "airvpn";
       mediaDir = "${my.lib.const.paths.homelab.slowStore}/servarr/media/tv";
     };
+    radarr = {
+      enable = true;
+      reverseProxy.domain = "radarr.${intraDomain}";
+      vpnNamespace = "airvpn";
+      mediaDir = "${my.lib.const.paths.homelab.slowStore}/servarr/media/movies";
+    };
     prowlarr = {
       enable = true;
       reverseProxy.domain = "prowlarr.${intraDomain}";
