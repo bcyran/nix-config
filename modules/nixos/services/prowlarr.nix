@@ -65,7 +65,7 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}' 750 ${user} ${group} - -"
+      "d '${cfg.dataDir}' 700 ${user} ${group} - -"
     ];
 
     vpnNamespaces.${cfg.vpnNamespace} = lib.mkIf (cfg.vpnNamespace != null) {

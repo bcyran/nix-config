@@ -87,14 +87,14 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}'                    0750 ${user} ${group} - -"
-      "d '${cfg.downloadsDir}'               0750 ${user} ${group} - -"
-      "d '${cfg.downloadsDir}/.incomplete'   0750 ${user} ${group} - -"
-      "d '${cfg.downloadsDir}/.watch'        0750 ${user} ${group} - -"
-      "d '${cfg.downloadsDir}/books'         0750 ${user} ${group} - -"
-      "d '${cfg.downloadsDir}/movies'        0750 ${user} ${group} - -"
-      "d '${cfg.downloadsDir}/music'         0750 ${user} ${group} - -"
-      "d '${cfg.downloadsDir}/tv'            0750 ${user} ${group} - -"
+      "d '${cfg.dataDir}'                    0700 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}'               0755 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}/.incomplete'   0755 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}/.watch'        0755 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}/books'         0755 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}/movies'        0755 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}/music'         0755 ${user} ${group} - -"
+      "d '${cfg.downloadsDir}/tv'            0755 ${user} ${group} - -"
     ];
 
     systemd.services.transmission.vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {

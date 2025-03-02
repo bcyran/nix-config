@@ -25,6 +25,10 @@ in {
       inherit (cfg) openFirewall dataDir;
     };
 
+    systemd.tmpfiles.rules = [
+      "d '${cfg.dataDir}'   0700 ${user} ${group} - -"
+    ];
+
     my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
       ${cfg.reverseProxy.domain} = {
         upstreamAddress = "127.0.0.1";
