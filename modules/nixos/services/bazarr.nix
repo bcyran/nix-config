@@ -11,13 +11,12 @@
   effectiveAddress =
     if cfg.vpnNamespace != null
     then config.vpnNamespaces.${cfg.vpnNamespace}.namespaceAddress
-    else cfg.address;
+    else "127.0.0.1";
 in {
   options.my.services.bazarr = let
     serviceName = "bazarr";
   in {
     enable = lib.mkEnableOption serviceName;
-    address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 6767;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
