@@ -40,6 +40,7 @@ in {
       tor-browser
       quickemu
       webcord
+      jellyfin-media-player
     ];
   };
 }
