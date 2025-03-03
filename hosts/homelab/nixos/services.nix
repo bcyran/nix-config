@@ -233,13 +233,15 @@ in {
         "slow_store" = "${slowStore}/share";
       };
     };
-    servarr = {
+    servarr = let
+      inherit (my.lib.const.paths.homelab) downloads media;
+    in {
       enable = true;
       domain = intraDomain;
       transmissionCredentialsFile = config.sops.secrets.transmission_credentials_file.path;
       transmissionPeerPort = 24334;
-      downloadsDir = "${my.lib.const.paths.homelab.slowStore}/servarr";
-      mediaDir = "${my.lib.const.paths.homelab.slowStore}/servarr/media";
+      downloadsDir = downloads;
+      mediaDir = media;
       vpnNamespace = "airvpn";
     };
   };
