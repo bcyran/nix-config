@@ -1,4 +1,5 @@
 {
+  my,
   config,
   lib,
   ...
@@ -6,9 +7,10 @@
   cfg = config.my.services.servarr;
 in {
   options.my.services.servarr = let
-    serviceName = "Servarr suite";
+    serviceName = "servarr";
   in {
     enable = lib.mkEnableOption serviceName;
+    group = my.lib.options.mkGroupOption serviceName;
 
     domain = lib.mkOption {
       type = lib.types.str;
@@ -50,6 +52,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    users.groups = lib.mkIf (cfg.group == "servarr") {"${cfg.group}" = {};};
+
     my.services = {
       transmission = {
         enable = true;
@@ -57,12 +61,12 @@ in {
         credentialsFile = cfg.transmissionCredentialsFile;
         peerPort = cfg.transmissionPeerPort;
         downloadsDir = "${cfg.downloadsDir}/torrents";
-        inherit (cfg) vpnNamespace;
+        inherit (cfg) group vpnNamespace;
       };
       prowlarr = {
         enable = true;
         reverseProxy.domain = "prowlarr.${cfg.domain}";
-        inherit (cfg) vpnNamespace;
+        inherit (cfg) group vpnNamespace;
       };
       flaresolverr = {
         enable = true;
@@ -72,23 +76,24 @@ in {
       sonarr = {
         enable = true;
         reverseProxy.domain = "sonarr.${cfg.domain}";
-        inherit (cfg) vpnNamespace;
+        inherit (cfg) group vpnNamespace;
         mediaDir = "${cfg.mediaDir}/tv";
       };
       radarr = {
         enable = true;
         reverseProxy.domain = "radarr.${cfg.domain}";
-        inherit (cfg) vpnNamespace;
+        inherit (cfg) group vpnNamespace;
         mediaDir = "${cfg.mediaDir}/movies";
       };
       bazarr = {
         enable = true;
         reverseProxy.domain = "bazarr.${cfg.domain}";
-        inherit (cfg) vpnNamespace;
+        inherit (cfg) group vpnNamespace;
       };
       jellyfin = {
         enable = true;
         reverseProxy.domain = "jellyfin.${cfg.domain}";
+        inherit (cfg) group;
       };
       jellyseerr = {
         enable = true;
@@ -97,7 +102,7 @@ in {
       unmanic = {
         enable = true;
         reverseProxy.domain = "unmanic.${cfg.domain}";
-        inherit (cfg) mediaDir;
+        inherit (cfg) group mediaDir;
       };
     };
   };

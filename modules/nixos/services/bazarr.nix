@@ -6,8 +6,6 @@
 }: let
   cfg = config.my.services.bazarr;
 
-  user = "bazarr";
-  group = "servarr";
   effectiveAddress =
     if cfg.vpnNamespace != null
     then config.vpnNamespaces.${cfg.vpnNamespace}.namespaceAddress
@@ -17,6 +15,8 @@ in {
     serviceName = "bazarr";
   in {
     enable = lib.mkEnableOption serviceName;
+    user = my.lib.options.mkUserOption serviceName;
+    group = my.lib.options.mkGroupOption serviceName;
     port = my.lib.options.mkPortOption serviceName 6767;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
@@ -33,8 +33,7 @@ in {
     services.bazarr = {
       enable = true;
       listenPort = cfg.port;
-      inherit user group;
-      inherit (cfg) openFirewall;
+      inherit (cfg) user group openFirewall;
     };
 
     systemd.services.bazarr.vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {

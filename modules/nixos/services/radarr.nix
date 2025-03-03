@@ -6,8 +6,6 @@
 }: let
   cfg = config.my.services.radarr;
 
-  user = "radarr";
-  group = "servarr";
   effectiveAddress =
     if cfg.vpnNamespace != null
     then config.vpnNamespaces.${cfg.vpnNamespace}.namespaceAddress
@@ -17,6 +15,8 @@ in {
     serviceName = "Radarr";
   in {
     enable = lib.mkEnableOption serviceName;
+    user = my.lib.options.mkUserOption serviceName;
+    group = my.lib.options.mkGroupOption serviceName;
     port = my.lib.options.mkPortOption serviceName 7878;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
@@ -39,13 +39,12 @@ in {
   config = lib.mkIf cfg.enable {
     services.radarr = {
       enable = true;
-      inherit user group;
-      inherit (cfg) openFirewall dataDir;
+      inherit (cfg) user group openFirewall dataDir;
     };
 
     systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}'   0700 ${user} ${group} - -"
-      "d '${cfg.mediaDir}'  0775 ${user} ${group} - -"
+      "d '${cfg.dataDir}'   0700 ${cfg.user} ${cfg.group} - -"
+      "d '${cfg.mediaDir}'  0775 ${cfg.user} ${cfg.group} - -"
     ];
 
     systemd.services.radarr.vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {

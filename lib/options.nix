@@ -59,4 +59,20 @@
       description = "The IP addresses on which the reverse proxy for ${serviceName} will bind.";
     };
   };
+
+  mkUserOption = serviceName:
+    lib.mkOption {
+      type = lib.types.str;
+      default = lib.toLower serviceName;
+      example = "service";
+      description = "User account under which ${serviceName} runs.";
+    };
+
+  mkGroupOption = serviceName:
+    lib.mkOption {
+      type = lib.types.str;
+      default = lib.toLower serviceName;
+      example = "service";
+      description = "Group under which ${serviceName} runs.";
+    };
 }

@@ -7,14 +7,14 @@
   cfg = config.my.services.unmanic;
 
   cacheDir = "/var/cache/unmanic";
-  user = "unmanic";
-  group = "servarr";
   unmanicVersion = "0.2.7";
 in {
   options.my.services.unmanic = let
     serviceName = "Unmanic";
   in {
     enable = lib.mkEnableOption serviceName;
+    user = my.lib.options.mkUserOption serviceName;
+    group = my.lib.options.mkGroupOption serviceName;
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 8888;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
@@ -46,25 +46,27 @@ in {
         "/dev/dri:/dev/dri"
       ];
       environment = {
-        PUID = toString config.users.users.${user}.uid;
-        PGID = toString config.users.groups.${group}.gid;
+        PUID = toString config.users.users.${cfg.user}.uid;
+        PGID = toString config.users.groups.${cfg.group}.gid;
+      };
+    };
+
+    users = {
+      users = lib.mkIf (cfg.user == "unmanic") {
+        unmanic = {
+          name = "unmanic";
+          isSystemUser = true;
+          uid = 2003;
+          inherit (cfg) group;
+        };
+        groups = lib.mkIf (cfg.group == "unmanic") {unmanic.gid = 2003;};
       };
     };
 
     systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}'   0700 ${user} ${group} - -"
-      "d '${cacheDir}'      0700 ${user} ${group} - -"
+      "d '${cfg.dataDir}'   0700 ${cfg.user} ${cfg.group} - -"
+      "d '${cacheDir}'      0700 ${cfg.user} ${cfg.group} - -"
     ];
-
-    users = {
-      users.${user} = {
-        home = cfg.dataDir;
-        createHome = true;
-        uid = 2003;
-        isSystemUser = true;
-        inherit group;
-      };
-    };
 
     my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
   };
