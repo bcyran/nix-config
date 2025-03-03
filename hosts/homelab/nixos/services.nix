@@ -201,14 +201,6 @@ in {
       enable = true;
       reverseProxy.domain = "joplin.${intraDomain}";
     };
-    transmission = {
-      enable = true;
-      reverseProxy.domain = "transmission.${intraDomain}";
-      credentialsFile = config.sops.secrets.transmission_credentials_file.path;
-      peerPort = 24334;
-      downloadsDir = "${my.lib.const.paths.homelab.slowStore}/servarr/torrents";
-      vpnNamespace = "airvpn";
-    };
     nix-serve = {
       enable = true;
       reverseProxy.domain = "cache.${intraDomain}";
@@ -241,44 +233,13 @@ in {
         "slow_store" = "${slowStore}/share";
       };
     };
-    sonarr = {
+    servarr = {
       enable = true;
-      reverseProxy.domain = "sonarr.${intraDomain}";
-      vpnNamespace = "airvpn";
-      mediaDir = "${my.lib.const.paths.homelab.slowStore}/servarr/media/tv";
-    };
-    radarr = {
-      enable = true;
-      reverseProxy.domain = "radarr.${intraDomain}";
-      vpnNamespace = "airvpn";
-      mediaDir = "${my.lib.const.paths.homelab.slowStore}/servarr/media/movies";
-    };
-    prowlarr = {
-      enable = true;
-      reverseProxy.domain = "prowlarr.${intraDomain}";
-      vpnNamespace = "airvpn";
-    };
-    bazarr = {
-      enable = true;
-      reverseProxy.domain = "bazarr.${intraDomain}";
-      vpnNamespace = "airvpn";
-    };
-    jellyfin = {
-      enable = true;
-      reverseProxy.domain = "jellyfin.${intraDomain}";
-    };
-    jellyseerr = {
-      enable = true;
-      reverseProxy.domain = "jellyseerr.${intraDomain}";
-    };
-    unmanic = {
-      enable = true;
-      reverseProxy.domain = "unmanic.${intraDomain}";
+      domain = intraDomain;
+      transmissionCredentialsFile = config.sops.secrets.transmission_credentials_file.path;
+      transmissionPeerPort = 24334;
+      downloadsDir = "${my.lib.const.paths.homelab.slowStore}/servarr";
       mediaDir = "${my.lib.const.paths.homelab.slowStore}/servarr/media";
-    };
-    flaresolverr = {
-      enable = true;
-      reverseProxy.domain = "flaresolverr.${intraDomain}";
       vpnNamespace = "airvpn";
     };
   };
