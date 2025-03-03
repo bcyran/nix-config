@@ -113,7 +113,6 @@ in {
         column.ui = "auto";
         diff = {
           algorithm = "histogram";
-          colorMoved = "plain";
           mnemonicPrefix = true;
           renames = true;
         };
