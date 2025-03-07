@@ -113,32 +113,6 @@ in {
             };
           }
           {
-            Hoarder = rec {
-              description = "Bookmark manager.";
-              icon = "hoarder";
-              href = makeServiceDomainUrl "hoarder";
-              siteMonitor = makeServiceLoopbackUrl "hoarder";
-              widget = {
-                type = "customapi";
-                url = "${siteMonitor}/api/v1/bookmarks?limit=1";
-                headers = {
-                  "Authorization" = "Bearer {{HOMEPAGE_VAR_HOARDER_API_KEY}}";
-                };
-                mappings = [
-                  {
-                    field = {
-                      bookmarks = {
-                        "0" = "createdAt";
-                      };
-                    };
-                    format = "relativeDate";
-                    label = "Last bookmark";
-                  }
-                ];
-              };
-            };
-          }
-          {
             "Home Assistant" = rec {
               description = "Home automation service.";
               icon = "home-assistant";
@@ -503,33 +477,6 @@ in {
             };
           }
           {
-            Meilisearch = rec {
-              description = "Search engine service.";
-              icon = "https://raw.githubusercontent.com/meilisearch/meilisearch/372f4fc924f36319c921fd36fbdc354d96b1d974/assets/logo.svg";
-              siteMonitor = makeServiceLoopbackUrl "meilisearch";
-              widget = {
-                type = "customapi";
-                url = "${siteMonitor}/stats";
-                headers = {
-                  "Authorization" = "Bearer {{HOMEPAGE_VAR_MEILISEARCH_API_KEY}}";
-                };
-                refreshInterval = 30000;
-                mappings = [
-                  {
-                    field = "indexes";
-                    label = "Indexes";
-                    format = "size";
-                  }
-                  {
-                    field = "databaseSize";
-                    label = "Total size";
-                    format = "bytes";
-                  }
-                ];
-              };
-            };
-          }
-          {
             PostgreSQL = {
               description = "SQL database service.";
               icon = "postgresql";
@@ -551,24 +498,6 @@ in {
                     label = "Scrape error";
                     query = "pg_exporter_last_scrape_error";
                     format.type = "text";
-                  }
-                ];
-              };
-            };
-          }
-          {
-            Chromium = rec {
-              description = "Headless browser service.";
-              icon = "chromium";
-              siteMonitor = makeServiceLoopbackUrl "chromium";
-              widget = {
-                type = "customapi";
-                url = "${siteMonitor}/json";
-                refreshInterval = 30000;
-                mappings = [
-                  {
-                    label = "Open tabs";
-                    format = "size";
                   }
                 ];
               };

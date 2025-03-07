@@ -52,12 +52,6 @@ in {
     speedtest_tracker_env_file = {
       restartUnits = ["podman-speedtest-tracker.service"];
     };
-    meilisearch_env_file = {
-      restartUnits = ["meilisearch.service"];
-    };
-    hoarder_env_file = {
-      restartUnits = ["podman-hoarder.service"];
-    };
     transmission_credentials_file = {
       reloadUnits = ["transmission.service"];
     };
@@ -147,21 +141,6 @@ in {
       reverseProxy.domain = "glances.${intraDomain}";
     };
     postgresql.enable = true;
-    meilisearch = {
-      enable = true;
-      masterKeyEnvironmentFile = config.sops.secrets.meilisearch_env_file.path;
-    };
-    chromium = {
-      enable = true;
-    };
-    hoarder = {
-      enable = true;
-      environmentFiles = with config.sops.secrets; [
-        hoarder_env_file.path
-        meilisearch_env_file.path
-      ];
-      reverseProxy.domain = "hoarder.${intraDomain}";
-    };
     linkwarden = {
       enable = true;
       environmentFiles = [config.sops.secrets.linkwarden_env_file.path];
