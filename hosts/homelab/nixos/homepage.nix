@@ -248,14 +248,6 @@ in {
             };
           }
           {
-            Memos = {
-              description = "Quick notes.";
-              icon = "https://raw.githubusercontent.com/usememos/memos/refs/heads/main/web/public/logo.webp";
-              href = makeServiceDomainUrl "memos";
-              siteMonitor = makeServiceLoopbackUrl "memos";
-            };
-          }
-          {
             "Open WebUI" = {
               description = "OpenAI API service.";
               icon = "https://docs.openwebui.com/images/logo-dark.png";

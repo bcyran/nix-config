@@ -160,10 +160,6 @@ in {
       address = "0.0.0.0";
       openFirewall = true;
     };
-    memos = {
-      enable = true;
-      reverseProxy.domain = "memos.${intraDomain}";
-    };
     immich = {
       enable = true;
       reverseProxy.domain = "immich.${intraDomain}";
