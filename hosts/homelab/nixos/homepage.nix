@@ -269,7 +269,7 @@ in {
                 type = "jellyfin";
                 url = siteMonitor;
                 key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
-                enableBlocks = true;
+                enableBlocks = false;
                 enableNowPlaying = true;
                 enableUser = true;
                 showEpisodeNumber = true;
