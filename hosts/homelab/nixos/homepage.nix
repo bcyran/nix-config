@@ -391,18 +391,6 @@ in {
               };
             };
           }
-          {
-            Unmanic = rec {
-              description = "Media optimizer.";
-              icon = "unmanic";
-              href = makeServiceDomainUrl "unmanic";
-              siteMonitor = makeServiceLoopbackUrl "unmanic";
-              widget = {
-                type = "unmanic";
-                url = siteMonitor;
-              };
-            };
-          }
         ];
       }
       {
