@@ -574,7 +574,8 @@
         "nixpkgs-stable": "nixpkgs-stable_3",
         "sops-nix": "sops-nix",
         "timewall": "timewall",
-        "vpn-confinement": "vpn-confinement"
+        "vpn-confinement": "vpn-confinement",
+        "zen-browser": "zen-browser"
       }
     },
     "rust-overlay": {
@@ -702,6 +703,26 @@
       "original": {
         "owner": "Maroka-chan",
         "repo": "VPN-Confinement",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1741428924,
+        "narHash": "sha256-Ivq8Ih3glwhdtSmVYBveL1eioyvUAIP1ZX/lgZEHcCM=",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "rev": "b166ec443ea9ede1891f6291b17b97772e8c392b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

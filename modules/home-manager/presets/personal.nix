@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   config,
   lib,
@@ -41,6 +42,7 @@ in {
       quickemu
       webcord
       jellyfin-media-player
+      inputs.zen-browser.packages."${pkgs.system}".default
     ];
   };
 }

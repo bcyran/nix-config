@@ -83,7 +83,7 @@ in {
             "$mod, space, exec, anyrun"
             "$mod, return, exec, alacritty"
             "$mod SHIFT, return, exec, alacritty --class terminal-floating"
-            "$mod, Y, exec, firefox"
+            "$mod, Y, exec, zen"
             "$mod, N, exec, thunar"
           ]
           ++ workspaceBinds;
