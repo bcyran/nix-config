@@ -29,7 +29,7 @@ in {
     };
 
     home.packages = with pkgs; [
-      portfolio
+      stable.portfolio # XXX: The package in unstable is broken
       gnucash
       gimp
       libreoffice-fresh
