@@ -31,6 +31,16 @@ in {
       description = "The port for transmission peer connections.";
     };
 
+    transmissionExtraSettings = lib.mkOption {
+      type = lib.types.attrs;
+      default = {};
+      example = {
+        speed-limit-down-enabled = true;
+        speed-limit-down = 20000;
+      };
+      description = "Extra settings to be added to the Transmission configuration.";
+    };
+
     downloadsDir = lib.mkOption {
       type = lib.types.path;
       example = "/path/to/downloads";
@@ -63,6 +73,7 @@ in {
         credentialsFile = cfg.transmissionCredentialsFile;
         peerPort = cfg.transmissionPeerPort;
         downloadsDir = "${cfg.downloadsDir}/torrents";
+        extraSettings = cfg.transmissionExtraSettings;
         inherit (cfg) group vpnNamespace;
       };
       prowlarr = {

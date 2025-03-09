@@ -49,6 +49,16 @@ in {
       example = "proton";
       description = "The name of the VPN namespace. VPN is disabled if not given.";
     };
+
+    extraSettings = lib.mkOption {
+      type = lib.types.attrs;
+      default = {};
+      example = {
+        speed-limit-down-enabled = true;
+        speed-limit-down = 20000;
+      };
+      description = "Extra settings to be added to the Transmission configuration.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -60,29 +70,31 @@ in {
       openRPCPort = cfg.openFirewall;
       inherit (cfg) user group credentialsFile;
 
-      settings = {
-        download-dir = cfg.downloadsDir;
-        incomplete-dir-enabled = true;
-        incomplete-dir = "${cfg.downloadsDir}/.incomplete";
-        watch-dir-enabled = true;
-        watch-dir = "${cfg.downloadsDir}/.watch";
+      settings =
+        {
+          download-dir = cfg.downloadsDir;
+          incomplete-dir-enabled = true;
+          incomplete-dir = "${cfg.downloadsDir}/.incomplete";
+          watch-dir-enabled = true;
+          watch-dir = "${cfg.downloadsDir}/.watch";
 
-        peer-port = cfg.peerPort;
-        port-forwarding-enabled = false;
+          peer-port = cfg.peerPort;
+          port-forwarding-enabled = false;
 
-        rpc-bind-address = effectiveAddress;
-        rpc-port = cfg.port;
-        rpc-whitelist-enabled = false;
-        rpc-authentication-required = true;
-        rpc-host-whitelist-enabled = true;
-        rpc-host-whitelist = builtins.concatStringsSep "," ["localhost" cfg.reverseProxy.domain];
+          rpc-bind-address = effectiveAddress;
+          rpc-port = cfg.port;
+          rpc-whitelist-enabled = false;
+          rpc-authentication-required = true;
+          rpc-host-whitelist-enabled = true;
+          rpc-host-whitelist = builtins.concatStringsSep "," ["localhost" cfg.reverseProxy.domain];
 
-        blocklist-enabled = true;
-        blocklist-url = "https://github.com/Naunter/BT_BlockLists/raw/master/bt_blocklists.gz";
+          blocklist-enabled = true;
+          blocklist-url = "https://github.com/Naunter/BT_BlockLists/raw/master/bt_blocklists.gz";
 
-        anti-brute-force-enabled = true;
-        anti-brute-force-threshold = 10;
-      };
+          anti-brute-force-enabled = true;
+          anti-brute-force-threshold = 10;
+        }
+        // cfg.extraSettings;
     };
 
     systemd.tmpfiles.rules = [
