@@ -70,6 +70,9 @@ in {
     linkwarden_env_file = {
       restartUnits = ["podman-linkwarden.service"];
     };
+    recyclarr_env_file = {
+      restartUnits = ["recyclarr.service"];
+    };
   };
 
   my.configurations = {
@@ -223,6 +226,7 @@ in {
         speed-limit-up-enabled = true;
         speed-limit-up = 3000;
       };
+      recyclarrEnvironmentFiles = [config.sops.secrets.recyclarr_env_file.path];
       downloadsDir = downloads;
       mediaDir = media;
       vpnNamespace = "airvpn";

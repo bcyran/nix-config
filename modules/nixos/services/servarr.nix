@@ -41,6 +41,8 @@ in {
       description = "Extra settings to be added to the Transmission configuration.";
     };
 
+    recyclarrEnvironmentFiles = my.lib.options.mkEnvironmentFilesOption "recyclarr";
+
     downloadsDir = lib.mkOption {
       type = lib.types.path;
       example = "/path/to/downloads";
@@ -116,6 +118,11 @@ in {
         enable = cfg.enableUnmanic;
         reverseProxy.domain = "unmanic.${cfg.domain}";
         inherit (cfg) group mediaDir;
+      };
+      recyclarr = {
+        enable = true;
+        environmentFiles = cfg.recyclarrEnvironmentFiles;
+        inherit (cfg) group;
       };
     };
   };
