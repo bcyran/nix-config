@@ -215,6 +215,14 @@ in {
       domain = intraDomain;
       transmissionCredentialsFile = config.sops.secrets.transmission_credentials_file.path;
       transmissionPeerPort = 24334;
+      transmissionExtraSettings = {
+        ratio-limit-enabled = true;
+        ratio-limit = 2;
+        speed-limit-down-enabled = true;
+        speed-limit-down = 20000;
+        speed-limit-up-enabled = true;
+        speed-limit-up = 3000;
+      };
       downloadsDir = downloads;
       mediaDir = media;
       vpnNamespace = "airvpn";
