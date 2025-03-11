@@ -27,7 +27,9 @@
   mkDnsMapping = attrs:
     my.lib.mapListToAttrs mkDnsMappingItem (builtins.attrValues attrs);
 in {
-  sops.secrets = {
+  sops.secrets = let
+    containersBackend = config.virtualisation.oci-containers.backend;
+  in {
     hass_secrets_file = {
       path = "${config.services.home-assistant.configDir}/secrets.yaml";
       owner = "hass";
@@ -50,7 +52,7 @@ in {
       restartUnits = ["homepage-dashboard.service"];
     };
     speedtest_tracker_env_file = {
-      restartUnits = ["podman-speedtest-tracker.service"];
+      restartUnits = ["${containersBackend}-speedtest-tracker.service"];
     };
     transmission_credentials_file = {
       reloadUnits = ["transmission.service"];
@@ -64,11 +66,14 @@ in {
     nextcloud_admin_pass = {
       owner = "nextcloud";
     };
-    nextcloud_whiteboard_env_file = {};
-    onlyoffice_env_file = {};
-    collabora_env_file = {};
+    nextcloud_whiteboard_env_file = {
+      restartUnits = ["nextcloud-whiteboard-server.service"];
+    };
+    collabora_env_file = {
+      restartUnits = ["${containersBackend}-collabora.service"];
+    };
     linkwarden_env_file = {
-      restartUnits = ["podman-linkwarden.service"];
+      restartUnits = ["${containersBackend}-linkwarden.service"];
     };
     recyclarr_env_file = {
       restartUnits = ["recyclarr.service"];
