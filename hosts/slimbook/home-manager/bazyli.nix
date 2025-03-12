@@ -46,7 +46,6 @@ in {
           "KeePass" = "~/Dokumenty/03 - Obszary/Tożsamość/Hasła";
           "Portfolio" = "~/Dokumenty/03 - Obszary/Finanse/Portfolio Performance";
           "Sync" = "~/Sync";
-          "Signal backup" = "~/Backup/Signal";
         };
       };
     };
