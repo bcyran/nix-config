@@ -65,6 +65,8 @@
       " > "$out"
     '';
   };
+
+  dataDir = "/var/lib/recyclarr";
 in {
   options.my.services.recyclarr = let
     serviceName = "recyclarr";
@@ -73,7 +75,6 @@ in {
     user = my.lib.options.mkUserOption serviceName;
     group = my.lib.options.mkGroupOption serviceName;
     environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
-    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/recyclarr";
   };
 
   config = lib.mkIf cfg.enable {
@@ -93,7 +94,7 @@ in {
           Type = "oneshot";
           User = cfg.user;
           Group = cfg.group;
-          ExecStart = "${lib.getExe pkgs.recyclarr} sync --app-data=${cfg.dataDir} --config=/etc/recyclarr/recyclarr.yml";
+          ExecStart = "${lib.getExe pkgs.recyclarr} sync --app-data=${dataDir} --config=/etc/recyclarr/recyclarr.yml";
           Restart = "on-failure";
           EnvironmentFile = cfg.environmentFiles;
         };
@@ -121,7 +122,7 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}' 700 ${cfg.user} ${cfg.group} - -"
+      "d '${dataDir}' 700 ${cfg.user} ${cfg.group} - -"
     ];
   };
 }

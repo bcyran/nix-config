@@ -10,6 +10,7 @@
   ollamaCfg = config.my.services.ollama;
 
   hoarderVersion = "0.22.0";
+  dataDir = "/var/lib/hoarder";
 in {
   options = {
     my.services.hoarder = let
@@ -21,7 +22,6 @@ in {
       reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
       openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
       environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
-      dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/hoarder";
 
       llm = lib.mkOption {
         type = with lib.types; nullOr str;
@@ -40,7 +40,7 @@ in {
       autoStart = true;
       ports = ["${cfg.address}:${toString cfg.port}:3000"];
       volumes = [
-        "${cfg.dataDir}:/data"
+        "${dataDir}:/data"
       ];
       environment = let
         loopback = "10.0.2.2";
@@ -74,7 +74,7 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}' 0750 root root - -"
+      "d '${dataDir}' 0750 root root - -"
     ];
 
     my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;

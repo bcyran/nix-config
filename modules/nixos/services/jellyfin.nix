@@ -14,18 +14,13 @@ in {
     group = my.lib.options.mkGroupOption serviceName;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/jellyfin";
   };
 
   config = lib.mkIf cfg.enable {
     services.jellyfin = {
       enable = true;
-      inherit (cfg) user group openFirewall dataDir;
+      inherit (cfg) user group openFirewall;
     };
-
-    systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}'   0700 ${cfg.user} ${cfg.group} - -"
-    ];
 
     my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
       ${cfg.reverseProxy.domain} = {

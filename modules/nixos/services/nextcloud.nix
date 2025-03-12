@@ -13,7 +13,6 @@ in {
     serviceName = "Nextcloud";
   in {
     enable = lib.mkEnableOption serviceName;
-    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/nextcloud";
     domain = lib.mkOption {
       type = lib.types.str;
       example = "nextcloud.example.com";
@@ -41,7 +40,6 @@ in {
         package = pkgs.nextcloud30;
         hostName = cfg.domain;
         https = true;
-        datadir = cfg.dataDir;
         maxUploadSize = "16G";
 
         config = {

@@ -6,8 +6,9 @@
 }: let
   cfg = config.my.services.unmanic;
 
-  cacheDir = "/var/cache/unmanic";
   unmanicVersion = "0.2.7";
+  cacheDir = "/var/cache/unmanic";
+  dataDir = "/var/lib/unmanic";
 in {
   options.my.services.unmanic = let
     serviceName = "Unmanic";
@@ -19,7 +20,6 @@ in {
     port = my.lib.options.mkPortOption serviceName 8888;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/unmanic";
 
     mediaDir = lib.mkOption {
       type = lib.types.path;
@@ -38,7 +38,7 @@ in {
         "${cfg.address}:${builtins.toString cfg.port}:8888"
       ];
       volumes = [
-        "${cfg.dataDir}:/config"
+        "${dataDir}:/config"
         "${cfg.mediaDir}:/library"
         "${cacheDir}:/tmp/unmanic"
       ];
@@ -64,8 +64,8 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}'   0700 ${cfg.user} ${cfg.group} - -"
-      "d '${cacheDir}'      0700 ${cfg.user} ${cfg.group} - -"
+      "d '${dataDir}'   0700 ${cfg.user} ${cfg.group} - -"
+      "d '${cacheDir}'  0700 ${cfg.user} ${cfg.group} - -"
     ];
 
     my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;

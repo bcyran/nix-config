@@ -11,6 +11,7 @@
     if cfg.vpnNamespace != null
     then config.vpnNamespaces.${cfg.vpnNamespace}.namespaceAddress
     else "127.0.0.1";
+  dataDir = "/var/lib/prowlarr";
 in {
   options.my.services.prowlarr = let
     serviceName = "prowlarr";
@@ -21,7 +22,6 @@ in {
     port = my.lib.options.mkPortOption serviceName 9696;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/prowlarr";
 
     vpnNamespace = lib.mkOption {
       type = with lib.types; nullOr str;
@@ -43,7 +43,7 @@ in {
         Type = "simple";
         User = cfg.user;
         Group = cfg.group;
-        ExecStart = "${lib.getExe pkgs.prowlarr} -nobrowser -data=${cfg.dataDir}";
+        ExecStart = "${lib.getExe pkgs.prowlarr} -nobrowser -data=${dataDir}";
         Restart = "on-failure";
       };
 
@@ -65,7 +65,7 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}' 700 ${cfg.user} ${cfg.group} - -"
+      "d '${dataDir}' 700 ${cfg.user} ${cfg.group} - -"
     ];
 
     vpnNamespaces.${cfg.vpnNamespace} = lib.mkIf (cfg.vpnNamespace != null) {

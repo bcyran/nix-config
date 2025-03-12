@@ -10,6 +10,7 @@
   cfg = config.my.services.memos;
 
   memosVersion = "0.23.0";
+  dataDir = "/var/lib/memos";
 in {
   options = {
     my.services.memos = let
@@ -20,7 +21,6 @@ in {
       port = my.lib.options.mkPortOption serviceName 5230;
       openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
       reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-      dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/memos";
     };
   };
 
@@ -32,12 +32,12 @@ in {
       autoStart = true;
       ports = ["${cfg.address}:${builtins.toString cfg.port}:5230"];
       volumes = [
-        "${cfg.dataDir}:/var/opt/memos"
+        "${dataDir}:/var/opt/memos"
       ];
     };
 
     systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}' 0750 root root - -"
+      "d '${dataDir}' 0750 root root - -"
     ];
 
     my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;

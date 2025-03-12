@@ -20,7 +20,6 @@ in {
     port = my.lib.options.mkPortOption serviceName 8989;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/sonarr";
 
     mediaDir = lib.mkOption {
       type = lib.types.path;
@@ -39,11 +38,11 @@ in {
   config = lib.mkIf cfg.enable {
     services.sonarr = {
       enable = true;
-      inherit (cfg) user group dataDir openFirewall;
+      dataDir = "/var/lib/sonarr";
+      inherit (cfg) user group openFirewall;
     };
 
     systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}'   0700 ${cfg.user} ${cfg.group} - -"
       "d '${cfg.mediaDir}'  0775 ${cfg.user} ${cfg.group} - -"
     ];
 

@@ -14,13 +14,11 @@ in {
     port = my.lib.options.mkPortOption serviceName 8123;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/hass";
   };
 
   config = lib.mkIf cfg.enable {
     services.home-assistant = {
       enable = true;
-      configDir = cfg.dataDir;
       inherit (cfg) openFirewall;
 
       config = {

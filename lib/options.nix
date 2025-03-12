@@ -37,14 +37,6 @@
       description = "The paths to the environment files for the ${serviceName}.";
     };
 
-  mkDataDirOption = serviceName: default:
-    lib.mkOption {
-      type = with lib.types; nullOr path;
-      example = "/path/to/data/dir";
-      description = "The path to the data directory for the ${serviceName}.";
-      inherit default;
-    };
-
   mkReverseProxyOptions = serviceName: {
     domain = lib.mkOption {
       type = with lib.types; nullOr str;

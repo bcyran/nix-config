@@ -22,7 +22,6 @@ in {
     port = my.lib.options.mkPortOption serviceName 9091;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/transmission";
 
     peerPort = lib.mkOption {
       type = lib.types.int;
@@ -64,7 +63,6 @@ in {
   config = lib.mkIf cfg.enable {
     services.transmission = {
       enable = true;
-      home = cfg.dataDir;
       webHome = pkgs.flood-for-transmission;
       openPeerPorts = cfg.openFirewall;
       openRPCPort = cfg.openFirewall;
@@ -98,7 +96,6 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}'                    0700 ${cfg.user} ${cfg.group} - -"
       "d '${cfg.downloadsDir}'               0755 ${cfg.user} ${cfg.group} - -"
       "d '${cfg.downloadsDir}/.incomplete'   0755 ${cfg.user} ${cfg.group} - -"
       "d '${cfg.downloadsDir}/.watch'        0755 ${cfg.user} ${cfg.group} - -"

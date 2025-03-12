@@ -13,13 +13,12 @@ in {
     port = my.lib.options.mkPortOption serviceName 5055;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/jellyseerr";
   };
 
   config = lib.mkIf cfg.enable {
     services.jellyseerr = {
       enable = true;
-      configDir = cfg.dataDir;
+      configDir = "/var/lib/jellyseerr";
       inherit (cfg) port openFirewall;
     };
 

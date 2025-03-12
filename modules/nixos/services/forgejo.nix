@@ -17,13 +17,11 @@ in {
     port = my.lib.options.mkPortOption serviceName 8085;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/forgejo";
   };
 
   config = lib.mkIf cfg.enable {
     services.forgejo = {
       enable = true;
-      stateDir = cfg.dataDir;
 
       database = {
         type = "postgres";

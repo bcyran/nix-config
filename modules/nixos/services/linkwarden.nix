@@ -9,6 +9,7 @@
 
   linkwardenVersion = "v2.9.3";
   pgDatabase = "linkwarden";
+  dataDir = "/var/lib/linkwarden";
 in {
   options.my.services.linkwarden = let
     serviceName = "linkwarden";
@@ -18,7 +19,6 @@ in {
     port = my.lib.options.mkPortOption serviceName 8088;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    dataDir = my.lib.options.mkDataDirOption serviceName "/var/lib/linkwarden";
     environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
 
     llm = lib.mkOption {
@@ -51,7 +51,7 @@ in {
       autoStart = true;
       ports = ["${cfg.address}:${builtins.toString cfg.port}:3000"];
       volumes = [
-        "${cfg.dataDir}:/data/data"
+        "${dataDir}:/data/data"
         "/run/postgresql:/run/postgresql"
       ];
       environment = let
@@ -83,7 +83,7 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}' 0750 root root - -"
+      "d '${dataDir}' 0750 root root - -"
     ];
 
     my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
