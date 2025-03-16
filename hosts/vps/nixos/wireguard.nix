@@ -59,6 +59,14 @@ in {
               (mkCidr peers.slimbook.ipv6 128)
             ];
           }
+          # Client #1
+          {
+            publicKey = "cDl6OrK4BWgZxkIyNx4JE/W8UHrgHfrZwunGLlEoO3E=";
+            allowedIPs = [
+              "10.100.200.200/32"
+              "2a03:4000:52:499:ffff::200/128"
+            ];
+          }
         ];
       };
     };
