@@ -62,6 +62,9 @@
       printing.enable = true;
       virtualisation.enable = true;
     };
+    programs = {
+      adb.enable = true;
+    };
     services = {
       openssh.enable = true;
     };
