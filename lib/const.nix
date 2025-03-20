@@ -76,6 +76,7 @@ rec {
   sshKeys = {
     bazyliAtSlimbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFKs3m56bDR5P7TXoL/MPd5FWyueqK3QPVGc7RwLnF09 bazyli@slimbook";
     btrbkAtSlimbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8a552vyvnPoS/JEkSujoygzQw0cB8jO2yI8VlsLUF6 btrbk@slimbook";
+    bazyliAtPixel = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGz5erZsix4olGmCQreNBjirZUXJihOWbvGdd27SeX+7 bazyli@pixel";
   };
   # Syncthing
   syncthing = {

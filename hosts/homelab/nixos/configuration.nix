@@ -58,7 +58,10 @@
         enable = true;
         hashedPasswordFile = config.sops.secrets.bazyli_hashed_password.path;
         rootHashedPasswordFile = config.sops.secrets.root_hashed_password.path;
-        authorizedKeys = [my.lib.const.sshKeys.bazyliAtSlimbook];
+        authorizedKeys = with my.lib.const.sshKeys; [
+          bazyliAtSlimbook
+          bazyliAtPixel
+        ];
       };
       lanzaboote.enable = true;
       sops.enable = true;
