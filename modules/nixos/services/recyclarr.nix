@@ -28,6 +28,18 @@
           {template = "sonarr-v4-quality-profile-anime";}
           {template = "sonarr-v4-custom-formats-anime";}
         ];
+        custom_formats = [
+          # Allow x265 1080p releases
+          {
+            trash_ids = ["47435ece6b99a0b477caf360e79ba0bb"]; # x265 (HD)
+            assign_scores_to = [
+              {
+                name = "WEB-1080p";
+                score = 0;
+              }
+            ];
+          }
+        ];
       };
     };
     radarr = {
@@ -50,6 +62,22 @@
           # Anime
           {template = "radarr-quality-profile-anime";}
           {template = "radarr-custom-formats-anime";}
+        ];
+        custom_formats = [
+          # Allow x265 1080p releases
+          {
+            trash_ids = ["dc98083864ea246d05a42df0d05f81cc"]; # x265 (HD)
+            assign_scores_to = [
+              {
+                name = "Remux + WEB 1080p";
+                score = 0;
+              }
+              {
+                name = "HD Bluray + WEB";
+                score = 0;
+              }
+            ];
+          }
         ];
       };
     };
