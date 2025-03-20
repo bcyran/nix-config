@@ -47,6 +47,9 @@
           {template = "radarr-custom-formats-remux-web-1080p";}
           {template = "radarr-quality-profile-hd-bluray-web";}
           {template = "radarr-custom-formats-hd-bluray-web";}
+          # Anime
+          {template = "radarr-quality-profile-anime";}
+          {template = "radarr-custom-formats-anime";}
         ];
       };
     };
