@@ -15,6 +15,7 @@ in {
       programs = {
         signal.enable = mkDefault true;
         joplin-desktop.enable = mkDefault true;
+        portfolio-performance.enable = mkDefault true;
       };
     };
 
@@ -29,7 +30,6 @@ in {
     };
 
     home.packages = with pkgs; [
-      stable.portfolio # XXX: The package in unstable is broken
       gnucash
       gimp3
       libreoffice-fresh
