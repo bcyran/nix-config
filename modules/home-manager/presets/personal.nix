@@ -33,7 +33,7 @@ in {
       gnucash
       gimp3
       libreoffice-fresh
-      rustdesk
+      rustdesk-flutter
       calibre
       gthumb
       protonvpn-gui
