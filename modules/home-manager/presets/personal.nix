@@ -31,7 +31,7 @@ in {
     home.packages = with pkgs; [
       stable.portfolio # XXX: The package in unstable is broken
       gnucash
-      gimp
+      gimp3
       libreoffice-fresh
       rustdesk
       calibre
