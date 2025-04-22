@@ -15,6 +15,7 @@ in {
   config = lib.mkIf cfg.enable {
     programs.anyrun = {
       enable = true;
+      package = my.inputs.anyrun.packages.${pkgs.system}.default;
       config = {
         plugins = with my.inputs.anyrun.packages.${pkgs.system};
           [
