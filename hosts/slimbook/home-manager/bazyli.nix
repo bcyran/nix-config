@@ -121,4 +121,5 @@ in {
       };
     };
   };
+  services.podman.enable = true;
 }
