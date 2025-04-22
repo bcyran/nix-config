@@ -47,19 +47,19 @@ in {
           };
           search = {
             force = true;
-            default = "Kagi";
-            order = ["Kagi"];
+            default = "kagi";
+            order = ["kagi"];
             engines = {
-              "Kagi" = {
+              "kagi" = {
                 urls = [{template = "https://kagi.com/search?q={searchTerms}";}];
-                iconUpdateURL = "https://kagi.com/favicon.ico";
+                icon = "https://kagi.com/favicon.ico";
                 updateInterval = 24 * 60 * 60 * 1000;
                 definedAlises = ["@kagi"];
               };
-              "Bing".metadata.hidden = true;
-              "Google".metadata.hidden = true;
-              "eBay".metadata.hidden = true;
-              "Wolne Lektury".metadata.hidden = true;
+              "bing".metadata.hidden = true;
+              "google".metadata.hidden = true;
+              "ebay".metadata.hidden = true;
+              "wolnelektury-pl".metadata.hidden = true;
             };
           };
         };
