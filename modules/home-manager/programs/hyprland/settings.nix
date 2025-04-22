@@ -64,6 +64,10 @@ in {
         "col.active_border" = "rgb(${palette.accentPrimary})";
         "col.inactive_border" = "rgb(${palette.base10})";
       };
+      ecosystem = {
+        no_update_news = true;
+        no_donation_nag = true;
+      };
       plugin = {
         hy3 = {
           group_inset = 0;
