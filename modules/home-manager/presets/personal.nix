@@ -36,7 +36,6 @@ in {
       rustdesk-flutter
       calibre
       gthumb
-      protonvpn-gui
       vlc
       tor-browser
       quickemu

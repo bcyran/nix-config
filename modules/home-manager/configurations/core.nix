@@ -22,7 +22,6 @@ in {
     nixpkgs = {
       overlays = [
         my.overlays.stable-packages
-        my.overlays.fish-stable
       ];
 
       config = {
