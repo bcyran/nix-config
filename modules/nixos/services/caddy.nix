@@ -13,10 +13,10 @@
   grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
   caddyWithPlugins = pkgs.caddy.withPlugins {
     plugins = [
-      "github.com/caddy-dns/ovh@v0.0.3"
+      "github.com/caddy-dns/ovh@v1.0.0"
       "github.com/greenpau/caddy-git@v1.0.9"
     ];
-    hash = "sha256-fDCmIEi7ZSJ+QrugT6/DsggYshLQdW3cavNSWGXjodw";
+    hash = "sha256-iZjzRR4cTnPeS/bMrUNiiGfSUJ7xszrfXQ7Vvu9rxJU";
   };
 
   nixBin = lib.getExe pkgs.nix;
