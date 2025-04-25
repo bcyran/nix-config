@@ -17,11 +17,8 @@ in {
       enableFishIntegration = cfg.enableShellIntegration;
       enableZshIntegration = cfg.enableShellIntegration;
       enableBashIntegration = cfg.enableShellIntegration;
-    };
-
-    home.sessionVariables = lib.mkIf cfg.enableShellIntegration {
-      ZELLIJ_AUTO_ATTACH = "true";
-      ZELLIJ_AUTO_EXIT = "true";
+      attachExistingSession = true;
+      exitShellOnExit = true;
     };
 
     xdg.configFile."zellij/config.kdl".text = ''
