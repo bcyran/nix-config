@@ -22,6 +22,7 @@ in {
       enable = true;
       inherit (cfg) openFirewall environmentFile;
       listenPort = cfg.port;
+      allowedHosts = "localhost,127.0.0.1:${toString cfg.port},${cfg.reverseProxy.domain}";
     };
 
     my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
