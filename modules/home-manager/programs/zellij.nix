@@ -22,6 +22,9 @@ in {
     };
 
     xdg.configFile."zellij/config.kdl".text = ''
+      show_startup_tips false
+      show_release_notes false
+
       keybinds clear-defaults=true {
         normal {
           bind "Alt h" { MoveFocusOrTab "Left"; }
