@@ -26,6 +26,8 @@ in {
     services = {
       prometheus = {
         enable = true;
+        # FIXME: Restore unstable when fixed: https://github.com/prometheus/prometheus/issues/16490
+        package = pkgs.stable.prometheus;
         listenAddress = cfg.address;
         inherit (cfg) port;
 
