@@ -7,7 +7,7 @@
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
     nixpkgs-stable = {
-      url = "github:nixos/nixpkgs/nixos-24.05";
+      url = "github:nixos/nixpkgs/nixos-24.11";
     };
     disko = {
       url = "github:nix-community/disko";
@@ -60,8 +60,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {
-        url = "github:0xc000022070/zen-browser-flake";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Secret management
