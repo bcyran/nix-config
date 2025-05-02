@@ -74,6 +74,9 @@ in {
       socat
       dig
       inetutils
+      unzip
+      zstd
+      gzip
     ];
 
     boot.tmp.cleanOnBoot = !config.boot.tmp.useTmpfs;
