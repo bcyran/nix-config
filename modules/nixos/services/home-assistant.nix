@@ -40,6 +40,16 @@ in {
         script = "!include scripts.yaml";
 
         mobile_app = {};
+
+        fan = [
+          {
+            platform = "xiaomi_miio_fan";
+            name = "Xiaomi Smart Fan";
+            host = "10.100.100.204";
+            token = "!secret xiaomi_fan_token";
+            model = "zhimi.fan.za5";
+          }
+        ];
       };
 
       extraComponents = [
@@ -53,6 +63,10 @@ in {
         "media_player"
         "yeelight"
         "philips_js"
+        "xiaomi_miio"
+      ];
+      customComponents = [
+        my.pkgs.xiaomi_miio_fan
       ];
     };
 
