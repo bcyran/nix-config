@@ -1,4 +1,5 @@
 {
+  pkgs,
   my,
   config,
   lib,
@@ -29,6 +30,7 @@ in {
           unit_system = "metric";
           internal_url = "https://${cfg.reverseProxy.domain}";
         };
+        lovelace.mode = "yaml";
         http = {
           use_x_forwarded_for = true;
           server_host = cfg.address;
@@ -65,8 +67,14 @@ in {
         "philips_js"
         "xiaomi_miio"
       ];
+
       customComponents = [
         my.pkgs.xiaomi_miio_fan
+      ];
+
+      customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
+        mushroom
+        universal-remote-card
       ];
     };
 
