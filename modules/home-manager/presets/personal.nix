@@ -16,6 +16,7 @@ in {
         signal.enable = mkDefault true;
         joplin-desktop.enable = mkDefault true;
         portfolio-performance.enable = mkDefault true;
+        libreoffice.enable = mkDefault true;
       };
     };
 
@@ -32,7 +33,6 @@ in {
     home.packages = with pkgs; [
       gnucash
       gimp3
-      libreoffice-fresh
       rustdesk-flutter
       calibre
       gthumb
