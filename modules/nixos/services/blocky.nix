@@ -71,7 +71,7 @@ in {
           prometheus.enable = true;
           queryLog = {
             type = "postgresql";
-            target = "postgresql:///${pgDatabase}?host=/run/postgresql";
+            target = "postgresql://${pgDatabase}@localhost/${pgDatabase}";
             logRetentionDays = 30;
           };
         };
@@ -87,6 +87,7 @@ in {
           }
         ];
         authentication = ''
+          host ${pgDatabase} ${pgDatabase} 127.0.0.1/32 trust
           local ${pgDatabase} ${pgDatabase} trust
         '';
       };
