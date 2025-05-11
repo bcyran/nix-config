@@ -41,6 +41,7 @@ in {
       httpie
       ranger
       dust
+      dysk
       neofetch
       alejandra
       statix
