@@ -78,6 +78,9 @@ in {
     recyclarr_env_file = {
       restartUnits = ["recyclarr.service"];
     };
+    pinchflat_env_file = {
+      restartUnits = ["pinchflat.service"];
+    };
   };
 
   my.configurations = {
@@ -232,6 +235,7 @@ in {
         speed-limit-up = 3000;
       };
       recyclarrEnvironmentFiles = [config.sops.secrets.recyclarr_env_file.path];
+      pinchflatEnvironmentFile = config.sops.secrets.pinchflat_env_file.path;
       downloadsDir = downloads;
       mediaDir = media;
       vpnNamespace = "airvpn";

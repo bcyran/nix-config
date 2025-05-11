@@ -388,10 +388,10 @@
     "my-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1746191524,
-        "narHash": "sha256-yo8lpvho7Dhzre3uIU+HetIpXNwgtQej+WfVRJm+zyc=",
+        "lastModified": 1746947126,
+        "narHash": "sha256-DuhiIMvaNfFwpkulKM2IuORBBXZambOluZkv5WaL74I=",
         "ref": "main",
-        "rev": "2c31da421394a2e761338ca1207443105c5f99ce",
+        "rev": "a6e023067e29ad0a39d56c44873521b85c022f3e",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/bcyran/nix-secrets.git"

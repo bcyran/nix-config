@@ -42,6 +42,7 @@ in {
     };
 
     recyclarrEnvironmentFiles = my.lib.options.mkEnvironmentFilesOption "recyclarr";
+    pinchflatEnvironmentFile = my.lib.options.mkEnvironmentFileOption "pinchflat";
 
     downloadsDir = lib.mkOption {
       type = lib.types.path;
@@ -99,6 +100,13 @@ in {
         reverseProxy.domain = "radarr.${cfg.domain}";
         inherit (cfg) group vpnNamespace;
         mediaDir = "${cfg.mediaDir}/movies";
+      };
+      pinchflat = {
+        enable = true;
+        reverseProxy.domain = "pinchflat.${cfg.domain}";
+        environmentFile = cfg.pinchflatEnvironmentFile;
+        inherit (cfg) group;
+        mediaDir = "${cfg.mediaDir}/youtube";
       };
       bazarr = {
         enable = true;
