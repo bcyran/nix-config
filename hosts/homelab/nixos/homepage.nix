@@ -357,6 +357,14 @@ in {
               };
             };
           }
+          {
+            Pinchflat = {
+              description = "Automated YouTube downloader.";
+              icon = "pinchflat";
+              href = makeServiceDomainUrl "pinchflat";
+              siteMonitor = makeServiceDomainUrl "pinchflat";
+            };
+          }
         ];
       }
       {
