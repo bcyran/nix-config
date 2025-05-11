@@ -62,9 +62,9 @@ in {
           (makeGlancesWidget "CPU" "cpu")
           (makeGlancesWidget "Memory" "memory")
           (makeGlancesWidget "Network" "network:enp0s31f6")
-          (makeGlancesWidget "Processes" "process")
-          (makeGlancesWidget "Disk I/O" "disk:nvme0n1")
           (makeGlancesWidget "Root FS" "fs:/")
+          (makeGlancesWidget "Fast Store FS" "fs:/mnt/fast_store")
+          (makeGlancesWidget "Slow Store FS" "fs:/mnt/slow_store")
         ];
       }
       {
