@@ -55,6 +55,7 @@ in {
                 version = "4";
                 metric = metricName;
                 refreshInterval = 3000;
+                chart = false;
               };
             };
           };
