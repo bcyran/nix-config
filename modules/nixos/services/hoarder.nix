@@ -12,23 +12,21 @@
   hoarderVersion = "0.22.0";
   dataDir = "/var/lib/hoarder";
 in {
-  options = {
-    my.services.hoarder = let
-      serviceName = "Hoarder";
-    in {
-      enable = lib.mkEnableOption serviceName;
-      address = my.lib.options.mkAddressOption serviceName;
-      port = my.lib.options.mkPortOption serviceName 8083;
-      reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-      openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-      environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
+  options.my.services.hoarder = let
+    serviceName = "Hoarder";
+  in {
+    enable = lib.mkEnableOption serviceName;
+    address = my.lib.options.mkAddressOption serviceName;
+    port = my.lib.options.mkPortOption serviceName 8083;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
+    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+    environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
 
-      llm = lib.mkOption {
-        type = with lib.types; nullOr str;
-        default = null;
-        example = "gemma:2b";
-        description = "The model to use for tags inference.";
-      };
+    llm = lib.mkOption {
+      type = with lib.types; nullOr str;
+      default = null;
+      example = "gemma:2b";
+      description = "The model to use for tags inference.";
     };
   };
 

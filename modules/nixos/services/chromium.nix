@@ -9,15 +9,13 @@
 
   internalPort = 9223;
 in {
-  options = {
-    my.services.chromium = let
-      serviceName = "Chromium headless";
-    in {
-      enable = lib.mkEnableOption serviceName;
-      address = my.lib.options.mkAddressOption serviceName;
-      port = my.lib.options.mkPortOption serviceName 9222;
-      openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    };
+  options.my.services.chromium = let
+    serviceName = "Chromium headless";
+  in {
+    enable = lib.mkEnableOption serviceName;
+    address = my.lib.options.mkAddressOption serviceName;
+    port = my.lib.options.mkPortOption serviceName 9222;
+    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
   };
 
   config = let

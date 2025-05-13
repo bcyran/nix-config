@@ -12,16 +12,14 @@
   memosVersion = "0.23.0";
   dataDir = "/var/lib/memos";
 in {
-  options = {
-    my.services.memos = let
-      serviceName = "Memos";
-    in {
-      enable = lib.mkEnableOption serviceName;
-      address = my.lib.options.mkAddressOption serviceName;
-      port = my.lib.options.mkPortOption serviceName 5230;
-      openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-      reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    };
+  options.my.services.memos = let
+    serviceName = "Memos";
+  in {
+    enable = lib.mkEnableOption serviceName;
+    address = my.lib.options.mkAddressOption serviceName;
+    port = my.lib.options.mkPortOption serviceName 5230;
+    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
   };
 
   config = lib.mkIf cfg.enable {

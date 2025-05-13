@@ -9,23 +9,21 @@
   speedtestTrackerVersion = "v1.5.0";
   dataDir = "/var/lib/speedtest-tracker";
 in {
-  options = {
-    my.services.speedtest-tracker = let
-      serviceName = "Speedtest Tracker";
-    in {
-      enable = lib.mkEnableOption serviceName;
-      address = my.lib.options.mkAddressOption serviceName;
-      port = my.lib.options.mkPortOption serviceName 8082;
-      openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-      reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-      environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
+  options.my.services.speedtest-tracker = let
+    serviceName = "Speedtest Tracker";
+  in {
+    enable = lib.mkEnableOption serviceName;
+    address = my.lib.options.mkAddressOption serviceName;
+    port = my.lib.options.mkPortOption serviceName 8082;
+    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
+    environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
 
-      blockedServers = lib.mkOption {
-        type = with lib.types; listOf int;
-        default = [];
-        example = [36998 52365];
-        description = "List of blocked server IDs.";
-      };
+    blockedServers = lib.mkOption {
+      type = with lib.types; listOf int;
+      default = [];
+      example = [36998 52365];
+      description = "List of blocked server IDs.";
     };
   };
 
