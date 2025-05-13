@@ -19,6 +19,13 @@ in {
       openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
       reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
       environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
+
+      blockedServers = lib.mkOption {
+        type = with lib.types; listOf int;
+        default = [];
+        example = [36998 52365];
+        description = "List of blocked server IDs.";
+      };
     };
   };
 
@@ -41,6 +48,7 @@ in {
         CHART_DATETIME_FORMAT = "d.m H:i";
         SPEEDTEST_SCHEDULE = "0 * * * *";
         PUBLIC_DASHBOARD = "true";
+        SPEEDTEST_BLOCKED_SERVERS = lib.concatMapStringsSep "," toString cfg.blockedServers;
       };
       inherit (cfg) environmentFiles;
     };
