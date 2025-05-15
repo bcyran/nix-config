@@ -9,9 +9,16 @@ in {
   options.my.configurations.virtualisation.enable = lib.mkEnableOption "virtualisation";
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [pkgs.qemu];
-    virtualisation.libvirtd.enable = true;
+    environment.systemPackages = with pkgs; [
+      qemu
+      quickemu
+    ];
+    virtualisation = {
+      libvirtd.enable = true;
+      spiceUSBRedirection.enable = true;
+    };
     programs.virt-manager.enable = true;
+    services.spice-vdagentd.enable = true;
 
     users.users.${config.my.user.name}.extraGroups = ["libvirtd"];
 

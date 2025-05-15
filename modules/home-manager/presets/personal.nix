@@ -38,7 +38,6 @@ in {
       gthumb
       vlc
       tor-browser
-      quickemu
       webcord
       jellyfin-media-player
       inputs.zen-browser.packages."${pkgs.system}".default
