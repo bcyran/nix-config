@@ -57,7 +57,7 @@ in {
       defaultFonts = {
         sansSerif = mkDefault ["Inter"];
         serif = mkDefault ["Noto Serif"];
-        monospace = mkDefault ["JetBrainsMonoNL NF"];
+        monospace = mkDefault ["JetBrainsMono NF"];
         emoji = mkDefault ["Noto Color Emoji"];
       };
     };
