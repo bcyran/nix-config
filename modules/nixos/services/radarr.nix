@@ -40,6 +40,7 @@ in {
       enable = true;
       dataDir = "/var/lib/radarr";
       inherit (cfg) user group openFirewall;
+      settings.server.port = cfg.port;
     };
 
     systemd.tmpfiles.rules = [
