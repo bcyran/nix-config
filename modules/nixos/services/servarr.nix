@@ -101,6 +101,12 @@ in {
         inherit (cfg) group vpnNamespace;
         mediaDir = "${cfg.mediaDir}/movies";
       };
+      lidarr = {
+        enable = true;
+        reverseProxy.domain = "lidarr.${cfg.domain}";
+        inherit (cfg) group vpnNamespace;
+        mediaDir = "${cfg.mediaDir}/music";
+      };
       pinchflat = {
         enable = true;
         reverseProxy.domain = "pinchflat.${cfg.domain}";
