@@ -279,6 +279,21 @@ in {
             };
           }
           {
+            Navidrome = rec {
+              description = "Music streaming server.";
+              icon = "navidrome";
+              href = makeServiceDomainUrl "navidrome";
+              siteMonitor = makeServiceLoopbackUrl "navidrome";
+              widget = {
+                type = "navidrome";
+                url = siteMonitor;
+                user = "{{HOMEPAGE_VAR_NAVIDROME_USERNAME}}";
+                token = "{{HOMEPAGE_VAR_NAVIDROME_TOKEN}}";
+                salt = "{{HOMEPAGE_VAR_NAVIDROME_SALT}}";
+              };
+            };
+          }
+          {
             Jellyseerr = rec {
               description = "Media requests manager.";
               icon = "jellyseerr";
