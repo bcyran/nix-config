@@ -231,9 +231,9 @@ in {
         ratio-limit-enabled = true;
         ratio-limit = 2;
         speed-limit-down-enabled = true;
-        speed-limit-down = 20000;
+        speed-limit-down = 40000;
         speed-limit-up-enabled = true;
-        speed-limit-up = 3000;
+        speed-limit-up = 20000;
       };
       recyclarrEnvironmentFiles = [config.sops.secrets.recyclarr_env_file.path];
       pinchflatEnvironmentFile = config.sops.secrets.pinchflat_env_file.path;
