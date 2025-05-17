@@ -333,6 +333,19 @@ in {
             };
           }
           {
+            Lidarr = rec {
+              description = "Music manager.";
+              icon = "lidarr";
+              href = makeServiceDomainUrl "lidarr";
+              siteMonitor = makeServiceDomainUrl "lidarr";
+              widget = {
+                type = "lidarr";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_LIDARR_API_KEY}}";
+              };
+            };
+          }
+          {
             Prowlarr = rec {
               description = "Indexer manager.";
               icon = "prowlarr";
