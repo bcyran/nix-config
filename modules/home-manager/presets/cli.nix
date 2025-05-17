@@ -25,6 +25,7 @@ in {
         btop.enable = mkDefault true;
         direnv.enable = mkDefault true;
         nix-index.enable = mkDefault true;
+        yazi.enable = mkDefault true;
       };
     };
 
@@ -39,7 +40,6 @@ in {
       wget
       curl
       httpie
-      ranger
       dust
       dysk
       neofetch
