@@ -262,7 +262,7 @@ in {
         "Media" = [
           {
             Jellyfin = rec {
-              description = "Media server.";
+              description = "Video streaming server.";
               icon = "jellyfin";
               href = makeServiceDomainUrl "jellyfin";
               siteMonitor = makeServiceDomainUrl "jellyfin";
@@ -295,7 +295,7 @@ in {
           }
           {
             Jellyseerr = rec {
-              description = "Media requests manager.";
+              description = "Video requests manager.";
               icon = "jellyseerr";
               href = makeServiceDomainUrl "jellyseerr";
               siteMonitor = makeServiceDomainUrl "jellyseerr";
@@ -388,7 +388,7 @@ in {
           }
           {
             Pinchflat = {
-              description = "Automated YouTube downloader.";
+              description = "YouTube video downloader.";
               icon = "pinchflat";
               href = makeServiceDomainUrl "pinchflat";
               siteMonitor = makeServiceDomainUrl "pinchflat";
