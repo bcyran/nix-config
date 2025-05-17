@@ -81,8 +81,8 @@ in {
             "CONTROL, escape, exec, swaync-client --close-latest"
 
             "$mod, space, exec, anyrun"
-            "$mod, return, exec, alacritty"
-            "$mod SHIFT, return, exec, alacritty --class terminal-floating"
+            "$mod, return, exec, kitty"
+            "$mod SHIFT, return, exec, kitty --class terminal-floating"
             "$mod, Y, exec, firefox"
             "$mod, N, exec, thunar"
           ]
