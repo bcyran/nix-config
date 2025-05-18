@@ -29,4 +29,8 @@ in {
       }
     ];
   };
+  systemd.services.wg-quick-wg0 = {
+    startLimitBurst = 10;
+    serviceConfig.Restart = "on-failure";
+  };
 }
