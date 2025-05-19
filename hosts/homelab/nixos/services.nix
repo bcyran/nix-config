@@ -241,11 +241,6 @@ in {
       mediaDir = media;
       vpnNamespace = "airvpn";
     };
-    navidrome = {
-      enable = true;
-      reverseProxy.domain = "navidrome.${intraDomain}";
-      mediaDir = "${my.lib.const.paths.homelab.media}/music";
-    };
   };
 
   services.btrbk.sshAccess = [
