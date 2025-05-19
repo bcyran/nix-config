@@ -118,7 +118,6 @@ in {
       services.recyclarr = {
         description = "Automatically synchronize servarr recommended settings from TRaSH guides";
         after = ["network.target"];
-        wantedBy = ["multi-user.target"];
         startLimitBurst = 5;
 
         serviceConfig = {

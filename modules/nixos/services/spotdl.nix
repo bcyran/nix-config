@@ -61,7 +61,6 @@ in {
       services.spotdl-sync = {
         description = "Spotify playlists synchronization service";
         after = ["network.target"];
-        wantedBy = ["multi-user.target"];
 
         serviceConfig = {
           Type = "oneshot";
