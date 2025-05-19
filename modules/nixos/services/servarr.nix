@@ -105,7 +105,12 @@ in {
         enable = true;
         reverseProxy.domain = "lidarr.${cfg.domain}";
         inherit (cfg) group vpnNamespace;
-        mediaDir = "${cfg.mediaDir}/music";
+        mediaDir = "${cfg.mediaDir}/music/lidarr";
+      };
+      spotdl = {
+        enable = true;
+        inherit (cfg) group;
+        mediaDir = "${my.lib.const.paths.homelab.media}/music/youtube";
       };
       pinchflat = {
         enable = true;
