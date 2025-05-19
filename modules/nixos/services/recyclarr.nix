@@ -129,15 +129,8 @@ in {
           Restart = "on-failure";
           EnvironmentFile = cfg.environmentFiles;
         };
-      };
-      timers.recyclarr = {
-        description = "Automatically synchronize servarr recommended settings from TRaSH guides";
-        partOf = ["recyclarr.service"];
-        wantedBy = ["timers.target"];
-        timerConfig = {
-          OnCalendar = "daily";
-          Persistent = true;
-        };
+
+        startAt = "daily";
       };
     };
 

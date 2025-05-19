@@ -82,13 +82,8 @@ in {
           enable = true;
           inherit (cfg) vpnNamespace;
         };
-      };
 
-      timers.spotdl-sync = {
-        description = "Spotify playlists synchronization timer";
-        partOf = ["spotdl-sync.service"];
-        wantedBy = ["timers.target"];
-        timerConfig.OnCalendar = "05:00";
+        startAt = "05:00";
       };
     };
 

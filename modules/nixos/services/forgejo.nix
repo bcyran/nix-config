@@ -62,15 +62,8 @@ in {
             dumpDir = config.services.forgejo.dump.backupDir;
           in "${findBin} '${dumpDir}' -type f -mtime +${builtins.toString dumpKeepDays} -delete";
         };
-      };
-      timers.forgejo-dump-cleanup = {
-        description = "Cleanup Forgejo dumps timer";
-        partOf = ["forgejo-dump-cleanup.service"];
-        wantedBy = ["timers.target"];
-        timerConfig = {
-          OnCalendar = "00:10";
-          Persistent = true;
-        };
+
+        startAt = "00:10";
       };
     };
 
