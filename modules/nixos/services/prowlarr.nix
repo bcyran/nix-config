@@ -60,8 +60,8 @@ in {
           isSystemUser = true;
           inherit (cfg) group;
         };
-        groups = lib.mkIf (cfg.group == "prowlarr") {prowlarr = {};};
       };
+      groups = lib.mkIf (cfg.group == "prowlarr") {prowlarr = {};};
     };
 
     systemd.tmpfiles.rules = [

@@ -59,8 +59,8 @@ in {
           uid = 2003;
           inherit (cfg) group;
         };
-        groups = lib.mkIf (cfg.group == "unmanic") {unmanic.gid = 2003;};
       };
+      groups = lib.mkIf (cfg.group == "unmanic") {unmanic.gid = 2003;};
     };
 
     systemd.tmpfiles.rules = [

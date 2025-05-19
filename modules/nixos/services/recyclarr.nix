@@ -148,8 +148,8 @@ in {
           isSystemUser = true;
           inherit (cfg) group;
         };
-        groups = lib.mkIf (cfg.group == "recyclarr") {recyclarr = {};};
       };
+      groups = lib.mkIf (cfg.group == "recyclarr") {recyclarr = {};};
     };
 
     systemd.tmpfiles.rules = [

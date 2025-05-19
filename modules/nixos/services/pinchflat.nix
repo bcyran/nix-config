@@ -54,8 +54,8 @@ in {
           isSystemUser = true;
           inherit (cfg) group;
         };
-        groups = lib.mkIf (cfg.group == "pinchflat") {pinchflat = {};};
       };
+      groups = lib.mkIf (cfg.group == "pinchflat") {pinchflat = {};};
     };
 
     systemd.tmpfiles.rules = [
