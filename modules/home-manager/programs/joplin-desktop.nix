@@ -28,6 +28,8 @@ in {
   config = lib.mkIf cfg.enable {
     programs.joplin-desktop = {
       enable = true;
+      # FIXME: Switch to unstable once it's fixed.
+      package = pkgs.stable.joplin-desktop;
       general.editor = lib.getExe pkgs.neovim;
       sync = {
         target = "joplin-server";
