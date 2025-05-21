@@ -8,6 +8,12 @@
   cfg = config.my.services.spotdl;
   spotdlBin = lib.getExe pkgs.spotdl;
 
+  effectiveAddress =
+    if cfg.vpnNamespace != null
+    then config.vpnNamespaces.${cfg.vpnNamespace}.namespaceAddress
+    else "127.0.0.1";
+  dataDir = "/var/lib/spotdl";
+
   spotdlCommonArgs = [
     "--headless"
     "--scan-for-songs"
@@ -25,8 +31,15 @@
     "4"
     "--sync-without-deleting"
   ];
+  spotdlWebArgs = [
+    "--host"
+    effectiveAddress
+    "--port"
+    (builtins.toString cfg.port)
+    "--web-use-output-dir"
+  ];
   spotdlCommonArgsStr = builtins.concatStringsSep " " spotdlCommonArgs;
-  dataDir = "/var/lib/spotdl";
+  spotdlWebArgsStr = builtins.concatStringsSep " " spotdlWebArgs;
 in {
   options.my.services.spotdl = let
     serviceName = "SpotDL";
@@ -34,6 +47,9 @@ in {
     enable = lib.mkEnableOption serviceName;
     user = my.lib.options.mkUserOption serviceName;
     group = my.lib.options.mkGroupOption serviceName;
+    port = my.lib.options.mkPortOption serviceName 8089;
+    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
 
     mediaDir = lib.mkOption {
       type = lib.types.path;
@@ -58,31 +74,53 @@ in {
         "d '${cfg.mediaDir}'  0775 ${cfg.user} ${cfg.group} - -"
       ];
 
-      services.spotdl-sync = {
-        description = "Spotify playlists synchronization service";
-        after = ["network.target"];
+      services = {
+        spotdl = {
+          description = "SpotDL web interface";
+          after = ["network.target"];
+          wantedBy = ["multi-user.target"];
 
-        serviceConfig = {
-          Type = "oneshot";
-          User = cfg.user;
-          Group = cfg.group;
-          WorkingDirectory = cfg.mediaDir;
+          serviceConfig = {
+            Type = "simple";
+            User = cfg.user;
+            Group = cfg.group;
+            WorkingDirectory = cfg.mediaDir;
+            ExecStart = "${spotdlBin} web ${spotdlCommonArgsStr} ${spotdlWebArgsStr}";
+            Restart = "always";
+          };
+
+          vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
+            enable = true;
+            inherit (cfg) vpnNamespace;
+          };
         };
 
-        script = ''
-          set -euo pipefail
-          for sync_target in ${cfg.mediaDir}/sync/*.spotdl; do
-            echo "Syncing ''${sync_target}..."
-            ${spotdlBin} ${spotdlCommonArgsStr} sync ''${sync_target}
-          done
-        '';
+        spotdl-sync = {
+          description = "Spotify playlists synchronization service";
+          after = ["network.target"];
 
-        vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
-          enable = true;
-          inherit (cfg) vpnNamespace;
+          serviceConfig = {
+            Type = "oneshot";
+            User = cfg.user;
+            Group = cfg.group;
+            WorkingDirectory = cfg.mediaDir;
+          };
+
+          script = ''
+            set -euo pipefail
+            for sync_target in ${cfg.mediaDir}/sync/*.spotdl; do
+              echo "Syncing ''${sync_target}..."
+              ${spotdlBin} ${spotdlCommonArgsStr} sync ''${sync_target}
+            done
+          '';
+
+          vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
+            enable = true;
+            inherit (cfg) vpnNamespace;
+          };
+
+          startAt = "05:00";
         };
-
-        startAt = "05:00";
       };
     };
 
@@ -96,6 +134,13 @@ in {
         };
       };
       groups = lib.mkIf (cfg.group == "spotdl") {spotdl = {};};
+    };
+
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
+        upstreamAddress = effectiveAddress;
+        upstreamPort = cfg.port;
+      };
     };
   };
 }

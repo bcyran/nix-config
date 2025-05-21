@@ -109,6 +109,7 @@ in {
       };
       spotdl = {
         enable = true;
+        reverseProxy.domain = "spotdl.${cfg.domain}";
         inherit (cfg) group;
         mediaDir = "${my.lib.const.paths.homelab.media}/music/youtube";
       };
