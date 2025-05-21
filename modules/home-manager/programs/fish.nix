@@ -24,6 +24,7 @@ in {
           ll = "ls --all --long --classify";
           tree = "eza --tree";
           vim = "nvim";
+          s = "kitten ssh";
         };
         functions = {
           fish_title = ''
