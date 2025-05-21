@@ -40,6 +40,7 @@ in {
       tor-browser
       webcord
       jellyfin-media-player
+      feishin
       inputs.zen-browser.packages."${pkgs.system}".default
     ];
   };
