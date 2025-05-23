@@ -34,9 +34,9 @@ in {
       scriptArgs = "%i";
       script = ''
         ${pkgs.curl}/bin/curl \
-          -H "Title: Systemd: unit failed" \
+          -H "Title: Systemd: $1 failed" \
           -H "Tags: warning" \
-          -d "Unit: $1.service" \
+          -d "$(journalctl --unit $1 --lines 10 --reverse --no-pager --boot | head -c 4095)" \
           http://127.0.0.1:${toString cfg.port}/systemd
       '';
     };
