@@ -3,6 +3,7 @@
   my,
   config,
   pkgs,
+  lib,
   ...
 }: {
   imports = [
@@ -67,6 +68,10 @@
     };
     services = {
       openssh.enable = true;
+      ntfy-systemd = {
+        enable = true;
+        serverUrl = "https://ntfy.${my.lib.const.domains.intra}";
+      };
     };
   };
 
@@ -125,6 +130,7 @@
       archive_preserve_min = snapshotRetentionMin;
     };
   };
+  systemd.services.btrbk-home.onFailure = ["ntfy-failed@btrbk-home.service"];
 
   boot.tmp.useTmpfs = true;
 
