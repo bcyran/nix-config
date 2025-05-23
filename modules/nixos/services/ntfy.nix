@@ -2,7 +2,6 @@
   my,
   config,
   lib,
-  pkgs,
   ...
 }: let
   cfg = config.my.services.ntfy;
@@ -27,18 +26,6 @@ in {
         base-url = "https://${cfg.reverseProxy.domain}";
         behind-proxy = true;
       };
-    };
-
-    systemd.services."ntfy-failed@" = {
-      description = "Send ntfy notification about %i failure";
-      scriptArgs = "%i";
-      script = ''
-        ${pkgs.curl}/bin/curl \
-          -H "Title: Systemd: $1 failed" \
-          -H "Tags: warning" \
-          -d "$(journalctl --unit $1 --lines 10 --reverse --no-pager --boot | head -c 4095)" \
-          http://127.0.0.1:${toString cfg.port}/systemd
-      '';
     };
 
     my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;

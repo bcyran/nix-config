@@ -184,6 +184,10 @@ in {
       enable = true;
       reverseProxy.domain = "ntfy.${intraDomain}";
     };
+    ntfy-systemd = {
+      enable = true;
+      serverUrl = "http://127.0.0.1:${toString config.my.services.ntfy.port}";
+    };
     joplin = {
       enable = true;
       reverseProxy.domain = "joplin.${intraDomain}";
