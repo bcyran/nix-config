@@ -67,6 +67,15 @@
     };
   };
 
+  nix.settings = {
+    trusted-public-keys = [
+      my.lib.const.binaryCacheKeys.intra
+    ];
+    substituters = [
+      "https://cache.${my.lib.const.domains.intra}"
+    ];
+  };
+
   services.qemuGuest.enable = true;
   boot = {
     initrd.systemd.enable = true;
