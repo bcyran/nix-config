@@ -75,6 +75,10 @@
     };
   };
 
+  programs = {
+    kdeconnect.enable = true;
+  };
+
   environment.systemPackages = [pkgs.cifs-utils];
   fileSystems = let
     userCfg = config.users.users.bazyli;
