@@ -88,6 +88,7 @@ in {
           "yeelight"
           "philips_js"
           "xiaomi_miio"
+          "mqtt"
         ];
 
         customComponents = [

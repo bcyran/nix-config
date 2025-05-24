@@ -81,6 +81,7 @@ in {
     pinchflat_env_file = {
       restartUnits = ["pinchflat.service"];
     };
+    mqtt_hass_password_file = {};
   };
 
   my.configurations = {
@@ -137,6 +138,17 @@ in {
     home-assistant = {
       enable = true;
       reverseProxy.domain = "hass.${intraDomain}";
+    };
+    mosquitto = {
+      enable = true;
+      address = "0.0.0.0";
+      openFirewall = true;
+      users = {
+        hass = {
+          acl = ["readwrite #"];
+          passwordFile = config.sops.secrets.mqtt_hass_password_file.path;
+        };
+      };
     };
     uptime-kuma = {
       enable = true;
