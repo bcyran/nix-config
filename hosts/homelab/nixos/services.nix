@@ -82,6 +82,7 @@ in {
       restartUnits = ["pinchflat.service"];
     };
     mqtt_hass_password_file = {};
+    ntfy_sh_env_file = {};
   };
 
   my.configurations = {
@@ -199,6 +200,7 @@ in {
     ntfy-systemd = {
       enable = true;
       serverUrl = "http://127.0.0.1:${toString config.my.services.ntfy.port}";
+      environmentFiles = [config.sops.secrets.ntfy_sh_env_file.path];
     };
     joplin = {
       enable = true;

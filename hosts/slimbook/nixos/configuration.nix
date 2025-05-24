@@ -3,7 +3,6 @@
   my,
   config,
   pkgs,
-  lib,
   ...
 }: {
   imports = [
@@ -38,6 +37,7 @@
       home_wifi_env_file.sopsFile = wifiSopsFile;
       mobile_wifi_env_file.sopsFile = wifiSopsFile;
       homelab_smb_credentials_file = {};
+      ntfy_sh_env_file = {};
     };
   };
 
@@ -71,6 +71,7 @@
       ntfy-systemd = {
         enable = true;
         serverUrl = "https://ntfy.${my.lib.const.domains.intra}";
+        environmentFiles = [config.sops.secrets.ntfy_sh_env_file.path];
       };
     };
   };

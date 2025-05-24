@@ -1,4 +1,5 @@
 {
+  my,
   config,
   lib,
   pkgs,
@@ -15,6 +16,7 @@ in {
     serviceName = "ntfy.sh systemd notifications";
   in {
     enable = lib.mkEnableOption serviceName;
+    environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
 
     serverUrl = lib.mkOption {
       type = lib.types.str;
@@ -35,11 +37,13 @@ in {
       scriptArgs = "%i";
       script = ''
         ${pkgs.curl}/bin/curl \
+          -u $NTFY_SH_USER:$NTFY_SH_PASSWORD \
           -H "Title: Systemd: $1 failed" \
           -H "Tags: warning" \
           -d "$(journalctl --unit $1 --lines 10 --reverse --no-pager --boot | head -c 4095)" \
           ${cfg.serverUrl}/${effectiveTopic}
       '';
+      serviceConfig.EnvironmentFile = cfg.environmentFiles;
     };
   };
 }

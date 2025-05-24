@@ -25,6 +25,8 @@ in {
         listen-http = "${cfg.address}:${toString cfg.port}";
         base-url = "https://${cfg.reverseProxy.domain}";
         behind-proxy = true;
+        auth-file = "/var/lib/ntfy-sh/user.db";
+        auth-default-access = "deny-all";
       };
     };
 
