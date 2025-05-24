@@ -11,14 +11,10 @@
   killBin = "${pkgs.coreutils}/bin/kill";
   sleepBin = "${pkgs.coreutils}/bin/sleep";
   # Config files: common, default, multi-monitor
-  configCommon = pkgs.substituteAll {
-    name = "config-common.json";
-    src = ./files/common.json;
+  configCommon = pkgs.replaceVars ./files/common.json {
     wirelessNetworkInterface = config.my.hardware.networkInterfaces.wireless;
   };
-  configDefault = pkgs.substituteAll {
-    name = "config-default.json";
-    src = ./files/config-default.json;
+  configDefault = pkgs.replaceVars ./files/config-default.json {
     configCommonPath = configCommon;
   };
   monitorByIdx = idx: builtins.elemAt config.my.hardware.monitors idx;
@@ -26,9 +22,7 @@
     if m.altOutput == null
     then ''"${m.output}"''
     else ''"${m.output}", "${m.altOutput}"'';
-  configMulti = pkgs.substituteAll {
-    name = "config-multi.json";
-    src = ./files/config-multi.json;
+  configMulti = pkgs.replaceVars ./files/config-multi.json {
     configCommonPath = configCommon;
     monitorLeft = monitorOutputsJsonStr (monitorByIdx 0);
     monitorCenter = monitorOutputsJsonStr (monitorByIdx 1);
@@ -51,9 +45,7 @@
     text = builtins.readFile ./files/modules/philipstv.sh;
   };
   # Launcher script
-  launcherRendered = pkgs.substituteAll {
-    name = "launch";
-    src = ./files/launch.sh;
+  launcherRendered = pkgs.replaceVars ./files/launch.sh {
     configDefaultPath = configDefault;
     configMultiPath = configMulti;
   };
