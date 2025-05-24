@@ -13,11 +13,11 @@
   libXi,
   libXxf86vm,
 }: let
-  version = "v11.1.2";
+  version = "v13.2.6";
   # Result of `git describe --tags --always --dirty`
-  commitHashShort = "101b2a8a";
+  commitHashShort = "b912d79d";
   # Result of `git log --date=iso8601-strict -1 --pretty=%ct`
-  commitTimestamp = "1738389749";
+  commitTimestamp = "1748040984";
 
   fakeGit = writeShellScriptBin "git" ''
     if [[ $@ = "describe --tags --always --dirty" ]]; then
@@ -40,10 +40,10 @@ in
       owner = "joshuar";
       repo = "go-hass-agent";
       rev = "refs/tags/${version}";
-      hash = "sha256-c2TldMY05Au4gwYiIDPi/gQuOHVnT+/0ycgGHKErZyA=";
+      hash = "sha256-vO5GUkGePKSaj4UDZioGBHLXx82l/LgmBz+GbfIiBxs=";
     };
 
-    vendorHash = "sha256-02sWRWWadZFMaLjJV181bAioNyuN7mG0ZzrkrTdUTqU=";
+    vendorHash = "sha256-HjjRqEeffpavhu/9m6fg6/23VoBjGi7Cfm1O26yj65g=";
 
     nativeBuildInputs = [
       pkg-config
