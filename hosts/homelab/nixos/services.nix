@@ -227,17 +227,6 @@ in {
       enable = true;
       reverseProxy.domain = "drawio.${intraDomain}";
     };
-    samba = {
-      enable = true;
-      openFirewall = true;
-      validUsers = [config.my.user.name];
-      shares = let
-        inherit (my.lib.const.paths.homelab) fastStore slowStore;
-      in {
-        "fast_store" = "${fastStore}/share";
-        "slow_store" = "${slowStore}/share";
-      };
-    };
     servarr = let
       inherit (my.lib.const.paths.homelab) downloads slowMedia fastMedia;
     in {
