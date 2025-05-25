@@ -239,7 +239,7 @@ in {
       };
     };
     servarr = let
-      inherit (my.lib.const.paths.homelab) downloads slowMedia;
+      inherit (my.lib.const.paths.homelab) downloads slowMedia fastMedia;
     in {
       enable = true;
       domain = intraDomain;
@@ -247,9 +247,9 @@ in {
         transmission = "${downloads}/torrents";
         sonarr = "${slowMedia}/tv";
         radarr = "${slowMedia}/movies";
-        lidarr = "${slowMedia}/music/lidarr";
-        spotdl = "${slowMedia}/music/youtube";
         pinchflat = "${slowMedia}/youtube";
+        lidarr = "${fastMedia}/music/lidarr";
+        spotdl = "${fastMedia}/music/youtube";
       };
       transmissionCredentialsFile = config.sops.secrets.transmission_credentials_file.path;
       transmissionPeerPort = 24334;
