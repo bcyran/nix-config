@@ -62,8 +62,6 @@ in {
       example = "proton";
       description = "The name of the VPN namespace. VPN is disabled if not given.";
     };
-
-    enableUnmanic = lib.mkEnableOption "unmanic";
   };
 
   config = lib.mkIf cfg.enable {
@@ -133,11 +131,6 @@ in {
       jellyseerr = {
         enable = true;
         reverseProxy.domain = "jellyseerr.${cfg.domain}";
-      };
-      unmanic = {
-        enable = cfg.enableUnmanic;
-        reverseProxy.domain = "unmanic.${cfg.domain}";
-        inherit (cfg) group mediaDir;
       };
       recyclarr = {
         enable = true;
