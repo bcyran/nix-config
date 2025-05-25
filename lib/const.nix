@@ -98,6 +98,8 @@ rec {
       fastStore = "/mnt/fast_store";
       slowMedia = "${slowStore}/media";
       fastMedia = "${fastStore}/media";
+      slowPrivate = "${slowStore}/private";
+      fastPrivate = "${fastStore}/private";
       backup = "${slowStore}/backup";
       services = "${fastStore}/services";
       downloads = "${fastStore}/downloads";

@@ -80,29 +80,33 @@
     kdeconnect.enable = true;
   };
 
-  environment.systemPackages = [pkgs.cifs-utils];
+  environment.systemPackages = [pkgs.sshfs];
   fileSystems = let
-    userCfg = config.users.users.bazyli;
-    smbOptions = [
+    inherit (my.lib) const;
+    userCfg = config.my.user;
+    homelabDomain = const.lan.devices.homelab.domain;
+    homelabPaths = const.paths.homelab;
+    sshfsOptions = [
       "x-systemd.automount"
       "noauto"
-      "x-systemd.idle-timeout=60"
+      "x-systemd.idle-timeout=300"
       "x-systemd.device-timeout=5s"
       "x-systemd.mount-timeout=5s"
-      "credentials=${config.sops.secrets.homelab_smb_credentials_file.path}"
-      "uid=${toString userCfg.uid}"
-      "gid=${toString config.ids.gids.users}"
+      "nodev"
+      "noatime"
+      "allow_other"
+      "IdentityFile=${userCfg.home}/.ssh/id_ed25519"
     ];
   in {
     "/mnt/FastStore" = {
-      device = "//${my.lib.const.lan.devices.homelab.domain}/fast_store";
-      fsType = "cifs";
-      options = smbOptions;
+      device = "${userCfg.name}@${homelabDomain}:${homelabPaths.fastPrivate}";
+      fsType = "sshfs";
+      options = sshfsOptions;
     };
     "/mnt/SlowStore" = {
-      device = "//${my.lib.const.lan.devices.homelab.domain}/slow_store";
-      fsType = "cifs";
-      options = smbOptions;
+      device = "${userCfg.name}@${homelabDomain}:${homelabPaths.slowPrivate}";
+      fsType = "sshfs";
+      options = sshfsOptions;
     };
   };
 
