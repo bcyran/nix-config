@@ -251,15 +251,17 @@ in {
         lidarr = "${fastMedia}/music/lidarr";
         spotdl = "${fastMedia}/music/youtube";
       };
-      transmissionCredentialsFile = config.sops.secrets.transmission_credentials_file.path;
-      transmissionPeerPort = 24334;
-      transmissionExtraSettings = {
-        ratio-limit-enabled = true;
-        ratio-limit = 2;
-        speed-limit-down-enabled = true;
-        speed-limit-down = 40000;
-        speed-limit-up-enabled = true;
-        speed-limit-up = 20000;
+      transmission = {
+        credentialsFile = config.sops.secrets.transmission_credentials_file.path;
+        peerPort = 24334;
+        extraSettings = {
+          ratio-limit-enabled = true;
+          ratio-limit = 2;
+          speed-limit-down-enabled = true;
+          speed-limit-down = 40000;
+          speed-limit-up-enabled = true;
+          speed-limit-up = 20000;
+        };
       };
       recyclarrEnvironmentFiles = [config.sops.secrets.recyclarr_env_file.path];
       pinchflatEnvironmentFile = config.sops.secrets.pinchflat_env_file.path;

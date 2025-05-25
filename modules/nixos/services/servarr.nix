@@ -27,27 +27,29 @@ in {
       pinchflat = my.lib.options.mkDirOption "pinchflat";
     };
 
-    transmissionCredentialsFile = lib.mkOption {
-      type = lib.types.path;
-      example = "/path/to/transmission/credentials";
-      description = "The path to the transmission credentials file.";
-    };
-
-    transmissionPeerPort = lib.mkOption {
-      type = lib.types.int;
-      default = 51413;
-      example = 24334;
-      description = "The port for transmission peer connections.";
-    };
-
-    transmissionExtraSettings = lib.mkOption {
-      type = lib.types.attrs;
-      default = {};
-      example = {
-        speed-limit-down-enabled = true;
-        speed-limit-down = 20000;
+    transmission = {
+      credentialsFile = lib.mkOption {
+        type = lib.types.path;
+        example = "/path/to/transmission/credentials";
+        description = "The path to the transmission credentials file.";
       };
-      description = "Extra settings to be added to the Transmission configuration.";
+
+      peerPort = lib.mkOption {
+        type = lib.types.int;
+        default = 51413;
+        example = 24334;
+        description = "The port for transmission peer connections.";
+      };
+
+      extraSettings = lib.mkOption {
+        type = lib.types.attrs;
+        default = {};
+        example = {
+          speed-limit-down-enabled = true;
+          speed-limit-down = 20000;
+        };
+        description = "Extra settings to be added to the Transmission configuration.";
+      };
     };
 
     recyclarrEnvironmentFiles = my.lib.options.mkEnvironmentFilesOption "recyclarr";
@@ -68,10 +70,8 @@ in {
       transmission = {
         enable = true;
         reverseProxy.domain = "transmission.${cfg.domain}";
-        credentialsFile = cfg.transmissionCredentialsFile;
-        peerPort = cfg.transmissionPeerPort;
         downloadsDir = cfg.dirs.transmission;
-        extraSettings = cfg.transmissionExtraSettings;
+        inherit (cfg.transmission) credentialsFile peerPort extraSettings;
         inherit (cfg) group vpnNamespace;
       };
       prowlarr = {
