@@ -67,4 +67,11 @@
       example = "service";
       description = "Group under which ${serviceName} runs.";
     };
+
+  mkDirOption = serviceName:
+    lib.mkOption {
+      type = lib.types.path;
+      example = "/path/to/media";
+      description = "The path to the directory for ${serviceName}.";
+    };
 }

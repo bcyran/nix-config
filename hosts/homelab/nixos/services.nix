@@ -239,10 +239,18 @@ in {
       };
     };
     servarr = let
-      inherit (my.lib.const.paths.homelab) downloads media;
+      inherit (my.lib.const.paths.homelab) downloads slowMedia;
     in {
       enable = true;
       domain = intraDomain;
+      dirs = {
+        transmission = "${downloads}/torrents";
+        sonarr = "${slowMedia}/tv";
+        radarr = "${slowMedia}/movies";
+        lidarr = "${slowMedia}/music/lidarr";
+        spotdl = "${slowMedia}/music/youtube";
+        pinchflat = "${slowMedia}/youtube";
+      };
       transmissionCredentialsFile = config.sops.secrets.transmission_credentials_file.path;
       transmissionPeerPort = 24334;
       transmissionExtraSettings = {
@@ -255,8 +263,6 @@ in {
       };
       recyclarrEnvironmentFiles = [config.sops.secrets.recyclarr_env_file.path];
       pinchflatEnvironmentFile = config.sops.secrets.pinchflat_env_file.path;
-      downloadsDir = downloads;
-      mediaDir = media;
       vpnNamespace = "airvpn";
     };
   };

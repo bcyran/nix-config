@@ -18,6 +18,15 @@ in {
       description = "The domain for servarr services subdomains.";
     };
 
+    dirs = {
+      transmission = my.lib.options.mkDirOption "transmission";
+      sonarr = my.lib.options.mkDirOption "sonarr";
+      radarr = my.lib.options.mkDirOption "radarr";
+      lidarr = my.lib.options.mkDirOption "lidarr";
+      spotdl = my.lib.options.mkDirOption "spotdl";
+      pinchflat = my.lib.options.mkDirOption "pinchflat";
+    };
+
     transmissionCredentialsFile = lib.mkOption {
       type = lib.types.path;
       example = "/path/to/transmission/credentials";
@@ -44,18 +53,6 @@ in {
     recyclarrEnvironmentFiles = my.lib.options.mkEnvironmentFilesOption "recyclarr";
     pinchflatEnvironmentFile = my.lib.options.mkEnvironmentFileOption "pinchflat";
 
-    downloadsDir = lib.mkOption {
-      type = lib.types.path;
-      example = "/path/to/downloads";
-      description = "The path to the temporary storage for downloads / seeding.";
-    };
-
-    mediaDir = lib.mkOption {
-      type = lib.types.path;
-      example = "/path/to/media";
-      description = "The path to the media library directory.";
-    };
-
     vpnNamespace = lib.mkOption {
       type = with lib.types; nullOr str;
       default = null;
@@ -73,7 +70,7 @@ in {
         reverseProxy.domain = "transmission.${cfg.domain}";
         credentialsFile = cfg.transmissionCredentialsFile;
         peerPort = cfg.transmissionPeerPort;
-        downloadsDir = "${cfg.downloadsDir}/torrents";
+        downloadsDir = cfg.dirs.transmission;
         extraSettings = cfg.transmissionExtraSettings;
         inherit (cfg) group vpnNamespace;
       };
@@ -91,32 +88,32 @@ in {
         enable = true;
         reverseProxy.domain = "sonarr.${cfg.domain}";
         inherit (cfg) group vpnNamespace;
-        mediaDir = "${cfg.mediaDir}/tv";
+        mediaDir = cfg.dirs.sonarr;
       };
       radarr = {
         enable = true;
         reverseProxy.domain = "radarr.${cfg.domain}";
         inherit (cfg) group vpnNamespace;
-        mediaDir = "${cfg.mediaDir}/movies";
+        mediaDir = cfg.dirs.radarr;
       };
       lidarr = {
         enable = true;
         reverseProxy.domain = "lidarr.${cfg.domain}";
         inherit (cfg) group vpnNamespace;
-        mediaDir = "${cfg.mediaDir}/music/lidarr";
+        mediaDir = cfg.dirs.lidarr;
       };
       spotdl = {
         enable = true;
         reverseProxy.domain = "spotdl.${cfg.domain}";
         inherit (cfg) group;
-        mediaDir = "${my.lib.const.paths.homelab.media}/music/youtube";
+        mediaDir = cfg.dirs.spotdl;
       };
       pinchflat = {
         enable = true;
         reverseProxy.domain = "pinchflat.${cfg.domain}";
         environmentFile = cfg.pinchflatEnvironmentFile;
         inherit (cfg) group;
-        mediaDir = "${cfg.mediaDir}/youtube";
+        mediaDir = cfg.dirs.pinchflat;
       };
       bazarr = {
         enable = true;

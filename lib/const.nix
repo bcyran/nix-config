@@ -96,10 +96,11 @@ rec {
     homelab = rec {
       slowStore = "/mnt/slow_store";
       fastStore = "/mnt/fast_store";
+      slowMedia = "${slowStore}/media";
+      fastMedia = "${fastStore}/media";
       backup = "${slowStore}/backup";
       services = "${fastStore}/services";
       downloads = "${fastStore}/downloads";
-      media = "${slowStore}/media";
     };
   };
 }
