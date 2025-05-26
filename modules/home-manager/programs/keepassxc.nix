@@ -32,7 +32,7 @@ in {
           SearchInAllDatabases = true;
         };
         SSHAgent = {
-          Enabled = true;
+          Enabled = false;
         };
         PasswordGenerator = {
           Length = 20;
@@ -46,6 +46,10 @@ in {
         };
         FdoSecrets = {
           Enabled = true;
+          ShowNotification = true;
+          ConfirmAccessItem = false;
+          ConfirmDeleteItem = false;
+          UnlockBeforeSearch = true;
         };
       };
     };
