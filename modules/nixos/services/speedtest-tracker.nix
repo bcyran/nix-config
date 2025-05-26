@@ -6,7 +6,7 @@
 }: let
   cfg = config.my.services.speedtest-tracker;
 
-  speedtestTrackerVersion = "v1.5.0";
+  speedtestTrackerVersion = "v1.6.0";
   dataDir = "/var/lib/speedtest-tracker";
 in {
   options.my.services.speedtest-tracker = let
