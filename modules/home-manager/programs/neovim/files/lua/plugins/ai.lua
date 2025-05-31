@@ -83,59 +83,32 @@ return {
       "CopilotChatFixDiagnostic",
       "CopilotChatCommit",
       "CopilotChatCommitStaged",
-      "CopilotChatBuffer",
     },
-    opts = {
-      proxy = os.getenv("http_proxy"),
-      name = "Copilot",
-      selection = function(source)
-        return require("CopilotChat.select").visual(source)
-      end,
-    },
-    config = function(_, opts)
-      local chat = require("CopilotChat")
+    opts = function()
       local select = require("CopilotChat.select")
+      local user = vim.env.USER or "User"
+      user = user:sub(1, 1):upper() .. user:sub(2)
 
-      -- Override default prompts
-      opts.prompts = {
-        Commit = {
-          prompt = "Write commit message for the changes using conventional commit format",
-          selection = select.gitdiff,
-        },
-        CommitStaged = {
-          prompt = "Write commit message for the changes using conventional commit format",
-          selection = function(source)
-            return select.gitdiff(source, true)
-          end,
+      return {
+        proxy = os.getenv("http_proxy"),
+        name = "Copilot",
+        selection = function(source)
+          return select.visual(source) or select.buffer(source)
+        end,
+        auto_insert_mode = true,
+        question_header = "  " .. user .. " ",
+        answer_header = "  Copilot ",
+        window = {
+          width = 0.4,
         },
       }
-      chat.setup(opts)
-
-      vim.api.nvim_create_user_command("CopilotChatBuffer", function(args)
-        chat.ask(args.args, { selection = select.buffer })
-      end, { nargs = "*", range = true })
     end,
     keys = {
       {
-        "<leader>av",
-        function()
-          local input = vim.fn.input("Chat about selection: ")
-          if input ~= "" then
-            vim.cmd("CopilotChat " .. input)
-          end
-        end,
+        "<leader>ac",
+        "<cmd>CopilotChatToggle<cr>",
         desc = "Copilot chat about visual selection",
-        mode = "v",
-      },
-      {
-        "<leader>ab",
-        function()
-          local input = vim.fn.input("Chat about the buffer: ")
-          if input ~= "" then
-            vim.cmd("CopilotChatBuffer " .. input)
-          end
-        end,
-        desc = "Copilot chat about current buffer",
+        mode = { "n", "v" },
       },
     },
   },
