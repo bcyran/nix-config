@@ -30,6 +30,7 @@ in {
           CustomProxyLocation = "";
           Enabled = true;
           SearchInAllDatabases = true;
+          HttpAuthPermission = true;
         };
         SSHAgent = {
           Enabled = false;
