@@ -25,7 +25,7 @@ in {
       settings = {
         program_options = {
           file_manager = "thunar";
-          terminal = "alacritty --working-directory";
+          terminal = "kitty --working-directory";
         };
         device_config = cfg.deviceConfig;
       };

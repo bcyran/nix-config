@@ -13,7 +13,6 @@ in {
   config = lib.mkIf cfg.enable {
     my = {
       programs = {
-        alacritty.enable = mkDefault true;
         kitty.enable = mkDefault true;
         keepassxc.enable = mkDefault true;
         firefox.enable = mkDefault true;

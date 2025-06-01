@@ -39,7 +39,7 @@ in {
           Config(
             desktop_actions: true,
             max_entries: 5,
-            terminal: Some("alacritty"),
+            terminal: Some("kitty"),
           )
         '';
         "shell.ron".text = ''

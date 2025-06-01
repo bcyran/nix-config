@@ -8,7 +8,7 @@
   inherit (lib.trivial) boolToString;
   cfg = config.my.programs.neovim;
 
-  alacrittyBin = "${pkgs.alacritty}/bin/alacritty";
+  kittyBin = "${pkgs.kitty}/bin/kitty";
   nvimBin = "${pkgs.neovim}/bin/nvim";
 in {
   options.my.programs.neovim = {
@@ -78,7 +78,7 @@ in {
       comment = "Edit text files";
       categories = ["Utility" "TextEditor"];
       icon = "nvim";
-      exec = "${alacrittyBin} -e ${nvimBin} %F";
+      exec = "${kittyBin} -e ${nvimBin} %F";
       mimeType = [
         "text/english"
         "text/plain"

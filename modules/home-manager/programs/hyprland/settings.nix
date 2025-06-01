@@ -182,7 +182,7 @@ in {
         "11, monitor:$monitorL"
       ];
       exec-once = [
-        "alacritty --class terminal-workspace"
+        "kitty --class terminal-workspace"
       ];
     };
   };
