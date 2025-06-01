@@ -182,6 +182,7 @@ in {
         "11, monitor:$monitorL"
       ];
       exec-once = [
+        "uwsm finalize"
         "kitty --class terminal-workspace"
       ];
     };

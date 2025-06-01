@@ -62,29 +62,29 @@ in {
             "$mod, mouse_left, hy3:focustab, l"
             "$mod, mouse_right, hy3:focustab, r"
 
-            "$mod, s, exec, scr output"
-            "$mod CONTROL, s, exec, scr area"
-            "$mod SHIFT, s, exec, scr active"
+            "$mod, s, exec, uwsm app -- scr output"
+            "$mod CONTROL, s, exec, uwsm app -- scr area"
+            "$mod SHIFT, s, exec, uwsm app -- scr active"
 
-            "$mod, slash, exec, playerctl play-pause"
-            "$mod, comma, exec, playerctl previous"
-            "$mod, period, exec, playerctl next"
+            "$mod, slash, exec, uwsm app -- playerctl play-pause"
+            "$mod, comma, exec, uwsm app -- playerctl previous"
+            "$mod, period, exec, uwsm app -- playerctl next"
 
-            ",XF86AudioRaiseVolume, exec, volume up"
-            ",XF86AudioLowerVolume, exec, volume down"
-            ",XF86AudioMute, exec, volume toggle"
+            ",XF86AudioRaiseVolume, exec, uwsm app -- volume up"
+            ",XF86AudioLowerVolume, exec, uwsm app -- volume down"
+            ",XF86AudioMute, exec, uwsm app -- volume toggle"
 
-            ",XF86MonBrightnessDown, exec, backlight down 10"
-            ",XF86MonBrightnessUp, exec, backlight up 10"
+            ",XF86MonBrightnessDown, exec, uwsm app -- backlight down 10"
+            ",XF86MonBrightnessUp, exec, uwsm app -- backlight up 10"
 
-            "CONTROL, space, exec, swaync-client --toggle-panel"
-            "CONTROL, escape, exec, swaync-client --close-latest"
+            "CONTROL, space, exec, uwsm app -- swaync-client --toggle-panel"
+            "CONTROL, escape, exec, uwsm app -- swaync-client --close-latest"
 
-            "$mod, space, exec, anyrun"
-            "$mod, return, exec, kitty"
-            "$mod SHIFT, return, exec, kitty --class terminal-floating"
-            "$mod, Y, exec, firefox"
-            "$mod, N, exec, thunar"
+            "$mod, space, exec, uwsm app -- anyrun"
+            "$mod, return, exec, uwsm app -- kitty"
+            "$mod SHIFT, return, exec, uwsm app -- kitty --class terminal-floating"
+            "$mod, Y, exec, uwsm app -- zen"
+            "$mod, N, exec, uwsm app -- thunar"
           ]
           ++ workspaceBinds;
         bindm = [

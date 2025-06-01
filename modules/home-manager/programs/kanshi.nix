@@ -21,6 +21,16 @@ in {
       pkgs.kanshi
     ];
 
+    # With UWSM, kanshi needs to be started after Hyprland.
+    systemd.user.services.kanshi = {
+      Install.WantedBy = lib.mkForce ["graphical-session.target"];
+      Unit.After = lib.mkForce ["graphical-session.target"];
+      Service = {
+        Slice = lib.mkForce ["background-graphical.slice"];
+        ExecCondition = "${pkgs.systemd}/lib/systemd/systemd-xdg-autostart-condition \"wlroots:sway:Hyprland\" \"\"";
+        ConditionEnvironment = lib.mkForce [];
+      };
+    };
     services.kanshi = {
       enable = true;
       systemdTarget = "graphical-session-pre.target";

@@ -9,6 +9,18 @@
   cfg = config.my.programs.anyrun;
 
   styleSheet = builtins.readFile ./style.css;
+
+  preprocessScript = pkgs.writeShellScriptBin "anyrun-app-preprocess-script" ''
+    command_name="$1"
+    term_mode="$2" # "term" or "no-term"
+    command="$3"
+
+    if [[ "$term_mode" == "term" ]]; then
+      exec uwsm app -- kitty "$command"
+    else
+      exec uwsm app -- "$command"
+    fi
+  '';
 in {
   options.my.programs.anyrun.enable = lib.mkEnableOption "anyrun";
 
@@ -40,6 +52,7 @@ in {
             desktop_actions: true,
             max_entries: 5,
             terminal: Some("kitty"),
+            preprocess_exec_script: Some("${preprocessScript}"),
           )
         '';
         "shell.ron".text = ''
