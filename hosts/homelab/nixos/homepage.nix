@@ -151,6 +151,19 @@ in {
             };
           }
           {
+            Paperless = rec {
+              description = "Document management system.";
+              icon = "paperless";
+              href = makeServiceDomainUrl "paperless";
+              siteMonitor = makeServiceLoopbackUrl "paperless";
+              widget = {
+                type = "paperlessngx";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_PAPERLESS_API_KEY}}";
+              };
+            };
+          }
+          {
             Syncthing = rec {
               description = "File synchronization service.";
               icon = "syncthing";
