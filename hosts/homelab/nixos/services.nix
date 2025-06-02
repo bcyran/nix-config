@@ -83,6 +83,7 @@ in {
     };
     mqtt_hass_password_file = {};
     ntfy_sh_env_file = {};
+    paperless_password_file = {};
   };
 
   my.configurations = {
@@ -229,6 +230,11 @@ in {
     drawio = {
       enable = true;
       reverseProxy.domain = "drawio.${intraDomain}";
+    };
+    paperless = {
+      enable = true;
+      reverseProxy.domain = "paperless.${intraDomain}";
+      passwordFile = config.sops.secrets.paperless_password_file.path;
     };
     servarr = let
       inherit (my.lib.const.paths.homelab) downloads slowMedia fastMedia;
