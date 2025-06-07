@@ -21,5 +21,7 @@ in {
         nh.enable = mkDefault true;
       };
     };
+
+    programs.nix-ld.enable = mkDefault true;
   };
 }
