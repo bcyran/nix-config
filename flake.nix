@@ -163,5 +163,7 @@
         my = inputs.self;
       })
     ];
+
+    devShells = myLib.forEachSystemPkgs systems inputs.nixpkgs (pkgs: import ./devshells {inherit pkgs inputs;});
   };
 }
