@@ -41,6 +41,8 @@ in {
       webcord
       jellyfin-media-player
       feishin
+      mixxx
+      ffmpeg
       inputs.zen-browser.packages."${pkgs.system}".default
     ];
   };
