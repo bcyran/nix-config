@@ -52,7 +52,7 @@ in {
         pinchflat = {
           name = "pinchflat";
           isSystemUser = true;
-          inherit (cfg) group;
+          group = lib.mkForce cfg.group;
         };
       };
       groups = lib.mkIf (cfg.group == "pinchflat") {pinchflat = {};};
