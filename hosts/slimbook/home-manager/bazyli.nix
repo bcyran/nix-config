@@ -34,7 +34,7 @@ in {
       tokyonight.enable = true;
     };
     programs = {
-      timewall.enable = true;
+      timewall.enable = false;
       cameractrls.enable = true;
       syncthing = {
         enable = true;
