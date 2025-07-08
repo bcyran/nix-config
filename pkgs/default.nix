@@ -14,7 +14,7 @@ in rec {
   };
   scr = pkgs.callPackage ./scr {};
   ttkbootstrap = pkgs.callPackage ./ttkbootstrap {
-    inherit (python3Packages) buildPythonPackage pythonOlder tkinter pillow;
+    inherit (python3Packages) buildPythonPackage pythonOlder tkinter pillow setuptools;
   };
   philipstv-gui = pkgs.callPackage ./philipstv-gui {
     inherit (python3Packages) buildPythonApplication pythonOlder poetry-core poetry-dynamic-versioning appdirs philipstv;

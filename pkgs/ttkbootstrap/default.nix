@@ -4,6 +4,7 @@
   buildPythonPackage,
   pythonOlder,
   tk,
+  setuptools,
   tkinter,
   pillow,
 }:
@@ -11,6 +12,7 @@ buildPythonPackage rec {
   pname = "ttkboostrap";
   version = "1.10.1";
   disable = pythonOlder "3.7";
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "israel-dryer";
@@ -19,7 +21,12 @@ buildPythonPackage rec {
     hash = "sha256-aUqr30Tgz3ZLjLbNIt9yi6bqhXj+31heZoOLOZHYUiU=";
   };
 
+  buildsystem = [
+    "setuptools"
+  ];
+
   buildInputs = [
+    setuptools
     tk
   ];
 
