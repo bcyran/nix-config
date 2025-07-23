@@ -83,7 +83,7 @@ in {
             "$mod, space, exec, uwsm app -- anyrun"
             "$mod, return, exec, uwsm app -- kitty"
             "$mod SHIFT, return, exec, uwsm app -- kitty --class terminal-floating"
-            "$mod, Y, exec, uwsm app -- zen"
+            "$mod, Y, exec, uwsm app -- firefox"
             "$mod, N, exec, uwsm app -- thunar"
           ]
           ++ workspaceBinds;

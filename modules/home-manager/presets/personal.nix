@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   config,
   lib,
@@ -43,7 +42,6 @@ in {
       feishin
       mixxx
       ffmpeg
-      inputs.zen-browser.packages."${pkgs.system}".default
     ];
   };
 }
