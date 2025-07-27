@@ -7,7 +7,7 @@
   cfg = config.my.services.linkwarden;
   ollamaCfg = config.my.services.ollama;
 
-  linkwardenVersion = "v2.10.2";
+  linkwardenVersion = "v2.11.5";
   pgDatabase = "linkwarden";
   dataDir = "/var/lib/linkwarden";
 in {

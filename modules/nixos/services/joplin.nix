@@ -7,7 +7,7 @@
   cfg = config.my.services.joplin;
   postgresCfg = config.my.services.postgresql;
 
-  joplinVersion = "3.3.13";
+  joplinVersion = "3.4.1";
   dbName = "joplin";
   dbUser = "joplin";
 in {

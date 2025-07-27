@@ -9,7 +9,7 @@
 }: let
   cfg = config.my.services.onlyoffice;
 
-  onlyofficeVersion = "8.3.0.1";
+  onlyofficeVersion = "9.0.4.36";
   dataDir = "/var/lib/onlyoffice";
 in {
   options.my.services.onlyoffice = let
