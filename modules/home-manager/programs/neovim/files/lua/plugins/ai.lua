@@ -113,6 +113,17 @@ return {
     },
   },
 
+  -- Code Companion (agentic workflows etc.)
+  {
+    "olimorris/codecompanion.nvim",
+    enabled = settings.copilot_enabled and not settings.copilot_official,
+    opts = {},
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+  },
+
   -- Codeium (alternative to Copilot)
   {
     "Exafunction/codeium.vim",
