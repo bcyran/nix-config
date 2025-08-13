@@ -37,6 +37,7 @@ in {
         experimental-features = "nix-command flakes";
         warn-dirty = false;
       };
+      download-buffer-size = 524288000; # 500 MiB
       extraOptions =
         if (cfg.nixExtraOptionsFile != null)
         then "!include ${cfg.nixExtraOptionsFile}"

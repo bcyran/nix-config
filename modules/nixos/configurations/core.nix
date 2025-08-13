@@ -34,6 +34,7 @@ in {
         experimental-features = "nix-command flakes";
         auto-optimise-store = true;
         warn-dirty = false;
+        download-buffer-size = 524288000; # 500 MiB
       };
       extraOptions =
         if (cfg.nixExtraOptionsFile != null)
