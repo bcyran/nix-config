@@ -6,7 +6,7 @@
 }: let
   cfg = config.my.programs.greetd;
 
-  tuigreetBin = lib.getExe pkgs.greetd.tuigreet;
+  tuigreetBin = lib.getExe pkgs.tuigreet;
 in {
   options.my.programs.greetd.enable = lib.mkEnableOption "greetd";
 
