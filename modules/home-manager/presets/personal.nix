@@ -38,7 +38,11 @@ in {
       vlc
       tor-browser
       webcord
-      jellyfin-media-player
+      # FIXME: Restore once updated not to use unsafe qt5.
+      #        See: https://github.com/NixOS/nixpkgs/issues/437865,
+      #        https://github.com/jellyfin/jellyfin-media-player/issues/282.
+      #
+      # jellyfin-media-player
       feishin
       mixxx
       ffmpeg

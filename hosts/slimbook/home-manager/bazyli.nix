@@ -108,6 +108,7 @@ in {
 
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     matchBlocks = {
       homelab = {
         host = "homelab";

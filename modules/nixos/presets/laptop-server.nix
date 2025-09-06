@@ -15,10 +15,10 @@ in {
     ];
 
     # Disable the lid switch completely
-    services.logind = {
-      lidSwitch = mkDefault "ignore";
-      lidSwitchExternalPower = mkDefault "ignore";
-      lidSwitchDocked = mkDefault "ignore";
+    services.logind.settings.Login = {
+      HandleLidSwitch = mkDefault "ignore";
+      HandleLidSwitchExternalPower = mkDefault "ignore";
+      HandleLidSwitchDocked = mkDefault "ignore";
     };
 
     # Disable the suspend target completely

@@ -43,12 +43,15 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # TODO: Switch to anyrun from current master.
+    #       This will require some changes to the config and styles.
+    #       Also, the current master seems to be a bit broken.
     anyrun = {
-      url = "github:anyrun-org/anyrun";
+      url = "github:anyrun-org/anyrun?ref=2536715";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     anyrun-powermenu = {
-      url = "github:bcyran/anyrun-powermenu";
+      url = "github:bcyran/anyrun-powermenu?ref=eb2790c";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprcursor-phinger = {
