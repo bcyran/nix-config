@@ -176,14 +176,6 @@ in {
       reverseProxy.domain = "linkwarden.${intraDomain}";
       llm = "phi3";
     };
-    ollama = {
-      enable = true;
-      reverseProxy.domain = "ollama.${intraDomain}";
-    };
-    open-webui = {
-      enable = true;
-      reverseProxy.domain = "openwebui.${intraDomain}";
-    };
     iperf = {
       enable = true;
       address = "0.0.0.0";

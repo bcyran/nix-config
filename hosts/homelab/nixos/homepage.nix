@@ -221,24 +221,6 @@ in {
             };
           }
           {
-            Ollama = rec {
-              description = "LLM API service.";
-              icon = "ollama";
-              siteMonitor = makeServiceLoopbackUrl "ollama";
-              widget = {
-                type = "customapi";
-                url = "${siteMonitor}/api/ps";
-                mappings = [
-                  {
-                    field = "models";
-                    label = "Running models";
-                    format = "size";
-                  }
-                ];
-              };
-            };
-          }
-          {
             Joplin = {
               description = "Notes synchronization.";
               icon = "joplin";
@@ -259,14 +241,6 @@ in {
               description = "Nix binary cache server.";
               icon = "https://nix.dev/_static/img/nix.svg";
               siteMonitor = "${makeServiceLoopbackUrl "nix-serve"}/nix-cache-info";
-            };
-          }
-          {
-            "Open WebUI" = {
-              description = "OpenAI API service.";
-              icon = "https://docs.openwebui.com/images/logo-dark.png";
-              href = makeServiceDomainUrl "open-webui";
-              siteMonitor = makeServiceLoopbackUrl "open-webui";
             };
           }
         ];
