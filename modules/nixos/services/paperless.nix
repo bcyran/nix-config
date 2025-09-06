@@ -5,8 +5,6 @@
   ...
 }: let
   cfg = config.my.services.paperless;
-
-  domain = "https://${cfg.reverseProxy.domain}";
 in {
   options.my.services.paperless = let
     serviceName = "Paperless";
@@ -32,7 +30,7 @@ in {
       configureNginx = false;
       database.createLocally = true;
       inherit (cfg) address port passwordFile;
-      inherit domain;
+      inherit (cfg.reverseProxy) domain;
       settings = {
         PAPERLESS_OCR_LANGUAGE = "pol+eng";
         PAPERLESS_TIME_ZONE = "Europe/Warsaw";
