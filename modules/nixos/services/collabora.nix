@@ -6,7 +6,7 @@
 }: let
   cfg = config.my.services.collabora;
 
-  codeVersion = "25.04.4.1.1";
+  codeVersion = "25.04.5.1.1";
 in {
   options.my.services.collabora = let
     serviceName = "Collabora CODE";

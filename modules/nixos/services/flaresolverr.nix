@@ -6,7 +6,7 @@
 }: let
   cfg = config.my.services.flaresolverr;
 
-  flareSolverrVersion = "v3.3.25";
+  flareSolverrVersion = "v3.4.0";
   containersBackend = config.virtualisation.oci-containers.backend;
   effectiveAddress =
     if cfg.vpnNamespace != null

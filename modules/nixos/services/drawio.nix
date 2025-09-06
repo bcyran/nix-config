@@ -6,7 +6,7 @@
 }: let
   cfg = config.my.services.drawio;
 
-  drawioVersion = "28.0.7";
+  drawioVersion = "28.2.0";
 in {
   options.my.services.drawio = let
     serviceName = "draw.io";
