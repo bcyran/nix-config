@@ -2,17 +2,17 @@
   fetchFromGitHub,
   stdenv,
 }: let
-  rev = "d0ec619";
+  rev = "769b458";
 in
   stdenv.mkDerivation {
     pname = "joplin-plugins";
-    version = "unstable-2025-02-17-${rev}";
+    version = "unstable-2025-09-06-${rev}";
 
     src = fetchFromGitHub {
       owner = "joplin";
       repo = "plugins";
       inherit rev;
-      hash = "sha256-pX+zdD0r7UJWz/KgKSx8sf2GLYCrOPYg2yOLKXDZfdY=";
+      hash = "sha256-g4lsMurp7qlvzBL4oWZTkPp+iyktw5NBMO2EKbKphIA=";
     };
 
     installPhase = ''
