@@ -104,6 +104,7 @@ in {
             User = cfg.user;
             Group = cfg.group;
             WorkingDirectory = cfg.mediaDir;
+            TimeoutSec = 60 * 60; # 1 hour
           };
 
           script = ''
