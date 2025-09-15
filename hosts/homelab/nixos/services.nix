@@ -257,6 +257,11 @@ in {
       pinchflatEnvironmentFile = config.sops.secrets.pinchflat_env_file.path;
       vpnNamespace = "airvpn";
     };
+    kiwix = {
+      enable = true;
+      libraryPath = "${my.lib.const.paths.homelab.slowMedia}/kiwix";
+      reverseProxy.domain = "kiwix.${intraDomain}";
+    };
   };
 
   services.btrbk.sshAccess = [
