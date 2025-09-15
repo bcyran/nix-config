@@ -374,6 +374,14 @@ in {
               siteMonitor = makeServiceDomainUrl "spotdl";
             };
           }
+          {
+            Kiwix = {
+              description = "Offline ZIM archives reader.";
+              icon = "kiwix";
+              href = makeServiceDomainUrl "kiwix";
+              siteMonitor = makeServiceLoopbackUrl "kiwix";
+            };
+          }
         ];
       }
       {
