@@ -30,6 +30,10 @@
     "--threads"
     "4"
     "--sync-without-deleting"
+    # Default AZlyrics provider had died and a bug causes spotdl to run request retries in an infinite loop.
+    # See: https://github.com/spotDL/spotify-downloader/issues/2441.
+    "--lyrics"
+    "genius musixmatch"
   ];
   spotdlWebArgs = [
     "--host"
@@ -85,7 +89,7 @@ in {
             User = cfg.user;
             Group = cfg.group;
             WorkingDirectory = cfg.mediaDir;
-            ExecStart = "${spotdlBin} web ${spotdlCommonArgsStr} ${spotdlWebArgsStr}";
+            ExecStart = "${spotdlBin} web ${spotdlWebArgsStr} ${spotdlCommonArgsStr}";
             Restart = "always";
           };
 
@@ -111,7 +115,7 @@ in {
             set -euo pipefail
             for sync_target in ${cfg.mediaDir}/sync/*.spotdl; do
               echo "Syncing ''${sync_target}..."
-              ${spotdlBin} ${spotdlCommonArgsStr} sync ''${sync_target}
+              ${spotdlBin} sync ''${sync_target} ${spotdlCommonArgsStr}
             done
           '';
 
