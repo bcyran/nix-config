@@ -4,11 +4,11 @@ return {
     enabled = false,
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     enabled = vim.fn.executable("nix") ~= 1,
   },
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     enabled = vim.fn.executable("nix") ~= 1,
   },
   {

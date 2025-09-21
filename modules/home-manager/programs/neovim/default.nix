@@ -38,6 +38,7 @@ in {
       '';
       extraPackages = with pkgs; [
         gcc # for treesitter
+        tree-sitter
         nodejs_22
         wl-clipboard
         lua-language-server
