@@ -382,6 +382,14 @@ in {
               siteMonitor = makeServiceLoopbackUrl "kiwix";
             };
           }
+          {
+            Redlib = {
+              description = "Private front-end for Reddit.";
+              icon = "redlib";
+              href = makeServiceDomainUrl "redlib";
+              siteMonitor = makeServiceLoopbackUrl "redlib";
+            };
+          }
         ];
       }
       {
