@@ -72,7 +72,7 @@ in {
           queryLog = {
             type = "postgresql";
             target = "postgresql://${pgDatabase}@localhost/${pgDatabase}";
-            logRetentionDays = 30;
+            logRetentionDays = 7;
           };
         };
       };
