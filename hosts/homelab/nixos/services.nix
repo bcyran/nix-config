@@ -262,6 +262,10 @@ in {
       libraryPath = "${my.lib.const.paths.homelab.slowMedia}/kiwix";
       reverseProxy.domain = "kiwix.${intraDomain}";
     };
+    redlib = {
+      enable = true;
+      reverseProxy.domain = "redlib.${intraDomain}";
+    };
   };
 
   services.btrbk.sshAccess = [
