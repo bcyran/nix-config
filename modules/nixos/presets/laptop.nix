@@ -15,10 +15,10 @@ in {
     };
     services = {
       tlp.enable = mkDefault true;
-      logind = {
-        lidSwitch = mkDefault "suspend";
-        lidSwitchDocked = mkDefault "ignore";
-        lidSwitchExternalPower = mkDefault "ignore";
+      logind.settings.Login = {
+        HandleLidSwitch = mkDefault "suspend";
+        HandleLidSwitchDocked = mkDefault "ignore";
+        HandleLidSwitchExternalPower = mkDefault "ignore";
       };
     };
   };
