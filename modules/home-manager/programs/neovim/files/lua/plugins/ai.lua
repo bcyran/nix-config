@@ -4,6 +4,8 @@ return {
   -- Base copilot plugin
   {
     "zbirenbaum/copilot.lua",
+    -- FIXME: The next commit breaks <CR>. Unpin when fixed on master.
+    commit = "8b9af0c3777f81e9f45059ff41fd1f93f492d9a7",
     enabled = settings.copilot_enabled and not settings.copilot_official,
     cmd = "Copilot",
     event = "InsertEnter",
