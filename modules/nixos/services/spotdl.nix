@@ -117,6 +117,9 @@ in {
               echo "Syncing ''${sync_target}..."
               ${spotdlBin} sync ''${sync_target} ${spotdlCommonArgsStr}
             done
+
+            # Fix paths in generated m3u8 playlists to be relative
+            find '${cfg.mediaDir}/playlists' -type f -name '*.m3u8' -exec sed -i 's@${cfg.mediaDir}@..@g' {} \;
           '';
 
           vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
