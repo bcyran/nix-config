@@ -129,7 +129,12 @@ in {
       certFile = config.sops.secrets.syncthing_cert_file.path;
       environmentFiles = [config.sops.secrets.syncthing_env_file.path];
       inherit (my.lib.const.syncthing) devices;
-      folders = ["KeePass" "Portfolio" "Signal backup" "Sync"];
+      folders = [
+        {name = "KeePass";}
+        {name = "Portfolio";}
+        {name = "Signal backup";}
+        {name = "Sync";}
+      ];
       hashedPassword = "$2a$12$16cl3sRqqpClYhSn/Q1rsuA2gsPI0sYPEk6Zs8QTU5oWwlAY0Y8wC";
     };
     homepage = {

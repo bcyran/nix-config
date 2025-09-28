@@ -36,8 +36,31 @@ in {
     };
 
     folders = lib.mkOption {
-      type = with lib.types; listOf str;
-      description = "List of folders to sync.";
+      type = with lib.types;
+        listOf (submodule {
+          options = {
+            name = lib.mkOption {
+              type = str;
+              description = "Name of the folder.";
+            };
+            path = lib.mkOption {
+              type = nullOr path;
+              default = null;
+              description = "Path to the folder. Defaults to /var/lib/<name>.";
+            };
+            type = lib.mkOption {
+              type = enum ["sendreceive" "sendonly" "receiveonly" "receiveencrypted"];
+              default = "sendreceive";
+              description = "Folder type.";
+            };
+            devices = lib.mkOption {
+              type = nullOr (listOf str);
+              default = null;
+              description = "List of device names. Defaults to service-level devices.";
+            };
+          };
+        });
+      description = "List of folders to sync, each as a submodule.";
       default = [];
     };
 
@@ -59,11 +82,17 @@ in {
 
       settings = {
         devices = lib.mapAttrs (name: id: {inherit id;}) cfg.devices;
-        folders = lib.listToAttrs (map (name: {
-            inherit name;
+        folders = lib.listToAttrs (map (folder: {
+            inherit (folder) name;
             value = {
-              path = "${config.services.syncthing.dataDir}/${name}";
-              devices = builtins.attrNames cfg.devices;
+              inherit (folder) type;
+              path =
+                lib.trivial.defaultTo "${config.services.syncthing.dataDir}/${folder.name}"
+                folder.path;
+              devices =
+                lib.trivial.defaultTo
+                (builtins.attrNames cfg.devices)
+                folder.devices;
             };
           })
           cfg.folders);
