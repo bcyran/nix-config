@@ -29,8 +29,10 @@ in {
       }
     ];
   };
-  systemd.services.wg-quick-wg0 = {
-    startLimitBurst = 10;
-    serviceConfig.Restart = "on-failure";
+  # Attempt to reconnect every minute without limit if the connection drops.
+  systemd.services.wg-quick-wg0.serviceConfig = {
+    StartLimitBurst = 0;
+    Restart = "on-failure";
+    RestartSec = 60;
   };
 }
