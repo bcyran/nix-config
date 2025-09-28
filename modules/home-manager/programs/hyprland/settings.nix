@@ -146,9 +146,9 @@ in {
       master = {
         new_status = "slave";
       };
-      gestures = {
-        workspace_swipe = true;
-      };
+      gesture = [
+        "3, horizontal, workspace"
+      ];
       binds = {
         workspace_back_and_forth = true;
       };
