@@ -70,6 +70,12 @@ in {
       description = "Hashed password for the GUI.";
       default = null;
     };
+
+    supplementaryGroups = lib.mkOption {
+      type = with lib.types; listOf str;
+      default = [];
+      description = "List of supplementary groups for the syncthing service.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -106,7 +112,10 @@ in {
 
     systemd.services.syncthing = {
       environment.STNODEFAULTFOLDER = "true";
-      serviceConfig.EnvironmentFile = cfg.environmentFiles;
+      serviceConfig = {
+        EnvironmentFile = cfg.environmentFiles;
+        SupplementaryGroups = cfg.supplementaryGroups;
+      };
     };
 
     my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
