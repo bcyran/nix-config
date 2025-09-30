@@ -32,9 +32,31 @@ in {
     };
 
     folders = lib.mkOption {
-      type = with lib.types; attrsOf str;
-      description = "Mapping of folder names to folder paths.";
-      default = {};
+      type = with lib.types;
+        listOf (submodule {
+          options = {
+            name = lib.mkOption {
+              type = str;
+              description = "Name of the folder.";
+            };
+            path = lib.mkOption {
+              type = str;
+              description = "Path to the folder.";
+            };
+            type = lib.mkOption {
+              type = enum ["sendreceive" "sendonly" "receiveonly" "receiveencrypted"];
+              default = "sendreceive";
+              description = "Folder type.";
+            };
+            devices = lib.mkOption {
+              type = nullOr (listOf str);
+              default = null;
+              description = "List of device names. Defaults to all configured devices.";
+            };
+          };
+        });
+      description = "List of folders to sync, each as a submodule.";
+      default = [];
     };
   };
 
@@ -48,12 +70,17 @@ in {
 
       settings = {
         devices = lib.mapAttrs (name: id: {inherit id;}) cfg.devices;
-        folders =
-          lib.mapAttrs (name: path: {
-            inherit path;
-            devices = builtins.attrNames cfg.devices;
+        folders = lib.listToAttrs (map (folder: {
+            inherit (folder) name;
+            value = {
+              inherit (folder) path type;
+              devices =
+                lib.trivial.defaultTo
+                (builtins.attrNames cfg.devices)
+                folder.devices;
+            };
           })
-          cfg.folders;
+          cfg.folders);
         options = {
           urAccepted = -1;
         };

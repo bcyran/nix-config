@@ -42,11 +42,20 @@ in {
         certFile = config.sops.secrets.syncthing_cert.path;
         passwordFile = config.sops.secrets.syncthing_password.path;
         inherit (my.lib.const.syncthing) devices;
-        folders = {
-          "KeePass" = "~/Dokumenty/03 - Obszary/Tożsamość/Hasła";
-          "Portfolio" = "~/Dokumenty/03 - Obszary/Finanse/Portfolio Performance";
-          "Sync" = "~/Sync";
-        };
+        folders = [
+          {
+            name = "KeePass";
+            path = "~/Dokumenty/03 - Obszary/Tożsamość/Hasła";
+          }
+          {
+            name = "Portfolio";
+            path = "~/Dokumenty/03 - Obszary/Finanse/Portfolio Performance";
+          }
+          {
+            name = "Sync";
+            path = "~/Sync";
+          }
+        ];
       };
     };
     hardware = {
