@@ -55,6 +55,17 @@ in {
             name = "Sync";
             path = "~/Sync";
           }
+          {
+            name = "Music YT";
+            type = "receiveonly";
+            path = "~/Muzyka/YouTube";
+          }
+          {
+            name = "Music Lidarr";
+            path = "~/Muzyka/Lidarr";
+            type = "receiveonly";
+            devices = ["homelab"];
+          }
         ];
       };
     };
