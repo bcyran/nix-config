@@ -5,6 +5,7 @@
   ...
 }: let
   intraDomain = my.lib.const.domains.intra;
+  mediaGroup = "servarr";
 
   caddyTlsConfig = ''
     tls {
@@ -121,19 +122,37 @@ in {
       enable = true;
       reverseProxy.domain = "grafana.${intraDomain}";
     };
-    syncthing = {
+    syncthing = let
+      inherit (my.lib.const.syncthing) devices;
+    in {
       enable = true;
+      supplementaryGroups = [mediaGroup];
       openFirewallTransfer = true;
       reverseProxy.domain = "syncthing.${intraDomain}";
       keyFile = config.sops.secrets.syncthing_key_file.path;
       certFile = config.sops.secrets.syncthing_cert_file.path;
       environmentFiles = [config.sops.secrets.syncthing_env_file.path];
-      inherit (my.lib.const.syncthing) devices;
+      inherit devices;
       folders = [
         {name = "KeePass";}
         {name = "Portfolio";}
-        {name = "Signal backup";}
         {name = "Sync";}
+        {
+          name = "Signal backup";
+          devices = ["pixel7"];
+        }
+        {
+          name = "Music YT";
+          path = "${my.lib.const.paths.homelab.fastMedia}/music/youtube";
+          type = "sendonly";
+          devices = ["slimbook" "pixel7"];
+        }
+        {
+          name = "Music Lidarr";
+          path = "${my.lib.const.paths.homelab.fastMedia}/music/lidarr";
+          type = "sendonly";
+          devices = ["slimbook"];
+        }
       ];
       hashedPassword = "$2a$12$16cl3sRqqpClYhSn/Q1rsuA2gsPI0sYPEk6Zs8QTU5oWwlAY0Y8wC";
     };
@@ -237,6 +256,7 @@ in {
       inherit (my.lib.const.paths.homelab) downloads slowMedia fastMedia;
     in {
       enable = true;
+      group = mediaGroup;
       domain = intraDomain;
       dirs = {
         transmission = "${downloads}/torrents";
