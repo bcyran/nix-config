@@ -21,6 +21,7 @@
     "org.joplinapp.plugins.ToggleSidebars.jpl"
     "plugin.calebjohn.MathMode.jpl"
     "plugin.calebjohn.rich-markdown.jpl"
+    "joplin.plugin.note.tabs.jpl"
   ];
 in {
   options.my.programs.joplin-desktop.enable = lib.mkEnableOption "joplin-desktop";
@@ -123,6 +124,7 @@ in {
           "richMarkdown.inlineImages" = null;
           "richMarkdown.focusMode" = null;
           CreateBackup = null;
+          "tabsSwitchLastActive" = "Ctrl+Tab";
         });
       }
       // my.lib.mapListToAttrs mkPluginFile plugins;
