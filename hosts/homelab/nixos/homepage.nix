@@ -359,6 +359,21 @@ in {
             };
           }
           {
+            Calibre = rec {
+              description = "E-books management.";
+              icon = "calibre";
+              href = makeServiceDomainUrl "calibre-web";
+              siteMonitor = makeServiceLoopbackUrl "calibre-web";
+              widget = {
+                type = "calibreweb";
+                url = siteMonitor;
+                username = "{{HOMEPAGE_VAR_CALIBREWEB_USERNAME}}";
+                password = "{{HOMEPAGE_VAR_CALIBREWEB_PASSWORD}}";
+                fields = ["books" "authors"];
+              };
+            };
+          }
+          {
             Pinchflat = {
               description = "YouTube video downloader.";
               icon = "pinchflat";
