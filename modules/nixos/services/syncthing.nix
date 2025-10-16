@@ -64,10 +64,9 @@ in {
       default = [];
     };
 
-    # TODO: Use a secret file once merged: https://github.com/NixOS/nixpkgs/pull/290485.
-    hashedPassword = lib.mkOption {
-      type = with lib.types; nullOr str;
-      description = "Hashed password for the GUI.";
+    guiPasswordFile = lib.mkOption {
+      type = with lib.types; nullOr path;
+      description = "Path to a file containing the plaintext password for the GUI.";
       default = null;
     };
 
@@ -85,6 +84,7 @@ in {
       enable = true;
       openDefaultPorts = cfg.openFirewallTransfer;
       guiAddress = "${cfg.guiAddress}:${toString cfg.guiPort}";
+      inherit (cfg) guiPasswordFile;
 
       settings = {
         devices = lib.mapAttrs (name: id: {inherit id;}) cfg.devices;
@@ -105,7 +105,6 @@ in {
         gui = {
           theme = "dark";
           user = config.my.user.name;
-          password = cfg.hashedPassword;
         };
       };
     };

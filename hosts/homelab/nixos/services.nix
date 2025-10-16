@@ -49,6 +49,10 @@ in {
     syncthing_env_file = {
       restartUnits = ["syncthing.service"];
     };
+    syncthing_gui_password_file = {
+      owner = config.services.syncthing.user;
+      restartUnits = ["syncthing.service"];
+    };
     homepage_env_file = {
       restartUnits = ["homepage-dashboard.service"];
     };
@@ -132,6 +136,7 @@ in {
       keyFile = config.sops.secrets.syncthing_key_file.path;
       certFile = config.sops.secrets.syncthing_cert_file.path;
       environmentFiles = [config.sops.secrets.syncthing_env_file.path];
+      guiPasswordFile = config.sops.secrets.syncthing_gui_password_file.path;
       inherit devices;
       folders = [
         {name = "KeePass";}
@@ -154,7 +159,6 @@ in {
           devices = ["slimbook"];
         }
       ];
-      hashedPassword = "$2a$12$16cl3sRqqpClYhSn/Q1rsuA2gsPI0sYPEk6Zs8QTU5oWwlAY0Y8wC";
     };
     homepage = {
       enable = true;
