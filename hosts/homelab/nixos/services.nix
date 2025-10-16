@@ -196,7 +196,7 @@ in {
     postgresql.enable = true;
     linkwarden = {
       enable = true;
-      environmentFiles = [config.sops.secrets.linkwarden_env_file.path];
+      environmentFile = config.sops.secrets.linkwarden_env_file.path;
       reverseProxy.domain = "linkwarden.${intraDomain}";
       llm = "phi3";
     };
