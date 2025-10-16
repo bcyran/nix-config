@@ -286,6 +286,11 @@ in {
       pinchflatEnvironmentFile = config.sops.secrets.pinchflat_env_file.path;
       vpnNamespace = "airvpn";
     };
+    calibre-web = {
+      enable = true;
+      reverseProxy.domain = "calibre.${intraDomain}";
+      calibreLibrary = "${my.lib.const.paths.homelab.fastMedia}/ebooks/calibre";
+    };
     kiwix = {
       enable = true;
       libraryPath = "${my.lib.const.paths.homelab.slowMedia}/kiwix";
