@@ -84,6 +84,8 @@ in {
       enable = true;
       openDefaultPorts = cfg.openFirewallTransfer;
       guiAddress = "${cfg.guiAddress}:${toString cfg.guiPort}";
+      key = cfg.keyFile;
+      cert = cfg.certFile;
       inherit (cfg) guiPasswordFile;
 
       settings = {
