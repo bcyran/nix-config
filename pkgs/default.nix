@@ -26,4 +26,5 @@ in rec {
   xiaomi_miio_fan = pkgs.callPackage ./xiaomi_miio_fan {
     inherit (python313Packages) python-miio;
   };
+  koinsight = pkgs.callPackage ./koinsight {};
 }
