@@ -66,6 +66,11 @@ in {
             type = "receiveonly";
             devices = ["homelab"];
           }
+          {
+            name = "Ebooks";
+            path = "~/Książki/Ebooki";
+            devices = ["homelab"];
+          }
         ];
       };
     };
