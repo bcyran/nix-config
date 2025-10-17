@@ -199,7 +199,7 @@ in {
             "Uptime Kuma" = rec {
               description = "Service uptime monitoring.";
               icon = "uptime-kuma";
-              href = "${makeServiceDomainUrl "uptime-kuma"}/status/external";
+              href = makeServiceDomainUrl "uptime-kuma";
               siteMonitor = makeServiceLoopbackUrl "uptime-kuma";
               widget = {
                 type = "uptimekuma";
