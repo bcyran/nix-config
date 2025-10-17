@@ -296,6 +296,10 @@ in {
       reverseProxy.domain = "calibre.${intraDomain}";
       calibreLibrary = "${my.lib.const.paths.homelab.fastMedia}/ebooks/calibre";
     };
+    koinsight = {
+      enable = true;
+      reverseProxy.domain = "koinsight.${intraDomain}";
+    };
     kiwix = {
       enable = true;
       libraryPath = "${my.lib.const.paths.homelab.slowMedia}/kiwix";
