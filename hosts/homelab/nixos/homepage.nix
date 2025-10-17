@@ -229,6 +229,14 @@ in {
             };
           }
           {
+            KoInsight = {
+              description = "KoReader reading stats dashboard.";
+              icon = "bookstack";
+              href = makeServiceDomainUrl "koinsight";
+              siteMonitor = makeServiceLoopbackUrl "koinsight";
+            };
+          }
+          {
             "ntfy.sh" = {
               description = "Push notifications service.";
               icon = "ntfy";
