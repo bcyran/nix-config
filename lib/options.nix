@@ -55,7 +55,9 @@
   mkUserOption = serviceName:
     lib.mkOption {
       type = lib.types.str;
-      default = lib.toLower serviceName;
+      default =
+        (lib.replaceStrings [" "] ["-"])
+        (lib.toLower serviceName);
       example = "service";
       description = "User account under which ${serviceName} runs.";
     };
@@ -63,7 +65,9 @@
   mkGroupOption = serviceName:
     lib.mkOption {
       type = lib.types.str;
-      default = lib.toLower serviceName;
+      default =
+        (lib.replaceStrings [" "] ["-"])
+        (lib.toLower serviceName);
       example = "service";
       description = "Group under which ${serviceName} runs.";
     };

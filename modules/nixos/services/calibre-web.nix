@@ -10,6 +10,8 @@ in {
     serviceName = "Calibre Web";
   in {
     enable = lib.mkEnableOption serviceName;
+    user = my.lib.options.mkUserOption serviceName;
+    group = my.lib.options.mkGroupOption serviceName;
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 8092;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
@@ -29,11 +31,15 @@ in {
         ip = cfg.address;
         inherit (cfg) port;
       };
-      inherit (cfg) openFirewall;
+      inherit (cfg) user group openFirewall;
       options = {
         inherit (cfg) calibreLibrary;
       };
     };
+
+    systemd.tmpfiles.rules = [
+      "d '${cfg.calibreLibrary}' 0775 ${cfg.user} ${cfg.group} - -"
+    ];
 
     my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
   };

@@ -288,6 +288,7 @@ in {
     };
     calibre-web = {
       enable = true;
+      group = mediaGroup;
       reverseProxy.domain = "calibre.${intraDomain}";
       calibreLibrary = "${my.lib.const.paths.homelab.fastMedia}/ebooks/calibre";
     };
