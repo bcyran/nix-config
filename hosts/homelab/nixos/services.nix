@@ -158,6 +158,11 @@ in {
           type = "sendonly";
           devices = ["slimbook"];
         }
+        {
+          name = "Ebooks";
+          path = "${my.lib.const.paths.homelab.fastMedia}/ebooks/calibre";
+          devices = ["slimbook"];
+        }
       ];
     };
     homepage = {
