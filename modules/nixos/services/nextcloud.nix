@@ -62,6 +62,7 @@ in {
             tasks
             whiteboard
             richdocuments
+            tables
             ;
           drawio = pkgs.fetchNextcloudApp {
             sha256 = "sha256-jxm07X+5i7SbxfMDrGOLMkF4mSeGLmYepSAvROdvJwE=";
