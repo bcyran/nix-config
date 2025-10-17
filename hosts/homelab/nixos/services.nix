@@ -7,18 +7,6 @@
   intraDomain = my.lib.const.domains.intra;
   mediaGroup = "servarr";
 
-  caddyTlsConfig = ''
-    tls {
-      resolvers ${lib.concatStringsSep " " my.lib.const.dns.ips};
-      dns ovh {
-        endpoint {$OVH_CYRAN_DEV_ENDPOINT}
-        application_key {$OVH_CYRAN_DEV_APPLICATION_KEY}
-        application_secret {$OVH_CYRAN_DEV_APPLICATION_SECRET}
-        consumer_key {$OVH_CYRAN_DEV_CONSUMER_KEY}
-      }
-    }
-  '';
-
   getDeviceIps = device:
     my.lib.filterNotNull [device.ip (my.lib.getAttrOrNull "ipv6" device)];
   mkDnsMappingItem = device: {
@@ -115,7 +103,19 @@ in {
       address = "0.0.0.0";
       openFirewall = true;
       environmentFile = config.sops.secrets.caddy_env_file.path;
-      reverseProxyHostsCommonExtraConfig = caddyTlsConfig;
+      extraConfig = ''
+        *.intra.cyran.dev {
+          tls {
+            resolvers ${lib.concatStringsSep " " my.lib.const.dns.ips};
+            dns ovh {
+              endpoint {$OVH_CYRAN_DEV_ENDPOINT}
+              application_key {$OVH_CYRAN_DEV_APPLICATION_KEY}
+              application_secret {$OVH_CYRAN_DEV_APPLICATION_SECRET}
+              consumer_key {$OVH_CYRAN_DEV_CONSUMER_KEY}
+            }
+          }
+        }
+      '';
     };
     prometheus = {
       enable = true;
@@ -245,7 +245,6 @@ in {
       domain = "nextcloud.${intraDomain}";
       adminPassFile = config.sops.secrets.nextcloud_admin_pass.path;
       whiteboardEnvironmentFiles = [config.sops.secrets.nextcloud_whiteboard_env_file.path];
-      caddyExtraConfig = caddyTlsConfig;
     };
     collabora = {
       enable = true;
