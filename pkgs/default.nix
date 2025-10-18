@@ -27,4 +27,5 @@ in rec {
     inherit (python313Packages) python-miio;
   };
   koinsight = pkgs.callPackage ./koinsight {};
+  flint-kvm = pkgs.callPackage ./flint-kvm {};
 }

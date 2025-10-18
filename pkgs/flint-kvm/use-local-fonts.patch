@@ -1,0 +1,30 @@
+diff --git a/app/layout.tsx b/app/layout.tsx
+index 1111111..2222222 100644
+--- a/app/layout.tsx
++++ b/app/layout.tsx
+@@ -1,7 +1,7 @@
+ import type { Metadata } from "next";
+ import { GeistSans } from "geist/font/sans";
+ import { GeistMono } from "geist/font/mono";
+-import { Inter } from "next/font/google";
++import localFont from "next/font/local";
+ import { ThemeProvider } from "@/components/theme-provider";
+ import { Toaster } from "@/components/ui/toaster";
+ import { Suspense } from "react";
+@@ -9,10 +9,14 @@ import "./globals.css"
+ import "../styles/static-export-fixes.css";
+ 
+-const inter = Inter({
+-  subsets: ["latin"],
++const inter = localFont({
++  src: [
++    { path: "../public/fonts/Inter-Regular.woff2", weight: "400", style: "normal" },
++    { path: "../public/fonts/Inter-Medium.woff2", weight: "500", style: "normal" },
++    { path: "../public/fonts/Inter-SemiBold.woff2", weight: "600", style: "normal" },
++    { path: "../public/fonts/Inter-Bold.woff2", weight: "700", style: "normal" },
++  ],
+   variable: "--font-inter",
+-  weight: ["400", "500", "600", "700"],
+ });
+ 
+ export const metadata: Metadata = {
