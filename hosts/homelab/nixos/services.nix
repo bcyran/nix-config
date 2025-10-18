@@ -5,7 +5,7 @@
   ...
 }: let
   intraDomain = my.lib.const.domains.intra;
-  mediaGroup = "servarr";
+  mediaGroup = "media";
 
   getDeviceIps = device:
     my.lib.filterNotNull [device.ip (my.lib.getAttrOrNull "ipv6" device)];
@@ -78,6 +78,8 @@ in {
     ntfy_sh_env_file = {};
     paperless_password_file = {};
   };
+
+  users.groups.${mediaGroup} = {};
 
   my.configurations = {
     vpnConfinement = {
