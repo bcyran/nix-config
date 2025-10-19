@@ -2,7 +2,6 @@
   my,
   config,
   lib,
-  pkgs,
   ...
 }: let
   cfg = config.my.services.prowlarr;
@@ -11,14 +10,11 @@
     if cfg.vpnNamespace != null
     then config.vpnNamespaces.${cfg.vpnNamespace}.namespaceAddress
     else "127.0.0.1";
-  dataDir = "/var/lib/prowlarr";
 in {
   options.my.services.prowlarr = let
     serviceName = "prowlarr";
   in {
     enable = lib.mkEnableOption serviceName;
-    user = my.lib.options.mkUserOption serviceName;
-    group = my.lib.options.mkGroupOption serviceName;
     port = my.lib.options.mkPortOption serviceName 9696;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
@@ -32,41 +28,17 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
-
-    systemd.services.prowlarr = {
-      description = "Indexer proxy and manager for Usenet and BitTorrent";
-      after = ["network.target"];
-      wantedBy = ["multi-user.target"];
-
-      serviceConfig = {
-        Type = "simple";
-        User = cfg.user;
-        Group = cfg.group;
-        ExecStart = "${lib.getExe pkgs.prowlarr} -nobrowser -data=${dataDir}";
-        Restart = "on-failure";
-      };
-
-      vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
-        enable = true;
-        inherit (cfg) vpnNamespace;
-      };
+    services.prowlarr = {
+      enable = true;
+      dataDir = "/var/lib/prowlarr";
+      inherit (cfg) openFirewall;
+      settings.server.port = cfg.port;
     };
 
-    users = {
-      users = lib.mkIf (cfg.user == "prowlarr") {
-        prowlarr = {
-          name = "prowlarr";
-          isSystemUser = true;
-          inherit (cfg) group;
-        };
-      };
-      groups = lib.mkIf (cfg.group == "prowlarr") {prowlarr = {};};
+    systemd.services.prowlarr.vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
+      enable = true;
+      inherit (cfg) vpnNamespace;
     };
-
-    systemd.tmpfiles.rules = [
-      "d '${dataDir}' 700 ${cfg.user} ${cfg.group} - -"
-    ];
 
     vpnNamespaces.${cfg.vpnNamespace} = lib.mkIf (cfg.vpnNamespace != null) {
       enable = true;

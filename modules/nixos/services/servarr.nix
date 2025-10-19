@@ -77,7 +77,7 @@ in {
       prowlarr = {
         enable = true;
         reverseProxy.domain = "prowlarr.${cfg.domain}";
-        inherit (cfg) group vpnNamespace;
+        inherit (cfg) vpnNamespace;
       };
       flaresolverr = {
         enable = true;
