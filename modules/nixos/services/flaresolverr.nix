@@ -6,8 +6,6 @@
 }: let
   cfg = config.my.services.flaresolverr;
 
-  flareSolverrVersion = "v3.4.0";
-  containersBackend = config.virtualisation.oci-containers.backend;
   effectiveAddress =
     if cfg.vpnNamespace != null
     then config.vpnNamespaces.${cfg.vpnNamespace}.namespaceAddress
@@ -17,7 +15,6 @@ in {
     serviceName = "flaresolverr";
   in {
     enable = lib.mkEnableOption serviceName;
-    address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 8191;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
@@ -31,19 +28,19 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
-
-    virtualisation.oci-containers.containers.flaresolverr = {
-      image = "ghcr.io/flaresolverr/flaresolverr:${flareSolverrVersion}";
-      autoStart = true;
-      ports = [
-        "${cfg.address}:${builtins.toString cfg.port}:8191"
-      ];
+    services.flaresolverr = {
+      enable = true;
+      inherit (cfg) port openFirewall;
     };
 
-    systemd.services."${containersBackend}-flaresolverr".vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
-      enable = true;
-      inherit (cfg) vpnNamespace;
+    systemd.services.flaresolverr = {
+      environment = {
+        HOST = effectiveAddress;
+      };
+      vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
+        enable = true;
+        inherit (cfg) vpnNamespace;
+      };
     };
 
     vpnNamespaces.${cfg.vpnNamespace} = lib.mkIf (cfg.vpnNamespace != null) {
