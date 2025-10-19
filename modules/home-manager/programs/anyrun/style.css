@@ -1,22 +1,20 @@
 * {
   font-size: 1.1rem;
+  color: @base05;
 }
 
-#window {
+window {
   background: transparent;
 }
 
-#main {
+.main {
   background: @base10;
   border-radius: 8px;
   padding: 12px;
-}
-
-box#main {
   border: 2px solid @base01;
 }
 
-#entry {
+text {
   background: @base11;
   border: 2px solid @base01;
   box-shadow: none;
@@ -24,21 +22,41 @@ box#main {
   padding: 4px 8px;
 }
 
-list#main {
+.matches {
   padding: 12px 0 0 0;
 }
 
-#match, #match box {
+.plugin.info {
+  padding: 2px;
+  margin-right: 8px;
+}
+
+.match, .match box {
   padding: 2px;
   border-radius: 8px;
   background: @base10;
   transition: 50ms;
 }
 
-#match:selected, #match:selected box {
+.match:selected, .match:selected * {
   background: @base01;
+  animation: fade 0.1s linear;
 }
 
-#match image {
+.match image {
   background: transparent;
+}
+
+.match.description {
+  color: @base03;
+  font-size: 1rem;
+}
+
+@keyframes fade {
+  0% {
+    background: @base10;
+  }
+  100% {
+    background: @base01;
+  }
 }

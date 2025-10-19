@@ -1,3 +1,4 @@
+# TODO: Switch to HM module and nixpkgs package once new version  (after 25.9.3) is released.
 {
   my,
   pkgs,
@@ -45,14 +46,53 @@ in {
         layer = "overlay";
         closeOnClick = true;
         hidePluginInfo = false;
+        keybinds = [
+          {
+            key = "Return";
+            action = "select";
+          }
+          {
+            key = "Down";
+            action = "down";
+          }
+          {
+            key = "Up";
+            action = "up";
+          }
+          {
+            key = "Tab";
+            action = "down";
+          }
+          {
+            key = "Escape";
+            action = "close";
+          }
+          {
+            ctrl = true;
+            key = "n";
+            action = "down";
+          }
+          {
+            ctrl = true;
+            key = "p";
+            action = "up";
+          }
+          {
+            ctrl = true;
+            key = "y";
+            action = "select";
+          }
+        ];
       };
       extraConfigFiles = {
         "applications.ron".text = ''
           Config(
-            desktop_actions: true,
+            desktop_actions: false,
             max_entries: 5,
-            terminal: Some("kitty"),
             preprocess_exec_script: Some("${preprocessScript}"),
+            terminal: Some(Terminal(
+              command: "kitty",
+            )),
           )
         '';
         "shell.ron".text = ''
