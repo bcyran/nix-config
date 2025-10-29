@@ -42,6 +42,7 @@ in {
       httpie
       dust
       dysk
+      glow
       neofetch
       alejandra
       statix
