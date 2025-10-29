@@ -43,7 +43,7 @@ in {
       dust
       dysk
       glow
-      neofetch
+      fastfetch
       alejandra
       statix
     ];
