@@ -29,7 +29,39 @@
             };
           };
         };
-      };
+      }; # /boot
+      ssd1 = {
+        type = "disk";
+        device = "/dev/nvme0n1";
+        content = {
+          type = "gpt";
+          partitions = {
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zfast_store";
+              };
+            };
+          };
+        };
+      }; # /ssd1
+      ssd2 = {
+        type = "disk";
+        device = "/dev/nvme2n1";
+        content = {
+          type = "gpt";
+          partitions = {
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zfast_store";
+              };
+            };
+          };
+        };
+      }; # /ssd2
     }; # /disk
     zpool = {
       zroot = {
@@ -81,6 +113,35 @@
           };
         };
       }; # /zroot
+      zfast_store = {
+        type = "zpool";
+        mode = "mirror";
+        rootFsOptions = {
+          compression = "lz4";
+        };
+        datasets = {
+          "fast_store" = {
+            type = "zfs_fs";
+            options = {
+              encryption = "aes-256-gcm";
+              keyformat = "passphrase";
+              keylocation = "prompt";
+            };
+          };
+          "fast_store/var_lib" = {
+            type = "zfs_fs";
+            mountpoint = "/var/lib";
+          };
+          "fast_store/backup" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/fast_store/backup";
+          };
+          "fast_store/files" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/fast_store/files";
+          };
+        };
+      }; # /zfast_store
     }; # /zpool
   };
 }
