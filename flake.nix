@@ -123,6 +123,15 @@
         my = inputs.self;
       })
       (myLib.config.mkSystem {
+        name = "atlas";
+        system = "x86_64-linux";
+        inherit inputs;
+        my = inputs.self;
+        extraInstallerModules = [
+          {networking.hostId = "07eb2678";}
+        ];
+      })
+      (myLib.config.mkSystem {
         name = "homelab";
         system = "x86_64-linux";
         inherit inputs;
@@ -142,6 +151,12 @@
     homeConfigurations = lib.mergeAttrsList [
       (myLib.config.mkHome {
         name = "bazyli@slimbook";
+        system = "x86_64-linux";
+        inherit inputs;
+        my = inputs.self;
+      })
+      (myLib.config.mkHome {
+        name = "bazyli@atlas";
         system = "x86_64-linux";
         inherit inputs;
         my = inputs.self;
