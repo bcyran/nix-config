@@ -5,7 +5,15 @@
 }: let
   cfg = config.my.configurations.lanzaboote;
 in {
-  options.my.configurations.lanzaboote.enable = lib.mkEnableOption "lanzaboote";
+  options.my.configurations.lanzaboote = {
+    enable = lib.mkEnableOption "lanzaboote";
+
+    pkiBundle = lib.mkOption {
+      type = lib.types.path;
+      description = "Path to the lanzaboote PKI bundle directory.";
+      default = "/var/lib/sbctl";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     boot = {
@@ -14,7 +22,7 @@ in {
       bootspec.enable = true;
       lanzaboote = {
         enable = true;
-        pkiBundle = "/etc/secureboot";
+        inherit (cfg) pkiBundle;
       };
     };
   };

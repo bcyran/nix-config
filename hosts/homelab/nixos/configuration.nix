@@ -63,7 +63,10 @@
           bazyliAtPixel
         ];
       };
-      lanzaboote.enable = true;
+      lanzaboote = {
+        enable = true;
+        pkiBundle = "/etc/secureboot";
+      };
       sops.enable = true;
     };
     programs = {

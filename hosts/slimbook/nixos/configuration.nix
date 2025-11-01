@@ -58,7 +58,10 @@
         hashedPasswordFile = config.sops.secrets.bazyli_hashed_password.path;
         rootHashedPasswordFile = config.sops.secrets.root_hashed_password.path;
       };
-      lanzaboote.enable = true;
+      lanzaboote = {
+        enable = true;
+        pkiBundle = "/etc/secureboot";
+      };
       sops.enable = true;
       printing.enable = true;
       virtualisation.enable = true;
