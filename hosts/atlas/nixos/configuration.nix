@@ -18,7 +18,6 @@
     ./disks.nix
     ./hardware-configuration.nix
     ../common/user.nix
-    ./homepage.nix
   ];
 
   # TODO: Move to services module
@@ -26,14 +25,14 @@
 
   networking = {
     hostName = "atlas";
-    hostID = "07eb2678";
-    nameservers = ["127.0.0.1"];
+    hostId = "07eb2678";
+    # nameservers = ["127.0.0.1"];
   };
 
   sops = let
-    homelabSopsFile = "${inputs.my-secrets}/homelab.yaml";
+    atlasSopsFile = "${inputs.my-secrets}/atlas.yaml";
   in {
-    defaultSopsFile = homelabSopsFile;
+    defaultSopsFile = atlasSopsFile;
     secrets = {
       bazyli_hashed_password.neededForUsers = true;
       root_hashed_password.neededForUsers = true;
@@ -48,7 +47,7 @@
     configurations = {
       core = {
         enable = true;
-        # nixExtraOptionsFile = config.sops.secrets.nix_extra_options.path;
+        nixExtraOptionsFile = config.sops.secrets.nix_extra_options.path;
       };
       users = {
         enable = true;
