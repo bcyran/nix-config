@@ -18,15 +18,15 @@
     ./disks.nix
     ./hardware-configuration.nix
     ../common/user.nix
+    ./homepage.nix
+    ./services.nix
+    ./wireguard.nix
   ];
-
-  # TODO: Move to services module
-  my.services.openssh.enable = true;
 
   networking = {
     hostName = "atlas";
     hostId = "07eb2678";
-    # nameservers = ["127.0.0.1"];
+    nameservers = ["127.0.0.1"];
   };
 
   sops = let

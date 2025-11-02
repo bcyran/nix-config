@@ -271,7 +271,6 @@ in {
         datasets = {
           "slow_store" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/slow_store";
             options = commonEncryptionOptions;
           };
           "slow_store/replicas" = {
