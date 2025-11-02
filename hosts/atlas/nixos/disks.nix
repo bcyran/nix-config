@@ -230,6 +230,10 @@ in {
             type = "zfs_fs";
             mountpoint = "/mnt/fast_store/backup";
           };
+          "fast_store/backup/slimbook_home" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/fast_store/backup/slimbook_home";
+          };
           "fast_store/misc" = {
             type = "zfs_fs";
             mountpoint = "/mnt/fast_store/misc";
@@ -287,6 +291,11 @@ in {
           "slow_store/replicas/atlas_var_lib" = {
             type = "zfs_fs";
             mountpoint = "/mnt/slow_store/replicas/atlas_var_lib";
+            options.mountpoint = "legacy";
+          };
+          "slow_store/replicas/slimbook_home" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/slow_store/replicas/slimbook_home";
             options.mountpoint = "legacy";
           };
           "slow_store/misc" = {

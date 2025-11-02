@@ -25,6 +25,10 @@ in {
           use_template = ["atlas"];
           recursive = true;
         };
+        "zfast_store/fast_store/backup/slimbook_home" = {
+          use_template = ["atlas"];
+          recursive = false;
+        };
       };
       templates = {
         atlas = {
@@ -53,6 +57,11 @@ in {
           source = "zfast_store/fast_store/var_lib";
           target = "zslow_store/slow_store/replicas/atlas_var_lib";
           recursive = true;
+        };
+        slimbook_home = {
+          source = "zfast_store/fast_store/backup/slimbook_home";
+          target = "zslow_store/slow_store/replicas/slimbook_home";
+          recursive = false;
         };
       };
     };
@@ -110,6 +119,12 @@ in {
         tag = "var_lib_postgresql";
         snapshotsGlob = "/var/lib/postgresql/.zfs/snapshot/autosnap_*_hourly";
         time = "02:45";
+      };
+      slimbook-home = mkResticBackupFromBtrbkSnapshots {
+        host = "slimbook";
+        tag = "home";
+        snapshotsGlob = "${backupStore}/slimbook_home/.zfs/snapshot/autosnap_*_hourly";
+        time = "03:00";
       };
     };
   };
