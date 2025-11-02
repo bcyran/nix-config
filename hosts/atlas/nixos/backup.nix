@@ -67,7 +67,7 @@ in {
     };
 
     restic.backups = let
-      mkResticBackupFromBtrbkSnapshots = {
+      mkResticBackupFromSnapshots = {
         host,
         tag,
         snapshotsGlob,
@@ -102,25 +102,25 @@ in {
         repositoryFile = config.sops.secrets.restic_repository_name_file.path;
       };
     in {
-      atlas-root = mkResticBackupFromBtrbkSnapshots {
+      atlas-root = mkResticBackupFromSnapshots {
         host = "atlas";
         tag = "root";
         snapshotsGlob = "/.zfs/snapshot/autosnap_*_hourly";
         time = "02:00";
       };
-      atlas-var_lib = mkResticBackupFromBtrbkSnapshots {
+      atlas-var_lib = mkResticBackupFromSnapshots {
         host = "atlas";
         tag = "var_lib";
         snapshotsGlob = "/var/lib/.zfs/snapshot/autosnap_*_hourly";
         time = "02:15";
       };
-      atlas-var_lib_postgresql = mkResticBackupFromBtrbkSnapshots {
+      atlas-var_lib_postgresql = mkResticBackupFromSnapshots {
         host = "atlas";
         tag = "var_lib_postgresql";
         snapshotsGlob = "/var/lib/postgresql/.zfs/snapshot/autosnap_*_hourly";
         time = "02:45";
       };
-      slimbook-home = mkResticBackupFromBtrbkSnapshots {
+      slimbook-home = mkResticBackupFromSnapshots {
         host = "slimbook";
         tag = "home";
         snapshotsGlob = "${backupStore}/slimbook_home/.zfs/snapshot/autosnap_*_hourly";
