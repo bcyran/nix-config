@@ -29,18 +29,18 @@ in {
         privateKeyFile = config.sops.secrets.wireguard_private_key.path;
         dns =
           [
-            devices.homelab.ip
-            peers.homelab.ipv6
+            devices.atlas.ip
+            peers.atlas.ipv6
           ]
           ++ dns.ips;
         peers = [
-          # Homelab
+          # Atlas
           {
-            inherit (peers.homelab) publicKey;
+            inherit (peers.atlas) publicKey;
             allowedIPs = [
-              (mkCidr peers.homelab.ip 32)
-              (mkCidr peers.homelab.ipv6 128)
-              (mkCidr devices.homelab.ip 32)
+              (mkCidr peers.atlas.ip 32)
+              (mkCidr peers.atlas.ipv6 128)
+              (mkCidr devices.atlas.ip 32)
             ];
           }
           # Pixel

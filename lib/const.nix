@@ -10,9 +10,9 @@ rec {
   lan = {
     subnet = "10.100.100.0/24";
     devices = {
-      homelab = {
+      atlas = {
         ip = "10.100.100.100";
-        domain = "homelab.${domains.intra}";
+        domain = "atlas.${domains.intra}";
       };
       tv = {
         ip = "10.100.100.231";
@@ -27,10 +27,10 @@ rec {
     subnet = "10.100.200.0/24";
     subnetv6 = "2a03:4000:52:499:ffff::/80";
     peers = {
-      homelab = {
+      atlas = {
         ip = "10.100.200.100";
         ipv6 = "2a03:4000:52:499:ffff::100";
-        domain = "homelab.${domains.wg}";
+        domain = "atlas.${domains.wg}";
         publicKey = "hHCFLo07K0hlVbFfRA4Q4iy8qHSusK81732k/Rt2ZCM=";
       };
       vps = {
@@ -83,7 +83,7 @@ rec {
     devices = {
       slimbook = "ADH7KVP-ATNX6XY-VSBFKEW-U7A4TAI-2YA6JQG-DZHNGRR-2DZOIXW-KAS6AQX";
       pixel7 = "WCA3ZM5-ZELYQWF-VAWS425-OPG5Q4R-O4J3ARM-IOPGI7Z-BTE2TY5-EZ36AAI";
-      homelab = "3Z4EMEX-FDR6OGT-KYTYFCO-TDANTYU-4NLDGDG-HOGFV7Q-MXWI75O-N67EDQG";
+      atlas = "3Z4EMEX-FDR6OGT-KYTYFCO-TDANTYU-4NLDGDG-HOGFV7Q-MXWI75O-N67EDQG";
     };
   };
   # Nix binary cache public keys
@@ -93,16 +93,15 @@ rec {
   };
   # Filesystem paths
   paths = {
-    homelab = rec {
+    atlas = rec {
       slowStore = "/mnt/slow_store";
       fastStore = "/mnt/fast_store";
       slowMedia = "${slowStore}/media";
       fastMedia = "${fastStore}/media";
-      slowPrivate = "${slowStore}/private";
-      fastPrivate = "${fastStore}/private";
-      backup = "${slowStore}/backup";
-      services = "${fastStore}/services";
+      backup = "${fastStore}/backup";
       downloads = "${fastStore}/downloads";
+      slowMisc = "${slowStore}/misc";
+      fastMisc = "${fastStore}/misc";
     };
   };
 }

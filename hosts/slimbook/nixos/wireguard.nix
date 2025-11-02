@@ -38,16 +38,16 @@ in {
         }
         // vpsProfileCommon);
       # Connection for when I'm outside my home LAN.
-      # Additionally to the wireguard subnet, homelab connection is routed through the tunnel as well.
-      # This way I can access my homelab using its LAN IP, like I'm at home.
+      # Additionally to the wireguard subnet, atlas connection is routed through the tunnel as well.
+      # This way I can access my atlas using its LAN IP, like I'm at home.
       vps-outside = mkWireguardProfile ({
           id = "vps-outside";
-          dns = devices.homelab.ip;
-          dnsv6 = peers.homelab.ipv6;
+          dns = devices.atlas.ip;
+          dnsv6 = peers.atlas.ipv6;
           peerAllowedIPs = [
             wireguard.subnet
             wireguard.subnetv6
-            (mkCidr devices.homelab.ip 32)
+            (mkCidr devices.atlas.ip 32)
           ];
         }
         // vpsProfileCommon);

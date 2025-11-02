@@ -36,7 +36,6 @@
       nix_store_binary_cache_key = {};
       home_wifi_env_file.sopsFile = wifiSopsFile;
       mobile_wifi_env_file.sopsFile = wifiSopsFile;
-      homelab_smb_credentials_file = {};
       ntfy_sh_env_file = {};
     };
   };
@@ -87,8 +86,8 @@
   fileSystems = let
     inherit (my.lib) const;
     userCfg = config.my.user;
-    homelabDomain = const.lan.devices.homelab.domain;
-    homelabPaths = const.paths.homelab;
+    atlasDomain = const.lan.devices.atlas.domain;
+    atlasPaths = const.paths.atlas;
     sshfsOptions = [
       "x-systemd.automount"
       "noauto"
@@ -102,12 +101,12 @@
     ];
   in {
     "/mnt/FastStore" = {
-      device = "${userCfg.name}@${homelabDomain}:${homelabPaths.fastPrivate}";
+      device = "${userCfg.name}@${atlasDomain}:${atlasPaths.fastMisc}";
       fsType = "sshfs";
       options = sshfsOptions;
     };
     "/mnt/SlowStore" = {
-      device = "${userCfg.name}@${homelabDomain}:${homelabPaths.slowPrivate}";
+      device = "${userCfg.name}@${atlasDomain}:${atlasPaths.slowMisc}";
       fsType = "sshfs";
       options = sshfsOptions;
     };
@@ -120,21 +119,16 @@
   services.hardware.bolt.enable = true;
 
   services.btrbk.instances.home = let
-    inherit (my.lib.const) lan paths;
     snapshotRetention = "14d";
     snapshotRetentionMin = "3d";
-    backupStore = "ssh://${lan.devices.homelab.domain}${paths.homelab.backup}";
   in {
     onCalendar = "hourly";
     settings = {
       volume."/" = {
         subvolume = "/home";
         snapshot_dir = "/.snapshots";
-        target = "${backupStore}/slimbook";
         ssh_user = "btrbk";
         ssh_identity = config.sops.secrets.btrbk_ssh_key.path;
-        target_preserve = snapshotRetention;
-        target_preserve_min = snapshotRetentionMin;
       };
       snapshot_preserve = snapshotRetention;
       snapshot_preserve_min = snapshotRetentionMin;

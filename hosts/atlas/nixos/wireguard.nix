@@ -13,8 +13,8 @@ in {
 
   networking.wg-quick.interfaces.wg0 = {
     address = [
-      (mkCidr peers.homelab.ip 24)
-      (mkCidr peers.homelab.ipv6 80)
+      (mkCidr peers.atlas.ip 24)
+      (mkCidr peers.atlas.ipv6 80)
     ];
     privateKeyFile = config.sops.secrets.wireguard_private_key.path;
     peers = [

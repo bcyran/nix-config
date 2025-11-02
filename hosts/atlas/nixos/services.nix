@@ -96,7 +96,7 @@ in {
       dnsAddress = "0.0.0.0";
       openFirewall = true;
       customDNSMappings =
-        {${intraDomain} = my.lib.const.lan.devices.homelab.ip;}
+        {${intraDomain} = my.lib.const.lan.devices.atlas.ip;}
         // mkDnsMapping my.lib.const.lan.devices
         // mkDnsMapping my.lib.const.wireguard.peers;
     };
@@ -150,19 +150,19 @@ in {
         }
         {
           name = "Music YT";
-          path = "${my.lib.const.paths.homelab.fastMedia}/music/youtube";
+          path = "${my.lib.const.paths.atlas.fastMedia}/music/youtube";
           type = "sendonly";
           devices = ["slimbook" "pixel7"];
         }
         {
           name = "Music Lidarr";
-          path = "${my.lib.const.paths.homelab.fastMedia}/music/lidarr";
+          path = "${my.lib.const.paths.atlas.fastMedia}/music/lidarr";
           type = "sendonly";
           devices = ["slimbook"];
         }
         {
           name = "Ebooks";
-          path = "${my.lib.const.paths.homelab.fastMedia}/ebooks/calibre";
+          path = "${my.lib.const.paths.atlas.fastMedia}/ebooks/calibre";
           devices = ["slimbook"];
         }
       ];
@@ -263,7 +263,7 @@ in {
       passwordFile = config.sops.secrets.paperless_password_file.path;
     };
     servarr = let
-      inherit (my.lib.const.paths.homelab) downloads slowMedia fastMedia;
+      inherit (my.lib.const.paths.atlas) downloads slowMedia fastMedia;
     in {
       enable = true;
       group = mediaGroup;
@@ -296,7 +296,7 @@ in {
       enable = true;
       group = mediaGroup;
       reverseProxy.domain = "calibre.${intraDomain}";
-      calibreLibrary = "${my.lib.const.paths.homelab.fastMedia}/ebooks/calibre";
+      calibreLibrary = "${my.lib.const.paths.atlas.fastMedia}/ebooks/calibre";
     };
     koinsight = {
       enable = true;
@@ -304,7 +304,7 @@ in {
     };
     kiwix = {
       enable = true;
-      libraryPath = "${my.lib.const.paths.homelab.slowMedia}/kiwix";
+      libraryPath = "${my.lib.const.paths.atlas.slowMedia}/kiwix";
       reverseProxy.domain = "kiwix.${intraDomain}";
     };
     redlib = {

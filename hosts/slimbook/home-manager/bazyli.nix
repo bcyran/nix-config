@@ -64,12 +64,12 @@ in {
             name = "Music Lidarr";
             path = "~/Muzyka/Lidarr";
             type = "receiveonly";
-            devices = ["homelab"];
+            devices = ["atlas"];
           }
           {
             name = "Ebooks";
             path = "~/Książki/Ebooki";
-            devices = ["homelab"];
+            devices = ["atlas"];
           }
         ];
       };
@@ -135,9 +135,9 @@ in {
     enable = true;
     enableDefaultConfig = false;
     matchBlocks = {
-      homelab = {
-        host = "homelab";
-        hostname = lan.devices.homelab.domain;
+      atlas = {
+        host = "atlas";
+        hostname = lan.devices.atlas.domain;
         user = "bazyli";
       };
       vps = {

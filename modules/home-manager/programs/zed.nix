@@ -104,7 +104,7 @@ in {
       userSettings = {
         ssh_connections = [
           {
-            host = my.lib.const.lan.devices.homelab.domain;
+            host = my.lib.const.lan.devices.atlas.domain;
             projects = [
               {paths = [config.my.user.configDir];}
             ];
