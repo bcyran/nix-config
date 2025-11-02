@@ -149,6 +149,9 @@ in {
   systemd.services = let
     notifyFailedServices = [
       "sanoid"
+      "syncoid-atlas_root"
+      "syncoid-atlas_var_lib"
+      "syncoid-slimbook_home"
       "restic-backups-atlas-root"
       "restic-backups-atlas-var_lib"
       "restic-backups-atlas-var_lib_postgresql"
