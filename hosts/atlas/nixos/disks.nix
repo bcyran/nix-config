@@ -276,15 +276,21 @@ in {
           "slow_store/replicas" = {
             type = "zfs_fs";
             mountpoint = "/mnt/slow_store/replicas";
+            options.mountpoint = "legacy";
           };
           "slow_store/misc" = {
             type = "zfs_fs";
             mountpoint = "/mnt/slow_store/misc";
+            options.mountpoint = "legacy";
           };
           "slow_store/media" = {
             type = "zfs_fs";
             mountpoint = "/mnt/slow_store/media";
-            options = mediaZfsOptions;
+            options =
+              {
+                mountpoint = "legacy";
+              }
+              // mediaZfsOptions;
           };
         };
       }; # /zslow_store
