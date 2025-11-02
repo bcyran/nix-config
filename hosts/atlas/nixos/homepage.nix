@@ -47,7 +47,7 @@ in {
     services = [
       {
         "Hardware status" = let
-          makeGlancesWidget = title: metricName: {
+          makeGlancesWidget = title: metricName: chart: {
             "${title}" = {
               widget = {
                 type = "glances";
@@ -55,17 +55,17 @@ in {
                 version = "4";
                 metric = metricName;
                 refreshInterval = 3000;
-                chart = false;
+                inherit chart;
               };
             };
           };
         in [
-          (makeGlancesWidget "CPU" "cpu")
-          (makeGlancesWidget "Memory" "memory")
-          (makeGlancesWidget "Network" "network:enp0s31f6")
-          (makeGlancesWidget "Root FS" "fs:/")
-          (makeGlancesWidget "Fast Store FS" "fs:/mnt/fast_store")
-          (makeGlancesWidget "Slow Store FS" "fs:/mnt/slow_store")
+          (makeGlancesWidget "CPU" "cpu" true)
+          (makeGlancesWidget "Memory" "memory" true)
+          (makeGlancesWidget "Network" "network:enp5s0" true)
+          (makeGlancesWidget "Root" "fs:/zroot" false)
+          (makeGlancesWidget "Fast Store" "fs:/zfast_store" false)
+          (makeGlancesWidget "Slow Store" "fs:/zslow_store" false)
         ];
       }
       {
