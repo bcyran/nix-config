@@ -66,6 +66,9 @@ in {
       e2fsprogs
       lsof
       lm_sensors
+      smartmontools
+      fio
+      iperf
       curl
       usbutils
       pciutils
