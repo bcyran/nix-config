@@ -34,6 +34,7 @@ in {
       eza.enable = mkDefault true;
       ripgrep.enable = mkDefault true;
       fd.enable = mkDefault true;
+      jq.enable = mkDefault true;
     };
 
     home.packages = with pkgs; [
