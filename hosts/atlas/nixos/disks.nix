@@ -1,6 +1,7 @@
 let
   commonZfsOptions = {
     ashift = "12";
+    snapdir = "visible";
   };
   commonFsOptions = {
     atime = "off";
