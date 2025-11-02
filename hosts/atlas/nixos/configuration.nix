@@ -21,6 +21,7 @@
     ./homepage.nix
     ./services.nix
     ./wireguard.nix
+    ./backup.nix
   ];
 
   networking = {
