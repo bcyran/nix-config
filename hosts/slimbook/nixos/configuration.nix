@@ -32,7 +32,6 @@
       bazyli_hashed_password.neededForUsers = true;
       root_hashed_password.neededForUsers = true;
       nix_extra_options = {};
-      btrbk_ssh_key.owner = "btrbk";
       nix_store_binary_cache_key = {};
       home_wifi_env_file.sopsFile = wifiSopsFile;
       mobile_wifi_env_file.sopsFile = wifiSopsFile;
@@ -127,8 +126,6 @@
       volume."/" = {
         subvolume = "/home";
         snapshot_dir = "/.snapshots";
-        ssh_user = "btrbk";
-        ssh_identity = config.sops.secrets.btrbk_ssh_key.path;
       };
       snapshot_preserve = snapshotRetention;
       snapshot_preserve_min = snapshotRetentionMin;
@@ -136,7 +133,34 @@
       archive_preserve_min = snapshotRetentionMin;
     };
   };
-  systemd.services.btrbk-home.onFailure = ["ntfy-failed@btrbk-home.service"];
+  systemd.services.btrbk-home = {
+    onSuccess = ["backup-home.service"];
+    onFailure = ["ntfy-failed@btrbk-home.service"];
+  };
+
+  systemd.services.backup-home = {
+    description = "Backup latest btrbk home snapshot to atlas";
+    wants = ["network-online.target"];
+    after = ["network-online.target"];
+    serviceConfig.Type = "oneshot";
+
+    script = ''
+      LATEST=$(${pkgs.findutils}/bin/find /.snapshots/home.* -maxdepth 0 -type d | sort | tail -n 1)
+
+      if [ -z "$LATEST" ]; then
+        echo "No snapshots found"
+        exit 1
+      fi
+
+      echo "Backing up $LATEST to atlas"
+      ${pkgs.rsync}/bin/rsync -avz --delete \
+        -e "${pkgs.openssh}/bin/ssh -i ${config.my.user.home}/.ssh/id_ed25519" \
+        "$LATEST/" \
+        ${config.my.user.name}@${my.lib.const.lan.devices.atlas.domain}:${my.lib.const.paths.atlas.backup}/slimbook_home/
+    '';
+
+    onFailure = ["ntfy-failed@backup-home.service"];
+  };
 
   boot.tmp.useTmpfs = true;
 
