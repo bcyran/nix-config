@@ -132,12 +132,6 @@
         ];
       })
       (myLib.config.mkSystem {
-        name = "homelab";
-        system = "x86_64-linux";
-        inherit inputs;
-        my = inputs.self;
-      })
-      (myLib.config.mkSystem {
         name = "vps";
         system = "x86_64-linux";
         inherit inputs;
@@ -157,12 +151,6 @@
       })
       (myLib.config.mkHome {
         name = "bazyli@atlas";
-        system = "x86_64-linux";
-        inherit inputs;
-        my = inputs.self;
-      })
-      (myLib.config.mkHome {
-        name = "bazyli@homelab";
         system = "x86_64-linux";
         inherit inputs;
         my = inputs.self;
