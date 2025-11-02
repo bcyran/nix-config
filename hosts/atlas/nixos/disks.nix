@@ -279,6 +279,16 @@ in {
             mountpoint = "/mnt/slow_store/replicas";
             options.mountpoint = "legacy";
           };
+          "slow_store/replicas/atlas_root" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/slow_store/replicas/atlas_root";
+            options.mountpoint = "legacy";
+          };
+          "slow_store/replicas/atlas_var_lib" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/slow_store/replicas/atlas_var_lib";
+            options.mountpoint = "legacy";
+          };
           "slow_store/misc" = {
             type = "zfs_fs";
             mountpoint = "/mnt/slow_store/misc";

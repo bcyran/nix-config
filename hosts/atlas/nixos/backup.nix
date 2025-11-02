@@ -38,6 +38,25 @@ in {
       };
     };
 
+    syncoid = {
+      enable = true;
+      commonArgs = [
+        "--no-sync-snap"
+      ];
+      commands = {
+        atlas_root = {
+          source = "zroot/root";
+          target = "zslow_store/slow_store/replicas/atlas_root";
+          recursive = false;
+        };
+        atlas_var_lib = {
+          source = "zfast_store/fast_store/var_lib";
+          target = "zslow_store/slow_store/replicas/atlas_var_lib";
+          recursive = true;
+        };
+      };
+    };
+
     restic.backups = let
       mkResticBackupFromBtrbkSnapshots = {
         host,
