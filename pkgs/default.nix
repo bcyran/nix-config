@@ -28,4 +28,7 @@ in rec {
   };
   koinsight = pkgs.callPackage ./koinsight {};
   flint-kvm = pkgs.callPackage ./flint-kvm {};
+  fio-plot = pkgs.callPackage ./fio-plot {
+    inherit (python3Packages) buildPythonApplication setuptools numpy matplotlib pillow pyparsing rich;
+  };
 }
