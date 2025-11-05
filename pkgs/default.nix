@@ -34,4 +34,8 @@ in rec {
   fio-bench = pkgs.callPackage ./fio-bench {
     inherit (pkgs) writeShellApplication fio jq;
   };
+  btrsync = pkgs.callPackage ./btrsync {
+    inherit (python3Packages) buildPythonApplication pythonOlder setuptools pytestCheckHook;
+    inherit (pkgs) btrfs-progs;
+  };
 }
