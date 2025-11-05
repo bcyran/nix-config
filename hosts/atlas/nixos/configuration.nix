@@ -66,6 +66,12 @@
     };
   };
 
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "monthly";
+    limit = "100M";
+  };
+
   nix.settings = {
     trusted-public-keys = [
       my.lib.const.binaryCacheKeys.slimbook
