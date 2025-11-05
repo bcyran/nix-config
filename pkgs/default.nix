@@ -31,4 +31,7 @@ in rec {
   fio-plot = pkgs.callPackage ./fio-plot {
     inherit (python3Packages) buildPythonApplication setuptools numpy matplotlib pillow pyparsing rich;
   };
+  fio-bench = pkgs.callPackage ./fio-bench {
+    inherit (pkgs) writeShellApplication fio jq;
+  };
 }
