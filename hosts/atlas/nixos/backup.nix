@@ -7,6 +7,8 @@
 }: let
   backupStore = my.lib.const.paths.atlas.backup;
   replicasStore = my.lib.const.paths.atlas.replicas;
+
+  btrsyncBin = lib.getExe my.pkgs.btrsync;
 in {
   sops.secrets = {
     restic_password_file = {};
@@ -131,6 +133,7 @@ in {
     notifyFailedServices = [
       "btrbk-root"
       "btrbk-fast_store"
+      "btrsync"
       "restic-backups-atlas-root"
       "restic-backups-atlas-var_lib"
       "restic-backups-slimbook-home"
@@ -139,5 +142,15 @@ in {
       onFailure = ["ntfy-failed@${serviceName}.service"];
     };
   in
-    lib.genAttrs notifyFailedServices mkOnFailure;
+    {
+      btrsync = {
+        description = "Btrfs snapshot synchronization service";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${btrsyncBin} -y ${backupStore}/slimbook/ ${replicasStore}/slimbook/";
+        };
+        startAt = "*-*-* 00:00:00";
+      };
+    }
+    // lib.genAttrs notifyFailedServices mkOnFailure;
 }
