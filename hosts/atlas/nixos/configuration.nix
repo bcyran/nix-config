@@ -26,7 +26,6 @@
 
   networking = {
     hostName = "atlas";
-    hostId = "07eb2678";
     nameservers = ["127.0.0.1"];
   };
 

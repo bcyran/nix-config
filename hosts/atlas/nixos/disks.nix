@@ -1,33 +1,24 @@
 let
-  commonZfsOptions = {
-    ashift = "12";
-    snapdir = "visible";
-  };
-  commonFsOptions = {
-    atime = "off";
-    xattr = "sa";
-    acltype = "posixacl";
-    relatime = "on";
-    normalization = "formD";
-    utf8only = "on";
-    "com.sun:auto-snapshot" = "false";
-  };
-  mediaZfsOptions = {
-    recordsize = "1M";
-    compression = "off";
-  };
-  commonEncryptionOptions = {
-    encryption = "aes-256-gcm";
-    keyformat = "passphrase";
-    keylocation = "prompt";
-  };
+  commonBtrfsMountOptions = [
+    "defaults"
+    "compress=zstd:1"
+    "noatime"
+    "nodiratime"
+  ];
+  ssdBtrfsMountOptions =
+    commonBtrfsMountOptions
+    ++ [
+      "ssd"
+      "discard=async"
+    ];
+  hddBtrfsMountOptions = commonBtrfsMountOptions;
 in {
   disko.devices = {
     disk = {
-      boot = {
+      root = {
         type = "disk";
         device = "/dev/disk/by-id/nvme-Vi3000_SSD_493735318370097";
-        name = "boot";
+        name = "root";
         content = {
           type = "gpt";
           partitions = {
@@ -44,11 +35,46 @@ in {
                 ];
               };
             };
-            zfs = {
+            luks = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "zroot";
+                type = "luks";
+                name = "root_crypt";
+                settings = {
+                  allowDiscards = true;
+                  bypassWorkqueues = true;
+                };
+                content = {
+                  type = "btrfs";
+                  extraArgs = ["-f"];
+                  subvolumes = {
+                    "@" = {
+                      mountpoint = "/";
+                      mountOptions = ssdBtrfsMountOptions;
+                    };
+                    "@nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = ssdBtrfsMountOptions;
+                    };
+                    "@home" = {
+                      mountpoint = "/home";
+                      mountOptions = ssdBtrfsMountOptions;
+                    };
+                    "@var" = {
+                      mountpoint = "/var";
+                      mountOptions = ssdBtrfsMountOptions;
+                    };
+                    "@snapshots" = {
+                      mountpoint = "/.snapshots";
+                      mountOptions = ssdBtrfsMountOptions;
+                    };
+                    "@swap" = {
+                      mountpoint = "/.swap";
+                      mountOptions = ["defaults" "noatime" "nodatacow"];
+                      swap.swapfile.size = "32G";
+                    };
+                  };
+                };
               };
             };
           };
@@ -61,11 +87,11 @@ in {
         content = {
           type = "gpt";
           partitions = {
-            zfs = {
+            mdadm = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "zfast_store";
+                type = "mdraid";
+                name = "fast_store";
               };
             };
           };
@@ -78,11 +104,11 @@ in {
         content = {
           type = "gpt";
           partitions = {
-            zfs = {
+            mdadm = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "zfast_store";
+                type = "mdraid";
+                name = "fast_store";
               };
             };
           };
@@ -95,11 +121,11 @@ in {
         content = {
           type = "gpt";
           partitions = {
-            zfs = {
+            mdadm = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "zslow_store";
+                type = "mdraid";
+                name = "slow_store";
               };
             };
           };
@@ -112,11 +138,11 @@ in {
         content = {
           type = "gpt";
           partitions = {
-            zfs = {
+            mdadm = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "zslow_store";
+                type = "mdraid";
+                name = "slow_store";
               };
             };
           };
@@ -129,11 +155,11 @@ in {
         content = {
           type = "gpt";
           partitions = {
-            zfs = {
+            mdadm = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "zslow_store";
+                type = "mdraid";
+                name = "slow_store";
               };
             };
           };
@@ -146,174 +172,90 @@ in {
         content = {
           type = "gpt";
           partitions = {
-            zfs = {
+            mdadm = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "zslow_store";
+                type = "mdraid";
+                name = "slow_store";
               };
             };
           };
         };
       }; # /hdd4
     }; # /disk
-    zpool = {
-      zroot = {
-        type = "zpool";
-        rootFsOptions =
-          {
-            mountpoint = "none";
-            compression = "lz4";
-          }
-          // commonFsOptions;
-        options = commonZfsOptions;
-        datasets = {
-          "root" = {
-            type = "zfs_fs";
-            mountpoint = "/";
-            options = commonEncryptionOptions;
-          };
-          "root/nix" = {
-            type = "zfs_fs";
-            mountpoint = "/nix";
-            options.mountpoint = "/nix";
-          };
-          "root/home" = {
-            type = "zfs_fs";
-            mountpoint = "/home";
-          };
-          "root/var" = {
-            type = "zfs_fs";
-            mountpoint = "/var";
-          };
-          "root/swap" = {
-            type = "zfs_volume";
-            size = "32G";
-            content.type = "swap";
-            options = {
-              volblocksize = "4096";
-              compression = "zle";
-              logbias = "throughput";
-              sync = "always";
-              primarycache = "metadata";
-              secondarycache = "none";
+    mdadm = {
+      fast_store = {
+        type = "mdadm";
+        name = "fast_store";
+        level = 1;
+        content = {
+          type = "gpt";
+          partitions = {
+            luks = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "fast_store_crypt";
+                settings = {
+                  allowDiscards = true;
+                  bypassWorkqueues = true;
+                };
+                content = {
+                  type = "btrfs";
+                  extraArgs = ["-f"];
+                  subvolumes = {
+                    "@fast_store" = {
+                      mountpoint = "/mnt/fast_store";
+                      mountOptions = ssdBtrfsMountOptions;
+                    };
+                    "@fast_store/var_lib" = {
+                      mountpoint = "/var/lib";
+                      mountOptions = ssdBtrfsMountOptions;
+                    };
+                    "@fast_store/backup" = {};
+                    "@fast_store/downloads" = {};
+                    "@fast_store/media" = {};
+                    "@fast_store/misc" = {};
+                  };
+                };
+              };
             };
           };
         };
-      }; # /zroot
-      zfast_store = {
-        type = "zpool";
-        mode = "mirror";
-        rootFsOptions =
-          {
-            compression = "lz4";
-          }
-          // commonFsOptions;
-        options = commonZfsOptions;
-        datasets = {
-          "fast_store" = {
-            type = "zfs_fs";
-            options = commonEncryptionOptions;
-          };
-          "fast_store/var_lib" = {
-            type = "zfs_fs";
-            mountpoint = "/var/lib";
-          };
-          "fast_store/var_lib/postgresql" = {
-            type = "zfs_fs";
-            mountpoint = "/var/lib/postgresql";
-            options = {
-              recordsize = "16K";
+      }; # /fast_store
+      slow_store = {
+        type = "mdadm";
+        name = "slow_store";
+        level = 10;
+        content = {
+          type = "gpt";
+          partitions = {
+            luks = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "slow_store_crypt";
+                settings = {
+                  bypassWorkqueues = true;
+                };
+                content = {
+                  type = "btrfs";
+                  extraArgs = ["-f"];
+                  subvolumes = {
+                    "@slow_store" = {
+                      mountpoint = "/mnt/slow_store";
+                      mountOptions = hddBtrfsMountOptions;
+                    };
+                    "@slow_store/media" = {};
+                    "@slow_store/backup" = {};
+                    "@slow_store/misc" = {};
+                  };
+                };
+              };
             };
           };
-          "fast_store/backup" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/fast_store/backup";
-          };
-          "fast_store/backup/slimbook_home" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/fast_store/backup/slimbook_home";
-          };
-          "fast_store/misc" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/fast_store/misc";
-          };
-          "fast_store/downloads" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/fast_store/downloads";
-            options = mediaZfsOptions;
-          };
-          "fast_store/media" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/fast_store/media";
-            options = mediaZfsOptions;
-          };
         };
-      }; # /zfast_store
-      zslow_store = {
-        type = "zpool";
-        mode = {
-          topology = {
-            type = "topology";
-            vdev = [
-              {
-                mode = "mirror";
-                members = ["hdd1" "hdd2"];
-              }
-              {
-                mode = "mirror";
-                members = ["hdd3" "hdd4"];
-              }
-            ];
-          };
-        };
-        rootFsOptions =
-          {
-            compression = "zstd";
-          }
-          // commonFsOptions;
-        options = commonZfsOptions;
-        datasets = {
-          "slow_store" = {
-            type = "zfs_fs";
-            options = commonEncryptionOptions;
-          };
-          "slow_store/replicas" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/slow_store/replicas";
-            options.mountpoint = "legacy";
-          };
-          "slow_store/replicas/atlas_root" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/slow_store/replicas/atlas_root";
-            options.mountpoint = "legacy";
-          };
-          "slow_store/replicas/atlas_var_lib" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/slow_store/replicas/atlas_var_lib";
-            options.mountpoint = "legacy";
-          };
-          "slow_store/replicas/slimbook_home" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/slow_store/replicas/slimbook_home";
-            options.mountpoint = "legacy";
-          };
-          "slow_store/misc" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/slow_store/misc";
-            options.mountpoint = "legacy";
-          };
-          "slow_store/media" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/slow_store/media";
-            options =
-              {
-                mountpoint = "legacy";
-              }
-              // mediaZfsOptions;
-          };
-        };
-      }; # /zslow_store
-    }; # /zpool
+      }; # /slow_store
+    }; # /mdadm
   };
 }
