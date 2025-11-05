@@ -6,6 +6,7 @@
   ...
 }: let
   backupStore = my.lib.const.paths.atlas.backup;
+  replicasStore = my.lib.const.paths.atlas.replicas;
 in {
   sops.secrets = {
     restic_password_file = {};
@@ -14,60 +15,46 @@ in {
   };
 
   services = {
-    sanoid = {
-      enable = true;
-      datasets = {
-        "zroot/root" = {
-          use_template = ["atlas"];
-          recursive = false;
-        };
-        "zfast_store/fast_store/var_lib" = {
-          use_template = ["atlas"];
-          recursive = true;
-        };
-        "zfast_store/fast_store/backup/slimbook_home" = {
-          use_template = ["atlas"];
-          recursive = false;
+    btrbk.instances = let
+      snapshotRetention = "14d";
+      snapshotRetentionMin = "1d";
+      mkBtrbkInstance = {
+        volume,
+        subvolumes,
+      }: {
+        onCalendar = "hourly";
+        settings = {
+          volume.${volume} = {
+            subvolume =
+              my.lib.mapListToAttrs (subvolume: {
+                name = subvolume;
+                value = {};
+              })
+              subvolumes;
+            snapshot_dir = ".snapshots";
+            target = "${replicasStore}/atlas";
+            target_preserve = snapshotRetention;
+            target_preserve_min = snapshotRetentionMin;
+          };
+          snapshot_preserve = snapshotRetention;
+          snapshot_preserve_min = snapshotRetentionMin;
+          archive_preserve = snapshotRetention;
+          archive_preserve_min = snapshotRetentionMin;
         };
       };
-      templates = {
-        atlas = {
-          hourly = 24;
-          daily = 14;
-          monthly = 0;
-          yearly = 0;
-          autosnap = true;
-          autoprune = true;
-        };
+    in {
+      root = mkBtrbkInstance {
+        volume = "/";
+        subvolumes = ["/"];
       };
-    };
-
-    syncoid = {
-      enable = true;
-      commonArgs = [
-        "--no-sync-snap"
-      ];
-      commands = {
-        atlas_root = {
-          source = "zroot/root";
-          target = "zslow_store/slow_store/replicas/atlas_root";
-          recursive = false;
-        };
-        atlas_var_lib = {
-          source = "zfast_store/fast_store/var_lib";
-          target = "zslow_store/slow_store/replicas/atlas_var_lib";
-          recursive = true;
-        };
-        slimbook_home = {
-          source = "zfast_store/fast_store/backup/slimbook_home";
-          target = "zslow_store/slow_store/replicas/slimbook_home";
-          recursive = false;
-        };
+      fast_store = mkBtrbkInstance {
+        volume = "/mnt/fast_store";
+        subvolumes = ["var_lib"];
       };
     };
 
     restic.backups = let
-      mkResticBackupFromSnapshots = {
+      mkResticBackupFromBtrbkSnapshots = {
         host,
         tag,
         snapshotsGlob,
@@ -75,7 +62,7 @@ in {
       }: let
         commonArgs = [
           "--group-by host,tags"
-          "--retry-lock 1h"
+          "--retry-lock 2h"
         ];
       in {
         initialize = true;
@@ -102,28 +89,22 @@ in {
         repositoryFile = config.sops.secrets.restic_repository_name_file.path;
       };
     in {
-      atlas-root = mkResticBackupFromSnapshots {
+      atlas-root = mkResticBackupFromBtrbkSnapshots {
         host = "atlas";
         tag = "root";
-        snapshotsGlob = "/.zfs/snapshot/autosnap_*_hourly";
-        time = "02:00";
+        snapshotsGlob = "/.snapshots/ROOT.*";
+        time = "01:00";
       };
-      atlas-var_lib = mkResticBackupFromSnapshots {
+      atlas-var_lib = mkResticBackupFromBtrbkSnapshots {
         host = "atlas";
         tag = "var_lib";
-        snapshotsGlob = "/var/lib/.zfs/snapshot/autosnap_*_hourly";
-        time = "02:15";
+        snapshotsGlob = "/mnt/fast_store/.snapshots/var_lib.*";
+        time = "01:30";
       };
-      atlas-var_lib_postgresql = mkResticBackupFromSnapshots {
-        host = "atlas";
-        tag = "var_lib_postgresql";
-        snapshotsGlob = "/var/lib/postgresql/.zfs/snapshot/autosnap_*_hourly";
-        time = "02:45";
-      };
-      slimbook-home = mkResticBackupFromSnapshots {
+      slimbook-home = mkResticBackupFromBtrbkSnapshots {
         host = "slimbook";
         tag = "home";
-        snapshotsGlob = "${backupStore}/slimbook_home/.zfs/snapshot/autosnap_*_hourly";
+        snapshotsGlob = "${backupStore}/slimbook/home.*";
         time = "03:00";
       };
     };
@@ -148,13 +129,11 @@ in {
 
   systemd.services = let
     notifyFailedServices = [
-      "sanoid"
-      "syncoid-atlas_root"
-      "syncoid-atlas_var_lib"
-      "syncoid-slimbook_home"
+      "btrbk-root"
+      "btrbk-fast_store"
       "restic-backups-atlas-root"
       "restic-backups-atlas-var_lib"
-      "restic-backups-atlas-var_lib_postgresql"
+      "restic-backups-slimbook-home"
     ];
     mkOnFailure = serviceName: {
       onFailure = ["ntfy-failed@${serviceName}.service"];

@@ -99,6 +99,7 @@ rec {
       slowMedia = "${slowStore}/media";
       fastMedia = "${fastStore}/media";
       backup = "${fastStore}/backup";
+      replicas = "${slowStore}/replicas";
       downloads = "${fastStore}/downloads";
       slowMisc = "${slowStore}/misc";
       fastMisc = "${fastStore}/misc";

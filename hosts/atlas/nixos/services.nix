@@ -312,4 +312,11 @@ in {
       reverseProxy.domain = "redlib.${intraDomain}";
     };
   };
+
+  services.btrbk.sshAccess = [
+    {
+      key = my.lib.const.sshKeys.btrbkAtSlimbook;
+      roles = ["info" "source" "target" "delete"];
+    }
+  ];
 }
