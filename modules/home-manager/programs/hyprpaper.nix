@@ -9,7 +9,7 @@
   cfg = config.my.programs.hyprpaper;
   timewallCfg = config.my.programs.timewall;
 
-  timewallBin = lib.getExe inputs.timewall.packages.${pkgs.system}.timewall;
+  timewallBin = lib.getExe inputs.timewall.packages.${pkgs.stdenv.hostPlatform.system}.timewall;
   wallpaperBin = lib.getExe my.pkgs.wallpaper;
 in {
   options.my.programs.hyprpaper.enable = lib.mkEnableOption "hyprpaper";

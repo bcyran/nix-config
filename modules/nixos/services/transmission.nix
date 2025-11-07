@@ -63,6 +63,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.transmission = {
       enable = true;
+      package = pkgs.transmission_4;
       webHome = pkgs.flood-for-transmission;
       openPeerPorts = cfg.openFirewall;
       openRPCPort = cfg.openFirewall;

@@ -26,12 +26,113 @@ in {
   options.my.programs.git.enable = lib.mkEnableOption "git";
 
   config = lib.mkIf cfg.enable {
-    programs.git = {
-      enable = true;
-      userName = config.my.user.fullName;
-      userEmail = config.my.user.email;
+    programs = {
+      git = {
+        enable = true;
+        includes = [
+          {
+            path = pkgs.fetchurl {
+              url = "https://raw.githubusercontent.com/dandavison/delta/f49fd3b012067e34c101d7dfc6cc3bbac1fe5ccc/themes.gitconfig";
+              sha256 = "09kfrlmrnj5h3vs8cwfs66yhz2zpgk0qnmajvsr57wsxzgda3mh6";
+            };
+          }
+          {
+            path = deltaTheme;
+          }
+        ];
+        settings = {
+          user = {
+            name = config.my.user.fullName;
+            inherit (config.my.user) email;
+          };
+          alias = {
+            st = "status";
+            co = "checkout";
+            cob = "checkout -b";
+            sw = "switch";
+            swc = "switch -c";
+            sl = "switch -";
+            sr = "!f() { git for-each-ref --count=30 --sort=-committerdate --format='%(refname:short)|%(committerdate:relative)|%(subject)|%(authorname)' refs/heads | column -ts'|' | fzf +m | cut -d ' ' -f 1 | xargs -o git switch; }; f";
+            br = "branch";
+            aa = "add --all";
+            sa = "stash --all";
+            rh = "reset HEAD";
+            rh1 = "reset HEAD~1";
+            cm = "commit";
+            cma = "commit --amend";
+            cmane = "commit --amend --no-edit";
+            ll = "log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+            l = "ll -15";
+            lp = "l -p";
+            df = "diff";
+            dfc = "diff --cached";
+            pf = "push --force-with-lease";
+            prom = "pull --rebase origin master";
+            ria = "rebase --interactive";
+            r = "restore";
+            rs = "restore --staged";
+            cf = "chain first";
+            cn = "chain next";
+            cp = "chain prev";
+            cl = "chain last";
+            cr = "chain rebase";
+          };
+          core = {
+            editor = "nvim";
+            fsmonitor = true;
+            untrackedCache = true;
+          };
+          merge.conflictstyle = "diff3";
+          pull = {
+            rebase = true;
+            ff = "only";
+          };
+          push = {
+            default = "simple";
+            autoSetupRemote = true;
+            followTags = "true";
+          };
+          rebase = {
+            autoStash = true;
+            autoSquash = true;
+          };
+          rerere = {
+            enabled = true;
+            autoupdate = true;
+          };
+          branch.sort = "-committerdate";
+          tag.sort = "version:refname";
+          column.ui = "auto";
+          diff = {
+            algorithm = "histogram";
+            mnemonicPrefix = true;
+            renames = true;
+          };
+          fetch = {
+            prune = true;
+            pruneTags = true;
+            all = true;
+          };
+          commit = {
+            verbose = true;
+          };
+        };
+        ignores = [
+          "local"
+          ".venv"
+          "*.egg-info"
+          ".mypy_cache"
+          "pyrightconfig.json"
+          "Session.vim"
+          ".vim"
+          ".rgignore"
+          ".direnv"
+        ];
+      };
+
       delta = {
         enable = true;
+        enableGitIntegration = true;
         options = {
           features = deltaThemeName;
           syntax-theme = config.programs.bat.config.theme;
@@ -40,102 +141,8 @@ in {
           side-by-side = false;
         };
       };
-      includes = [
-        {
-          path = pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/dandavison/delta/f49fd3b012067e34c101d7dfc6cc3bbac1fe5ccc/themes.gitconfig";
-            sha256 = "09kfrlmrnj5h3vs8cwfs66yhz2zpgk0qnmajvsr57wsxzgda3mh6";
-          };
-        }
-        {
-          path = deltaTheme;
-        }
-      ];
-      aliases = {
-        st = "status";
-        co = "checkout";
-        cob = "checkout -b";
-        sw = "switch";
-        swc = "switch -c";
-        sl = "switch -";
-        sr = "!f() { git for-each-ref --count=30 --sort=-committerdate --format='%(refname:short)|%(committerdate:relative)|%(subject)|%(authorname)' refs/heads | column -ts'|' | fzf +m | cut -d ' ' -f 1 | xargs -o git switch; }; f";
-        br = "branch";
-        aa = "add --all";
-        sa = "stash --all";
-        rh = "reset HEAD";
-        rh1 = "reset HEAD~1";
-        cm = "commit";
-        cma = "commit --amend";
-        cmane = "commit --amend --no-edit";
-        ll = "log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
-        l = "ll -15";
-        lp = "l -p";
-        df = "diff";
-        dfc = "diff --cached";
-        pf = "push --force-with-lease";
-        prom = "pull --rebase origin master";
-        ria = "rebase --interactive";
-        r = "restore";
-        rs = "restore --staged";
-        cf = "chain first";
-        cn = "chain next";
-        cp = "chain prev";
-        cl = "chain last";
-        cr = "chain rebase";
-      };
-      extraConfig = {
-        core = {
-          editor = "nvim";
-          fsmonitor = true;
-          untrackedCache = true;
-        };
-        merge.conflictstyle = "diff3";
-        pull = {
-          rebase = true;
-          ff = "only";
-        };
-        push = {
-          default = "simple";
-          autoSetupRemote = true;
-          followTags = "true";
-        };
-        rebase = {
-          autoStash = true;
-          autoSquash = true;
-        };
-        rerere = {
-          enabled = true;
-          autoupdate = true;
-        };
-        branch.sort = "-committerdate";
-        tag.sort = "version:refname";
-        column.ui = "auto";
-        diff = {
-          algorithm = "histogram";
-          mnemonicPrefix = true;
-          renames = true;
-        };
-        fetch = {
-          prune = true;
-          pruneTags = true;
-          all = true;
-        };
-        commit = {
-          verbose = true;
-        };
-      };
-      ignores = [
-        "local"
-        ".venv"
-        "*.egg-info"
-        ".mypy_cache"
-        "pyrightconfig.json"
-        "Session.vim"
-        ".vim"
-        ".rgignore"
-        ".direnv"
-      ];
     };
+
     home.packages = with pkgs; [
       git-chain
       git-smash

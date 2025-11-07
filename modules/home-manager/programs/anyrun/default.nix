@@ -8,6 +8,7 @@
 }: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.anyrun;
+  inherit (pkgs.stdenv.hostPlatform) system;
 
   styleSheet = builtins.readFile ./style.css;
 
@@ -28,9 +29,9 @@ in {
   config = lib.mkIf cfg.enable {
     programs.anyrun = {
       enable = true;
-      package = my.inputs.anyrun.packages.${pkgs.system}.default;
+      package = my.inputs.anyrun.packages.${system}.default;
       config = {
-        plugins = with my.inputs.anyrun.packages.${pkgs.system};
+        plugins = with my.inputs.anyrun.packages.${system};
           [
             applications
             shell
@@ -38,7 +39,7 @@ in {
             translate
             websearch
           ]
-          ++ [my.inputs.anyrun-powermenu.packages.${pkgs.system}.default];
+          ++ [my.inputs.anyrun-powermenu.packages.${system}.default];
         x = {fraction = 0.5;};
         y = {fraction = 0.3;};
         width = {absolute = 700;};

@@ -36,14 +36,14 @@ in {
       inter
       corefonts
       noto-fonts
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       noto-fonts-cjk-sans
       nerd-fonts.jetbrains-mono
 
       libnotify
       wl-clipboard
       playerctl
-      philipstv
+      my.pkgs.philipstv
       my.pkgs.volume
       my.pkgs.backlight
       my.pkgs.wallpaper
