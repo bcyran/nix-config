@@ -16,9 +16,13 @@ in rec {
   ttkbootstrap = pkgs.callPackage ./ttkbootstrap {
     inherit (python3Packages) buildPythonPackage pythonOlder tkinter pillow setuptools;
   };
+  philipstv = pkgs.callPackage ./philipstv {
+    inherit (pkgs) installShellFiles;
+    inherit (python3Packages) buildPythonPackage pythonOlder poetry-core poetry-dynamic-versioning pytestCheckHook requests-mock requests pydantic click appdirs;
+  };
   philipstv-gui = pkgs.callPackage ./philipstv-gui {
-    inherit (python3Packages) buildPythonApplication pythonOlder poetry-core poetry-dynamic-versioning appdirs philipstv;
-    inherit ttkbootstrap;
+    inherit (python3Packages) buildPythonApplication pythonOlder poetry-core poetry-dynamic-versioning appdirs;
+    inherit ttkbootstrap philipstv;
   };
   kidex = pkgs.callPackage ./kidex {};
   go-hass-agent = pkgs.callPackage ./go-hass-agent {};
