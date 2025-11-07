@@ -11,15 +11,15 @@
 }:
 buildPythonApplication rec {
   pname = "philipstv-gui";
-  version = "1.2.0";
+  version = "2.0.0";
   format = "pyproject";
-  disable = pythonOlder "3.9";
+  disable = pythonOlder "3.10";
 
   src = fetchFromGitHub {
     owner = "bcyran";
     repo = "philipstv-gui";
     rev = "refs/tags/${version}";
-    hash = "sha256-vSU8VB2NbwMGGtNBdJ1M0alttYO1HlGi2bl7WbPDm48=";
+    hash = "sha256-Ez8bjbuthdJUDOgIXzGMEyaU86CUadGlUuvOyRPsV+I=";
   };
 
   nativeBuildInputs = [
