@@ -198,15 +198,10 @@ EOF
 # SECUREBOOT
 #
 secureboot() {
-  log_info "Ensuring Secure Boot keys are present"
+  log_info "Ensuring Secure Boot keys are present and enrolled"
   ssh_cmd root << EOF
-    if [[ ! -d /etc/secureboot ]]; then
-      sbctl create-keys
-      sbctl enroll-keys --microsoft
-      echo "Secure Boot keys created & enrolled"
-    else
-      echo "Secure Boot keys already present"
-    fi
+    sbctl create-keys
+    sbctl enroll-keys --microsoft
 EOF
 
   log_success "Secure Boot setup finished"
