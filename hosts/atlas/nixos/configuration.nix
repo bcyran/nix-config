@@ -68,6 +68,7 @@
           environmentFile = config.sops.secrets.ntfy_sh_env_file.path;
         };
       };
+      smart.enable = true;
     };
     programs = {
       podman.enable = true;
