@@ -5,6 +5,8 @@
   ...
 }: let
   cfg = config.my.services.immich;
+
+  mlModelName = "nllb-clip-base-siglip__mrl";
 in {
   options.my.services.immich = let
     serviceName = "Immich";
@@ -23,6 +25,10 @@ in {
       inherit (cfg) port openFirewall;
       settings = {
         newVersionCheck.enabled = false;
+        machineLearning.clip = {
+          enabled = true;
+          modelName = mlModelName;
+        };
       };
     };
 
