@@ -22,6 +22,9 @@ in {
       inherit (cfg) user group openFirewall;
     };
 
+    hardware.graphics.enable = true;
+    users.users.${cfg.user}.extraGroups = ["video" "render"];
+
     my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
       ${cfg.reverseProxy.domain} = {
         upstreamAddress = "127.0.0.1";
