@@ -247,6 +247,7 @@ in {
                       mountOptions = hddBtrfsMountOptions;
                     };
                     "@slow_store/media" = {};
+                    "@slow_store/replicas" = {};
                     "@slow_store/backup" = {};
                     "@slow_store/misc" = {};
                   };
