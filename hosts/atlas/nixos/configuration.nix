@@ -61,12 +61,12 @@
       };
       lanzaboote.enable = true;
       sops.enable = true;
-    };
-    services = {
-      ntfy-mdmonitor = {
+      mdadm = {
         enable = true;
-        serverUrl = "http://127.0.0.1:${toString config.my.services.ntfy.port}";
-        environmentFile = config.sops.secrets.ntfy_sh_env_file.path;
+        ntfy = {
+          serverUrl = "http://127.0.0.1:${toString config.my.services.ntfy.port}";
+          environmentFile = config.sops.secrets.ntfy_sh_env_file.path;
+        };
       };
     };
     programs = {
