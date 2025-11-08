@@ -1,11 +1,18 @@
 {
   my,
+  inputs,
   config,
   lib,
   pkgs,
   ...
 }: let
   cfg = config.my.configurations.mdadm;
+  grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
+
+  provisionGrafanaDashboard =
+    config.services.grafana.enable
+    && config.services.prometheus.enable
+    && config.services.prometheus.exporters.node.enable;
 
   effectiveTopic =
     if cfg.ntfy.topic != null
@@ -58,6 +65,26 @@ in {
           PROGRAM ${lib.getExe mdadmNtfyWithEnv}
         '';
       };
+    };
+
+    services.grafana.provision = lib.mkIf provisionGrafanaDashboard {
+      dashboards.settings.providers = [
+        (grafanaDashboardsLib.dashboardEntry {
+          name = "raid-mdadm";
+          path = grafanaDashboardsLib.fetchDashboard {
+            name = "raid-mdadm";
+            id = 20989;
+            version = 3;
+            hash = "sha256-s72AM3vD93LEZj0ntdmU2EaCklgsvc2JwXiyS1rVTWY=";
+          };
+          transformations = grafanaDashboardsLib.fillTemplating [
+            {
+              key = "DS_PROMETHEUS";
+              value = "Prometheus";
+            }
+          ];
+        })
+      ];
     };
   };
 }
