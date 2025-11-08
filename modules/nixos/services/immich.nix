@@ -29,7 +29,22 @@ in {
           enabled = true;
           modelName = mlModelName;
         };
+        ffmpeg = {
+          transcode = "required";
+          targetResolution = "1080";
+          preset = "slow";
+          crf = 20;
+          accel = "vaapi";
+          accelDecode = true;
+        };
       };
+    };
+
+    hardware.graphics.enable = true;
+    systemd.services.immich-server.serviceConfig = {
+      PrivateDevices = lib.mkForce false;
+      DeviceAllow = ["char-drm rw"];
+      SupplementaryGroups = ["video" "render"];
     };
 
     my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
