@@ -5,8 +5,6 @@
   ...
 }: let
   cfg = config.my.services.collabora;
-
-  codeVersion = "25.04.5.1.1";
 in {
   options.my.services.collabora = let
     serviceName = "Collabora CODE";
@@ -22,18 +20,32 @@ in {
   config = lib.mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
-    virtualisation.oci-containers.containers.collabora = {
-      image = "collabora/code:${codeVersion}";
-      autoStart = true;
-      ports = ["${cfg.address}:${builtins.toString cfg.port}:9980"];
-      environment = {
-        aliasgroup1 = config.my.services.nextcloud.domain;
+    services.collabora-online = {
+      enable = true;
+      inherit (cfg) port;
+
+      aliasGroups = [
+        {host = config.my.services.nextcloud.domain;}
+      ];
+
+      settings = {
+        ssl = {
+          enable = false;
+          termination = true;
+        };
+        net = {
+          listen = cfg.address;
+          post_allow.host = ["::1"];
+        };
+        storage.wopi = {
+          "@allow" = true;
+          host = [config.my.services.nextcloud.domain];
+        };
         server_name = cfg.reverseProxy.domain;
-        extra_params = "--o:ssl.enable=false --o:ssl.termination=true";
-        dictionaries = "pl_PL en_US";
+        allowed_languages = "pl_PL en_US";
       };
-      inherit (cfg) environmentFiles;
     };
+    systemd.services.coolwsd.serviceConfig.EnvironmentFile = cfg.environmentFiles;
 
     my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
   };
