@@ -37,7 +37,7 @@ in {
     services = {
       nextcloud = {
         enable = true;
-        package = pkgs.nextcloud31;
+        package = pkgs.nextcloud32;
         hostName = cfg.domain;
         https = true;
         maxUploadSize = "16G";
@@ -63,20 +63,16 @@ in {
             whiteboard
             richdocuments
             tables
+            theming_customcss
             ;
           drawio = pkgs.fetchNextcloudApp {
-            sha256 = "sha256-jxm07X+5i7SbxfMDrGOLMkF4mSeGLmYepSAvROdvJwE=";
-            url = "https://github.com/jgraph/drawio-nextcloud/releases/download/v3.1.0/drawio-v3.1.0.tar.gz";
-            license = "agpl3Only";
-          };
-          theming_customcss = pkgs.fetchNextcloudApp {
-            sha256 = "sha256-MsF+im9yCt7bRNIE8ait0wxcVzMXsHMNbp+IIzY/zJI=";
-            url = "https://github.com/nextcloud-releases/theming_customcss/releases/download/v1.18.0/theming_customcss.tar.gz";
+            sha256 = "sha256-yl9/OuJ7fHDcp8Jk4oW3we3cdmK9BW3N0/v+Dbw6J6M=";
+            url = "https://github.com/jgraph/drawio-nextcloud/releases/download/v3.1.2/drawio-v3.1.2.tar.gz";
             license = "agpl3Only";
           };
           breezedark = pkgs.fetchNextcloudApp {
-            sha256 = "sha256-LXoTFFs0Cwqo4yDVAPnqJ9Ovwz9DsrHCGbdesmOypRg=";
-            url = "https://github.com/bcyran/nextcloud-breeze-dark/archive/65d3791e96b2beee10828881f325ae3fb45e64d4.tar.gz";
+            sha256 = "sha256-i2O8KHuWitBkPutQz2bqxQNDADClTp/QBNjs5kquy6o";
+            url = "https://github.com/bcyran/nextcloud-breeze-dark/archive/6cc9236bdc59ff1ecf04bf83f0945364b9d29b5b.tar.gz";
             license = "agpl3Only";
           };
         };
