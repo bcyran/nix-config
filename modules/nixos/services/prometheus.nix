@@ -1,14 +1,10 @@
 {
   my,
-  inputs,
-  pkgs,
   config,
   lib,
   ...
 }: let
   cfg = config.my.services.prometheus;
-
-  grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
 in {
   options.my.services.prometheus = let
     serviceName = "Prometheus";
@@ -60,31 +56,6 @@ in {
               }
             ];
           }
-        ];
-      };
-
-      grafana.provision = {
-        enable = true;
-
-        datasources.settings.datasources = lib.mkIf config.services.grafana.enable [
-          {
-            name = "Prometheus";
-            type = "prometheus";
-            url = "http://127.0.0.1:${toString cfg.port}";
-            default = true;
-          }
-        ];
-
-        dashboards.settings.providers = [
-          (grafanaDashboardsLib.dashboardEntry {
-            name = "node-exporter-full";
-            path = grafanaDashboardsLib.fetchDashboard {
-              name = "node-exporter-full";
-              id = 1860;
-              version = 37;
-              hash = "sha256-PS9pNh3AqDpBMabZWjqsj1pgp7asuyGeJInP9Bdbpr0=";
-            };
-          })
         ];
       };
     };
