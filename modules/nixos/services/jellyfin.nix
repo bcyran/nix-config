@@ -23,7 +23,10 @@ in {
     };
 
     hardware.graphics.enable = true;
-    users.users.${cfg.user}.extraGroups = ["video" "render"];
+    systemd.services.jellyfin.serviceConfig = {
+      DeviceAllow = ["char-drm rw"];
+      SupplementaryGroups = ["video" "render"];
+    };
 
     my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
       ${cfg.reverseProxy.domain} = {
