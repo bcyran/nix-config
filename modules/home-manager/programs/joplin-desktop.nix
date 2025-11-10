@@ -74,16 +74,30 @@ in {
           children = [
             {
               key = "sideBar";
-              width = 210;
               visible = true;
+              width = 210;
             }
             {
               key = "noteList";
-              width = 220;
               visible = true;
+              width = 220;
             }
             {
-              key = "editor";
+              key = "tempContainer-LesXc856pKyjJUTaxYr7gP";
+              children = [
+                {
+                  key = "plugin-view-joplin.plugin.note.tabs-note.tabs.panel";
+                  context = {
+                    pluginId = "joplin.plugin.note.tabs";
+                  };
+                  visible = true;
+                  height = 40;
+                }
+                {
+                  key = "editor";
+                  visible = true;
+                }
+              ];
               visible = true;
             }
           ];
