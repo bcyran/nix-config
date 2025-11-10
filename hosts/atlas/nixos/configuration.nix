@@ -75,6 +75,24 @@
     };
   };
 
+  boot.kernelModules = ["nct6775"]; # Required for fans control
+  services.hddfancontrol = {
+    enable = true;
+    settings.drivebay = {
+      disks = [
+        "`find /dev/disk/by-id -name 'ata-*' -and -not -name '*-part*' -printf '%p '`"
+      ];
+      pwmPaths = [
+        "/sys/class/hwmon/hwmon3/pwm1:70:50"
+        "/sys/class/hwmon/hwmon3/pwm4:70:50"
+      ];
+      extraArgs = [
+        "--min-fan-speed-prct 0"
+        "--drive-temp-range 30 50"
+      ];
+    };
+  };
+
   services.btrfs.autoScrub = {
     enable = true;
     interval = "monthly";
