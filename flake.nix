@@ -20,10 +20,6 @@
     hardware = {
       url = "github:nixos/nixos-hardware";
     };
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     grafana-dashboards = {
       url = "github:blackheaven/grafana-dashboards.nix";
     };
