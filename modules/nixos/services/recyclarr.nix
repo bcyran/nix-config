@@ -18,10 +18,10 @@
           # Series
           {template = "sonarr-quality-definition-series";}
           # 4k
-          {template = "sonarr-v4-quality-profile-web-2160p";}
+          {template = "sonarr-v4-quality-profile-web-2160p-alternative";}
           {template = "sonarr-v4-custom-formats-web-2160p";}
           # 1080p
-          {template = "sonarr-v4-quality-profile-web-1080p";}
+          {template = "sonarr-v4-quality-profile-web-1080p-alternative";}
           {template = "sonarr-v4-custom-formats-web-1080p";}
           # Anime
           {template = "sonarr-quality-definition-anime";}
