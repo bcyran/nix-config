@@ -22,6 +22,7 @@
     "plugin.calebjohn.MathMode.jpl"
     "plugin.calebjohn.rich-markdown.jpl"
     "joplin.plugin.note.tabs.jpl"
+    "org.joplinapp.plugins.admonition.jpl"
   ];
 in {
   options.my.programs.joplin-desktop.enable = lib.mkEnableOption "joplin-desktop";
