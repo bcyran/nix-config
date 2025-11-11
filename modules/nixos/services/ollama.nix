@@ -23,6 +23,14 @@ in {
       inherit (cfg) port openFirewall;
     };
 
-    my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+      ${cfg.reverseProxy.domain} = {
+        upstreamAddress = cfg.address;
+        upstreamPort = cfg.port;
+        proxyExtraConfig = ''
+          header_up Host {upstream_hostport}
+        '';
+      };
+    };
   };
 }
