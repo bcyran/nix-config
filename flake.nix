@@ -51,6 +51,14 @@
       url = "github:jappie3/hyprcursor-phinger";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland?ref=95ee08b&submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hy3 = {
+      url = "github:outfoxxed/hy3?ref=8057eac";
+      inputs.hyprland.follows = "hyprland";
+    };
     timewall = {
       url = "github:bcyran/timewall";
       inputs.nixpkgs.follows = "nixpkgs";

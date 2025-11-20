@@ -21,8 +21,9 @@ in {
         plugins = with pkgs.xfce; [thunar-volman thunar-archive-plugin];
       };
       xfconf.enable = true;
-      file-roller.enable = true;
     };
+
+    environment.systemPackages = [pkgs.file-roller];
 
     boot.supportedFilesystems = ["ntfs" "exfat"];
   };

@@ -37,13 +37,20 @@ in {
       gthumb
       vlc
       tor-browser
-      webcord
       # FIXME: Restore once updated not to use unsafe qt5.
       #        See: https://github.com/NixOS/nixpkgs/issues/437865,
       #        https://github.com/jellyfin/jellyfin-media-player/issues/282.
       #
       # jellyfin-media-player
-      feishin
+      # FIXME: Restore once updated not to use EOL Electron.
+      #        This sems to already be on master when writing this but
+      #        not yet released.
+      #
+      # feishin
+      # FIXME: Restore once updated not to use EOL Electron.
+      #
+      # feishin
+      # webcord
       mixxx
       ffmpeg
     ];

@@ -1,12 +1,14 @@
 {
+  my,
   pkgs,
   config,
   lib,
   ...
 }: let
   cfg = config.my.programs.hyprland;
+  inherit (pkgs.stdenv.hostPlatform) system;
 
-  xdph = pkgs.xdg-desktop-portal-hyprland.overrideAttrs (finalAttrs: previousAttrs: {
+  xdph = my.inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland.overrideAttrs (finalAttrs: previousAttrs: {
     patches = [./xdph-service.patch];
   });
 in {
@@ -15,6 +17,7 @@ in {
   config = lib.mkIf cfg.enable {
     programs.hyprland = {
       enable = true;
+      package = my.inputs.hyprland.packages.${system}.hyprland;
       withUWSM = true;
       portalPackage = xdph;
     };
