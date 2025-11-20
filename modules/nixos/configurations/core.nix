@@ -81,6 +81,7 @@ in {
       unzip
       zstd
       gzip
+      nix-tree
     ];
 
     boot.tmp.cleanOnBoot = !config.boot.tmp.useTmpfs;
