@@ -16,7 +16,7 @@
       "github.com/caddy-dns/ovh@v1.0.0"
       "github.com/greenpau/caddy-git@v1.0.9"
     ];
-    hash = "sha256-mMEsiidpp7Sx8ol/iUlpvYtN+cNMrpPWCVAYMJj1/so=";
+    hash = "sha256-etELbHSXm4wRS17t27ghctTtIwfb7XsLN9BgkoOIVH8=";
   };
 
   nixBin = lib.getExe pkgs.nix;
