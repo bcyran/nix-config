@@ -1,5 +1,4 @@
 {
-  my,
   pkgs,
   config,
   lib,
@@ -12,18 +11,16 @@
     HYPRCURSOR_THEME = "phinger-cursors-dark-hyprcursor";
     HYPRCURSOR_SIZE = "24";
   };
-  inherit (pkgs.stdenv.hostPlatform) system;
 in {
   options.my.programs.hyprland.enable = lib.mkEnableOption "hyprland";
 
   config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
-      package = my.inputs.hyprland.packages.${system}.hyprland;
       systemd.enable = false;
       settings.env = lib.mapAttrsToList (name: value: "${name},${value}") envVars;
-      plugins = [
-        my.inputs.hy3.packages.${system}.hy3
+      plugins = with pkgs.hyprlandPlugins; [
+        hy3
       ];
     };
 

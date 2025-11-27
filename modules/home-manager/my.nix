@@ -10,7 +10,6 @@
     my.inputs.hyprcursor-phinger.homeManagerModules.hyprcursor-phinger
     my.inputs.timewall.homeManagerModules.timewall
     my.inputs.anyrun.homeManagerModules.default
-    my.inputs.hyprland.homeManagerModules.default
 
     ./options
     ./configurations
