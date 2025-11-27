@@ -19,6 +19,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    home.enableNixpkgsReleaseCheck = false;
+
     nixpkgs = {
       overlays = [
         my.overlays.stable-packages
