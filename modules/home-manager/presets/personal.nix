@@ -53,6 +53,7 @@ in {
       # webcord
       mixxx
       ffmpeg
+      kdePackages.kdenlive
     ];
   };
 }
