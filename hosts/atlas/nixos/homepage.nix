@@ -382,6 +382,20 @@ in {
             };
           }
           {
+            Audiobookshelf = rec {
+              description = "Podcasts and audiobooks management.";
+              icon = "audiobookshelf";
+              href = makeServiceDomainUrl "audiobookshelf";
+              siteMonitor = makeServiceLoopbackUrl "audiobookshelf";
+              widget = {
+                type = "audiobookshelf";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY}}";
+                fields = ["podcasts" "books"];
+              };
+            };
+          }
+          {
             Pinchflat = {
               description = "YouTube video downloader.";
               icon = "pinchflat";
