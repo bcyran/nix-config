@@ -302,6 +302,11 @@ in {
       enable = true;
       reverseProxy.domain = "koinsight.${intraDomain}";
     };
+    audiobookshelf = {
+      enable = true;
+      group = mediaGroup;
+      reverseProxy.domain = "audiobookshelf.${intraDomain}";
+    };
     kiwix = {
       enable = true;
       libraryPath = "${my.lib.const.paths.atlas.slowMedia}/kiwix";
