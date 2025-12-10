@@ -5,11 +5,11 @@ return {
   },
   {
     "mason-org/mason.nvim",
-    enabled = vim.fn.executable("nix") ~= 1,
+    enabled = false,
   },
   {
     "mason-org/mason-lspconfig.nvim",
-    enabled = vim.fn.executable("nix") ~= 1,
+    enabled = false,
   },
   {
     "neovim/nvim-lspconfig",
