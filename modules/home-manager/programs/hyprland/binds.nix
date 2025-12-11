@@ -4,6 +4,7 @@
   ...
 }: let
   cfg = config.my.programs.hyprland;
+  inherit (cfg) execWrapper;
 
   workspaceBinds = let
     # Keys: 1 - 9, 0, -
@@ -62,29 +63,29 @@ in {
             "$mod, mouse_left, hy3:focustab, l"
             "$mod, mouse_right, hy3:focustab, r"
 
-            "$mod, s, exec, uwsm app -- scr output"
-            "$mod CONTROL, s, exec, uwsm app -- scr area"
-            "$mod SHIFT, s, exec, uwsm app -- scr active"
+            "$mod, s, exec, ${execWrapper} scr output"
+            "$mod CONTROL, s, exec, ${execWrapper} scr area"
+            "$mod SHIFT, s, exec, ${execWrapper} scr active"
 
-            "$mod, slash, exec, uwsm app -- playerctl play-pause"
-            "$mod, comma, exec, uwsm app -- playerctl previous"
-            "$mod, period, exec, uwsm app -- playerctl next"
+            "$mod, slash, exec, ${execWrapper} playerctl play-pause"
+            "$mod, comma, exec, ${execWrapper} playerctl previous"
+            "$mod, period, exec, ${execWrapper} playerctl next"
 
-            ",XF86AudioRaiseVolume, exec, uwsm app -- volume up"
-            ",XF86AudioLowerVolume, exec, uwsm app -- volume down"
-            ",XF86AudioMute, exec, uwsm app -- volume toggle"
+            ",XF86AudioRaiseVolume, exec, ${execWrapper} volume up"
+            ",XF86AudioLowerVolume, exec, ${execWrapper} volume down"
+            ",XF86AudioMute, exec, ${execWrapper} volume toggle"
 
-            ",XF86MonBrightnessDown, exec, uwsm app -- backlight down 10"
-            ",XF86MonBrightnessUp, exec, uwsm app -- backlight up 10"
+            ",XF86MonBrightnessDown, exec, ${execWrapper} backlight down 10"
+            ",XF86MonBrightnessUp, exec, ${execWrapper} backlight up 10"
 
-            "CONTROL, space, exec, uwsm app -- swaync-client --toggle-panel"
-            "CONTROL, escape, exec, uwsm app -- swaync-client --close-latest"
+            "CONTROL, space, exec, ${execWrapper} swaync-client --toggle-panel"
+            "CONTROL, escape, exec, ${execWrapper} swaync-client --close-latest"
 
-            "$mod, space, exec, uwsm app -- anyrun"
-            "$mod, return, exec, uwsm app -- kitty"
-            "$mod SHIFT, return, exec, uwsm app -- kitty --class terminal-floating"
-            "$mod, Y, exec, uwsm app -- firefox"
-            "$mod, N, exec, uwsm app -- thunar"
+            "$mod, space, exec, ${execWrapper} anyrun"
+            "$mod, return, exec, ${execWrapper} kitty"
+            "$mod SHIFT, return, exec, ${execWrapper} kitty --class terminal-floating"
+            "$mod, Y, exec, ${execWrapper} firefox"
+            "$mod, N, exec, ${execWrapper} thunar"
           ]
           ++ workspaceBinds;
         bindm = [

@@ -12,7 +12,21 @@
     HYPRCURSOR_SIZE = "24";
   };
 in {
-  options.my.programs.hyprland.enable = lib.mkEnableOption "hyprland";
+  options.my.programs.hyprland = {
+    enable = lib.mkEnableOption "hyprland";
+
+    execWrapper = lib.mkOption {
+      type = lib.types.str;
+      default = "uwsm app --";
+      description = "Command prefix to wrap hyprland execution with.";
+    };
+
+    withUWSM = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Whether to wrap hyprland execution with uwsm.";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland = {

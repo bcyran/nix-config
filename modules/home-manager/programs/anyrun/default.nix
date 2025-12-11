@@ -18,13 +18,21 @@
     command="$3"
 
     if [[ "$term_mode" == "term" ]]; then
-      exec uwsm app -- kitty "$command"
+      ${cfg.execWrapper} kitty "$command"
     else
-      exec uwsm app -- "$command"
+      ${cfg.execWrapper} "$command"
     fi
   '';
 in {
-  options.my.programs.anyrun.enable = lib.mkEnableOption "anyrun";
+  options.my.programs.anyrun = {
+    enable = lib.mkEnableOption "anyrun";
+
+    execWrapper = lib.mkOption {
+      type = lib.types.str;
+      default = "uwsm app --";
+      description = "Command prefix to wrap hyprland execution with.";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     programs.anyrun = {

@@ -5,6 +5,7 @@
 }: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.hyprland;
+  inherit (cfg) execWrapper;
   kanshiCfg = config.my.programs.kanshi;
 
   monitorId = m:
@@ -181,10 +182,11 @@ in {
         "10, monitor:$monitorL"
         "11, monitor:$monitorL"
       ];
-      exec-once = [
-        "uwsm finalize"
-        "kitty --class terminal-workspace"
-      ];
+      exec-once =
+        lib.optional cfg.withUWSM "uwsm finalize"
+        ++ [
+          "${execWrapper} kitty --class terminal-workspace"
+        ];
     };
   };
 }
