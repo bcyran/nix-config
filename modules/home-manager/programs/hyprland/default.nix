@@ -31,7 +31,10 @@ in {
   config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
-      systemd.enable = false;
+      systemd = {
+        enable = !cfg.withUWSM;
+        enableXdgAutostart = !cfg.withUWSM;
+      };
       settings.env = lib.mapAttrsToList (name: value: "${name},${value}") envVars;
       plugins = with pkgs.hyprlandPlugins; [
         hy3
