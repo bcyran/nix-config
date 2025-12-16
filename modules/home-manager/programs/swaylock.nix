@@ -1,21 +1,16 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.swaylock;
-
-  swaylockPkg = pkgs.swaylock;
-  swaylockBin = "${swaylockPkg}/bin/swaylock";
 in {
   options.my.programs.swaylock.enable = lib.mkEnableOption "swaylock";
 
   config = lib.mkIf cfg.enable {
     programs.swaylock = {
       enable = true;
-      package = swaylockPkg;
       settings = {
         color = "#${palette.base00}";
 
@@ -38,28 +33,6 @@ in {
 
         text-wrong-color = "#${palette.base05}";
         text-ver-color = "#${palette.base05}";
-      };
-    };
-
-    # This requires `services.systemd-lock-handler.enable = true` in the system config.
-    systemd.user.services.lock = {
-      Unit = {
-        Description = "Screen locker.";
-        OnSuccess = ["unlock.target"];
-        PartOf = ["lock.target"];
-        After = ["lock.target"];
-      };
-      # Change this to forking service without custom script if hyprlock implements forking mode.
-      # See: https://github.com/hyprwm/hyprlock/issues/184
-      Service = {
-        Type = "forking";
-        NotifyAccess = "all";
-        ExecStart = "${swaylockBin} -f";
-        Restart = "on-failure";
-        RestartSec = 0;
-      };
-      Install = {
-        WantedBy = ["lock.target"];
       };
     };
   };

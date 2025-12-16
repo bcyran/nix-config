@@ -6,11 +6,25 @@
   ...
 }: let
   cfg = config.my.programs.hypridle;
+  programsCfg = config.my.programs;
 
+  pidofBin = "${pkgs.procps}/bin/pidof";
   backlightBin = lib.getExe my.pkgs.backlight;
   hyprctlBin = "${pkgs.hyprland}/bin/hyprctl";
   loginctlBin = "${pkgs.systemd}/bin/loginctl";
   sleepBin = "${pkgs.coreutils}/bin/sleep";
+
+  swaylockBin = lib.getExe pkgs.swaylock;
+  hyprlockBin = lib.getExe pkgs.hyprlock;
+
+  lockerName =
+    if programsCfg.hyprlock.enable
+    then "hyprlock"
+    else "swaylock";
+  lockerBin =
+    if programsCfg.hyprlock.enable
+    then hyprlockBin
+    else swaylockBin;
 in {
   options.my.programs.hypridle.enable = lib.mkEnableOption "hypridle";
 
@@ -18,6 +32,10 @@ in {
     services.hypridle = {
       enable = true;
       settings = {
+        general = {
+          lock_cmd = "${pidofBin} ${lockerName} || ${lockerBin}";
+          before_sleep_cmd = "${loginctlBin} lock-session";
+        };
         listener = [
           {
             timeout = 5 * 60;

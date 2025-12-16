@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   ...
@@ -8,19 +7,6 @@
   cfg = config.my.programs.hyprlock;
 
   fontName = builtins.elemAt config.fonts.fontconfig.defaultFonts.sansSerif 0;
-  lockServiceScript = pkgs.writeShellApplication {
-    name = "hyprlock-sd-notify";
-    runtimeInputs = with pkgs; [hyprlock systemd];
-    text = ''
-      hyprlock | while read -r line; do
-        echo "$line"
-        if [[ "$line" == *'onLockLocked called'* ]]; then
-          systemd-notify --ready
-        fi
-      done
-    '';
-  };
-  lockServiceScriptBin = lib.getExe lockServiceScript;
 in {
   options.my.programs.hyprlock.enable = lib.mkEnableOption "hyprlock";
 
@@ -72,28 +58,6 @@ in {
             numlock_color = "rgb(${palette.warning})";
           }
         ];
-      };
-    };
-
-    # This requires `services.systemd-lock-handler.enable = true` in the system config.
-    systemd.user.services.lock = {
-      Unit = {
-        Description = "Screen locker.";
-        OnSuccess = ["unlock.target"];
-        PartOf = ["lock.target"];
-        After = ["lock.target"];
-      };
-      # Change this to forking service without custom script if hyprlock implements forking mode.
-      # See: https://github.com/hyprwm/hyprlock/issues/184
-      Service = {
-        Type = "notify";
-        NotifyAccess = "all";
-        ExecStart = lockServiceScriptBin;
-        Restart = "on-failure";
-        RestartSec = 0;
-      };
-      Install = {
-        WantedBy = ["lock.target"];
       };
     };
   };
