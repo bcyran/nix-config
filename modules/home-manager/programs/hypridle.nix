@@ -9,6 +9,7 @@
   programsCfg = config.my.programs;
 
   pidofBin = "${pkgs.procps}/bin/pidof";
+  pkillBin = "${pkgs.procps}/bin/pkill";
   backlightBin = lib.getExe my.pkgs.backlight;
   hyprctlBin = "${pkgs.hyprland}/bin/hyprctl";
   loginctlBin = "${pkgs.systemd}/bin/loginctl";
@@ -34,6 +35,7 @@ in {
       settings = {
         general = {
           lock_cmd = "${pidofBin} ${lockerName} || ${lockerBin}";
+          unlock_cmd = "${pkillBin} -USR1 ${lockerName}";
           before_sleep_cmd = "${loginctlBin} lock-session";
         };
         listener = [

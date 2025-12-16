@@ -17,7 +17,7 @@ in {
         anyrun.enable = mkDefault true;
         swaync.enable = mkDefault true;
         hypridle.enable = mkDefault true;
-        swaylock.enable = mkDefault true;
+        hyprlock.enable = mkDefault true;
         hyprpaper.enable = mkDefault true;
         wlsunset.enable = mkDefault true;
         kanshi.enable = mkDefault true;
