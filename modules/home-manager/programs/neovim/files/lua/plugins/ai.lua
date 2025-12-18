@@ -67,10 +67,58 @@ return {
   {
     "olimorris/codecompanion.nvim",
     enabled = settings.copilot_enabled,
-    opts = {},
+    opts = {
+      adapters = {
+        http = {
+          copilot = function()
+            return require("codecompanion.adapters").extend("copilot", {
+              schema = {
+                model = {
+                  default = "claude-sonnet-4",
+                },
+              },
+            })
+          end,
+        },
+      },
+      interactions = {
+        chat = {
+          variables = {
+            ["buffer"] = {
+              opts = {
+                -- Always sync the buffer by sharing its "diff"
+                default_params = "diff",
+              },
+            },
+          },
+        },
+      },
+    },
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
+    },
+    keys = {
+      {
+        "<leader>aa",
+        "<cmd>CodeCompanionChat Toggle<cr>",
+        desc = "Toggle Code Companion chat buffer",
+      },
+      {
+        "<leader>ac",
+        "<cmd>CodeCompanionChat<cr>",
+        desc = "Open new Code Companion chat buffer",
+      },
+      {
+        "<leader>ap",
+        "<cmd>CodeCompanionActions<cr>",
+        desc = "Open Code Companion actions palette",
+      },
+      {
+        "<leader>ai",
+        "<cmd>CodeCompanionChat Add<cr>",
+        desc = "Insert visual selection into the Code Companion chat buffer",
+      },
     },
   },
 
