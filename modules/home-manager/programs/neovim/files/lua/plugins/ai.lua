@@ -116,9 +116,6 @@ return {
   -- Code Companion (agentic workflows etc.)
   {
     "olimorris/codecompanion.nvim",
-    -- TODO: Unpin and adjust config when new version is released.
-    --       See: https://github.com/olimorris/codecompanion.nvim/pull/2439.
-    version = "17.33.0",
     enabled = settings.copilot_enabled and not settings.copilot_official,
     opts = {},
     dependencies = {
