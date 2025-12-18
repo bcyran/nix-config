@@ -20,7 +20,6 @@ in {
           type = types.bool;
           default = true;
         };
-        useOfficialPlugin = lib.mkEnableOption "copilot official plugin";
       };
     };
   };
@@ -64,7 +63,6 @@ in {
       "nvim/lua/config/settings.lua".text = ''
         local settings = {
           copilot_enabled = ${boolToString cfg.settings.copilot.enable},
-          copilot_official = ${boolToString cfg.settings.copilot.useOfficialPlugin},
           codeium_enabled = ${boolToString cfg.settings.codeium.enable},
         }
 

@@ -4,7 +4,7 @@ return {
   -- Base copilot plugin
   {
     "zbirenbaum/copilot.lua",
-    enabled = settings.copilot_enabled and not settings.copilot_official,
+    enabled = settings.copilot_enabled,
     cmd = "Copilot",
     event = "InsertEnter",
     keys = {
@@ -63,146 +63,15 @@ return {
     end,
   },
 
-  -- Copilot chat plugin
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    enable = settings.copilot_enabled,
-    branch = "canary",
-    dependencies = {
-      { "zbirenbaum/copilot.lua" },
-      { "nvim-lua/plenary.nvim" },
-    },
-    cmd = {
-      "CopilotChat",
-      "CopilotChatOpen",
-      "CopilotChatToggle",
-      "CopilotChatExplain",
-      "CopilotChatTests",
-      "CopilotChatOptimize",
-      "CopilotChatDocs",
-      "CopilotChatFixDiagnostic",
-      "CopilotChatCommit",
-      "CopilotChatCommitStaged",
-    },
-    opts = function()
-      local select = require("CopilotChat.select")
-      local user = vim.env.USER or "User"
-      user = user:sub(1, 1):upper() .. user:sub(2)
-
-      return {
-        proxy = os.getenv("http_proxy"),
-        name = "Copilot",
-        selection = function(source)
-          return select.visual(source) or select.buffer(source)
-        end,
-        auto_insert_mode = true,
-        question_header = "  " .. user .. " ",
-        answer_header = "  Copilot ",
-        window = {
-          width = 0.4,
-        },
-      }
-    end,
-    keys = {
-      {
-        "<leader>ac",
-        "<cmd>CopilotChatToggle<cr>",
-        desc = "Copilot chat about visual selection",
-        mode = { "n", "v" },
-      },
-    },
-  },
-
-  -- Code Companion (agentic workflows etc.)
+  -- Code Companion (chat, agentic workflows etc.)
   {
     "olimorris/codecompanion.nvim",
-    enabled = settings.copilot_enabled and not settings.copilot_official,
+    enabled = settings.copilot_enabled,
     opts = {},
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
-  },
-
-  -- Codeium (alternative to Copilot)
-  {
-    "Exafunction/codeium.vim",
-    enabled = settings.codeium_enabled,
-    cmd = "Codeium",
-    event = "BufEnter",
-    keys = {
-      {
-        "<leader>at",
-        "<cmd>Codeium Toggle<cr>",
-        desc = "Toggle Codeium auto trigger",
-      },
-    },
-    config = function()
-      vim.g.codeium_disable_bindings = 1
-      vim.g.codeium_filetypes_disabled_by_default = 1
-      vim.g.codeium_filetypes = {
-        rust = true,
-        python = true,
-        bash = true,
-        lua = true,
-        dart = true,
-        nix = true,
-      }
-      vim.keymap.set("i", "<C-y>", function()
-        return vim.fn["codeium#Accept"]()
-      end, { expr = true, silent = true })
-      vim.keymap.set("i", "<C-n>", function()
-        return vim.fn["codeium#CycleOrComplete"]()
-      end, { expr = true, silent = true })
-      vim.keymap.set("i", "<C-p>", function()
-        return vim.fn["codeium#CycleCompletions"](-1)
-      end, { expr = true, silent = true })
-      vim.keymap.set("i", "<C-e>", function()
-        return vim.fn["codeium#Clear"]()
-      end, { expr = true, silent = true })
-    end,
-  },
-
-  {
-    "github/copilot.vim",
-    enabled = settings.copilot_enabled and settings.copilot_official,
-    lazy = false,
-    init = function()
-      -- Settings
-      vim.g.copilot_filetypes = {
-        ["*"] = false,
-        rust = true,
-        python = true,
-        bash = true,
-        lua = true,
-        nix = true,
-      }
-      vim.g.copilot_no_tab_map = true
-      -- Keymaps
-      vim.keymap.set("i", "<C-n>", "<Plug>(copilot-next)")
-      vim.keymap.set("i", "<C-p>", "<Plug>(copilot-next)")
-      vim.keymap.set("i", "<C-e>", "<Plug>(copilot-dismiss)")
-      vim.keymap.set("i", "<C-a>", "<Plug>(copilot-suggest)")
-
-      -- Dismiss copilot suggestion when cmp menu is opened
-      local cmp = require("blink.cmp.completion.list")
-      cmp.show_emitter:on(function()
-        vim.cmd([[
-          if copilot#Enabled()
-            call copilot#Dismiss()
-          endif
-        ]])
-      end)
-
-      -- Define suggestion accept function
-      LazyVim.cmp.actions.ai_accept = function()
-        if vim.fn["copilot#GetDisplayedSuggestion"]().text ~= "" then
-          LazyVim.create_undo()
-          vim.fn.feedkeys(vim.fn["copilot#Accept"]())
-          return true
-        end
-      end
-    end,
   },
 
   -- Copilot / Codeium indicator in statusline
@@ -221,16 +90,6 @@ return {
             end
           end)
         )
-      end
-
-      if settings.codeium_enabled then
-        table.insert(opts.sections.lualine_x, 2, {
-          function()
-            local icon = require("lazyvim.config").icons.kinds.Codeium
-            local status = vim.api.nvim_call_function("codeium#GetStatusString", {})
-            return icon .. status
-          end,
-        })
       end
     end,
   },
