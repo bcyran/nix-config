@@ -82,6 +82,7 @@
   },
   "network": {
     "interface": "@wirelessNetworkInterface@",
+    "format": "",
     "format-wifi": "{icon}   {essid}",
     "format-icons": [
       "󰤯",
