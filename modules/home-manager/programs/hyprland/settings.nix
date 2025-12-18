@@ -159,6 +159,7 @@ in {
         force_default_wallpaper = 0;
         animate_manual_resizes = true;
         focus_on_activate = true;
+        disable_hyprland_guiutils_check = true;
       };
       cursor = {
         inactive_timeout = 60;
