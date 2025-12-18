@@ -45,13 +45,13 @@ in {
             on-resume = "${backlightBin} restore";
           }
           {
-            timeout = 15 * 60;
-            on-timeout = "${loginctlBin} lock-session";
-          }
-          {
-            timeout = 20 * 60;
+            timeout = 10 * 60;
             on-timeout = "${hyprctlBin} dispatch dpms off";
             on-resume = "${hyprctlBin} dispatch dpms on && ${sleepBin} 7 && ${backlightBin} restore";
+          }
+          {
+            timeout = 30 * 60;
+            on-timeout = "${loginctlBin} lock-session";
           }
         ];
       };
