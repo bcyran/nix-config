@@ -7,15 +7,6 @@ return {
     enabled = settings.copilot_enabled,
     cmd = "Copilot",
     event = "InsertEnter",
-    keys = {
-      {
-        "<leader>at",
-        function()
-          require("copilot.suggestion").toggle_auto_trigger()
-        end,
-        desc = "Toggle Copilot auto trigger",
-      },
-    },
     opts = {
       panel = {
         enabled = false,
@@ -61,6 +52,13 @@ return {
         vim.api.nvim_buf_set_var(0, "copilot_suggestion_hidden", false)
       end)
     end,
+    keys = {
+      {
+        "<leader>at",
+        "<cmd>Copilot toggle<cr>",
+        desc = "Toggle Copilot",
+      },
+    },
   },
 
   -- Code Companion (chat, agentic workflows etc.)
