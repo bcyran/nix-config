@@ -19,6 +19,22 @@ in {
         enable = true;
         multipliers = "1 2 4 8 16 32 64";
       };
+      jails = {
+        caddy-status = {
+          settings = {
+            logpath = "/var/log/caddy/access-*.log";
+            maxretry = 5;
+            action = ''iptables-multiport[name=HTTP, port="http,https"]'';
+          };
+          filter = {
+            Definition = {
+              failregex = ''^.*"remote_ip":"<HOST>",.*?"status":(?:401|403|500),.*$'';
+              ignoreregex = "";
+              datepattern = "LongEpoch";
+            };
+          };
+        };
+      };
     };
   };
 }
