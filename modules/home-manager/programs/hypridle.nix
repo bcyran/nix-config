@@ -13,6 +13,7 @@
   backlightBin = lib.getExe my.pkgs.backlight;
   hyprctlBin = "${pkgs.hyprland}/bin/hyprctl";
   loginctlBin = "${pkgs.systemd}/bin/loginctl";
+  sleepBin = "${pkgs.coreutils}/bin/sleep";
 
   swaylockBin = lib.getExe pkgs.swaylock;
   hyprlockBin = lib.getExe pkgs.hyprlock;
@@ -46,7 +47,7 @@ in {
           {
             timeout = 10 * 60;
             on-timeout = "${hyprctlBin} dispatch dpms off";
-            on-resume = "${hyprctlBin} dispatch dpms on && ${backlightBin} restore";
+            on-resume = "${hyprctlBin} dispatch dpms on && ${sleepBin} 5 && ${backlightBin} restore";
           }
           {
             timeout = 30 * 60;
