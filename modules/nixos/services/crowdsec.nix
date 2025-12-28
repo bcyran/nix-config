@@ -1,9 +1,14 @@
 {
+  inputs,
+  pkgs,
   config,
   lib,
   ...
 }: let
   cfg = config.my.services.crowdsec;
+
+  grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
+  crowdsecPrometheusJobName = "crowdsec";
 in {
   options.my.services.crowdsec.enable = lib.mkEnableOption "crowdsec";
 
@@ -34,8 +39,42 @@ in {
           ];
         };
       };
+
       crowdsec-firewall-bouncer = {
         enable = true;
+      };
+
+      prometheus.scrapeConfigs = lib.mkIf config.services.prometheus.enable [
+        {
+          job_name = crowdsecPrometheusJobName;
+          static_configs = [
+            {
+              targets = ["127.0.0.1:6060"];
+            }
+          ];
+        }
+      ];
+
+      grafana = lib.mkIf config.services.grafana.enable {
+        provision = {
+          dashboards.settings.providers = [
+            (grafanaDashboardsLib.dashboardEntry {
+              name = "crowdsec";
+              path = grafanaDashboardsLib.fetchDashboard {
+                name = "crowdsec-v6";
+                id = 21419;
+                version = 6;
+                hash = "sha256-OlqgFmmjtiXMxLMOsiW66rZ7YnXg5CKU3pno0boa1Ho=";
+              };
+              transformations = grafanaDashboardsLib.fillTemplating [
+                {
+                  key = "DS_PROMETHEUS";
+                  value = "Prometheus";
+                }
+              ];
+            })
+          ];
+        };
       };
     };
   };
