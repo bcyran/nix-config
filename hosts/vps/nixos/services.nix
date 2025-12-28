@@ -52,6 +52,7 @@ in {
         '';
       };
       fail2ban.enable = true;
+      crowdsec.enable = true;
       prometheus = {
         enable = true;
         reverseProxy = {
