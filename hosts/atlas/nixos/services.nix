@@ -127,6 +127,13 @@ in {
           allowFromIPs = [my.lib.const.wireguard.peers.vps.ip];
         };
       };
+      reverseProxyHosts = {
+        "http://jellyseerr.${extraDomain}" = {
+          upstreamAddress = "127.0.0.1";
+          upstreamPort = config.my.services.jellyseerr.port;
+          allowFromIPs = [my.lib.const.wireguard.peers.vps.ip];
+        };
+      };
     };
     prometheus = {
       enable = true;
