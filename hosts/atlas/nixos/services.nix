@@ -5,6 +5,7 @@
   ...
 }: let
   intraDomain = my.lib.const.domains.intra;
+  extraDomain = my.lib.const.domains.extra;
   mediaGroup = "media";
 
   getDeviceIps = device:
@@ -118,6 +119,14 @@ in {
           }
         }
       '';
+      # Externally accessible services. We use HTTP because TLS is terminated on VPS.
+      reverseProxyHosts = {
+        "http://jellyfin.${extraDomain}" = {
+          upstreamAddress = "127.0.0.1";
+          upstreamPort = 8096;
+          allowFromIPs = [my.lib.const.wireguard.peers.vps.ip];
+        };
+      };
     };
     prometheus = {
       enable = true;

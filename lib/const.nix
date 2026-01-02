@@ -3,6 +3,7 @@ rec {
   domains = rec {
     root = "cyran.dev";
     intra = "intra.${root}";
+    extra = "extra.${root}";
     vps = "vps.${root}";
     wg = "wg.${root}";
   };

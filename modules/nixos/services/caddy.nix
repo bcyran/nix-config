@@ -69,13 +69,19 @@
       cfg.reverseProxyHostsCommonExtraConfig
       hostCfg.extraConfig
     ];
+    allowFromConfig =
+      lib.optionalString (hostCfg.allowFromIPs != [])
+      ''
+        @not_allowed_ips not remote_ip ${lib.concatStringsSep " " hostCfg.allowFromIPs}
+        respond @not_allowed_ips 403
+      '';
   in {
     inherit (hostCfg) listenAddresses;
     extraConfig = ''
+      ${allowFromConfig}
       reverse_proxy ${hostCfg.upstreamAddress}:${toString hostCfg.upstreamPort} {
         ${hostCfg.proxyExtraConfig}
       }
-
       ${hostExtraConfig}
     '';
     logFormat = my.lib.caddy.mkLogConfig domain;
@@ -166,6 +172,12 @@ in {
               type = lib.types.lines;
               default = "";
               description = "Extra configuration to add to the reverse_proxy block.";
+            };
+            allowFromIPs = lib.mkOption {
+              type = with lib.types; listOf str;
+              default = [];
+              example = ["10.10.10.10"];
+              description = "List of IPs to allow access from. If empty allow from all.";
             };
           };
         }
