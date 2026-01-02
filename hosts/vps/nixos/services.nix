@@ -58,6 +58,12 @@ in {
             upstreamPort = 80;
           };
         };
+        reverseProxyHosts = {
+          "jellyseerr.${extraDomain}" = {
+            upstreamAddress = "http://${my.lib.const.wireguard.peers.atlas.ip}";
+            upstreamPort = 80;
+          };
+        };
       };
       fail2ban.enable = true;
       crowdsec.enable = true;
