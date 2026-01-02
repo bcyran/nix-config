@@ -6,6 +6,7 @@
 }: let
   caddyCfg = config.services.caddy;
 
+  extraDomain = my.lib.const.domains.extra;
   vpsWgDomain = my.lib.const.wireguard.peers.vps.domain;
   vpsWgAddresses = with my.lib.const.wireguard.peers.vps; [ip "[${ipv6}]"];
 in {
@@ -50,6 +51,13 @@ in {
             }
           }
         '';
+        # Externally available services hosted on atlas (home server).
+        reverseProxyHosts = {
+          "jellyfin.${extraDomain}" = {
+            upstreamAddress = "http://${my.lib.const.wireguard.peers.atlas.ip}";
+            upstreamPort = 80;
+          };
+        };
       };
       fail2ban.enable = true;
       crowdsec.enable = true;
