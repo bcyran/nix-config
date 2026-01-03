@@ -87,6 +87,8 @@ in {
             text_center = true;
             "col.active" = "rgba(${palette.accentPrimary}ed)";
             "col.active.text" = "rgba(${palette.base10}ed)";
+            "col.active_alt_monitor" = "rgba(${palette.base01}ed)";
+            "col.active_alt_monitor.text" = "rgba(${palette.base05}ed)";
             "col.focused" = "rgba(${palette.base01}ed)";
             "col.focused.text" = "rgba(${palette.base05}ed)";
             "col.inactive" = "rgba(${palette.base10}ed)";
