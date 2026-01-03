@@ -10,7 +10,21 @@
   grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
   crowdsecPrometheusJobName = "crowdsec";
 in {
-  options.my.services.crowdsec.enable = lib.mkEnableOption "crowdsec";
+  options.my.services.crowdsec = {
+    enable = lib.mkEnableOption "crowdsec";
+
+    consoleTokenFile = lib.mkOption {
+      type = with lib.types; nullOr path;
+      default = null;
+      description = "Path to the file containing CrowdSec Console token.";
+    };
+
+    capiCredentialsFile = lib.mkOption {
+      type = with lib.types; nullOr path;
+      default = null;
+      description = "Path to the file containing CrowdSec Central API credentials.";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     services = {
@@ -24,6 +38,8 @@ in {
         settings = {
           general.api.server.enable = true;
           lapi.credentialsFile = "/var/lib/crowdsec/local_api_credentials.yaml";
+          capi.credentialsFile = cfg.capiCredentialsFile;
+          console.tokenFile = cfg.consoleTokenFile;
         };
         localConfig = {
           acquisitions = [
@@ -76,6 +92,12 @@ in {
           ];
         };
       };
+    };
+
+    # TODO: Remove when fixed upstream: https://github.com/NixOS/nixpkgs/pull/459188.
+    systemd.services.crowdsec-firewall-bouncer.serviceConfig = {
+      AmbientCapabilities = ["CAP_NET_RAW"];
+      CapabilityBoundingSet = ["CAP_NET_RAW"];
     };
   };
 }

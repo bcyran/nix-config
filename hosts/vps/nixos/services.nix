@@ -5,6 +5,7 @@
   ...
 }: let
   caddyCfg = config.services.caddy;
+  crowdsecCfg = config.services.crowdsec;
 
   extraDomain = my.lib.const.domains.extra;
   vpsWgDomain = my.lib.const.wireguard.peers.vps.domain;
@@ -18,6 +19,14 @@ in {
     deploy_cyran_dev_ssh_key_file = {
       owner = caddyCfg.user;
       reloadUnits = ["caddy.service"];
+    };
+    crowdsec_console_token_file = {
+      owner = crowdsecCfg.user;
+      reloadUnits = ["crowdsec.service"];
+    };
+    crowdsec_capi_credentials_file = {
+      owner = crowdsecCfg.user;
+      reloadUnits = ["crowdsec.service"];
     };
   };
 
@@ -66,7 +75,11 @@ in {
         };
       };
       fail2ban.enable = true;
-      crowdsec.enable = true;
+      crowdsec = {
+        enable = true;
+        consoleTokenFile = config.sops.secrets.crowdsec_console_token_file.path;
+        capiCredentialsFile = config.sops.secrets.crowdsec_capi_credentials_file.path;
+      };
       prometheus = {
         enable = true;
         reverseProxy = {
