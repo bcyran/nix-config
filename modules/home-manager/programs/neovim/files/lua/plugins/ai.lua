@@ -29,6 +29,7 @@ return {
         bash = true,
         lua = true,
         nix = true,
+        go = true,
         ["*"] = false,
       },
     },
