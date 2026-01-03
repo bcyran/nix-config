@@ -86,6 +86,7 @@ in {
             "$mod SHIFT, return, exec, ${execWrapper} kitty --class terminal-floating"
             "$mod, Y, exec, ${execWrapper} firefox"
             "$mod, N, exec, ${execWrapper} thunar"
+            "$mod SHIFT, m, exec, ${execWrapper} loginctl lock-session"
           ]
           ++ workspaceBinds;
         bindm = [
