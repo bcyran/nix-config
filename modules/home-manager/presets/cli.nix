@@ -26,6 +26,7 @@ in {
         direnv.enable = mkDefault true;
         nix-index.enable = mkDefault true;
         yazi.enable = mkDefault true;
+        opencode.enable = mkDefault true;
       };
     };
 
