@@ -19,6 +19,14 @@ rec {
         ip = "10.100.100.231";
         domain = "tv.${domains.intra}";
       };
+      jetkvm = {
+        ip = "10.100.100.101";
+        domain = "jetkvm.${domains.intra}";
+      };
+      flint = {
+        ip = "10.100.100.1";
+        domain = "flint.${domains.intra}";
+      };
     };
   };
   # Wireguard VPN
