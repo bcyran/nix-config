@@ -65,6 +65,7 @@ in {
             allowedIPs = [
               (mkCidr peers.jetkvm.ip 32)
               (mkCidr peers.jetkvm.ipv6 128)
+              (mkCidr devices.jetkvm.ip 32)
             ];
           }
           # Client #1
