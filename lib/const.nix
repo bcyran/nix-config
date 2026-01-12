@@ -60,6 +60,12 @@ rec {
         domain = "slimbook.${domains.wg}";
         publicKey = "znkXF+4voMh5iCCd68H5gFTFahtfsYTjsCr05Ei/+Tw=";
       };
+      jetkvm = {
+        ip = "10.100.200.99";
+        ipv6 = "2a03:4000:52:499:ffff::99";
+        domain = "jetkvm.${domains.wg}";
+        publicKey = "bORArI/14BFDU/6HL4tXJLkng0jwZSaF6Me+Myg3BCY=";
+      };
     };
   };
   # DNS resolvers

@@ -59,6 +59,14 @@ in {
               (mkCidr peers.slimbook.ipv6 128)
             ];
           }
+          # JetKVM
+          {
+            inherit (peers.jetkvm) publicKey;
+            allowedIPs = [
+              (mkCidr peers.jetkvm.ip 32)
+              (mkCidr peers.jetkvm.ipv6 128)
+            ];
+          }
           # Client #1
           {
             publicKey = "cDl6OrK4BWgZxkIyNx4JE/W8UHrgHfrZwunGLlEoO3E=";
