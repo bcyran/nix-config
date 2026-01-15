@@ -332,6 +332,10 @@ in {
       enable = true;
       reverseProxy.domain = "redlib.${intraDomain}";
     };
+    edo-calculator = {
+      enable = true;
+      reverseProxy.domain = "edocalculator.${intraDomain}";
+    };
   };
 
   services.btrbk.sshAccess = [
