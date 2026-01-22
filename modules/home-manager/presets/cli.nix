@@ -48,6 +48,7 @@ in {
       fastfetch
       alejandra
       statix
+      github-copilot-cli
     ];
   };
 }
