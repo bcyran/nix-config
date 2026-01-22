@@ -7,16 +7,16 @@
 }:
 buildNpmPackage rec {
   pname = "koinsight";
-  version = "0.1.2";
+  version = "0.2.2";
 
   src = fetchFromGitHub {
     owner = "GeorgeSG";
     repo = "KoInsight";
     rev = "v${version}";
-    hash = "sha256-hXJcEBIXi+N/nis6xM7NZ53E53Fv8KZr3/oPHbT4GSw=";
+    hash = "sha256-kDJEXQijNahrCPd19uYIMOn1YgfoPzmkh6tuFh/XU24=";
   };
 
-  npmDepsHash = "sha256-W6BW/1ToRvkWAkhM/0gAS4fqKWjB01I5jV6aEk5r1YU=";
+  npmDepsHash = "sha256-PEoZvk9CUdPAbMomYJhlg2NaYq/IhNZYlrUumxOWWY0=";
 
   nativeBuildInputs = [makeWrapper];
 
