@@ -3,8 +3,8 @@
   fetchFromGitHub,
   buildPythonPackage,
   pythonOlder,
-  poetry-core,
-  poetry-dynamic-versioning,
+  hatchling,
+  hatch-vcs,
   installShellFiles,
   pytestCheckHook,
   requests-mock,
@@ -17,7 +17,7 @@
 }:
 buildPythonPackage rec {
   pname = "philipstv";
-  version = "3.0.1";
+  version = "3.0.2";
   pyproject = true;
 
   disabled = pythonOlder "3.10";
@@ -26,12 +26,12 @@ buildPythonPackage rec {
     owner = "bcyran";
     repo = "philipstv";
     tag = version;
-    hash = "sha256-9OlPaGruD6HDJArvIOb/pIVw5nqTUleDfxeYp2xBbEA=";
+    hash = "sha256-UJYxQ3R1bEoNkhm5FiFqQC4PbeEqsBKZYdqv5i5H7rg=";
   };
 
   build-system = [
-    poetry-core
-    poetry-dynamic-versioning
+    hatchling
+    hatch-vcs
   ];
 
   nativeBuildInputs = [

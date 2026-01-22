@@ -18,7 +18,7 @@ in rec {
   };
   philipstv = pkgs.callPackage ./philipstv {
     inherit (pkgs) installShellFiles;
-    inherit (python3Packages) buildPythonPackage pythonOlder poetry-core poetry-dynamic-versioning pytestCheckHook requests-mock requests pydantic click appdirs;
+    inherit (python3Packages) buildPythonPackage pythonOlder hatchling hatch-vcs pytestCheckHook requests-mock requests pydantic click appdirs;
   };
   philipstv-gui = pkgs.callPackage ./philipstv-gui {
     inherit (python3Packages) buildPythonApplication pythonOlder poetry-core poetry-dynamic-versioning appdirs;
