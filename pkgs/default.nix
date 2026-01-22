@@ -21,7 +21,7 @@ in rec {
     inherit (python3Packages) buildPythonPackage pythonOlder hatchling hatch-vcs pytestCheckHook requests-mock requests pydantic click appdirs;
   };
   philipstv-gui = pkgs.callPackage ./philipstv-gui {
-    inherit (python3Packages) buildPythonApplication pythonOlder poetry-core poetry-dynamic-versioning appdirs;
+    inherit (python3Packages) buildPythonApplication pythonOlder hatchling hatch-vcs appdirs;
     inherit ttkbootstrap philipstv;
   };
   kidex = pkgs.callPackage ./kidex {};

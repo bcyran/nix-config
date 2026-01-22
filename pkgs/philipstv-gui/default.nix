@@ -3,15 +3,15 @@
   fetchFromGitHub,
   buildPythonApplication,
   pythonOlder,
-  poetry-core,
-  poetry-dynamic-versioning,
+  hatchling,
+  hatch-vcs,
   philipstv,
   appdirs,
   ttkbootstrap,
 }:
 buildPythonApplication rec {
   pname = "philipstv-gui";
-  version = "2.0.0";
+  version = "2.0.1";
   format = "pyproject";
   disable = pythonOlder "3.10";
 
@@ -19,12 +19,12 @@ buildPythonApplication rec {
     owner = "bcyran";
     repo = "philipstv-gui";
     rev = "refs/tags/${version}";
-    hash = "sha256-Ez8bjbuthdJUDOgIXzGMEyaU86CUadGlUuvOyRPsV+I=";
+    hash = "sha256-qV+xetWziE9ORkIk93gXl3Q5+zCnLKJho28RztlIzrE=";
   };
 
   nativeBuildInputs = [
-    poetry-core
-    poetry-dynamic-versioning
+    hatchling
+    hatch-vcs
   ];
 
   propagatedBuildInputs = [
