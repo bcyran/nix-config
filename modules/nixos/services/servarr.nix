@@ -74,6 +74,11 @@ in {
         inherit (cfg.transmission) credentialsFile peerPort extraSettings;
         inherit (cfg) group vpnNamespace;
       };
+      sabnzbd = {
+        enable = true;
+        reverseProxy.domain = "sabnzbd.${cfg.domain}";
+        inherit (cfg) group;
+      };
       prowlarr = {
         enable = true;
         reverseProxy.domain = "prowlarr.${cfg.domain}";
