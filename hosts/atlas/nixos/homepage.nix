@@ -302,6 +302,19 @@ in {
             };
           }
           {
+            SABnzbd = rec {
+              description = "Usenet downloader.";
+              icon = "sabnzbd";
+              href = makeServiceDomainUrl "sabnzbd";
+              siteMonitor = makeServiceDomainUrl "sabnzbd";
+              widget = {
+                type = "sabnzbd";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_SABNZBD_API_KEY}}";
+              };
+            };
+          }
+          {
             Sonarr = rec {
               description = "TV shows manager.";
               icon = "sonarr";
