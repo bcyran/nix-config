@@ -21,6 +21,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.sabnzbd = {
       enable = true;
+      configFile = null;
       settings = {
         misc = {
           host = cfg.address;

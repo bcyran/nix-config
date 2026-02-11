@@ -32,7 +32,7 @@ in {
       vimAlias = true;
       vimdiffAlias = true;
       withNodeJs = true;
-      extraLuaConfig = ''
+      initLua = ''
         require("config.lazy")
       '';
       extraPackages = with pkgs; [
