@@ -244,6 +244,10 @@ in {
       enable = true;
       reverseProxy.domain = "ntfy.${intraDomain}";
     };
+    apprise = {
+      enable = true;
+      reverseProxy.domain = "apprise.${intraDomain}";
+    };
     ntfy-systemd = {
       enable = true;
       serverUrl = "http://127.0.0.1:${toString config.my.services.ntfy.port}";
