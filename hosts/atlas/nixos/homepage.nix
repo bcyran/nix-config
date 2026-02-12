@@ -221,14 +221,6 @@ in {
             };
           }
           {
-            Joplin = {
-              description = "Notes synchronization.";
-              icon = "joplin";
-              href = makeServiceDomainUrl "joplin";
-              siteMonitor = makeServiceLoopbackUrl "joplin";
-            };
-          }
-          {
             KoInsight = {
               description = "KoReader reading stats dashboard.";
               icon = "bookstack";
@@ -237,26 +229,19 @@ in {
             };
           }
           {
-            "ntfy.sh" = {
-              description = "Push notifications service.";
-              icon = "ntfy";
-              href = makeServiceDomainUrl "ntfy";
-              siteMonitor = makeServiceLoopbackUrl "ntfy";
+            Kiwix = {
+              description = "Offline ZIM archives reader.";
+              icon = "kiwix";
+              href = makeServiceDomainUrl "kiwix";
+              siteMonitor = makeServiceLoopbackUrl "kiwix";
             };
           }
           {
-            Apprise = {
-              description = "Notification services aggregator.";
-              icon = "apprise";
-              href = makeServiceDomainUrl "apprise";
-              siteMonitor = makeServiceLoopbackUrl "apprise";
-            };
-          }
-          {
-            "nix-serve" = {
-              description = "Nix binary cache server.";
-              icon = "https://nix.dev/_static/img/nix.svg";
-              siteMonitor = "${makeServiceLoopbackUrl "nix-serve"}/nix-cache-info";
+            Redlib = {
+              description = "Private front-end for Reddit.";
+              icon = "redlib";
+              href = makeServiceDomainUrl "redlib";
+              siteMonitor = makeServiceLoopbackUrl "redlib";
             };
           }
         ];
@@ -432,22 +417,6 @@ in {
               siteMonitor = makeServiceDomainUrl "spotdl";
             };
           }
-          {
-            Kiwix = {
-              description = "Offline ZIM archives reader.";
-              icon = "kiwix";
-              href = makeServiceDomainUrl "kiwix";
-              siteMonitor = makeServiceLoopbackUrl "kiwix";
-            };
-          }
-          {
-            Redlib = {
-              description = "Private front-end for Reddit.";
-              icon = "redlib";
-              href = makeServiceDomainUrl "redlib";
-              siteMonitor = makeServiceLoopbackUrl "redlib";
-            };
-          }
         ];
       }
       {
@@ -584,6 +553,37 @@ in {
                   }
                 ];
               };
+            };
+          }
+          {
+            Joplin = {
+              description = "Notes synchronization.";
+              icon = "joplin";
+              href = makeServiceDomainUrl "joplin";
+              siteMonitor = makeServiceLoopbackUrl "joplin";
+            };
+          }
+          {
+            "ntfy.sh" = {
+              description = "Push notifications service.";
+              icon = "ntfy";
+              href = makeServiceDomainUrl "ntfy";
+              siteMonitor = makeServiceLoopbackUrl "ntfy";
+            };
+          }
+          {
+            Apprise = {
+              description = "Notification services aggregator.";
+              icon = "apprise";
+              href = makeServiceDomainUrl "apprise";
+              siteMonitor = makeServiceLoopbackUrl "apprise";
+            };
+          }
+          {
+            "nix-serve" = {
+              description = "Nix binary cache server.";
+              icon = "https://nix.dev/_static/img/nix.svg";
+              siteMonitor = "${makeServiceLoopbackUrl "nix-serve"}/nix-cache-info";
             };
           }
         ];
