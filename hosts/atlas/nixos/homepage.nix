@@ -204,7 +204,7 @@ in {
               widget = {
                 type = "uptimekuma";
                 url = siteMonitor;
-                slug = "external";
+                slug = "intra";
               };
             };
           }
