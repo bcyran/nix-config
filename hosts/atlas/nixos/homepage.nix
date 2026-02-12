@@ -245,6 +245,14 @@ in {
             };
           }
           {
+            Apprise = {
+              description = "Notification services aggregator.";
+              icon = "apprise";
+              href = makeServiceDomainUrl "apprise";
+              siteMonitor = makeServiceLoopbackUrl "apprise";
+            };
+          }
+          {
             "nix-serve" = {
               description = "Nix binary cache server.";
               icon = "https://nix.dev/_static/img/nix.svg";
