@@ -48,6 +48,10 @@ in {
         PUBLIC_DASHBOARD = "true";
         SPEEDTEST_BLOCKED_SERVERS = lib.concatMapStringsSep "," toString cfg.blockedServers;
       };
+      extraOptions = [
+        # Expose host's loopback interface in the container as 10.0.2.2.
+        "--network=slirp4netns:allow_host_loopback=true"
+      ];
       inherit (cfg) environmentFiles;
     };
 
