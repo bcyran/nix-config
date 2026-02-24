@@ -120,14 +120,25 @@ in {
           };
 
           script = ''
-            set -euo pipefail
-            for sync_target in ${cfg.mediaDir}/sync/*.spotdl; do
+            set -uo pipefail
+
+            # Process the files from the oldest modification.
+            # Not all files are guaranteed to be processed in a single run due to API rate limits.
+            # This way we prioritize playlists that haven't been sync the longest.
+            mapfile -t sync_targets < <(ls -tr ${cfg.mediaDir}/sync/*.spotdl 2>/dev/null)
+
+            sync_failed=0
+            for sync_target in "''${sync_targets[@]}"; do
               echo "Syncing ''${sync_target}..."
-              ${spotdlBin} sync ''${sync_target} ${spotdlCommonArgsStr}
+
+              ${spotdlBin} sync "''${sync_target}" ${spotdlCommonArgsStr} || sync_failed=1
+
+              # Fix paths in generated m3u8 playlists to be relative.
+              ${pkgs.findutils}/bin/find '${cfg.mediaDir}/playlists' -type f -name '*.m3u8' \
+                -exec ${pkgs.gnused}/bin/sed -i 's@${cfg.mediaDir}/@../@g' {} +
             done
 
-            # Fix paths in generated m3u8 playlists to be relative
-            find '${cfg.mediaDir}/playlists' -type f -name '*.m3u8' -exec sed -i 's@${cfg.mediaDir}@..@g' {} \;
+            exit "''${sync_failed}"
           '';
 
           vpnConfinement = lib.mkIf (cfg.vpnNamespace != null) {
