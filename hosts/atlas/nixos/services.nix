@@ -78,6 +78,9 @@ in {
     mqtt_hass_password_file = {};
     ntfy_sh_env_file = {};
     paperless_password_file = {};
+    spotdl_env_file = {
+      restartUnits = ["spotdl.service"];
+    };
   };
 
   users.groups.${mediaGroup} = {};
@@ -310,6 +313,7 @@ in {
       };
       recyclarrEnvironmentFiles = [config.sops.secrets.recyclarr_env_file.path];
       pinchflatEnvironmentFile = config.sops.secrets.pinchflat_env_file.path;
+      spotdlEnvironmentFile = config.sops.secrets.spotdl_env_file.path;
       vpnNamespace = "airvpn";
     };
     calibre-web = {

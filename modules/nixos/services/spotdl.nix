@@ -34,6 +34,10 @@
     # See: https://github.com/spotDL/spotify-downloader/issues/2441.
     "--lyrics"
     "genius musixmatch"
+    "--client-id"
+    "$SPOTIFY_CLIENT_ID"
+    "--client-secret"
+    "$SPOTIFY_CLIENT_SECRET"
   ];
   spotdlWebArgs = [
     "--host"
@@ -60,6 +64,8 @@ in {
       example = "/path/to/media";
       description = "The path to the directory for ${serviceName} to store media files.";
     };
+
+    environmentFile = my.lib.options.mkEnvironmentFileOption serviceName;
 
     vpnNamespace = lib.mkOption {
       type = with lib.types; nullOr str;
@@ -90,6 +96,7 @@ in {
             Group = cfg.group;
             WorkingDirectory = cfg.mediaDir;
             ExecStart = "${spotdlBin} web ${spotdlWebArgsStr} ${spotdlCommonArgsStr}";
+            EnvironmentFile = cfg.environmentFile;
             Restart = "always";
           };
 
@@ -108,6 +115,7 @@ in {
             User = cfg.user;
             Group = cfg.group;
             WorkingDirectory = cfg.mediaDir;
+            EnvironmentFile = cfg.environmentFile;
             TimeoutSec = 60 * 60; # 1 hour
           };
 

@@ -54,6 +54,7 @@ in {
 
     recyclarrEnvironmentFiles = my.lib.options.mkEnvironmentFilesOption "recyclarr";
     pinchflatEnvironmentFile = my.lib.options.mkEnvironmentFileOption "pinchflat";
+    spotdlEnvironmentFile = my.lib.options.mkEnvironmentFileOption "spotdl";
 
     vpnNamespace = lib.mkOption {
       type = with lib.types; nullOr str;
@@ -110,6 +111,7 @@ in {
       spotdl = {
         enable = true;
         reverseProxy.domain = "spotdl.${cfg.domain}";
+        environmentFile = cfg.spotdlEnvironmentFile;
         inherit (cfg) group;
         mediaDir = cfg.dirs.spotdl;
       };
