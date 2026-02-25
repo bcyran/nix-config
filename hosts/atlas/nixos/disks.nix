@@ -226,7 +226,7 @@ in {
       slow_store = {
         type = "mdadm";
         name = "slow_store";
-        level = 10;
+        level = 5;
         content = {
           type = "gpt";
           partitions = {
