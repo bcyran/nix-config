@@ -20,6 +20,7 @@ in {
           HideWindowOnCopy = true;
         };
         GUI = {
+          ApplicationTheme = "dark";
           CompactMode = true;
           HidePasswords = true;
           MinimizeOnClose = true;
