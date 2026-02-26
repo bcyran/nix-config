@@ -58,6 +58,8 @@ in {
     xdg = {
       enable = true;
 
+      autostart.enable = true;
+
       mimeApps = {
         enable = true;
         defaultApplications = associations;
