@@ -4,16 +4,13 @@
   lib,
   ...
 }: let
+  inherit (pkgs) signal-desktop;
   cfg = config.my.programs.signal;
-
-  signalPackage = pkgs.signal-desktop;
-  signalDesktopName = "signal-desktop.desktop";
-  signalDesktop = "${signalPackage}/share/applications/${signalDesktopName}";
 in {
   options.my.programs.signal.enable = lib.mkEnableOption "signal";
 
   config = lib.mkIf cfg.enable {
-    home.packages = [signalPackage];
+    home.packages = [signal-desktop];
     xdg.configFile."Signal/ephemeral.json".text = ''
       {
         "localeOverride": null,
@@ -27,6 +24,8 @@ in {
         }
       }
     '';
-    xdg.configFile."autostart/${signalDesktopName}".source = signalDesktop;
+    xdg.autostart.entries = [
+      "${signal-desktop}/share/applications/signal-desktop.desktop"
+    ];
   };
 }
