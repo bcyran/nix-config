@@ -22,10 +22,6 @@ in {
         "match:class org.keepassxc.KeePassXC, size 1000 700"
         "match:class org.keepassxc.KeePassXC, center on"
 
-        "match:class MEGAsync, float on"
-        "match:class MEGAsync, monitor $monitorC"
-        "match:class MEGAsync, move 100%-420 70"
-
         "match:class protonvpn, float on"
         "match:class protonvpn, monitor $monitorC"
         "match:class protonvpn, size 400 760"
