@@ -17,8 +17,6 @@ in {
       enableFishIntegration = cfg.enableShellIntegration;
       enableZshIntegration = cfg.enableShellIntegration;
       enableBashIntegration = cfg.enableShellIntegration;
-      attachExistingSession = cfg.enableShellIntegration;
-      exitShellOnExit = cfg.enableShellIntegration;
     };
 
     xdg.configFile."zellij/config.kdl".text = ''
