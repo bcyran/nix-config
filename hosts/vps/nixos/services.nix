@@ -7,6 +7,7 @@
   caddyCfg = config.services.caddy;
   crowdsecCfg = config.services.crowdsec;
 
+  rootDomain = my.lib.const.domains.root;
   extraDomain = my.lib.const.domains.extra;
   vpsWgDomain = my.lib.const.wireguard.peers.vps.domain;
   vpsWgAddresses = with my.lib.const.wireguard.peers.vps; [ip "[${ipv6}]"];
@@ -40,6 +41,11 @@ in {
         address = "0.0.0.0";
         openFirewall = true;
         environmentFile = config.sops.secrets.caddy_env_file.path;
+        staticHosts = {
+          "livecodes.${rootDomain}" = {
+            root = "${my.pkgs.livecodes}/share/livecodes";
+          };
+        };
         # This pulls the repo, runs `nix build` and serves the result.
         # Webhook to the /_update endpoint triggers the update.
         staticGitHosts = {
