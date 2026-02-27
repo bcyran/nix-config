@@ -43,4 +43,5 @@ in rec {
     inherit (pkgs) btrfs-progs;
   };
   bentopdf = pkgs.callPackage ./bentopdf {};
+  livecodes = pkgs.callPackage ./livecodes {};
 }
