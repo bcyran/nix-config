@@ -24,7 +24,6 @@ in {
           ll = "ls --all --long --classify";
           tree = "eza --tree";
           vim = "nvim";
-          s = "kitten ssh";
         };
         functions = {
           fish_title = ''
@@ -102,6 +101,25 @@ in {
                     echo "Unable to extract $argv[1]: unsupported format."
                     return 1
             end
+          '';
+          s = ''
+            argparse --ignore-unknown 'z/zellij-session=' -- $argv
+            or return 1
+
+            set -l session (test -n "$_flag_z" && echo "$_flag_z" || echo "main")
+
+            if test (count $argv) -eq 0
+                echo "Usage: s [-z session] [ssh-args] <host>"
+                return 1
+            end
+
+            set -l ssh_cmd ssh
+            if command -q kitten
+                set ssh_cmd kitten ssh
+            end
+
+            set -l remote_cmd 'command -v zellij >/dev/null 2>&1 && zellij attach '"$session"' -c || $SHELL -l'
+            $ssh_cmd $argv -t $remote_cmd
           '';
           sudo = ''
             for i in (seq 1 (count $argv))
