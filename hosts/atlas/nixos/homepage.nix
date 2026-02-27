@@ -1,7 +1,13 @@
-{config, ...}: let
+{
+  config,
+  my,
+  ...
+}: let
+  intraDomain = my.lib.const.domains.intra;
   servicesCfg = config.my.services;
   makeServiceDomainUrl = serviceName: "https://${servicesCfg.${serviceName}.reverseProxy.domain}";
   makeLoopbackUrl = port: "http://127.0.0.1:${toString port}";
+  makeStaticHostDomainUrl = serviceName: "https://${serviceName}.${intraDomain}";
   makeServiceLoopbackUrl = serviceName: makeLoopbackUrl servicesCfg.${serviceName}.port;
 in {
   services.homepage-dashboard = {
@@ -242,6 +248,14 @@ in {
               icon = "redlib";
               href = makeServiceDomainUrl "redlib";
               siteMonitor = makeServiceLoopbackUrl "redlib";
+            };
+          }
+          {
+            BentoPDF = {
+              description = "PDF toolkit.";
+              icon = "bentopdf";
+              href = makeStaticHostDomainUrl "bentopdf";
+              siteMonitor = makeStaticHostDomainUrl "bentopdf";
             };
           }
         ];
