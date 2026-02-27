@@ -42,4 +42,5 @@ in rec {
     inherit (python3Packages) buildPythonApplication pythonOlder setuptools pytestCheckHook;
     inherit (pkgs) btrfs-progs;
   };
+  bentopdf = pkgs.callPackage ./bentopdf {};
 }
