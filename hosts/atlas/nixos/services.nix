@@ -122,6 +122,11 @@ in {
           }
         }
       '';
+      staticHosts = {
+        "bentopdf.${intraDomain}" = {
+          root = "${my.pkgs.bentopdf}/share/bentopdf";
+        };
+      };
       # Externally accessible services. We use HTTP because TLS is terminated on VPS.
       reverseProxyHosts = {
         "http://jellyfin.${extraDomain}" = {
