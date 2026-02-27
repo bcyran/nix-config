@@ -64,6 +64,22 @@
   '';
   mkGitHostsConfig = staticGitHosts: lib.concatMapAttrsStringSep "\n" mkGitHostConfig staticGitHosts;
 
+  mkStaticHostConfig = domain: hostCfg: ''
+    ${domain} {
+      route {
+        root ${hostCfg.root}
+        ${hostCfg.extraRouteConfig}
+        encode zstd gzip
+        file_server
+      }
+
+      log {
+        ${my.lib.caddy.mkLogConfig domain}
+      }
+    }
+  '';
+  mkStaticHostsConfig = staticHosts: lib.concatMapAttrsStringSep "\n" mkStaticHostConfig staticHosts;
+
   mkReverseProxyHostConfig = domain: hostCfg: let
     hostExtraConfig = lib.concatStringsSep "\n" [
       cfg.reverseProxyHostsCommonExtraConfig
@@ -141,6 +157,28 @@ in {
       );
       default = {};
       description = "Static Git repositories to serve.";
+    };
+
+    staticHosts = lib.mkOption {
+      type = lib.types.attrsOf (
+        lib.types.submodule {
+          options = {
+            root = lib.mkOption {
+              type = lib.types.str;
+              example = ''"''${my.pkgs.bentopdf}/share/bentopdf"'';
+              description = "Path to the directory to serve.";
+            };
+            extraRouteConfig = lib.mkOption {
+              type = lib.types.lines;
+              default = "";
+              example = "try_files {path} /index.html";
+              description = "Extra configuration to add to the route block for this host.";
+            };
+          };
+        }
+      );
+      default = {};
+      description = "Static file hosts serving files from a given path.";
     };
 
     reverseProxyHosts = lib.mkOption {
@@ -226,6 +264,7 @@ in {
         extraConfig = lib.concatStringsSep "\n" [
           cfg.extraConfig
           (mkGitHostsConfig cfg.staticGitHosts)
+          (mkStaticHostsConfig cfg.staticHosts)
         ];
       };
 
