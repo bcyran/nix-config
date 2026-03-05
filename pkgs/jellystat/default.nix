@@ -23,6 +23,11 @@ buildNpmPackage rec {
 
   nativeBuildInputs = [makeWrapper];
 
+  postPatch = ''
+    substituteInPlace backend/server.js \
+      --replace-fail "const PORT = 3000;" "const PORT = process.env.JS_LISTEN_PORT || 3000;"
+  '';
+
   installPhase = ''
     runHook preInstall
 
@@ -35,7 +40,8 @@ buildNpmPackage rec {
     mkdir -p $out/bin
     makeWrapper ${nodejs}/bin/node $out/bin/jellystat \
       --add-flags "$out/share/jellystat/backend/server.js" \
-      --set NODE_ENV production
+      --set NODE_ENV production \
+      --chdir "$out/share/jellystat/backend"
 
     runHook postInstall
   '';
