@@ -53,6 +53,7 @@ in {
     };
 
     recyclarrEnvironmentFiles = my.lib.options.mkEnvironmentFilesOption "recyclarr";
+    jellystatEnvironmentFiles = my.lib.options.mkEnvironmentFilesOption "jellystat";
     pinchflatEnvironmentFile = my.lib.options.mkEnvironmentFileOption "pinchflat";
     spotdlEnvironmentFile = my.lib.options.mkEnvironmentFileOption "spotdl";
 
@@ -140,6 +141,11 @@ in {
         enable = true;
         environmentFiles = cfg.recyclarrEnvironmentFiles;
         inherit (cfg) group;
+      };
+      jellystat = {
+        enable = true;
+        environmentFiles = cfg.jellystatEnvironmentFiles;
+        reverseProxy.domain = "jellystat.${cfg.domain}";
       };
     };
   };

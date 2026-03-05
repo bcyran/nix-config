@@ -72,6 +72,9 @@ in {
     recyclarr_env_file = {
       restartUnits = ["recyclarr.service"];
     };
+    jellystat_env_file = {
+      restartUnits = ["jellystat.service"];
+    };
     pinchflat_env_file = {
       restartUnits = ["pinchflat.service"];
     };
@@ -317,6 +320,7 @@ in {
         };
       };
       recyclarrEnvironmentFiles = [config.sops.secrets.recyclarr_env_file.path];
+      jellystatEnvironmentFiles = [config.sops.secrets.jellystat_env_file.path];
       pinchflatEnvironmentFile = config.sops.secrets.pinchflat_env_file.path;
       spotdlEnvironmentFile = config.sops.secrets.spotdl_env_file.path;
       vpnNamespace = "airvpn";
