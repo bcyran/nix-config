@@ -295,6 +295,20 @@ in {
             };
           }
           {
+            Jellystat = rec {
+              description = "Jellyfin statistics and analytics.";
+              icon = "jellystat";
+              href = makeServiceDomainUrl "jellystat";
+              siteMonitor = makeServiceLoopbackUrl "jellystat";
+              widget = {
+                type = "jellystat";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_JELLYSTAT_API_KEY}}";
+                fields = ["episodes" "movies" "songs"];
+              };
+            };
+          }
+          {
             Transmission = rec {
               description = "BitTorrent client.";
               icon = "transmission";
