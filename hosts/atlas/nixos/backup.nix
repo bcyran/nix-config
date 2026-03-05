@@ -7,20 +7,6 @@
 }: let
   backupStore = my.lib.const.paths.atlas.backup;
   replicasStore = my.lib.const.paths.atlas.replicas;
-
-  btrsyncBin = lib.getExe my.pkgs.btrsync;
-
-  notifyFailedServices = [
-    "btrbk-root"
-    "btrbk-fast_store"
-    "btrsync"
-    "restic-backups-atlas-root"
-    "restic-backups-atlas-var_lib"
-    "restic-backups-slimbook-home"
-  ];
-  mkOnFailure = serviceName: {
-    onFailure = ["ntfy-failed@${serviceName}.service"];
-  };
 in {
   sops.secrets = {
     restic_password_file = {};
@@ -158,12 +144,31 @@ in {
         lib.genAttrs notifyFailedServices mkOnFailure
     )
     // {
-      btrsync = {
+      btrsync = let
+        src = "${backupStore}/slimbook";
+        dst = "${replicasStore}/slimbook";
+      in {
         description = "Btrfs snapshot synchronization service";
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = "${btrsyncBin} -y ${backupStore}/slimbook/ ${replicasStore}/slimbook/";
-        };
+        serviceConfig.Type = "oneshot";
+        script = ''
+          ${lib.getExe my.pkgs.btrsync} -y ${src}/ ${dst}/
+
+          # btrsync doesn't clean up subvolumes that no longer exist in the source.
+          declare -A src_subvols
+          for entry in ${src}/*/; do
+            [[ -d "$entry" ]] || continue
+            src_subvols["$(basename "$entry")"]=1
+          done
+
+          for entry in ${dst}/*/; do
+            [[ -d "$entry" ]] || continue
+            name="$(basename "$entry")"
+            if [[ -z "''${src_subvols[$name]+x}" ]]; then
+              echo "Deleting stale subvolume: ${dst}/$name"
+              ${lib.getExe' pkgs.btrfs-progs "btrfs"} subvolume delete "${dst}/$name"
+            fi
+          done
+        '';
         startAt = "*-*-* 00:00:00";
         onFailure = ["ntfy-failed@btrsync.service"];
       };
