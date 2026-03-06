@@ -19,6 +19,12 @@ in {
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
     environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
 
+    servers = lib.mkOption {
+      type = with lib.types; listOf int;
+      default = [];
+      example = [12345 67890];
+      description = "List of server IDs to use for speed tests";
+    };
     blockedServers = lib.mkOption {
       type = with lib.types; listOf int;
       default = [];
@@ -46,6 +52,7 @@ in {
         CHART_DATETIME_FORMAT = "d.m H:i";
         SPEEDTEST_SCHEDULE = "0 * * * *";
         PUBLIC_DASHBOARD = "true";
+        SPEEDTEST_SERVERS = lib.concatMapStringsSep "," toString cfg.servers;
         SPEEDTEST_BLOCKED_SERVERS = lib.concatMapStringsSep "," toString cfg.blockedServers;
       };
       extraOptions = [

@@ -222,10 +222,7 @@ in {
       enable = true;
       environmentFiles = [config.sops.secrets.speedtest_tracker_env_file.path];
       reverseProxy.domain = "speedtest.${intraDomain}";
-      blockedServers = [
-        5679 # My ISP's server, shows higher speeds than actual.
-        5326 # This one always shows lower speeds than actual.
-      ];
+      servers = [5679];
     };
     glances = {
       enable = true;
