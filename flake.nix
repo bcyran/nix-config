@@ -43,10 +43,6 @@
       url = "github:anyrun-org/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    anyrun-powermenu = {
-      url = "github:bcyran/anyrun-powermenu";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     hyprcursor-phinger = {
       url = "github:jappie3/hyprcursor-phinger";
       inputs.nixpkgs.follows = "nixpkgs";

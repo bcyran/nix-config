@@ -39,15 +39,14 @@ in {
       enable = true;
       package = my.inputs.anyrun.packages.${system}.default;
       config = {
-        plugins = with my.inputs.anyrun.packages.${system};
-          [
-            applications
-            shell
-            rink
-            translate
-            websearch
-          ]
-          ++ [my.inputs.anyrun-powermenu.packages.${system}.default];
+        plugins = with my.inputs.anyrun.packages.${system}; [
+          applications
+          shell
+          rink
+          translate
+          websearch
+          actions
+        ];
         x = {fraction = 0.5;};
         y = {fraction = 0.3;};
         width = {absolute = 700;};
@@ -126,14 +125,6 @@ in {
                 url: "kagi.com/search?q={}",
               ),
             ],
-          )
-        '';
-        "powermenu.ron".text = ''
-          Config(
-            logout: (
-              command: "hyprctl dispatch exit",
-              confirm: true,
-            ),
           )
         '';
       };
