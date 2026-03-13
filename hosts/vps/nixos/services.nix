@@ -17,6 +17,10 @@ in {
       owner = caddyCfg.user;
       reloadUnits = ["caddy.service"];
     };
+    grafana_secret_key_file = {
+      owner = "grafana";
+      restartUnits = ["grafana.service"];
+    };
     deploy_cyran_dev_ssh_key_file = {
       owner = caddyCfg.user;
       reloadUnits = ["caddy.service"];
@@ -96,6 +100,7 @@ in {
       loki.enable = true;
       grafana = {
         enable = true;
+        secretKeyFile = config.sops.secrets.grafana_secret_key_file.path;
         reverseProxy = {
           domain = "grafana.${vpsWgDomain}";
           listenAddresses = vpsWgAddresses;

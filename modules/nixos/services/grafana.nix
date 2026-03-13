@@ -21,6 +21,11 @@ in {
     port = my.lib.options.mkPortOption serviceName 3000;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
+
+    secretKeyFile = lib.mkOption {
+      type = with lib.types; path;
+      description = "Path to the file containing the Grafana secret key.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -37,6 +42,7 @@ in {
           enable_gzip = true;
           inherit (cfg.reverseProxy) domain;
         };
+        security.secret_key = "$__file{${cfg.secretKeyFile}}";
         analytics.reporting_enabled = false;
       };
 
