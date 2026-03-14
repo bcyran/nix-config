@@ -58,7 +58,7 @@ in {
         repeat_delay = 300;
       };
       general = {
-        layout = "hy3";
+        layout = "dwindle";
         gaps_in = 5;
         gaps_out = 10;
         border_size = 2;
@@ -69,46 +69,30 @@ in {
         no_update_news = true;
         no_donation_nag = true;
       };
-      plugin = {
-        hy3 = {
-          group_inset = 0;
-          autotile = {
-            enable = false;
-          };
-          tabs = {
-            rounding = 3;
-            border_width = 0;
-            height = 22;
-            padding = 0;
-            render_text = true;
-            text_font = builtins.elemAt config.fonts.fontconfig.defaultFonts.sansSerif 0;
-            text_height = 11;
-            text_padding = 8;
-            text_center = true;
-            "col.active" = "rgba(${palette.accentPrimary}ed)";
-            "col.active.text" = "rgba(${palette.base10}ed)";
-            "col.active_alt_monitor" = "rgba(${palette.base01}ed)";
-            "col.active_alt_monitor.text" = "rgba(${palette.base05}ed)";
-            "col.focused" = "rgba(${palette.base01}ed)";
-            "col.focused.text" = "rgba(${palette.base05}ed)";
-            "col.inactive" = "rgba(${palette.base10}ed)";
-            "col.inactive.text" = "rgba(${palette.base05}ed)";
-            "col.urgent" = "rgba(${palette.warning}ed)";
-            "col.urgent.text" = "rgba(${palette.base10}ed)";
-          };
-        };
-      };
       group = {
         focus_removed_window = true;
         insert_after_current = true;
         "col.border_active" = "rgb(${palette.accentPrimary})";
         "col.border_inactive" = "rgb(${palette.base10})";
         groupbar = {
-          render_titles = false;
-          gradients = false;
-          "col.active" = "rgb(${palette.accentPrimary})";
-          "col.inactive" = "rgb(${palette.base10})";
-          text_color = "rgb(${palette.base05})";
+          enabled = true;
+          font_family = builtins.elemAt config.fonts.fontconfig.defaultFonts.sansSerif 0;
+          font_size = 12;
+          render_titles = true;
+          gradients = true;
+          gradient_rounding = 3;
+          indicator_height = 0;
+          height = 22;
+          rounding = 3;
+          round_only_edges = false;
+          text_padding = 8;
+          text_color = "rgba(${palette.base10}ed)";
+          text_color_inactive = "rgba(${palette.base05}ed)";
+          "col.active" = "rgba(${palette.accentPrimary}ed)";
+          "col.inactive" = "rgba(${palette.base10}ed)";
+          gaps_in = 0;
+          gaps_out = 0;
+          keep_upper_gap = false;
         };
       };
       decoration = {

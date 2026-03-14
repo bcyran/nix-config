@@ -36,9 +36,7 @@ in {
         enableXdgAutostart = !cfg.withUWSM;
       };
       settings.env = lib.mapAttrsToList (name: value: "${name},${value}") envVars;
-      plugins = with pkgs.hyprlandPlugins; [
-        hy3
-      ];
+      plugins = [];
     };
 
     programs.hyprcursor-phinger.enable = true;
