@@ -151,7 +151,7 @@ in {
         description = "Btrfs snapshot synchronization service";
         serviceConfig.Type = "oneshot";
         script = ''
-          ${lib.getExe my.pkgs.btrsync} -y ${src}/ ${dst}/
+          ${lib.getExe pkgs.btrsync} -y ${src}/ ${dst}/
 
           # btrsync doesn't clean up subvolumes that no longer exist in the source.
           declare -A src_subvols
