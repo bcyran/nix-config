@@ -16,7 +16,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    services.jellyseerr = {
+    services.seerr = {
       enable = true;
       configDir = "/var/lib/jellyseerr";
       inherit (cfg) port openFirewall;
