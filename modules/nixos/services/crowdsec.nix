@@ -95,11 +95,6 @@ in {
       };
     };
 
-    # TODO: Remove when fixed upstream: https://github.com/NixOS/nixpkgs/pull/459188.
-    systemd.services.crowdsec-firewall-bouncer.serviceConfig = {
-      AmbientCapabilities = ["CAP_NET_RAW"];
-      CapabilityBoundingSet = ["CAP_NET_RAW"];
-    };
     # TODO: Remove when fixed upstream: https://github.com/NixOS/nixpkgs/pull/500515
     systemd.services.crowdsec-firewall-bouncer-register.script = let
       apiKeyFile = "/var/lib/crowdsec-firewall-bouncer-register/api-key.cred";
