@@ -5,6 +5,7 @@
   lib,
   ...
 }: let
+  bouncerUpstreamCfg = config.services.crowdsec-firewall-bouncer;
   cfg = config.my.services.crowdsec;
 
   grafanaDashboardsLib = inputs.grafana-dashboards.lib {inherit pkgs;};
@@ -99,5 +100,30 @@ in {
       AmbientCapabilities = ["CAP_NET_RAW"];
       CapabilityBoundingSet = ["CAP_NET_RAW"];
     };
+    # TODO: Remove when fixed upstream: https://github.com/NixOS/nixpkgs/pull/500515
+    systemd.services.crowdsec-firewall-bouncer-register.script = let
+      apiKeyFile = "/var/lib/crowdsec-firewall-bouncer-register/api-key.cred";
+    in
+      lib.mkForce ''
+        # Need to use a `cscli` wrapper which sets `--config` to correct path.
+        cscli=/run/current-system/sw/bin/cscli
+        if $cscli bouncers list --output json | ${lib.getExe pkgs.jq} -e -- ${lib.escapeShellArg "any(.[]; .name == \"${bouncerUpstreamCfg.registerBouncer.bouncerName}\")"} >/dev/null; then
+          # Bouncer already registered. Verify the API key is still present
+          if [ ! -f ${apiKeyFile} ]; then
+            echo "Bouncer registered but API key is not present"
+            exit 1
+          fi
+        else
+          # Bouncer not registered
+          # Remove any previously saved API key
+          rm -f '${apiKeyFile}'
+          # Register the bouncer and save the new API key
+          if ! $cscli bouncers add --output raw -- ${lib.escapeShellArg bouncerUpstreamCfg.registerBouncer.bouncerName} >${apiKeyFile}; then
+            # Failed to register the bouncer
+            rm ${apiKeyFile}
+            exit 1
+          fi
+        fi
+      '';
   };
 }
