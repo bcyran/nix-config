@@ -76,6 +76,7 @@ in {
         homeDir = config.home.homeDirectory;
       in {
         enable = true;
+        setSessionVariables = true;
         desktop = "${homeDir}/Pulpit";
         documents = "${homeDir}/Dokumenty";
         download = "${homeDir}/Pobrane";

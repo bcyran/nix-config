@@ -128,6 +128,7 @@ in {
           ".rgignore"
           ".direnv"
         ];
+        signing.format = null;
       };
 
       delta = {
