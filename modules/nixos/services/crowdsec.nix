@@ -95,6 +95,9 @@ in {
       };
     };
 
+    # Fix "mkdir: cannot create directory '/var/lib/crowdsec': Permission denied"
+    systemd.services.crowdsec.serviceConfig.StateDirectory = "crowdsec";
+
     # TODO: Remove when fixed upstream: https://github.com/NixOS/nixpkgs/pull/500515
     systemd.services.crowdsec-firewall-bouncer-register.script = let
       apiKeyFile = "/var/lib/crowdsec-firewall-bouncer-register/api-key.cred";
