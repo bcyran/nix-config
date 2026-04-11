@@ -493,10 +493,10 @@ in {
             };
           }
           {
-            Promtail = {
+            Alloy = {
               description = "Log collector.";
-              icon = "https://grafana.com/static/img/logos/logo-loki.svg";
-              siteMonitor = "${makeLoopbackUrl servicesCfg.loki.promtailPort}/ready";
+              icon = "alloy";
+              siteMonitor = "${makeLoopbackUrl servicesCfg.loki.alloyPort}/ready";
             };
           }
         ];

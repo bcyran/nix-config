@@ -268,37 +268,6 @@ in {
         ];
       };
 
-      promtail.configuration.scrape_configs = lib.mkIf lokiCfg.enable [
-        {
-          job_name = "caddy";
-          static_configs = [
-            {
-              targets = ["localhost"];
-              labels = {
-                job = "caddy-access";
-                agent = "caddy-promtail";
-                __path__ = "/var/log/caddy/*.log";
-              };
-            }
-          ];
-          pipeline_stages = [
-            {
-              json = {
-                expressions = {
-                  timestamp = "ts";
-                };
-              };
-            }
-            {
-              timestamp = {
-                source = "timestamp";
-                format = "Unix";
-              };
-            }
-          ];
-        }
-      ];
-
       prometheus.scrapeConfigs = lib.mkIf config.services.prometheus.enable [
         {
           job_name = "caddy";
@@ -332,5 +301,34 @@ in {
         ];
       };
     };
+
+    my.services.loki.extraAlloyConfig = lib.mkIf lokiCfg.enable ''
+      // Process Caddy access logs: extract timestamp from JSON
+      loki.process "caddy" {
+        forward_to = [loki.write.default.receiver]
+
+        stage.json {
+          expressions = {
+            timestamp = "ts",
+          }
+        }
+
+        stage.timestamp {
+          source = "timestamp"
+          format = "Unix"
+        }
+      }
+
+      // Read Caddy access log files
+      loki.source.file "caddy" {
+        targets = [
+          {__path__ = "/var/log/caddy/*.log", job = "caddy-access"},
+        ]
+        forward_to = [loki.process.caddy.receiver]
+        file_match {
+          enabled = true
+        }
+      }
+    '';
   };
 }

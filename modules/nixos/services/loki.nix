@@ -11,142 +11,148 @@
 in {
   options.my.services.loki = let
     lokiServiceName = "Loki";
-    promatilServiceName = "Promtail";
+    alloyServiceName = "Alloy";
   in {
     enable = lib.mkEnableOption lokiServiceName;
     lokiAddress = my.lib.options.mkAddressOption lokiServiceName;
     lokiPort = my.lib.options.mkPortOption lokiServiceName 3100;
-    promtailAddress = my.lib.options.mkAddressOption promatilServiceName;
-    promtailPort = my.lib.options.mkPortOption promatilServiceName 3031;
+    alloyAddress = my.lib.options.mkAddressOption alloyServiceName;
+    alloyPort = my.lib.options.mkPortOption alloyServiceName 3031;
+
+    extraAlloyConfig = lib.mkOption {
+      type = lib.types.lines;
+      default = "";
+      description = "Extra Alloy configuration to append to the generated config.";
+    };
   };
 
-  config.services = lib.mkIf cfg.enable {
-    loki = {
-      enable = true;
-      configuration = {
-        server = {
-          http_listen_address = cfg.lokiAddress;
-          http_listen_port = cfg.lokiPort;
-        };
-        auth_enabled = false;
-        common.path_prefix = lokiDataDir;
+  config = lib.mkIf cfg.enable {
+    services = {
+      loki = {
+        enable = true;
+        configuration = {
+          server = {
+            http_listen_address = cfg.lokiAddress;
+            http_listen_port = cfg.lokiPort;
+          };
+          auth_enabled = false;
+          common.path_prefix = lokiDataDir;
 
-        ingester = {
-          lifecycler = {
-            address = "127.0.0.1";
-            ring = {
+          ingester = {
+            lifecycler = {
+              address = "127.0.0.1";
+              ring = {
+                kvstore = {
+                  store = "inmemory";
+                };
+                replication_factor = 1;
+              };
+            };
+            chunk_idle_period = "1h";
+            max_chunk_age = "1h";
+            chunk_target_size = 999999;
+            chunk_retain_period = "30s";
+          };
+
+          schema_config = {
+            configs = [
+              {
+                from = "2024-12-01";
+                store = "tsdb";
+                object_store = "filesystem";
+                schema = "v13";
+                index = {
+                  prefix = "index_";
+                  period = "24h";
+                };
+              }
+            ];
+          };
+
+          storage_config = {
+            tsdb_shipper = {
+              active_index_directory = "${lokiDataDir}/tsdb-shipper-active";
+              cache_location = "${lokiDataDir}/tsdb-shipper-cache";
+              cache_ttl = "24h";
+            };
+
+            filesystem = {
+              directory = "${lokiDataDir}/chunks";
+            };
+          };
+
+          limits_config = {
+            reject_old_samples = true;
+            reject_old_samples_max_age = "168h";
+          };
+
+          table_manager = {
+            retention_deletes_enabled = false;
+            retention_period = "0s";
+          };
+
+          compactor = {
+            working_directory = lokiDataDir;
+            delete_request_store = "filesystem";
+            compactor_ring = {
               kvstore = {
                 store = "inmemory";
               };
-              replication_factor = 1;
-            };
-          };
-          chunk_idle_period = "1h";
-          max_chunk_age = "1h";
-          chunk_target_size = 999999;
-          chunk_retain_period = "30s";
-        };
-
-        schema_config = {
-          configs = [
-            {
-              from = "2024-12-01";
-              store = "tsdb";
-              object_store = "filesystem";
-              schema = "v13";
-              index = {
-                prefix = "index_";
-                period = "24h";
-              };
-            }
-          ];
-        };
-
-        storage_config = {
-          tsdb_shipper = {
-            active_index_directory = "${lokiDataDir}/tsdb-shipper-active";
-            cache_location = "${lokiDataDir}/tsdb-shipper-cache";
-            cache_ttl = "24h";
-          };
-
-          filesystem = {
-            directory = "${lokiDataDir}/chunks";
-          };
-        };
-
-        limits_config = {
-          reject_old_samples = true;
-          reject_old_samples_max_age = "168h";
-        };
-
-        table_manager = {
-          retention_deletes_enabled = false;
-          retention_period = "0s";
-        };
-
-        compactor = {
-          working_directory = lokiDataDir;
-          delete_request_store = "filesystem";
-          compactor_ring = {
-            kvstore = {
-              store = "inmemory";
             };
           };
         };
       };
-    };
 
-    promtail = {
-      enable = true;
-
-      configuration = {
-        server = {
-          http_listen_address = cfg.promtailAddress;
-          http_listen_port = cfg.promtailPort;
-          grpc_listen_port = 0;
-        };
-
-        positions = {
-          filename = "/tmp/positions.yaml";
-        };
-
-        clients = [
-          {
-            url = "http://127.0.0.1:${toString cfg.lokiPort}/loki/api/v1/push";
-          }
+      alloy = {
+        enable = true;
+        extraFlags = [
+          "--server.http.listen-addr=${cfg.alloyAddress}:${toString cfg.alloyPort}"
+          "--disable-reporting"
         ];
+      };
 
-        scrape_configs = [
+      grafana.provision = {
+        enable = true;
+
+        datasources.settings.datasources = lib.mkIf grafanaCfg.enable [
           {
-            job_name = "journal";
-            journal = {
-              max_age = "12h";
-              labels = {
-                job = "systemd-journal";
-                host = config.networking.hostName;
-              };
-            };
-            relabel_configs = [
-              {
-                source_labels = ["__journal__systemd_unit"];
-                target_label = "unit";
-              }
-            ];
+            name = "Loki";
+            type = "loki";
+            url = "http://127.0.0.1:${toString cfg.lokiPort}";
           }
         ];
       };
     };
 
-    grafana.provision = {
-      enable = true;
-
-      datasources.settings.datasources = lib.mkIf grafanaCfg.enable [
-        {
-          name = "Loki";
-          type = "loki";
-          url = "http://127.0.0.1:${toString cfg.lokiPort}";
+    environment.etc."alloy/config.alloy".text = ''
+      // Loki write endpoint
+      loki.write "default" {
+        endpoint {
+          url = "http://127.0.0.1:${toString cfg.lokiPort}/loki/api/v1/push"
         }
-      ];
-    };
+      }
+
+      // Relabel journal entries to extract the systemd unit label
+      loki.relabel "journal" {
+        forward_to = [loki.write.default.receiver]
+
+        rule {
+          source_labels = ["__journal__systemd_unit"]
+          target_label  = "unit"
+        }
+      }
+
+      // Read systemd journal logs
+      loki.source.journal "systemd" {
+        forward_to    = [loki.relabel.journal.receiver]
+        max_age       = "12h"
+        labels        = {
+          job  = "systemd-journal",
+          host = "${config.networking.hostName}",
+        }
+      }
+
+      ${cfg.extraAlloyConfig}
+    '';
   };
 }
