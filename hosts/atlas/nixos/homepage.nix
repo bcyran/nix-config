@@ -452,7 +452,7 @@ in {
           {
             Grafana = rec {
               description = "Server metrics visualization.";
-              icon = "https://upload.wikimedia.org/wikipedia/commons/archive/a/a1/20230113183100%21Grafana_logo.svg";
+              icon = "grafana";
               href = makeServiceDomainUrl "grafana";
               siteMonitor = makeServiceLoopbackUrl "grafana";
               widget = {
@@ -488,7 +488,7 @@ in {
           {
             Loki = {
               description = "Log aggregation service.";
-              icon = "https://grafana.com/static/img/logos/logo-loki.svg";
+              icon = "loki";
               siteMonitor = "${makeLoopbackUrl servicesCfg.loki.lokiPort}/ready";
             };
           }
@@ -610,7 +610,7 @@ in {
           {
             "nix-serve" = {
               description = "Nix binary cache server.";
-              icon = "https://nix.dev/_static/img/nix.svg";
+              icon = "nixos";
               siteMonitor = "${makeServiceLoopbackUrl "nix-serve"}/nix-cache-info";
             };
           }
