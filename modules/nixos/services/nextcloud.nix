@@ -70,11 +70,6 @@ in {
             url = "https://github.com/jgraph/drawio-nextcloud/releases/download/v3.1.2/drawio-v3.1.2.tar.gz";
             license = "agpl3Only";
           };
-          breezedark = pkgs.fetchNextcloudApp {
-            sha256 = "sha256-i2O8KHuWitBkPutQz2bqxQNDADClTp/QBNjs5kquy6o";
-            url = "https://github.com/bcyran/nextcloud-breeze-dark/archive/6cc9236bdc59ff1ecf04bf83f0945364b9d29b5b.tar.gz";
-            license = "agpl3Only";
-          };
         };
         extraAppsEnable = true;
 
