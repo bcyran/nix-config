@@ -63,6 +63,7 @@ in {
             whiteboard
             richdocuments
             tables
+            cospend
             theming_customcss
             ;
           drawio = pkgs.fetchNextcloudApp {
