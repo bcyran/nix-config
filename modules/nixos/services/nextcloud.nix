@@ -37,7 +37,7 @@ in {
     services = {
       nextcloud = {
         enable = true;
-        package = pkgs.nextcloud32;
+        package = pkgs.nextcloud33;
         hostName = cfg.domain;
         https = true;
         maxUploadSize = "16G";
@@ -66,8 +66,8 @@ in {
             theming_customcss
             ;
           drawio = pkgs.fetchNextcloudApp {
-            sha256 = "sha256-yl9/OuJ7fHDcp8Jk4oW3we3cdmK9BW3N0/v+Dbw6J6M=";
-            url = "https://github.com/jgraph/drawio-nextcloud/releases/download/v3.1.2/drawio-v3.1.2.tar.gz";
+            sha256 = "sha256-XLcDIcb7nr4oW7OtYC1FrF1lOsZTddhFT0HgjFsXXvg=";
+            url = "https://github.com/jgraph/drawio-nextcloud/releases/download/v4.2.3/drawio-v4.2.3.tar.gz";
             license = "agpl3Only";
           };
         };
