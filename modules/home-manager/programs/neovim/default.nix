@@ -32,6 +32,8 @@ in {
       vimAlias = true;
       vimdiffAlias = true;
       withNodeJs = true;
+      withPython3 = true;
+      withRuby = false;
       initLua = ''
         require("config.lazy")
       '';

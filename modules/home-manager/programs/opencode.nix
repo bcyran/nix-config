@@ -11,8 +11,10 @@ in {
     programs.opencode = {
       enable = true;
       settings = {
-        theme = "tokyonight";
         autoupdate = false;
+      };
+      tui = {
+        theme = "tokyonight";
       };
     };
   };
