@@ -43,3 +43,19 @@ push host=current_host user=current_user:
 switch host=current_host user=current_user:
     nh os switch . --hostname {{ host }}
     nh home switch . --configuration {{ user }}@{{ host }}
+
+# Rollback to a previous NixOS and/or home-manager generation.
+rollback target="both" generations="1":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    n="{{ generations }}"
+    if [ "{{ target }}" = "both" ] || [ "{{ target }}" = "system" ]; then
+        profile="/nix/var/nix/profiles/system"
+        gen=$(sudo nix-env --list-generations -p "$profile" | tail -n $((n + 1)) | head -n 1 | awk '{print $1}')
+        sudo nix-env -p "$profile" --switch-generation "$gen"
+        sudo "$profile/bin/switch-to-configuration" switch
+    fi
+    if [ "{{ target }}" = "both" ] || [ "{{ target }}" = "home" ]; then
+        activation=$(home-manager generations | sed -n "$((n + 1))p" | sed 's/.*-> //')
+        "$activation/activate"
+    fi
