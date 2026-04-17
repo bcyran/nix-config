@@ -40,7 +40,10 @@ in {
         enable = true;
         keyFile = config.sops.secrets.syncthing_key.path;
         certFile = config.sops.secrets.syncthing_cert.path;
-        passwordFile = config.sops.secrets.syncthing_password.path;
+        guiCredentials = {
+          username = config.my.user.name;
+          passwordFile = config.sops.secrets.syncthing_password.path;
+        };
         inherit (my.lib.const.syncthing) devices;
         folders = [
           {

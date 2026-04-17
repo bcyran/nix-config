@@ -201,7 +201,7 @@ in {
     };
     homepage = {
       enable = true;
-      environmentFile = config.sops.secrets.homepage_env_file.path;
+      environmentFiles = [config.sops.secrets.homepage_env_file.path];
       reverseProxy.domain = "home.${intraDomain}";
     };
     home-assistant = {

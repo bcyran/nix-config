@@ -19,10 +19,22 @@ in {
       default = null;
       description = "Path to the file containing the Syncthing certificate.";
     };
-    passwordFile = lib.mkOption {
-      type = with lib.types; nullOr path;
+    guiCredentials = lib.mkOption {
+      type = with lib.types;
+        nullOr (submodule {
+          options = {
+            username = lib.mkOption {
+              type = str;
+              description = "Username for the Syncthing GUI.";
+            };
+            passwordFile = lib.mkOption {
+              type = str;
+              description = "Path to file containing the GUI password or bcrypt hash.";
+            };
+          };
+        });
       default = null;
-      description = "Path to the file containing the Syncthing GUI password file.";
+      description = "Credentials for the Syncthing GUI.";
     };
 
     devices = lib.mkOption {
@@ -66,7 +78,7 @@ in {
 
       key = cfg.keyFile;
       cert = cfg.certFile;
-      inherit (cfg) passwordFile;
+      inherit (cfg) guiCredentials;
 
       settings = {
         devices = lib.mapAttrs (name: id: {inherit id;}) cfg.devices;

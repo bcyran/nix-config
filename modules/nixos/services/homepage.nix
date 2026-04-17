@@ -14,13 +14,13 @@ in {
     port = my.lib.options.mkPortOption serviceName 8080;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    environmentFile = my.lib.options.mkEnvironmentFileOption serviceName;
+    environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
   };
 
   config = lib.mkIf cfg.enable {
     services.homepage-dashboard = {
       enable = true;
-      inherit (cfg) openFirewall environmentFile;
+      inherit (cfg) openFirewall environmentFiles;
       listenPort = cfg.port;
       allowedHosts = "localhost,127.0.0.1:${toString cfg.port},${cfg.reverseProxy.domain}";
     };
