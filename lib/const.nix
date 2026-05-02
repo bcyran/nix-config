@@ -90,6 +90,7 @@ rec {
   # Public SSH keys
   sshKeys = {
     bazyliAtSlimbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFKs3m56bDR5P7TXoL/MPd5FWyueqK3QPVGc7RwLnF09 bazyli@slimbook";
+    rootAtSlimbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPGqHNqwFgdR0uKkXdcovGzUxCFJNq06lid/mD5R3Koj root@slimbook";
     btrbkAtSlimbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8a552vyvnPoS/JEkSujoygzQw0cB8jO2yI8VlsLUF6 btrbk@slimbook";
     bazyliAtPixel = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKIEWeLZ0wns7L8ToD6zFJn9DRXQsqan8cbyRKoOz7FR bazyli@pixel";
   };

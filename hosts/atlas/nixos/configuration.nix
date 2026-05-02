@@ -104,4 +104,11 @@
       my.lib.const.binaryCacheKeys.slimbook
     ];
   };
+
+  # Limit memory used for builds
+  systemd.services.nix-daemon.serviceConfig = {
+    MemoryAccounting = true;
+    MemoryMax = "70%";
+    MemoryHigh = "60%";
+  };
 }

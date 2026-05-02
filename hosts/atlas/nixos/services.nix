@@ -98,6 +98,10 @@ in {
       wireguardConfigFile = config.sops.secrets.airvpn_conf_file.path;
       namespaceName = "airvpn";
     };
+    remoteBuilder = {
+      enable = true;
+      authorizedKeys = [my.lib.const.sshKeys.rootAtSlimbook];
+    };
   };
 
   my.services = {
