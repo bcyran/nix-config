@@ -7,13 +7,13 @@
 }:
 buildNpmPackage rec {
   pname = "jellystat";
-  version = "1.1.8";
+  version = "1.1.10";
 
   src = fetchFromGitHub {
     owner = "CyferShepard";
     repo = "Jellystat";
-    rev = "V${version}";
-    hash = "sha256-3wD9xy+P/edVJnLgImRyDCQ1xgVvkjN07T5JZDoJFY0=";
+    rev = "${version}";
+    hash = "sha256-eMDnQJLGEUlOZupUODXvNQ/TtQyQ7salqeZatR6ieRQ=";
   };
 
   npmDepsHash = "sha256-Y40ZnpHjEbYOjDrgwjLxCTyGWHGH6Zw8JADUiJc4hl4=";
