@@ -32,6 +32,12 @@ in {
       default = false;
       description = "Whether to enable the hy3 plugin for Hyprland.";
     };
+
+    withNoctalia = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether to use Noctalia shell integration for Hyprland.";
+    };
   };
 
   config = lib.mkIf cfg.enable {

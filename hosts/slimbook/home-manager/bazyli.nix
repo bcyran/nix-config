@@ -29,11 +29,38 @@ in {
     presets = {
       cli.enable = true;
       desktop.enable = true;
-      hyprland.enable = true;
+      noctalia.enable = true;
       personal.enable = true;
       tokyonight.enable = true;
     };
     programs = {
+      noctalia.monitors = {
+        primary = [
+          "DP-5" # Main monitor upon first plug
+          "DP-8" # Main monitor upon second plug
+          "eDP-1" # Laptop monitor
+        ];
+        secondary = [
+          "DP-6" # Right monitor upon first plug
+          "DP-7" # Left monitor upon first plug
+          "DP-9" # Right monitor upon second plug
+          "DP-10" # Left monitor upon second plug
+        ];
+        ddcMappings = [
+          {
+            device = "/sys/class/backlight/ddcci14";
+            output = "DP-5";
+          }
+          {
+            device = "/sys/class/backlight/ddcci15";
+            output = "DP-6";
+          }
+          {
+            device = "/sys/class/backlight/ddcci16";
+            output = "DP-7";
+          }
+        ];
+      };
       timewall.enable = false;
       cameractrls.enable = true;
       syncthing = {

@@ -212,6 +212,7 @@ in {
       ];
       exec-once =
         lib.optional cfg.withUWSM "uwsm finalize"
+        ++ lib.optional cfg.withNoctalia "${execWrapper} noctalia-shell"
         ++ [
           "${execWrapper} kitty --class terminal-workspace"
         ];

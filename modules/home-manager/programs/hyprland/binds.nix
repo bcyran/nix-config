@@ -24,128 +24,164 @@
         names));
   in
     binds;
+
+  # Common binds that don't change between noctalia and my custom shell
+  commonBinds =
+    [
+      (
+        if cfg.withHy3
+        then "$mod SHIFT, q, hy3:killactive,"
+        else "$mod SHIFT, q, killactive,"
+      )
+      "$mod, f, fullscreen"
+      "$mod SHIFT, f, togglefloating,"
+      "$mod SHIFT, p, pseudo,"
+      "$mod SHIFT, x, pin,"
+    ]
+    ++ (
+      if cfg.withHy3
+      then [
+        "$mod, v, hy3:makegroup, v"
+        "$mod, c, hy3:makegroup, h"
+        "$mod, x, hy3:changegroup, opposite"
+        "$mod, a, hy3:changefocus, raise"
+        "$mod, z, hy3:changefocus, lower"
+        "$mod, o, hy3:focustab, l"
+        "$mod, p, hy3:focustab, r"
+        "$mod, t, hy3:makegroup, tab"
+        "$mod SHIFT, t, hy3:changegroup, toggletab"
+        "$mod, g, hy3:togglefocuslayer, nowarp"
+        "$mod, e, hy3:expand, expand"
+        "$mod SHIFT, e, hy3:expand, shrink"
+      ]
+      else [
+        "$mod, v, layoutmsg, preselect d"
+        "$mod, c, layoutmsg, preselect r"
+        "$mod, t, togglegroup"
+        "$mod, x, moveoutofgroup"
+        "$mod, o, changegroupactive, b"
+        "$mod, p, changegroupactive, f"
+        "$mod SHIFT, o, movegroupwindow, b"
+        "$mod SHIFT, p, movegroupwindow, f"
+        "$mod, g, cyclenext, tiled"
+        "$mod SHIFT, g, cyclenext, floating"
+      ]
+    )
+    ++ (
+      if cfg.withHy3
+      then [
+        "$mod, h, hy3:movefocus, l, visible"
+        "$mod, l, hy3:movefocus, r, visible"
+        "$mod, k, hy3:movefocus, u, visible"
+        "$mod, j, hy3:movefocus, d, visible"
+      ]
+      else [
+        "$mod, h, movefocus, l"
+        "$mod, l, movefocus, r"
+        "$mod, k, movefocus, u"
+        "$mod, j, movefocus, d"
+      ]
+    )
+    ++ [
+      "$mod, u, focusmonitor, l"
+      "$mod, i, focusmonitor, r"
+    ]
+    ++ (
+      if cfg.withHy3
+      then [
+        "$mod SHIFT, h, hy3:movewindow, l"
+        "$mod SHIFT, l, hy3:movewindow, r"
+        "$mod SHIFT, k, hy3:movewindow, u"
+        "$mod SHIFT, j, hy3:movewindow, d"
+      ]
+      else [
+        "$mod SHIFT, h, movewindoworgroup, l"
+        "$mod SHIFT, l, movewindoworgroup, r"
+        "$mod SHIFT, k, movewindoworgroup, u"
+        "$mod SHIFT, j, movewindoworgroup, d"
+      ]
+    )
+    ++ [
+      "$mod, mouse_down, workspace, e+1"
+      "$mod, mouse_up, workspace, e-1"
+    ]
+    ++ (
+      if cfg.withHy3
+      then [
+        "$mod, mouse_left, hy3:focustab, l"
+        "$mod, mouse_right, hy3:focustab, r"
+      ]
+      else [
+        "$mod, mouse_left, changegroupactive, b"
+        "$mod, mouse_right, changegroupactive, f"
+      ]
+    )
+    ++ [
+      "$mod, s, exec, ${execWrapper} scr output"
+      "$mod CONTROL, s, exec, ${execWrapper} scr area"
+      "$mod SHIFT, s, exec, ${execWrapper} scr active"
+
+      "$mod, return, exec, ${execWrapper} kitty"
+      "$mod SHIFT, return, exec, ${execWrapper} kitty --class terminal-floating"
+      "$mod, Y, exec, ${execWrapper} firefox"
+      "$mod, N, exec, ${execWrapper} thunar"
+    ];
+
+  # Noctalia shell binds
+  noctaliaShellBinds = let
+    ipc = "noctalia-shell ipc call";
+    noctaliaExecWrapper = "${execWrapper} ${ipc}";
+  in [
+    "$mod, slash, exec, ${noctaliaExecWrapper} media playPause"
+    "$mod, comma, exec, ${noctaliaExecWrapper} media previous"
+    "$mod, period, exec, ${noctaliaExecWrapper} media next"
+
+    ",XF86AudioRaiseVolume, exec, ${noctaliaExecWrapper} volume increase"
+    ",XF86AudioLowerVolume, exec, ${noctaliaExecWrapper} volume decrease"
+    ",XF86AudioMute, exec, ${noctaliaExecWrapper} volume muteOutput"
+
+    ",XF86MonBrightnessDown, exec, ${noctaliaExecWrapper} brightness decrease"
+    ",XF86MonBrightnessUp, exec, ${noctaliaExecWrapper} brightness increase"
+
+    "CONTROL, space, exec, ${noctaliaExecWrapper} notifications toggleHistory"
+    "CONTROL, escape, exec, ${noctaliaExecWrapper} notifications clear"
+
+    "$mod, space, exec, ${noctaliaExecWrapper} launcher toggle"
+    "$mod, grave, exec, ${noctaliaExecWrapper} settings toggle"
+    "$mod SHIFT, space, exec, ${noctaliaExecWrapper} controlCenter toggle"
+    "$mod SHIFT, m, exec, ${noctaliaExecWrapper} lockScreen lock"
+  ];
+
+  # Non-noctalia shell binds
+  defaultShellBinds = [
+    "$mod, slash, exec, ${execWrapper} playerctl play-pause"
+    "$mod, comma, exec, ${execWrapper} playerctl previous"
+    "$mod, period, exec, ${execWrapper} playerctl next"
+
+    ",XF86AudioRaiseVolume, exec, ${execWrapper} volume up"
+    ",XF86AudioLowerVolume, exec, ${execWrapper} volume down"
+    ",XF86AudioMute, exec, ${execWrapper} volume toggle"
+
+    ",XF86MonBrightnessDown, exec, ${execWrapper} backlight down 10"
+    ",XF86MonBrightnessUp, exec, ${execWrapper} backlight up 10"
+
+    "CONTROL, space, exec, ${execWrapper} swaync-client --toggle-panel"
+    "CONTROL, escape, exec, ${execWrapper} swaync-client --close-latest"
+
+    "$mod, space, exec, ${execWrapper} anyrun"
+    "$mod SHIFT, m, exec, ${execWrapper} loginctl lock-session"
+  ];
+
+  # Select shell-specific binds
+  shellBinds =
+    if cfg.withNoctalia
+    then noctaliaShellBinds
+    else defaultShellBinds;
 in {
   config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       settings = {
-        bind =
-          [
-            (
-              if cfg.withHy3
-              then "$mod SHIFT, q, hy3:killactive,"
-              else "$mod SHIFT, q, killactive,"
-            )
-            "$mod, f, fullscreen"
-            "$mod SHIFT, m, fullscreenstate, 1"
-            "$mod SHIFT, f, togglefloating,"
-            "$mod SHIFT, p, pseudo,"
-            "$mod SHIFT, x, pin,"
-          ]
-          ++ (
-            if cfg.withHy3
-            then [
-              "$mod, v, hy3:makegroup, v"
-              "$mod, c, hy3:makegroup, h"
-              "$mod, x, hy3:changegroup, opposite"
-              "$mod, a, hy3:changefocus, raise"
-              "$mod, z, hy3:changefocus, lower"
-              "$mod, o, hy3:focustab, l"
-              "$mod, p, hy3:focustab, r"
-              "$mod, t, hy3:makegroup, tab"
-              "$mod SHIFT, t, hy3:changegroup, toggletab"
-              "$mod, g, hy3:togglefocuslayer, nowarp"
-              "$mod, e, hy3:expand, expand"
-              "$mod SHIFT, e, hy3:expand, shrink"
-            ]
-            else [
-              "$mod, v, layoutmsg, preselect d"
-              "$mod, c, layoutmsg, preselect r"
-              "$mod, t, togglegroup"
-              "$mod, x, moveoutofgroup"
-              "$mod, o, changegroupactive, b"
-              "$mod, p, changegroupactive, f"
-              "$mod SHIFT, o, movegroupwindow, b"
-              "$mod SHIFT, p, movegroupwindow, f"
-              "$mod, g, cyclenext, tiled"
-              "$mod SHIFT, g, cyclenext, floating"
-            ]
-          )
-          ++ (
-            if cfg.withHy3
-            then [
-              "$mod, h, hy3:movefocus, l, visible"
-              "$mod, l, hy3:movefocus, r, visible"
-              "$mod, k, hy3:movefocus, u, visible"
-              "$mod, j, hy3:movefocus, d, visible"
-            ]
-            else [
-              "$mod, h, movefocus, l"
-              "$mod, l, movefocus, r"
-              "$mod, k, movefocus, u"
-              "$mod, j, movefocus, d"
-            ]
-          )
-          ++ [
-            "$mod, u, focusmonitor, l"
-            "$mod, i, focusmonitor, r"
-          ]
-          ++ (
-            if cfg.withHy3
-            then [
-              "$mod SHIFT, h, hy3:movewindow, l"
-              "$mod SHIFT, l, hy3:movewindow, r"
-              "$mod SHIFT, k, hy3:movewindow, u"
-              "$mod SHIFT, j, hy3:movewindow, d"
-            ]
-            else [
-              "$mod SHIFT, h, movewindoworgroup, l"
-              "$mod SHIFT, l, movewindoworgroup, r"
-              "$mod SHIFT, k, movewindoworgroup, u"
-              "$mod SHIFT, j, movewindoworgroup, d"
-            ]
-          )
-          ++ [
-            "$mod, mouse_down, workspace, e+1"
-            "$mod, mouse_up, workspace, e-1"
-          ]
-          ++ (
-            if cfg.withHy3
-            then [
-              "$mod, mouse_left, hy3:focustab, l"
-              "$mod, mouse_right, hy3:focustab, r"
-            ]
-            else [
-              "$mod, mouse_left, changegroupactive, b"
-              "$mod, mouse_right, changegroupactive, f"
-            ]
-          )
-          ++ [
-            "$mod, s, exec, ${execWrapper} scr output"
-            "$mod CONTROL, s, exec, ${execWrapper} scr area"
-            "$mod SHIFT, s, exec, ${execWrapper} scr active"
-
-            "$mod, slash, exec, ${execWrapper} playerctl play-pause"
-            "$mod, comma, exec, ${execWrapper} playerctl previous"
-            "$mod, period, exec, ${execWrapper} playerctl next"
-
-            ",XF86AudioRaiseVolume, exec, ${execWrapper} volume up"
-            ",XF86AudioLowerVolume, exec, ${execWrapper} volume down"
-            ",XF86AudioMute, exec, ${execWrapper} volume toggle"
-
-            ",XF86MonBrightnessDown, exec, ${execWrapper} backlight down 10"
-            ",XF86MonBrightnessUp, exec, ${execWrapper} backlight up 10"
-
-            "CONTROL, space, exec, ${execWrapper} swaync-client --toggle-panel"
-            "CONTROL, escape, exec, ${execWrapper} swaync-client --close-latest"
-
-            "$mod, space, exec, ${execWrapper} anyrun"
-            "$mod, return, exec, ${execWrapper} kitty"
-            "$mod SHIFT, return, exec, ${execWrapper} kitty --class terminal-floating"
-            "$mod, Y, exec, ${execWrapper} firefox"
-            "$mod, N, exec, ${execWrapper} thunar"
-            "$mod SHIFT, m, exec, ${execWrapper} loginctl lock-session"
-          ]
-          ++ workspaceBinds;
+        bind = commonBinds ++ shellBinds ++ workspaceBinds;
         bindm = [
           "$mod, mouse:272, movewindow"
           "$mod, mouse:273, resizewindow"

@@ -47,6 +47,10 @@
       url = "github:jappie3/hyprcursor-phinger";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     timewall = {
       url = "github:bcyran/timewall";
       inputs.nixpkgs.follows = "nixpkgs";
