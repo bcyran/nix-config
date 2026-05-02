@@ -243,14 +243,6 @@ in {
             };
           }
           {
-            Redlib = {
-              description = "Private front-end for Reddit.";
-              icon = "redlib";
-              href = makeServiceDomainUrl "redlib";
-              siteMonitor = makeServiceLoopbackUrl "redlib";
-            };
-          }
-          {
             BentoPDF = {
               description = "PDF toolkit.";
               icon = "bentopdf";

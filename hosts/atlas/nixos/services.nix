@@ -351,10 +351,6 @@ in {
       libraryPath = "${my.lib.const.paths.atlas.slowMedia}/kiwix";
       reverseProxy.domain = "kiwix.${intraDomain}";
     };
-    redlib = {
-      enable = true;
-      reverseProxy.domain = "redlib.${intraDomain}";
-    };
     edo-calculator = {
       enable = true;
       reverseProxy.domain = "edocalculator.${intraDomain}";
