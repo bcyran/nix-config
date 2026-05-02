@@ -6,16 +6,16 @@
 }:
 buildNpmPackage rec {
   pname = "bentopdf";
-  version = "2.3.3";
+  version = "2.8.4";
 
   src = fetchFromGitHub {
     owner = "alam00000";
     repo = "bentopdf";
     rev = "v${version}";
-    hash = "sha256-Flp9uIIcuoBjEfTID9kPI5fkGIIb9NvA0FNEesuj1fE=";
+    hash = "sha256-kVCzIFINN+Qs4TfLMqon8A9mQQ8kCRqdmu1CrzaRqf0=";
   };
 
-  npmDepsHash = "sha256-DsWH0RmGOIRIimp6rKt8b5PPaaaDU1jNdM/javA3sB8=";
+  npmDepsHash = "sha256-F4PrTZdkNrzU4HZXm5cF9X56QtJs4Q1OUQCtOSWnZGk=";
 
   env.HUSKY = "0";
   env.NODE_OPTIONS = "--max-old-space-size=3072";
@@ -71,7 +71,7 @@ buildNpmPackage rec {
   # since we can't use npm install in the sandbox (no network access).
   preBuild = ''
     mkdir -p node_modules/embedpdf-snippet
-    tar xzf vendor/embedpdf/embedpdf-snippet-2.3.0.tgz -C node_modules/embedpdf-snippet --strip-components=1
+    tar xzf vendor/embedpdf/embedpdf-snippet-2.9.1.tgz -C node_modules/embedpdf-snippet --strip-components=1
   '';
 
   npmBuildScript = "build";
