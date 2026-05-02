@@ -19,6 +19,7 @@
     ./hardware-configuration.nix
     ../common/user.nix
     ./wireguard.nix
+    ./distributed-builds.nix
   ];
 
   networking.hostName = "slimbook";
