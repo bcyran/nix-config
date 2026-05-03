@@ -10,6 +10,23 @@
   primaryWidgets = {
     left = [
       {
+        id = "ControlCenter";
+        useDistroLogo = true;
+      }
+      {
+        colorizeIcons = false;
+        hideMode = "hidden";
+        id = "ActiveWindow";
+        maxWidth = 500;
+        scrollingMode = "hover";
+        showIcon = false;
+        showText = true;
+        textColor = "none";
+        useFixedWidth = false;
+      }
+    ];
+    center = [
+      {
         characterCount = 2;
         colorizeIcons = false;
         emptyColor = "secondary";
@@ -30,30 +47,6 @@
         showLabelsOnlyWhenOccupied = true;
         unfocusedIconsOpacity = 1;
       }
-      {
-        colorizeIcons = false;
-        hideMode = "hidden";
-        id = "ActiveWindow";
-        maxWidth = 300;
-        scrollingMode = "hover";
-        showIcon = false;
-        showText = true;
-        textColor = "none";
-        useFixedWidth = false;
-      }
-    ];
-    center = [
-      {
-        clockColor = "none";
-        customFont = "";
-        formatHorizontal = "HH:mm, d MMMM";
-        formatVertical = "HH mm";
-        id = "Clock";
-        tooltipFormat = "HH:mm ddd, MMM dd";
-        useCustomFont = false;
-        useMonospacedFont = false;
-        usePrimaryColor = true;
-      }
     ];
     right = [
       {
@@ -73,6 +66,52 @@
         visualizerType = "linear";
       }
       {
+        defaultSettings = {
+          autoMount = true;
+          fileBrowser = "thunar";
+          hideWhenEmpty = true;
+          iconColor = "none";
+          showBadge = true;
+          showNotifications = true;
+          terminalCommand = "kitty";
+        };
+        id = "plugin:usb-drive-manager";
+      }
+      {
+        blacklist = [];
+        chevronColor = "none";
+        colorizeIcons = false;
+        drawerEnabled = true;
+        hidePassive = false;
+        id = "Tray";
+        pinned = [];
+      }
+      {
+        displayMode = "onhover";
+        iconColor = "none";
+        id = "Network";
+        textColor = "none";
+      }
+      {
+        defaultSettings = {
+          connectedColor = "primary";
+          disableToastNotifications = false;
+          disconnectedColor = "none";
+          displayMode = "onhover";
+        };
+        id = "plugin:network-manager-vpn";
+      }
+      {
+        displayMode = "onhover";
+        iconColor = "none";
+        id = "Bluetooth";
+        textColor = "none";
+      }
+      {
+        defaultSettings = {};
+        id = "plugin:kde-connect";
+      }
+      {
         applyToAllMonitors = false;
         displayMode = "alwaysShow";
         iconColor = "none";
@@ -87,24 +126,6 @@
         textColor = "none";
       }
       {
-        displayMode = "onhover";
-        iconColor = "none";
-        id = "Network";
-        textColor = "none";
-      }
-      {
-        displayMode = "onhover";
-        iconColor = "none";
-        id = "VPN";
-        textColor = "none";
-      }
-      {
-        displayMode = "onhover";
-        iconColor = "none";
-        id = "Bluetooth";
-        textColor = "none";
-      }
-      {
         alwaysShowPercentage = false;
         deviceNativePath = "__default__";
         displayMode = "graphic";
@@ -116,15 +137,6 @@
         warningThreshold = 30;
       }
       {
-        blacklist = [];
-        chevronColor = "none";
-        colorizeIcons = false;
-        drawerEnabled = true;
-        hidePassive = false;
-        id = "Tray";
-        pinned = [];
-      }
-      {
         hideWhenZero = false;
         hideWhenZeroUnread = false;
         iconColor = "none";
@@ -133,8 +145,15 @@
         unreadBadgeColor = "primary";
       }
       {
-        id = "ControlCenter";
-        useDistroLogo = true;
+        clockColor = "none";
+        customFont = "Inter SemiBold";
+        formatHorizontal = "HH:mm, d MMMM";
+        formatVertical = "HH mm";
+        id = "Clock";
+        tooltipFormat = "HH:mm ddd, MMM dd";
+        useCustomFont = true;
+        useMonospacedFont = false;
+        usePrimaryColor = true;
       }
     ];
   };
@@ -142,6 +161,12 @@
   # Widget configuration for secondary monitors (simplified)
   secondaryWidgets = {
     left = [
+      {
+        id = "ControlCenter";
+        useDistroLogo = true;
+      }
+    ];
+    center = [
       {
         characterCount = 2;
         colorizeIcons = false;
@@ -164,19 +189,13 @@
         unfocusedIconsOpacity = 1;
       }
     ];
-    center = [
+    right = [
       {
         formatHorizontal = "HH:mm";
         formatVertical = "HH mm";
         id = "Clock";
         useMonospacedFont = false;
         usePrimaryColor = true;
-      }
-    ];
-    right = [
-      {
-        id = "ControlCenter";
-        useDistroLogo = true;
       }
     ];
   };
@@ -484,7 +503,7 @@ in {
           density = "default";
         };
         controlCenter = {
-          position = "top_right";
+          position = "top_left";
           diskPath = "/";
           shortcuts = {
             left = [

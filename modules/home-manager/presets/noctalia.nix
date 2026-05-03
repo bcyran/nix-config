@@ -26,6 +26,7 @@ in {
       file-roller
       gnome-calculator
       gnome-font-viewer
+      gpu-screen-recorder
     ];
   };
 }
