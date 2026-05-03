@@ -122,4 +122,7 @@ rec {
       fastMisc = "${fastStore}/misc";
     };
   };
+  users = {
+    remoteBuild = "remotebuild";
+  };
 }
