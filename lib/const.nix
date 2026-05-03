@@ -93,6 +93,7 @@ rec {
     rootAtSlimbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPGqHNqwFgdR0uKkXdcovGzUxCFJNq06lid/mD5R3Koj root@slimbook";
     btrbkAtSlimbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8a552vyvnPoS/JEkSujoygzQw0cB8jO2yI8VlsLUF6 btrbk@slimbook";
     bazyliAtPixel = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKIEWeLZ0wns7L8ToD6zFJn9DRXQsqan8cbyRKoOz7FR bazyli@pixel";
+    rootAtWork = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOJvg18oT3TMJ99H5nPvqRHj3Cskpp0++W4uCkLbI33b root@work";
   };
   # Syncthing
   syncthing = {

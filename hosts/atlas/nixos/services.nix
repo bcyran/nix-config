@@ -100,7 +100,7 @@ in {
     };
     remoteBuilder = {
       enable = true;
-      authorizedKeys = [my.lib.const.sshKeys.rootAtSlimbook];
+      authorizedKeys = with my.lib.const.sshKeys; [rootAtSlimbook rootAtWork];
     };
   };
 
