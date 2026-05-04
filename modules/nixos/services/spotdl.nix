@@ -48,6 +48,33 @@
   ];
   spotdlCommonArgsStr = builtins.concatStringsSep " " spotdlCommonArgs;
   spotdlWebArgsStr = builtins.concatStringsSep " " spotdlWebArgs;
+
+  syncPlaylistScript = pkgs.writeShellScriptBin "spotdl-sync-playlist" ''
+    set -euo pipefail
+
+    if [ $# -ne 2 ]; then
+      echo "Usage: spotdl-sync-playlist <spotify-playlist-url> <sync-file.spotdl>"
+      echo "Example: spotdl-sync-playlist https://open.spotify.com/playlist/... playlistname.spotdl"
+      exit 1
+    fi
+
+    # Load credentials from the environment file
+    set -a
+    # shellcheck disable=SC1090
+    source ${cfg.environmentFile}
+    set +a
+
+    cd '${cfg.mediaDir}'
+
+    ${pkgs.sudo}/bin/sudo -u ${cfg.user} \
+      SPOTIFY_CLIENT_ID="$SPOTIFY_CLIENT_ID" \
+      SPOTIFY_CLIENT_SECRET="$SPOTIFY_CLIENT_SECRET" \
+      ${spotdlBin} ${spotdlCommonArgsStr} --save-file "${cfg.mediaDir}/sync/$2" sync "$1"
+
+    # Fix paths in generated m3u8 playlists to be relative.
+    ${pkgs.findutils}/bin/find '${cfg.mediaDir}/playlists' -type f -name '*.m3u8' \
+      -exec ${pkgs.gnused}/bin/sed -i 's@${cfg.mediaDir}/@../@g' {} +
+  '';
 in {
   options.my.services.spotdl = let
     serviceName = "SpotDL";
@@ -76,7 +103,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [pkgs.spotdl];
+    environment.systemPackages = [pkgs.spotdl syncPlaylistScript];
 
     systemd = {
       tmpfiles.rules = [
