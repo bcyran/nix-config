@@ -6,197 +6,196 @@
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.noctalia;
 
-  # Widget configuration for primary monitors (full feature set)
-  primaryWidgets = {
-    left = [
-      {
-        id = "ControlCenter";
-        useDistroLogo = true;
-      }
-      {
-        colorizeIcons = false;
-        hideMode = "hidden";
-        id = "ActiveWindow";
-        maxWidth = 500;
-        scrollingMode = "hover";
-        showIcon = false;
-        showText = true;
-        textColor = "none";
-        useFixedWidth = false;
-      }
-    ];
-    center = [
-      {
-        characterCount = 2;
-        colorizeIcons = false;
-        emptyColor = "secondary";
-        enableScrollWheel = true;
-        focusedColor = "primary";
-        followFocusedScreen = false;
-        fontWeight = "bold";
-        groupedBorderOpacity = 1;
-        hideUnoccupied = false;
-        iconScale = 0.8;
-        id = "Workspace";
-        labelMode = "name";
-        occupiedColor = "none";
-        pillSize = 0.7;
-        showApplications = true;
-        showApplicationsHover = false;
+  widgets = {
+    clock = {
+      clockColor = "none";
+      customFont = "Inter SemiBold";
+      formatHorizontal = "ddd d MMMM HH:mm";
+      formatVertical = "HH mm";
+      id = "Clock";
+      tooltipFormat = "ddd d MMMM HH:mm";
+      useCustomFont = true;
+      useMonospacedFont = false;
+      usePrimaryColor = true;
+    };
+    controlCenter = {
+      id = "ControlCenter";
+      useDistroLogo = true;
+    };
+    workspace = {
+      characterCount = 2;
+      colorizeIcons = false;
+      emptyColor = "secondary";
+      enableScrollWheel = true;
+      focusedColor = "primary";
+      followFocusedScreen = false;
+      fontWeight = "bold";
+      groupedBorderOpacity = 1;
+      hideUnoccupied = false;
+      iconScale = 0.8;
+      id = "Workspace";
+      labelMode = "name";
+      occupiedColor = "none";
+      pillSize = 0.7;
+      showApplications = true;
+      showApplicationsHover = false;
+      showBadge = true;
+      showLabelsOnlyWhenOccupied = true;
+      unfocusedIconsOpacity = 1;
+    };
+    activeWindow = {
+      colorizeIcons = false;
+      hideMode = "hidden";
+      id = "ActiveWindow";
+      maxWidth = 800;
+      scrollingMode = "hover";
+      showIcon = false;
+      showText = true;
+      textColor = "none";
+      useFixedWidth = false;
+    };
+    mediaMini = {
+      compactMode = false;
+      hideMode = "idle";
+      hideWhenIdle = false;
+      id = "MediaMini";
+      maxWidth = 300;
+      panelShowAlbumArt = true;
+      scrollingMode = "hover";
+      showAlbumArt = true;
+      showArtistFirst = true;
+      showProgressRing = true;
+      showVisualizer = true;
+      textColor = "none";
+      useFixedWidth = false;
+      visualizerType = "linear";
+    };
+    usbDriveManager = {
+      defaultSettings = {
+        autoMount = true;
+        fileBrowser = "thunar";
+        hideWhenEmpty = true;
+        iconColor = "none";
         showBadge = true;
-        showLabelsOnlyWhenOccupied = true;
-        unfocusedIconsOpacity = 1;
-      }
+        showNotifications = true;
+        terminalCommand = "kitty";
+      };
+      id = "plugin:usb-drive-manager";
+    };
+    tray = {
+      blacklist = [];
+      chevronColor = "none";
+      colorizeIcons = false;
+      drawerEnabled = true;
+      hidePassive = false;
+      id = "Tray";
+      pinned = [];
+    };
+    network = {
+      displayMode = "alwaysHide";
+      iconColor = "none";
+      id = "Network";
+      textColor = "none";
+    };
+    networkManagerVpn = {
+      defaultSettings = {
+        connectedColor = "primary";
+        disableToastNotifications = false;
+        disconnectedColor = "none";
+        displayMode = "alwaysHide";
+      };
+      id = "plugin:network-manager-vpn";
+    };
+    bluetooth = {
+      displayMode = "alwaysHide";
+      iconColor = "none";
+      id = "Bluetooth";
+      textColor = "none";
+    };
+    brightness = {
+      applyToAllMonitors = true;
+      displayMode = "alwaysHide";
+      iconColor = "none";
+      id = "Brightness";
+      textColor = "none";
+    };
+    volume = {
+      displayMode = "alwaysHide";
+      iconColor = "none";
+      id = "Volume";
+      middleClickCommand = "pwvucontrol || pavucontrol";
+      textColor = "none";
+    };
+    keepAwake = {
+      iconColor = "none";
+      id = "KeepAwake";
+      textColor = "none";
+    };
+    battery = {
+      alwaysShowPercentage = false;
+      deviceNativePath = "__default__";
+      displayMode = "graphic";
+      hideIfIdle = false;
+      hideIfNotDetected = true;
+      id = "Battery";
+      showNoctaliaPerformance = false;
+      showPowerProfiles = false;
+      warningThreshold = 30;
+    };
+    notificationHistory = {
+      hideWhenZero = false;
+      hideWhenZeroUnread = false;
+      iconColor = "none";
+      id = "NotificationHistory";
+      showUnreadBadge = true;
+      unreadBadgeColor = "primary";
+    };
+    lockKeys = {
+      capsLockIcon = "square-letter-c";
+      hideWhenOff = true;
+      id = "LockKeys";
+      numLockIcon = "square-letter-n";
+      scrollLockIcon = "square-letter-s";
+      showCapsLock = true;
+      showNumLock = true;
+      showScrollLock = true;
+    };
+  };
+
+  # Widget configuration for primary monitors (full feature set)
+  primaryWidgets = with widgets; {
+    left = [
+      controlCenter
+      workspace
+      activeWindow
     ];
+    center = [];
     right = [
-      {
-        compactMode = false;
-        hideMode = "idle";
-        hideWhenIdle = false;
-        id = "MediaMini";
-        maxWidth = 300;
-        panelShowAlbumArt = true;
-        scrollingMode = "hover";
-        showAlbumArt = true;
-        showArtistFirst = true;
-        showProgressRing = true;
-        showVisualizer = true;
-        textColor = "none";
-        useFixedWidth = false;
-        visualizerType = "linear";
-      }
-      {
-        defaultSettings = {
-          autoMount = true;
-          fileBrowser = "thunar";
-          hideWhenEmpty = true;
-          iconColor = "none";
-          showBadge = true;
-          showNotifications = true;
-          terminalCommand = "kitty";
-        };
-        id = "plugin:usb-drive-manager";
-      }
-      {
-        blacklist = [];
-        chevronColor = "none";
-        colorizeIcons = false;
-        drawerEnabled = true;
-        hidePassive = false;
-        id = "Tray";
-        pinned = [];
-      }
-      {
-        displayMode = "onhover";
-        iconColor = "none";
-        id = "Network";
-        textColor = "none";
-      }
-      {
-        defaultSettings = {
-          connectedColor = "primary";
-          disableToastNotifications = false;
-          disconnectedColor = "none";
-          displayMode = "onhover";
-        };
-        id = "plugin:network-manager-vpn";
-      }
-      {
-        displayMode = "onhover";
-        iconColor = "none";
-        id = "Bluetooth";
-        textColor = "none";
-      }
-      {
-        defaultSettings = {};
-        id = "plugin:kde-connect";
-      }
-      {
-        applyToAllMonitors = false;
-        displayMode = "alwaysShow";
-        iconColor = "none";
-        id = "Brightness";
-        textColor = "none";
-      }
-      {
-        displayMode = "alwaysShow";
-        iconColor = "none";
-        id = "Volume";
-        middleClickCommand = "pwvucontrol || pavucontrol";
-        textColor = "none";
-      }
-      {
-        alwaysShowPercentage = false;
-        deviceNativePath = "__default__";
-        displayMode = "graphic";
-        hideIfIdle = false;
-        hideIfNotDetected = true;
-        id = "Battery";
-        showNoctaliaPerformance = false;
-        showPowerProfiles = false;
-        warningThreshold = 30;
-      }
-      {
-        hideWhenZero = false;
-        hideWhenZeroUnread = false;
-        iconColor = "none";
-        id = "NotificationHistory";
-        showUnreadBadge = true;
-        unreadBadgeColor = "primary";
-      }
-      {
-        clockColor = "none";
-        customFont = "Inter SemiBold";
-        formatHorizontal = "HH:mm, d MMMM";
-        formatVertical = "HH mm";
-        id = "Clock";
-        tooltipFormat = "HH:mm ddd, MMM dd";
-        useCustomFont = true;
-        useMonospacedFont = false;
-        usePrimaryColor = true;
-      }
+      lockKeys
+      mediaMini
+      usbDriveManager
+      tray
+      volume
+      brightness
+      keepAwake
+      network
+      networkManagerVpn
+      bluetooth
+      battery
+      notificationHistory
+      clock
     ];
   };
 
   # Widget configuration for secondary monitors (simplified)
-  secondaryWidgets = {
+  secondaryWidgets = with widgets; {
     left = [
-      {
-        id = "ControlCenter";
-        useDistroLogo = true;
-      }
+      controlCenter
+      workspace
     ];
-    center = [
-      {
-        characterCount = 2;
-        colorizeIcons = false;
-        emptyColor = "none";
-        enableScrollWheel = true;
-        focusedColor = "primary";
-        followFocusedScreen = false;
-        fontWeight = "bold";
-        groupedBorderOpacity = 1;
-        hideUnoccupied = false;
-        iconScale = 0.8;
-        id = "Workspace";
-        labelMode = "name";
-        occupiedColor = "none";
-        pillSize = 0.7;
-        showApplications = true;
-        showApplicationsHover = false;
-        showBadge = true;
-        showLabelsOnlyWhenOccupied = true;
-        unfocusedIconsOpacity = 1;
-      }
-    ];
+    center = [];
     right = [
-      {
-        formatHorizontal = "HH:mm";
-        formatVertical = "HH mm";
-        id = "Clock";
-        useMonospacedFont = false;
-        usePrimaryColor = true;
-      }
+      clock
     ];
   };
 
@@ -452,13 +451,13 @@ in {
           randomIntervalSec = 300;
           transitionDuration = 1500;
           transitionType = [
-            "wipe"
+            "fade"
           ];
           skipStartupTransition = false;
           transitionEdgeSmoothness = 0.05;
           panelPosition = "follow_bar";
           hideWallpaperFilenames = false;
-          useOriginalImages = false;
+          useOriginalImages = true;
           overviewBlur = 0.4;
           overviewTint = 0.6;
           useWallhaven = false;
@@ -584,29 +583,37 @@ in {
           disableDesktopWidgets = true;
         };
         dock = {
-          enabled = false;
+          enabled = true;
           position = "bottom";
           displayMode = "auto_hide";
           dockType = "floating";
-          backgroundOpacity = 1;
+          backgroundOpacity = 0.8;
           floatingRatio = 1;
-          size = 1;
-          onlySameOutput = true;
+          size = 1.4;
+          onlySameOutput = false;
           monitors = [];
-          pinnedApps = [];
+          pinnedApps = [
+            "firefox"
+            "kitty"
+            "thunar"
+            "joplin"
+            "signal"
+            "spotify"
+            "org.keepassxc.KeePassXC"
+          ];
           colorizeIcons = false;
           showLauncherIcon = false;
           launcherPosition = "end";
           launcherUseDistroLogo = false;
-          launcherIcon = "";
+          launcherIcon = "apps";
           launcherIconColor = "none";
-          pinnedStatic = false;
-          inactiveIndicators = false;
-          groupApps = false;
+          pinnedStatic = true;
+          inactiveIndicators = true;
+          groupApps = true;
           groupContextMenuMode = "extended";
-          groupClickAction = "cycle";
-          groupIndicatorStyle = "dots";
-          deadOpacity = 0.6;
+          groupClickAction = "list";
+          groupIndicatorStyle = "number";
+          deadOpacity = 1;
           animationSpeed = 1;
           sitOnFrame = false;
           showDockIndicator = false;
