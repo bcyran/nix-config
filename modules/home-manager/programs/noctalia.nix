@@ -160,6 +160,28 @@
       showNumLock = true;
       showScrollLock = true;
     };
+    systemMonitor = {
+      compactMode = true;
+      diskPath = "/";
+      iconColor = "none";
+      id = "SystemMonitor";
+      showCpuCores = false;
+      showCpuFreq = false;
+      showCpuTemp = true;
+      showCpuUsage = true;
+      showDiskAvailable = false;
+      showDiskUsage = false;
+      showDickUsageAsPercent = false;
+      showGpuTemp = false;
+      showLoadAverage = false;
+      showMemoryUsage = true;
+      showMemoryAsPercent = false;
+      showNetworkStats = false;
+      showSwapUsage = false;
+      textColor = "none";
+      useMonospaceFont = true;
+      usePadding = false;
+    };
   };
 
   # Widget configuration for primary monitors (full feature set)
@@ -181,6 +203,7 @@
       network
       networkManagerVpn
       bluetooth
+      systemMonitor
       battery
       notificationHistory
       clock
