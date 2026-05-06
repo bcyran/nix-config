@@ -29,18 +29,26 @@ notify_if_saved() {
 }
 
 annotate_fullscreen() {
-    hyprctl keyword windowrulev2 'fullscreen,title:^(satty)$' > /dev/null
-    hyprctl keyword windowrulev2 'float,title:^(satty)$' > /dev/null
-    hyprctl keyword windowrulev2 'noanim,title:^(satty)$' > /dev/null
+    hyprctl keyword 'windowrule[scr-satty-fullscreen]:match:title ^(satty)$' > /dev/null
+    hyprctl keyword 'windowrule[scr-satty-fullscreen]:fullscreen on' > /dev/null
+    hyprctl keyword 'windowrule[scr-satty-fullscreen]:float on' > /dev/null
+    hyprctl keyword 'windowrule[scr-satty-fullscreen]:no_anim on' > /dev/null
+    hyprctl keyword 'windowrule[scr-satty-fullscreen]:enable true' > /dev/null
+
     satty --disable-notifications --filename - --fullscreen --save-after-copy --early-exit --output-filename "$1"
-    hyprctl keyword windowrulev2 'unset,title:^(satty)$' > /dev/null
+
+    hyprctl keyword 'windowrule[scr-satty-fullscreen] remove' > /dev/null
 }
 
 annotate_floating() {
-    hyprctl keyword windowrulev2 'float,title:^(satty)$' > /dev/null
-    hyprctl keyword windowrulev2 'noanim,title:^(satty)$' > /dev/null
+    hyprctl keyword 'windowrule[scr-satty-floating]:match:title ^(satty)$' > /dev/null
+    hyprctl keyword 'windowrule[scr-satty-floating]:float on' > /dev/null
+    hyprctl keyword 'windowrule[scr-satty-floating]:no_anim on' > /dev/null
+    hyprctl keyword 'windowrule[scr-satty-floating]:enable true' > /dev/null
+
     satty --disable-notifications --filename - --save-after-copy --early-exit --output-filename "$1"
-    hyprctl keyword windowrulev2 'unset,title:^(satty)$' > /dev/null
+
+    hyprctl keyword 'windowrule[scr-satty-floating] remove' > /dev/null
 }
 
 print_usage() {
