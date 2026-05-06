@@ -15,7 +15,7 @@ in {
         "match:title PhilipsTV GUI, float on"
         "match:class PhilipsTV GUI, monitor $monitorC"
         "match:title PhilipsTV GUI, size 250 700"
-        "match:title PhilipsTV GUI, move 100%-270 70"
+        "match:title PhilipsTV GUI, move (monitor_w-270) 70"
 
         "match:class org.keepassxc.KeePassXC, float on"
         "match:class org.keepassxc.KeePassXC, monitor $monitorC"
@@ -25,14 +25,14 @@ in {
         "match:class protonvpn, float on"
         "match:class protonvpn, monitor $monitorC"
         "match:class protonvpn, size 400 760"
-        "match:class protonvpn, move 100%-420 70"
+        "match:class protonvpn, move (monitor_w-420) 70"
 
         "match:title splash, float on"
         "match:title Android Emulator, float on"
 
         "match:class org.gnome.Calculator, float on"
-        "match:class org.gnome.Calculator, size 400 500"
-        "match:class org.gnome.Calculator, move 100%-420 100%-520"
+        "match:class org.gnome.Calculator, size 400 620"
+        "match:class org.gnome.Calculator, move (monitor_w-420) (monitor_h-640)"
 
         "match:class Spotify, workspace 11 silent"
         "match:title Spotify Premium, workspace 11 silent"
