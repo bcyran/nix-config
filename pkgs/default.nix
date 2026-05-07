@@ -41,4 +41,5 @@ in rec {
   bentopdf = pkgs.callPackage ./bentopdf {};
   livecodes = pkgs.callPackage ./livecodes {};
   jellystat = pkgs.callPackage ./jellystat {};
+  noctalia-plugins = pkgs.callPackage ./noctalia-plugins {};
 }
