@@ -1,10 +1,21 @@
 {
+  my,
   config,
   lib,
   ...
 }: let
   inherit (config.colorScheme) palette;
   cfg = config.my.programs.noctalia;
+
+  noctaliaPluginsUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+  enabledPlugins = [
+    "currency-exchange"
+    "network-manager-vpn"
+    "screen-recorder"
+    "translator"
+    "usb-drive-manager"
+    "privacy-indicator"
+  ];
 
   widgets = {
     clock = {
@@ -302,6 +313,90 @@ in {
         mSurfaceVariant = "#${palette.base10}";
         mTertiary = "#${palette.base0E}";
       };
+
+      plugins = {
+        sources = [
+          {
+            name = "Noctalia Plugins";
+            enabled = true;
+            url = noctaliaPluginsUrl;
+          }
+        ];
+        states = lib.listToAttrs (
+          map (pluginName: {
+            name = pluginName;
+            value = {
+              enabled = true;
+              sourceUrl = noctaliaPluginsUrl;
+            };
+          })
+          enabledPlugins
+        );
+      };
+
+      pluginSettings = {
+        currency-exchange = {
+          sourceCurrency = "USD";
+          targetCurrency = "PLN";
+          widgetDisplayModel = "icon";
+          refreshInterval = 60;
+        };
+        network-manager-vpn = {
+          displayMode = "alwaysHide";
+          disconnectedColor = "none";
+          connectedColor = "primary";
+          disableToastNotifications = false;
+        };
+        screen-recorder = {
+          hideInactive = false;
+          iconColor = "none";
+          directory = "";
+          filenamePattern = "recording_yyyyMMdd_HHmmss";
+          frameRate = "60";
+          audioCodec = "opus";
+          videoCodec = "h264";
+          quality = "very_high";
+          colorRange = "limited";
+          showCursor = true;
+          copyToClipboard = false;
+          audioSource = "default_output";
+          videoSource = "portal";
+          resolution = "original";
+          replayEnabled = false;
+          replayDuration = "30";
+          customReplayDuration = "30";
+          replayStorage = "ram";
+          restorePortalSession = false;
+          customFrameRate = "60";
+        };
+        translator = {
+          backend = "google";
+          realTime = true;
+          deeplApiKey = "";
+          realTimeTranslation = true;
+          showPreview = true;
+        };
+        usb-drive-manager = {
+          autoMount = true;
+          fileBrowser = "thunar";
+          terminalCommand = "kitty";
+          showNotifications = true;
+          hideWhenEmpty = true;
+          showBadge = true;
+          iconColor = "none";
+        };
+        privacy-indicator = {
+          hideInactive = true;
+          enableToast = true;
+          removeMargins = true;
+          iconSpacing = 4;
+          activeColor = "primary";
+          inactiveColor = "none";
+          micFilterRegex = "";
+          camFilterRegex = "";
+        };
+      };
+
       settings = {
         settingsVersion = 59;
         bar = {
@@ -845,5 +940,16 @@ in {
         };
       };
     };
+
+    xdg.configFile = let
+      mkPluginFile = pluginName: {
+        name = "noctalia/plugins/${pluginName}";
+        value = {
+          source = "${my.pkgs.noctalia-plugins}/${pluginName}";
+          recursive = true;
+        };
+      };
+    in
+      my.lib.mapListToAttrs mkPluginFile enabledPlugins;
   };
 }
