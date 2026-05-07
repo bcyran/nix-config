@@ -26,8 +26,6 @@
       id = "Clock";
       tooltipFormat = "ddd d MMMM HH:mm";
       useCustomFont = true;
-      useMonospacedFont = false;
-      usePrimaryColor = true;
     };
     controlCenter = {
       id = "ControlCenter";
@@ -143,7 +141,6 @@
       textColor = "none";
     };
     battery = {
-      alwaysShowPercentage = false;
       deviceNativePath = "__default__";
       displayMode = "graphic";
       hideIfIdle = false;
@@ -151,7 +148,6 @@
       id = "Battery";
       showNoctaliaPerformance = false;
       showPowerProfiles = false;
-      warningThreshold = 30;
     };
     notificationHistory = {
       hideWhenZero = false;
@@ -182,7 +178,7 @@
       showCpuUsage = true;
       showDiskAvailable = false;
       showDiskUsage = false;
-      showDickUsageAsPercent = false;
+      showDiskUsageAsPercent = false;
       showGpuTemp = false;
       showLoadAverage = false;
       showMemoryUsage = true;
