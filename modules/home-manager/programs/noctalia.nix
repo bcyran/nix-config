@@ -189,6 +189,19 @@
       useMonospaceFont = true;
       usePadding = false;
     };
+    privacyIndicator = {
+      defaultSettings = {
+        activeColor = "primary";
+        camFilterRegex = "";
+        enableToast = true;
+        hideInactive = true;
+        iconSpacing = 4;
+        inactiveColor = "none";
+        micFilterRegex = "";
+        removeMargins = true;
+      };
+      id = "plugin:privacy-indicator";
+    };
   };
 
   # Widget configuration for primary monitors (full feature set)
@@ -201,6 +214,7 @@
     center = [];
     right = [
       lockKeys
+      privacyIndicator
       mediaMini
       usbDriveManager
       tray
