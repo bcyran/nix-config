@@ -19,7 +19,6 @@
     ./hardware-configuration.nix
     ../common/user.nix
     ./wireguard.nix
-    ./distributed-builds.nix
   ];
 
   networking.hostName = "slimbook";
@@ -65,6 +64,7 @@
       sops.enable = true;
       printing.enable = true;
       virtualisation.enable = true;
+      distributedBuilds.enable = true;
     };
     programs = {
       adb.enable = true;

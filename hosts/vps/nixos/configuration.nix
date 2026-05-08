@@ -15,7 +15,6 @@
     ../common/user.nix
     ./wireguard.nix
     ./services.nix
-    ./distributed-builds.nix
   ];
 
   networking = {
@@ -65,6 +64,7 @@
         ];
       };
       sops.enable = true;
+      distributedBuilds.enable = true;
     };
     services = {
       openssh.enable = true;
