@@ -13,7 +13,7 @@ in {
         "match:class terminal-workspace, workspace 2 silent"
 
         "match:title PhilipsTV GUI, float on"
-        "match:class PhilipsTV GUI, monitor $monitorC"
+        "match:title PhilipsTV GUI, monitor $monitorC"
         "match:title PhilipsTV GUI, size 250 700"
         "match:title PhilipsTV GUI, move (monitor_w-270) 70"
 

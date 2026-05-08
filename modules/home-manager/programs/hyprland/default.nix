@@ -7,7 +7,9 @@
   cfg = config.my.programs.hyprland;
   envVars = {
     NIXOS_OZONE_WL = "1";
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
     QT_QPA_PLATFORM = "wayland";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
     HYPRCURSOR_THEME = "phinger-cursors-dark-hyprcursor";
     HYPRCURSOR_SIZE = "24";
   };

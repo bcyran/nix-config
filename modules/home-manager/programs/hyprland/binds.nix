@@ -85,6 +85,11 @@
     ++ [
       "$mod, u, focusmonitor, l"
       "$mod, i, focusmonitor, r"
+      "$mod SHIFT, u, movewindow, mon:$monitorL"
+      "$mod SHIFT, i, movewindow, mon:$monitorR"
+
+      "$mod, d, togglespecialworkspace, dropdown"
+      "$mod, tab, focuscurrentorlast,"
     ]
     ++ (
       if cfg.withHy3
@@ -117,9 +122,9 @@
       ]
     )
     ++ [
-      "$mod, s, exec, ${execWrapper} scr output"
-      "$mod CONTROL, s, exec, ${execWrapper} scr area"
+      "$mod, s, exec, ${execWrapper} scr area"
       "$mod SHIFT, s, exec, ${execWrapper} scr active"
+      "$mod CONTROL, s, exec, ${execWrapper} scr output"
 
       "$mod, return, exec, ${execWrapper} kitty"
       "$mod SHIFT, return, exec, ${execWrapper} kitty --class terminal-floating"
@@ -133,23 +138,40 @@
     noctaliaExecWrapper = "${execWrapper} ${ipc}";
   in [
     "$mod, slash, exec, ${noctaliaExecWrapper} media playPause"
+    "$mod SHIFT, slash, exec, ${noctaliaExecWrapper} media toggle"
     "$mod, comma, exec, ${noctaliaExecWrapper} media previous"
     "$mod, period, exec, ${noctaliaExecWrapper} media next"
 
-    ",XF86AudioRaiseVolume, exec, ${noctaliaExecWrapper} volume increase"
-    ",XF86AudioLowerVolume, exec, ${noctaliaExecWrapper} volume decrease"
-    ",XF86AudioMute, exec, ${noctaliaExecWrapper} volume muteOutput"
-
-    ",XF86MonBrightnessDown, exec, ${noctaliaExecWrapper} brightness decrease"
-    ",XF86MonBrightnessUp, exec, ${noctaliaExecWrapper} brightness increase"
-
     "CONTROL, space, exec, ${noctaliaExecWrapper} notifications toggleHistory"
-    "CONTROL, escape, exec, ${noctaliaExecWrapper} notifications clear"
+    "CONTROL SHIFT, space, exec, ${noctaliaExecWrapper} notifications clear"
+    "CONTROL, escape, exec, ${noctaliaExecWrapper} notifications dismissAll"
 
     "$mod, space, exec, ${noctaliaExecWrapper} launcher toggle"
+    "$mod, w, exec, ${noctaliaExecWrapper} launcher windows"
+    "$mod SHIFT, v, exec, ${noctaliaExecWrapper} launcher clipboard"
     "$mod, grave, exec, ${noctaliaExecWrapper} settings toggle"
     "$mod SHIFT, space, exec, ${noctaliaExecWrapper} controlCenter toggle"
     "$mod SHIFT, m, exec, ${noctaliaExecWrapper} lockScreen lock"
+  ];
+
+  # Noctalia locked binds (active on lock screen, non-repeatable)
+  noctaliaLockedBinds = let
+    ipc = "noctalia-shell ipc call";
+    noctaliaExecWrapper = "${execWrapper} ${ipc}";
+  in [
+    ",XF86AudioMute, exec, ${noctaliaExecWrapper} volume muteOutput"
+  ];
+
+  # Noctalia locked repeatable binds (active on lock screen, repeat while held)
+  noctaliaRepeatableLockedBinds = let
+    ipc = "noctalia-shell ipc call";
+    noctaliaExecWrapper = "${execWrapper} ${ipc}";
+  in [
+    ",XF86AudioRaiseVolume, exec, ${noctaliaExecWrapper} volume increase"
+    ",XF86AudioLowerVolume, exec, ${noctaliaExecWrapper} volume decrease"
+
+    ",XF86MonBrightnessDown, exec, ${noctaliaExecWrapper} brightness decrease"
+    ",XF86MonBrightnessUp, exec, ${noctaliaExecWrapper} brightness increase"
   ];
 
   # Non-noctalia shell binds
@@ -158,13 +180,6 @@
     "$mod, comma, exec, ${execWrapper} playerctl previous"
     "$mod, period, exec, ${execWrapper} playerctl next"
 
-    ",XF86AudioRaiseVolume, exec, ${execWrapper} volume up"
-    ",XF86AudioLowerVolume, exec, ${execWrapper} volume down"
-    ",XF86AudioMute, exec, ${execWrapper} volume toggle"
-
-    ",XF86MonBrightnessDown, exec, ${execWrapper} backlight down 10"
-    ",XF86MonBrightnessUp, exec, ${execWrapper} backlight up 10"
-
     "CONTROL, space, exec, ${execWrapper} swaync-client --toggle-panel"
     "CONTROL, escape, exec, ${execWrapper} swaync-client --close-latest"
 
@@ -172,16 +187,42 @@
     "$mod SHIFT, m, exec, ${execWrapper} loginctl lock-session"
   ];
 
+  # Non-noctalia locked binds (active on lock screen, non-repeatable)
+  defaultLockedBinds = [
+    ",XF86AudioMute, exec, ${execWrapper} volume toggle"
+  ];
+
+  # Non-noctalia locked repeatable binds (active on lock screen, repeat while held)
+  defaultRepeatableLockedBinds = [
+    ",XF86AudioRaiseVolume, exec, ${execWrapper} volume up"
+    ",XF86AudioLowerVolume, exec, ${execWrapper} volume down"
+
+    ",XF86MonBrightnessDown, exec, ${execWrapper} backlight down 10"
+    ",XF86MonBrightnessUp, exec, ${execWrapper} backlight up 10"
+  ];
+
   # Select shell-specific binds
   shellBinds =
     if cfg.withNoctalia
     then noctaliaShellBinds
     else defaultShellBinds;
+
+  lockedBinds =
+    if cfg.withNoctalia
+    then noctaliaLockedBinds
+    else defaultLockedBinds;
+
+  repeatableLockedBinds =
+    if cfg.withNoctalia
+    then noctaliaRepeatableLockedBinds
+    else defaultRepeatableLockedBinds;
 in {
   config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       settings = {
         bind = commonBinds ++ shellBinds ++ workspaceBinds;
+        bindl = lockedBinds;
+        bindel = repeatableLockedBinds;
         bindm = [
           "$mod, mouse:272, movewindow"
           "$mod, mouse:273, resizewindow"

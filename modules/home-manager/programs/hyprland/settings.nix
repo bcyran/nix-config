@@ -143,15 +143,17 @@ in {
         fullscreen_opacity = 1.0;
         shadow = {
           enabled = true;
-          range = 4;
+          range = 20;
           render_power = 3;
-          color = "rgb(1a1a1a)";
+          color = "rgba(${palette.base00}cc)";
         };
         blur = {
           enabled = true;
           size = 5;
           passes = 2;
           new_optimizations = "on";
+          vibrancy = 0.1696;
+          special = true;
         };
       };
       animations = {
@@ -164,15 +166,14 @@ in {
           "borderangle, 1, 8, default"
           "fade, 1, 7, default"
           "workspaces, 0"
+          "specialWorkspace, 1, 4, myBezier, slidevert"
+          "layers, 1, 3, default, fade"
         ];
       };
       dwindle = {
         pseudotile = "yes";
         preserve_split = "yes";
         force_split = 2;
-      };
-      master = {
-        new_status = "slave";
       };
       gesture = [
         "3, horizontal, workspace"
@@ -187,6 +188,8 @@ in {
         animate_manual_resizes = true;
         focus_on_activate = true;
         disable_hyprland_guiutils_check = true;
+        enable_swallow = true;
+        swallow_regex = "^(kitty|terminal-floating|terminal-workspace)$";
       };
       cursor = {
         inactive_timeout = 60;
