@@ -28,6 +28,12 @@
       useCustomFont = true;
     };
     controlCenter = {
+      colorizeDistroLogo = false;
+      colorizeSystemIcon = "none";
+      colorizeSystemText = "none";
+      customIconPath = "";
+      enableColorization = false;
+      icon = "noctalia";
       id = "ControlCenter";
       useDistroLogo = true;
     };
