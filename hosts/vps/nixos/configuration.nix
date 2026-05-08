@@ -15,6 +15,7 @@
     ../common/user.nix
     ./wireguard.nix
     ./services.nix
+    ./distributed-builds.nix
   ];
 
   networking = {
