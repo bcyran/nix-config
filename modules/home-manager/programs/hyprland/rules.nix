@@ -13,17 +13,14 @@ in {
         "match:class terminal-workspace, workspace 2 silent"
 
         "match:title PhilipsTV GUI, float on"
-        "match:title PhilipsTV GUI, monitor $monitorC"
         "match:title PhilipsTV GUI, size 250 700"
         "match:title PhilipsTV GUI, move (monitor_w-270) 70"
 
         "match:class org.keepassxc.KeePassXC, float on"
-        "match:class org.keepassxc.KeePassXC, monitor $monitorC"
         "match:class org.keepassxc.KeePassXC, size 1000 700"
         "match:class org.keepassxc.KeePassXC, center on"
 
         "match:class protonvpn, float on"
-        "match:class protonvpn, monitor $monitorC"
         "match:class protonvpn, size 400 760"
         "match:class protonvpn, move (monitor_w-420) 70"
 

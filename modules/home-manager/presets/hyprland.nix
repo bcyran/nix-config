@@ -20,7 +20,7 @@ in {
         hyprlock.enable = mkDefault true;
         hyprpaper.enable = mkDefault true;
         wlsunset.enable = mkDefault true;
-        kanshi.enable = mkDefault true;
+        monique.enable = mkDefault true;
       };
     };
 

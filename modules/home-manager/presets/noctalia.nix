@@ -17,7 +17,7 @@ in {
           withNoctalia = mkDefault true;
         };
         noctalia.enable = mkDefault true;
-        kanshi.enable = mkDefault true;
+        monique.enable = mkDefault true;
       };
     };
     services = {

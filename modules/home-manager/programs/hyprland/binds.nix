@@ -85,8 +85,6 @@
     ++ [
       "$mod, u, focusmonitor, l"
       "$mod, i, focusmonitor, r"
-      "$mod SHIFT, u, movewindow, mon:$monitorL"
-      "$mod SHIFT, i, movewindow, mon:$monitorR"
 
       "$mod, d, togglespecialworkspace, dropdown"
       "$mod, tab, focuscurrentorlast,"
