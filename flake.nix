@@ -55,6 +55,10 @@
       url = "github:bcyran/timewall";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    monique = {
+      url = "github:ToRvaLDz/monique";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Secret management
     sops-nix = {
