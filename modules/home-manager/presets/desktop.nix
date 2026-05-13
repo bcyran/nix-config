@@ -23,7 +23,6 @@ in {
       configurations = {
         gtk.enable = mkDefault true;
         xdg.enable = mkDefault true;
-        polkit.enable = mkDefault true;
       };
     };
 

@@ -2,6 +2,7 @@
   my,
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit (config.colorScheme) palette;
@@ -15,6 +16,9 @@
     "translator"
     "usb-drive-manager"
     "privacy-indicator"
+    "file-search"
+    "unicode-picker"
+    "polkit-agent"
   ];
 
   widgets = {
@@ -410,6 +414,13 @@ in {
           inactiveColor = "none";
           micFilterRegex = "";
           camFilterRegex = "";
+        };
+        file-search = {
+          showHidden = false;
+          maxResults = 100;
+          fileOpener = lib.getExe' pkgs.xdg-utils "xdg-open";
+          searchDirectory = config.my.user.home;
+          fdCommand = lib.getExe pkgs.fd;
         };
       };
 

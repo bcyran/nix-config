@@ -10,13 +10,15 @@ in {
   options.my.presets.noctalia.enable = lib.mkEnableOption "noctalia";
 
   config = lib.mkIf cfg.enable {
-    my.programs = {
-      hyprland = {
-        enable = mkDefault true;
-        withNoctalia = mkDefault true;
+    my = {
+      programs = {
+        hyprland = {
+          enable = mkDefault true;
+          withNoctalia = mkDefault true;
+        };
+        noctalia.enable = mkDefault true;
+        kanshi.enable = mkDefault true;
       };
-      noctalia.enable = mkDefault true;
-      kanshi.enable = mkDefault true;
     };
     services = {
       poweralertd.enable = mkDefault true;

@@ -14,6 +14,9 @@ in {
         hyprland.enable = mkDefault true;
         greetd.enable = mkDefault true;
       };
+      configurations = {
+        polkit.enable = mkDefault true;
+      };
     };
 
     security = {
