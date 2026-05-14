@@ -80,6 +80,13 @@ in {
         enable = true;
         reverseProxy.domain = "sabnzbd.${cfg.domain}";
         inherit (cfg) group;
+        extraSettings = {
+          misc = {
+            bandwidth_max = "110MB/s";
+            bandwidth_perc = 70;
+            cache_limit = "4G";
+          };
+        };
       };
       prowlarr = {
         enable = true;
