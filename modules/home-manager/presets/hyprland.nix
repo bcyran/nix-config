@@ -22,6 +22,9 @@ in {
         wlsunset.enable = mkDefault true;
         monique.enable = mkDefault true;
       };
+      configurations = {
+        polkit.enable = mkDefault true;
+      };
     };
 
     services = {
