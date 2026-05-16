@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkDefault;
+  inherit (lib) mkDefault mkForce;
   cfg = config.my.presets.laptop;
 in {
   options.my.presets.laptop.enable = lib.mkEnableOption "laptop";
@@ -14,7 +14,11 @@ in {
       kanata.enable = mkDefault true;
     };
     services = {
-      tlp.enable = mkDefault true;
+      tuned = {
+        enable = mkDefault true;
+        ppdSupport = mkDefault true;
+      };
+      tlp.enable = mkForce false;
       logind.settings.Login = {
         HandleLidSwitch = mkDefault "suspend";
         HandleLidSwitchDocked = mkDefault "ignore";
