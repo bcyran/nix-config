@@ -139,7 +139,6 @@ in {
         ];
       };
       dwindle = {
-        pseudotile = "yes";
         preserve_split = "yes";
         force_split = 2;
       };
