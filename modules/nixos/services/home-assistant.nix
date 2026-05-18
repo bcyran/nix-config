@@ -43,7 +43,6 @@ in {
             unit_system = "metric";
             internal_url = "https://${cfg.reverseProxy.domain}";
           };
-          lovelace.mode = "yaml";
           http = {
             use_x_forwarded_for = true;
             server_host = cfg.address;
