@@ -49,6 +49,7 @@ in {
         enable = !cfg.withUWSM;
         enableXdgAutostart = !cfg.withUWSM;
       };
+      configType = "hyprlang";
       settings.env = lib.mapAttrsToList (name: value: "${name},${value}") envVars;
       plugins = lib.optionals cfg.withHy3 [pkgs.hyprlandPlugins.hy3];
     };

@@ -134,6 +134,7 @@ in {
           "borderangle, 1, 8, default"
           "fade, 1, 7, default"
           "workspaces, 0"
+          "fadeSwitch, 0"
           "specialWorkspace, 1, 4, myBezier, slidevert"
           "layers, 1, 3, default, fade"
         ];
