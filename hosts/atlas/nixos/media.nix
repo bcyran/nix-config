@@ -6,8 +6,12 @@
   inherit (my.lib.const.paths.atlas) downloads slowMedia fastMedia;
   intraDomain = my.lib.const.domains.intra;
   mediaGroup = "media";
+  vpnNs = "airvpn";
 in {
   sops.secrets = {
+    airvpn_conf_file = {
+      restartUnits = ["airvpn.service"];
+    };
     transmission_credentials_file = {
       reloadUnits = ["transmission.service"];
     };
@@ -25,6 +29,12 @@ in {
     };
   };
 
+  my.configurations.vpnConfinement = {
+    enable = true;
+    wireguardConfigFile = config.sops.secrets.airvpn_conf_file.path;
+    namespaceName = vpnNs;
+  };
+
   my.services = {
     transmission = {
       enable = true;
@@ -33,7 +43,7 @@ in {
       credentialsFile = config.sops.secrets.transmission_credentials_file.path;
       peerPort = 24334;
       group = mediaGroup;
-      vpnNamespace = "airvpn";
+      vpnNamespace = vpnNs;
       extraSettings = {
         ratio-limit-enabled = true;
         ratio-limit = 2;
@@ -58,32 +68,32 @@ in {
     prowlarr = {
       enable = true;
       reverseProxy.domain = "prowlarr.${intraDomain}";
-      vpnNamespace = "airvpn";
+      vpnNamespace = vpnNs;
     };
     flaresolverr = {
       enable = true;
       reverseProxy.domain = "flaresolverr.${intraDomain}";
-      vpnNamespace = "airvpn";
+      vpnNamespace = vpnNs;
     };
     sonarr = {
       enable = true;
       reverseProxy.domain = "sonarr.${intraDomain}";
       group = mediaGroup;
-      vpnNamespace = "airvpn";
+      vpnNamespace = vpnNs;
       mediaDir = "${slowMedia}/tv";
     };
     radarr = {
       enable = true;
       reverseProxy.domain = "radarr.${intraDomain}";
       group = mediaGroup;
-      vpnNamespace = "airvpn";
+      vpnNamespace = vpnNs;
       mediaDir = "${slowMedia}/movies";
     };
     lidarr = {
       enable = true;
       reverseProxy.domain = "lidarr.${intraDomain}";
       group = mediaGroup;
-      vpnNamespace = "airvpn";
+      vpnNamespace = vpnNs;
       mediaDir = "${fastMedia}/music/lidarr";
     };
     spotdl = {
@@ -104,7 +114,7 @@ in {
       enable = true;
       reverseProxy.domain = "bazarr.${intraDomain}";
       group = mediaGroup;
-      vpnNamespace = "airvpn";
+      vpnNamespace = vpnNs;
     };
     jellyfin = {
       enable = true;

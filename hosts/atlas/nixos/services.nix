@@ -52,9 +52,6 @@ in {
     speedtest_tracker_env_file = {
       restartUnits = ["${containersBackend}-speedtest-tracker.service"];
     };
-    airvpn_conf_file = {
-      restartUnits = ["airvpn.service"];
-    };
     nix_store_binary_cache_key = {
       restartUnits = ["nix-serve.service"];
     };
@@ -78,11 +75,6 @@ in {
   users.groups.${mediaGroup} = {};
 
   my.configurations = {
-    vpnConfinement = {
-      enable = true;
-      wireguardConfigFile = config.sops.secrets.airvpn_conf_file.path;
-      namespaceName = "airvpn";
-    };
     remoteBuilder = {
       enable = true;
       authorizedKeys = with my.lib.const.sshKeys; [
