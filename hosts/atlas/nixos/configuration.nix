@@ -20,6 +20,7 @@
     ../common/user.nix
     ./homepage.nix
     ./services.nix
+    ./media.nix
     ./wireguard.nix
     ./backup.nix
   ];

@@ -52,9 +52,6 @@ in {
     speedtest_tracker_env_file = {
       restartUnits = ["${containersBackend}-speedtest-tracker.service"];
     };
-    transmission_credentials_file = {
-      reloadUnits = ["transmission.service"];
-    };
     airvpn_conf_file = {
       restartUnits = ["airvpn.service"];
     };
@@ -73,21 +70,9 @@ in {
     linkwarden_env_file = {
       restartUnits = ["linkwarden.service"];
     };
-    recyclarr_env_file = {
-      restartUnits = ["recyclarr.service"];
-    };
-    jellystat_env_file = {
-      restartUnits = ["jellystat.service"];
-    };
-    pinchflat_env_file = {
-      restartUnits = ["pinchflat.service"];
-    };
     mqtt_hass_password_file = {};
     ntfy_sh_env_file = {};
     paperless_password_file = {};
-    spotdl_env_file = {
-      restartUnits = ["spotdl.service"];
-    };
   };
 
   users.groups.${mediaGroup} = {};
@@ -303,57 +288,9 @@ in {
       reverseProxy.domain = "paperless.${intraDomain}";
       passwordFile = config.sops.secrets.paperless_password_file.path;
     };
-    servarr = let
-      inherit (my.lib.const.paths.atlas) downloads slowMedia fastMedia;
-    in {
-      enable = true;
-      group = mediaGroup;
-      domain = intraDomain;
-      dirs = {
-        transmission = "${downloads}/torrents";
-        sonarr = "${slowMedia}/tv";
-        radarr = "${slowMedia}/movies";
-        pinchflat = "${slowMedia}/youtube";
-        lidarr = "${fastMedia}/music/lidarr";
-        spotdl = "${fastMedia}/music/youtube";
-      };
-      transmission = {
-        credentialsFile = config.sops.secrets.transmission_credentials_file.path;
-        peerPort = 24334;
-        extraSettings = {
-          ratio-limit-enabled = true;
-          ratio-limit = 2;
-          speed-limit-down-enabled = true;
-          speed-limit-down = 40000;
-          speed-limit-up-enabled = true;
-          speed-limit-up = 20000;
-        };
-      };
-      recyclarrEnvironmentFiles = [config.sops.secrets.recyclarr_env_file.path];
-      jellystatEnvironmentFiles = [config.sops.secrets.jellystat_env_file.path];
-      pinchflatEnvironmentFile = config.sops.secrets.pinchflat_env_file.path;
-      spotdlEnvironmentFile = config.sops.secrets.spotdl_env_file.path;
-      vpnNamespace = "airvpn";
-    };
-    calibre-web = {
-      enable = true;
-      group = mediaGroup;
-      reverseProxy.domain = "calibre.${intraDomain}";
-      calibreLibrary = "${my.lib.const.paths.atlas.fastMedia}/ebooks/calibre";
-    };
     koinsight = {
       enable = true;
       reverseProxy.domain = "koinsight.${intraDomain}";
-    };
-    audiobookshelf = {
-      enable = true;
-      group = mediaGroup;
-      reverseProxy.domain = "audiobookshelf.${intraDomain}";
-    };
-    kiwix = {
-      enable = true;
-      libraryPath = "${my.lib.const.paths.atlas.slowMedia}/kiwix";
-      reverseProxy.domain = "kiwix.${intraDomain}";
     };
     edo-calculator = {
       enable = true;
