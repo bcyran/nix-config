@@ -45,8 +45,6 @@ in {
       group = mediaGroup;
       vpnNamespace = vpnNs;
       extraSettings = {
-        ratio-limit-enabled = true;
-        ratio-limit = 2;
         speed-limit-down-enabled = true;
         speed-limit-down = 40000;
         speed-limit-up-enabled = true;
