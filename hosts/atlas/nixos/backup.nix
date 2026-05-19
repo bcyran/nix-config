@@ -15,42 +15,50 @@ in {
   };
 
   services = {
-    btrbk.instances = let
-      snapshotRetention = "14d";
-      snapshotRetentionMin = "1d";
-      mkBtrbkInstance = {
-        volume,
-        subvolumes,
-      }: {
-        onCalendar = "hourly";
-        settings = {
-          volume.${volume} = {
-            subvolume =
-              my.lib.mapListToAttrs (subvolume: {
-                name = subvolume;
-                value = {};
-              })
-              subvolumes;
-            snapshot_dir = ".snapshots";
-            target = "${replicasStore}/atlas";
-            target_preserve = snapshotRetention;
-            target_preserve_min = snapshotRetentionMin;
+    btrbk = {
+      instances = let
+        snapshotRetention = "14d";
+        snapshotRetentionMin = "1d";
+        mkBtrbkInstance = {
+          volume,
+          subvolumes,
+        }: {
+          onCalendar = "hourly";
+          settings = {
+            volume.${volume} = {
+              subvolume =
+                my.lib.mapListToAttrs (subvolume: {
+                  name = subvolume;
+                  value = {};
+                })
+                subvolumes;
+              snapshot_dir = ".snapshots";
+              target = "${replicasStore}/atlas";
+              target_preserve = snapshotRetention;
+              target_preserve_min = snapshotRetentionMin;
+            };
+            snapshot_preserve = snapshotRetention;
+            snapshot_preserve_min = snapshotRetentionMin;
+            archive_preserve = snapshotRetention;
+            archive_preserve_min = snapshotRetentionMin;
           };
-          snapshot_preserve = snapshotRetention;
-          snapshot_preserve_min = snapshotRetentionMin;
-          archive_preserve = snapshotRetention;
-          archive_preserve_min = snapshotRetentionMin;
+        };
+      in {
+        root = mkBtrbkInstance {
+          volume = "/";
+          subvolumes = ["/"];
+        };
+        fast_store = mkBtrbkInstance {
+          volume = "/mnt/fast_store";
+          subvolumes = ["var_lib"];
         };
       };
-    in {
-      root = mkBtrbkInstance {
-        volume = "/";
-        subvolumes = ["/"];
-      };
-      fast_store = mkBtrbkInstance {
-        volume = "/mnt/fast_store";
-        subvolumes = ["var_lib"];
-      };
+      sshAccess = [
+        {
+          key = my.lib.const.sshKeys.btrbkAtSlimbook;
+          roles = ["info" "source" "target" "delete"];
+        }
+      ];
     };
 
     restic.backups = let
