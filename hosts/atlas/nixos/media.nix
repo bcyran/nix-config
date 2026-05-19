@@ -130,6 +130,10 @@ in {
       environmentFiles = [config.sops.secrets.recyclarr_env_file.path];
       group = mediaGroup;
     };
+    cleanuparr = {
+      enable = true;
+      reverseProxy.domain = "cleanuparr.${intraDomain}";
+    };
     jellystat = {
       enable = true;
       environmentFiles = [config.sops.secrets.jellystat_env_file.path];

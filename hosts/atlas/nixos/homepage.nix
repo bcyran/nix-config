@@ -422,6 +422,14 @@ in {
             };
           }
           {
+            Cleanuparr = {
+              description = "Download manager for the Servarr ecosystem";
+              icon = "cleanuparr";
+              href = makeServiceDomainUrl "cleanuparr";
+              siteMonitor = makeServiceLoopbackUrl "cleanuparr";
+            };
+          }
+          {
             Pinchflat = {
               description = "YouTube video downloader.";
               icon = "pinchflat";
