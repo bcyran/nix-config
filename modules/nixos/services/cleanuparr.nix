@@ -39,7 +39,7 @@ in {
         PUID = toString config.users.users.${user}.uid;
         PGID = toString config.users.groups.${group}.gid;
         UMASK = "022";
-        TZ = "Etc/UTC";
+        TZ = "Europe/Warsaw";
       };
       extraOptions = [
         "--network=slirp4netns:allow_host_loopback=true"
