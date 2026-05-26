@@ -19,7 +19,6 @@ buildNpmPackage rec {
   npmDepsHash = "sha256-Y40ZnpHjEbYOjDrgwjLxCTyGWHGH6Zw8JADUiJc4hl4=";
 
   makeCacheWritable = true;
-  npmFlags = ["--legacy-peer-deps"];
 
   nativeBuildInputs = [makeWrapper];
 
