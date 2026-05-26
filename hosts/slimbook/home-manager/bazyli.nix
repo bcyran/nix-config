@@ -164,16 +164,14 @@ in {
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       atlas = {
-        host = "atlas";
-        hostname = lan.devices.atlas.domain;
-        user = "bazyli";
+        HostName = lan.devices.atlas.domain;
+        User = "bazyli";
       };
       vps = {
-        host = "vps";
-        hostname = domains.vps;
-        user = "bazyli";
+        HostName = domains.vps;
+        User = "bazyli";
       };
     };
   };
