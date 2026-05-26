@@ -26,20 +26,23 @@ in {
             base_url = "https://${config.my.services.sonarr.reverseProxy.domain}";
             api_key._secret = cfg.sonarrApiKeyFile;
             delete_old_custom_formats = true;
-            replace_existing_custom_formats = true;
-            include = [
-              # Series
-              {template = "sonarr-quality-definition-series";}
+            quality_definition.type = "series";
+            quality_profiles = [
               # 4k
-              {template = "sonarr-v4-quality-profile-web-2160p-alternative";}
-              {template = "sonarr-v4-custom-formats-web-2160p";}
+              {
+                trash_id = "dfa5eaae7894077ad6449169b6eb03e0"; # WEB-2160p (Alternative)
+                name = "WEB-2160p";
+              }
               # 1080p
-              {template = "sonarr-v4-quality-profile-web-1080p-alternative";}
-              {template = "sonarr-v4-custom-formats-web-1080p";}
+              {
+                trash_id = "9d142234e45d6143785ac55f5a9e8dc9"; # WEB-1080p (Alternative)
+                name = "WEB-1080p";
+              }
               # Anime
-              {template = "sonarr-quality-definition-anime";}
-              {template = "sonarr-v4-quality-profile-anime";}
-              {template = "sonarr-v4-custom-formats-anime";}
+              {
+                trash_id = "20e0fc959f1f1704bed501f23bdae76f"; # [Anime] Remux-1080p
+                name = "Remux-1080p - Anime";
+              }
             ];
             custom_formats = [
               # Allow x265 1080p releases
@@ -59,22 +62,31 @@ in {
           myradarr = {
             base_url = "https://${config.my.services.radarr.reverseProxy.domain}";
             api_key._secret = cfg.radarrApiKeyFile;
-            include = [
-              # Movies
-              {template = "radarr-quality-definition-movie";}
+            quality_definition.type = "movie";
+            quality_profiles = [
               # 4k
-              {template = "radarr-quality-profile-remux-web-2160p";}
-              {template = "radarr-custom-formats-remux-web-2160p";}
-              {template = "radarr-quality-profile-uhd-bluray-web";}
-              {template = "radarr-custom-formats-uhd-bluray-web";}
+              {
+                trash_id = "fd161a61e3ab826d3a22d53f935696dd"; # Remux + WEB 2160p
+                name = "Remux + WEB 2160p";
+              }
+              {
+                trash_id = "64fb5f9858489bdac2af690e27c8f42f"; # UHD Bluray + WEB
+                name = "UHD Bluray + WEB";
+              }
               # 1080p
-              {template = "radarr-quality-profile-remux-web-1080p";}
-              {template = "radarr-custom-formats-remux-web-1080p";}
-              {template = "radarr-quality-profile-hd-bluray-web";}
-              {template = "radarr-custom-formats-hd-bluray-web";}
+              {
+                trash_id = "9ca12ea80aa55ef916e3751f4b874151"; # Remux + WEB 1080p
+                name = "Remux + WEB 1080p";
+              }
+              {
+                trash_id = "d1d67249d3890e49bc12e275d989a7e9"; # HD Bluray + WEB
+                name = "HD Bluray + WEB";
+              }
               # Anime
-              {template = "radarr-quality-profile-anime";}
-              {template = "radarr-custom-formats-anime";}
+              {
+                trash_id = "722b624f9af1e492284c4bc842153a38"; # [Anime] Remux-1080p
+                name = "Remux-1080p - Anime";
+              }
             ];
             custom_formats = [
               # Allow x265 1080p releases
