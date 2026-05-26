@@ -15,7 +15,10 @@ in {
     transmission_credentials_file = {
       reloadUnits = ["transmission.service"];
     };
-    recyclarr_env_file = {
+    sonarr_api_key = {
+      restartUnits = ["recyclarr.service"];
+    };
+    radarr_api_key = {
       restartUnits = ["recyclarr.service"];
     };
     jellystat_env_file = {
@@ -125,8 +128,8 @@ in {
     };
     recyclarr = {
       enable = true;
-      environmentFiles = [config.sops.secrets.recyclarr_env_file.path];
-      group = mediaGroup;
+      sonarrApiKeyFile = config.sops.secrets.sonarr_api_key.path;
+      radarrApiKeyFile = config.sops.secrets.radarr_api_key.path;
     };
     cleanuparr = {
       enable = true;
