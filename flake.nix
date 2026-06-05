@@ -19,6 +19,7 @@
     };
     hardware = {
       url = "github:nixos/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     grafana-dashboards = {
       url = "github:blackheaven/grafana-dashboards.nix";
