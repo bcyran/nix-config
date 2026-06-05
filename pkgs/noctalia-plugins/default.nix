@@ -3,17 +3,17 @@
   stdenv,
   fetchFromGitHub,
 }: let
-  rev = "cb10d23";
+  rev = "2218cf8";
 in
   stdenv.mkDerivation {
     pname = "noctalia-plugins";
-    version = "unstable-2026-05-07-${rev}";
+    version = "unstable-2026-06-03-${rev}";
 
     src = fetchFromGitHub {
       owner = "noctalia-dev";
       repo = "noctalia-plugins";
       inherit rev;
-      hash = "sha256-vgJj89YeiU2FQ+cXIraPx/XdiAMC9Cj+rJqC//O4Na4=";
+      hash = "sha256-jOHmyhHBEk4CjiroB6Ju+5mml1uQtGfMjcuu1fhCSfs=";
     };
 
     dontBuild = true;

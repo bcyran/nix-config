@@ -22,14 +22,14 @@
 in
   buildNpmPackage rec {
     pname = "livecodes";
-    version = "48";
+    version = "49";
 
     src = fetchFromGitHub {
       owner = "live-codes";
       repo = "livecodes";
       tag = "v${version}";
       leaveDotGit = true;
-      hash = "sha256-QikmlJfyoFXnMLA9xZ9wEMgo5I+LqAwdcvX2tVhWs5w=";
+      hash = "sha256-fALyMOAHo39yIBIjnu28seWK+M2yA24csqkdIDV0rj0=";
       postFetch = ''
         pushd $out
         git rev-parse HEAD > .gitrev
@@ -38,7 +38,7 @@ in
       '';
     };
 
-    npmDepsHash = "sha256-t1VcRVOlyCYs8ofe/RNQOsW0yCwwOxsiKyGzEt4p9jE=";
+    npmDepsHash = "sha256-MQrbMidvG7i3UGUdxZJhvzppVMWgZlUefs+iRuAph5s=";
 
     nativeBuildInputs = [fake-git];
 

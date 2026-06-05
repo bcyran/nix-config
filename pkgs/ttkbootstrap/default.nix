@@ -10,7 +10,7 @@
 }:
 buildPythonPackage rec {
   pname = "ttkboostrap";
-  version = "1.10.1";
+  version = "1.20.3";
   disable = pythonOlder "3.7";
   pyproject = true;
 
@@ -18,7 +18,7 @@ buildPythonPackage rec {
     owner = "israel-dryer";
     repo = "ttkbootstrap";
     rev = "refs/tags/v${version}";
-    hash = "sha256-aUqr30Tgz3ZLjLbNIt9yi6bqhXj+31heZoOLOZHYUiU=";
+    hash = "sha256-S00XBfSBhnsxJ4KlffrKnurJTQIEepUnqBPV8tBUMsA=";
   };
 
   buildsystem = [

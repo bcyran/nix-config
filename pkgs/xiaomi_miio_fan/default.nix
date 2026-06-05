@@ -7,13 +7,13 @@
 buildHomeAssistantComponent rec {
   owner = "syssi";
   domain = "xiaomi_miio_fan";
-  version = "2025.7.0.1";
+  version = "2026.5.0.1";
 
   src = fetchFromGitHub {
     owner = "syssi";
     repo = "xiaomi_fan";
     rev = version;
-    hash = "sha256-+w0OxUn7wKYb+RmG0QowaxP1wBL5Re50t77XQ8iWDzQ=";
+    hash = "sha256-suTqFpGDtDuF742yLnGcEDItP8R1ZyiuLlDnUjUcWAg=";
   };
 
   postPatch = ''

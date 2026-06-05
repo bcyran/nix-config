@@ -11,14 +11,14 @@
 }:
 buildPythonApplication {
   pname = "fio-plot";
-  version = "1.1.16";
+  version = "1.1.21";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "louwrentius";
     repo = "fio-plot";
-    rev = "9484287";
-    hash = "sha256-yN0gVm6ZYEIoh91d+0ohJ9yU+VWwYEq3MoG+WgBrs2Q=";
+    rev = "cfc6a6f6e6f0de13838ea7cdb8861fdc07f42185";
+    hash = "sha256-iEn6BlfDRZK9vSnx5EEJpjiV61OEU3fHeZMaTYd4X5Q=";
   };
 
   postPatch = ''
