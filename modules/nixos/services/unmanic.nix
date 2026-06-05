@@ -6,7 +6,7 @@
 }: let
   cfg = config.my.services.unmanic;
 
-  unmanicVersion = "0.2.7";
+  unmanicVersion = "0.4.0.post23";
   cacheDir = "/var/cache/unmanic";
   dataDir = "/var/lib/unmanic";
 in {

@@ -6,7 +6,7 @@
 }: let
   cfg = config.my.services.edo-calculator;
 
-  edoCalculatorVersion = "sha-85b6167";
+  edoCalculatorVersion = "sha-b7495bc";
 in {
   options.my.services.edo-calculator = let
     serviceName = "EDO Calculator";
