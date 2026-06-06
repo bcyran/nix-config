@@ -296,5 +296,9 @@ in {
       reverseProxy.domain = "changedetection.${intraDomain}";
       environmentFile = config.sops.secrets.changedetection_env_file.path;
     };
+    playwright-chromium = {
+      enable = true;
+      reverseProxy.domain = "playwright-chromium.${intraDomain}";
+    };
   };
 }
