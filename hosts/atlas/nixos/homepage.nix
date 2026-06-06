@@ -227,6 +227,20 @@ in {
             };
           }
           {
+            "Changedetection" = rec {
+              description = "Web page change monitoring.";
+              icon = "https://cdn.jsdelivr.net/gh/selfhst/icons/svg/changedetection.svg";
+              href = makeServiceDomainUrl "changedetection";
+              siteMonitor = makeServiceLoopbackUrl "changedetection";
+              widget = {
+                type = "changedetectionio";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_CHANGEDETECTION_API_KEY}}";
+                fields = ["diffsDetected" "totalObserved"];
+              };
+            };
+          }
+          {
             KoInsight = {
               description = "KoReader reading stats dashboard.";
               icon = "bookstack";

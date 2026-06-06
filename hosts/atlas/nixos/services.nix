@@ -70,6 +70,9 @@ in {
     mqtt_hass_password_file = {};
     ntfy_sh_env_file = {};
     paperless_password_file = {};
+    changedetection_env_file = {
+      restartUnits = ["changedetection-io.service"];
+    };
   };
 
   users.groups.${mediaGroup} = {};
@@ -287,6 +290,11 @@ in {
     edo-calculator = {
       enable = true;
       reverseProxy.domain = "edocalculator.${intraDomain}";
+    };
+    changedetection = {
+      enable = true;
+      reverseProxy.domain = "changedetection.${intraDomain}";
+      environmentFile = config.sops.secrets.changedetection_env_file.path;
     };
   };
 }
