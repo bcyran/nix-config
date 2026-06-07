@@ -27,6 +27,7 @@ in {
         nix-index.enable = mkDefault true;
         yazi.enable = mkDefault true;
         opencode.enable = mkDefault true;
+        glow.enable = mkDefault true;
       };
     };
 
@@ -44,7 +45,6 @@ in {
       httpie
       dust
       dysk
-      glow
       fastfetch
       alejandra
       statix
