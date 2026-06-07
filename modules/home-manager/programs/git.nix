@@ -67,6 +67,7 @@ in {
             df = "diff";
             dfc = "diff --cached";
             pf = "push --force-with-lease";
+            pall = "!git remote | xargs -L1 git push";
             prom = "pull --rebase origin master";
             ria = "rebase --interactive";
             r = "restore";
