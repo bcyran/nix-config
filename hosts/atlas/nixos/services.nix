@@ -307,6 +307,7 @@ in {
       enable = true;
       reverseProxy.domain = "opencode.${intraDomain}";
       environmentFile = config.sops.secrets.opencode_env_file.path;
+      workingDirectory = "${config.my.user.home}/Kod";
     };
   };
 }
