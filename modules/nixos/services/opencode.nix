@@ -6,6 +6,7 @@
   ...
 }: let
   cfg = config.my.services.opencode;
+  dataDir = "/var/lib/opencode";
 in {
   options.my.services.opencode = let
     serviceName = "opencode";
@@ -16,19 +17,45 @@ in {
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
     environmentFile = my.lib.options.mkEnvironmentFileOption serviceName;
+    user = my.lib.options.mkUserOption serviceName;
+    group = my.lib.options.mkGroupOption serviceName;
 
     workingDirectory = lib.mkOption {
       type = lib.types.path;
       example = "/srv/repos/myapp";
-      description = "Working directory for the opencode server. The path will be bind-mounted read-write into the service's namespace.";
+      description = "Working directory for the opencode server. The path will be made read-write accessible inside the service's namespace.";
     };
   };
 
   config = lib.mkIf cfg.enable {
+    users = {
+      users.${cfg.user} = {
+        home = dataDir;
+        createHome = true;
+        inherit (cfg) group;
+        isSystemUser = true;
+        # Tools spawned by the service need a real shell; nologin (isSystemUser
+        # default) causes "This account is currently not available." errors.
+        shell = pkgs.bash;
+      };
+      groups.${cfg.group} = {};
+    };
+
     systemd.services.opencode = {
       description = "opencode server";
       after = ["network.target"];
       wantedBy = ["multi-user.target"];
+
+      environment = {
+        HOME = dataDir;
+        # The working directory repos may be owned by a different user.
+        # Git 2.35.2+ rejects repos whose owner doesn't match the calling user.
+        # The service is already sandboxed (ProtectSystem=strict,
+        # ReadWritePaths limited to workingDirectory), so * is safe here.
+        GIT_CONFIG_COUNT = "1";
+        GIT_CONFIG_KEY_0 = "safe.directory";
+        GIT_CONFIG_VALUE_0 = "*";
+      };
 
       serviceConfig = {
         Type = "simple";
@@ -44,15 +71,15 @@ in {
         EnvironmentFile = cfg.environmentFile;
         Restart = "on-failure";
 
-        # Dynamic user
-        DynamicUser = true;
+        User = cfg.user;
+        Group = cfg.group;
         StateDirectory = "opencode";
-        Environment = "HOME=/var/lib/opencode";
+        UMask = "0002";
 
         # Hardening
         PrivateTmp = true;
         ProtectSystem = "strict";
-        ProtectHome = "tmpfs";
+        ProtectHome = true;
         NoNewPrivileges = true;
         PrivateDevices = true;
         ProtectKernelTunables = true;
@@ -63,7 +90,7 @@ in {
         RestrictRealtime = true;
         RestrictSUIDSGID = true;
         WorkingDirectory = cfg.workingDirectory;
-        BindPaths = [cfg.workingDirectory];
+        ReadWritePaths = [cfg.workingDirectory];
       };
     };
 

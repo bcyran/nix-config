@@ -7,6 +7,8 @@
   intraDomain = my.lib.const.domains.intra;
   extraDomain = my.lib.const.domains.extra;
   mediaGroup = "media";
+  agentsGroup = "agents";
+  agentsDir = "/var/lib/agents";
 
   getDeviceIps = device:
     my.lib.filterNotNull [device.ip (my.lib.getAttrOrNull "ipv6" device)];
@@ -81,7 +83,23 @@ in {
     };
   };
 
+  # Ensure common groups exist, so that services can use them without depending on each other.
   users.groups.${mediaGroup} = {};
+  users.groups.${agentsGroup} = {
+    # Allow the human user to access files created by agent service users.
+    members = [config.my.user.name];
+  };
+
+  # Ensure common agents directory exists.
+  # Mode 2770: setgid ensures new subdirectories (e.g. cloned repos) inherit
+  # the agents group, so service users can write to them.
+  # NOTE: existing repos need a one-time fix:
+  #   chown -R :agents /var/lib/agents && chmod -R g+rw /var/lib/agents
+  # For ongoing correct permissions inside repos also run:
+  #   git config core.sharedRepository group
+  systemd.tmpfiles.rules = [
+    "d ${agentsDir} 2770 ${config.my.user.name} ${agentsGroup} -"
+  ];
 
   my.configurations = {
     remoteBuilder = {
@@ -308,13 +326,15 @@ in {
     };
     opencode = {
       enable = true;
-      workingDirectory = "${config.my.user.home}/Kod";
+      group = agentsGroup;
+      workingDirectory = agentsDir;
     };
     openchamber = {
       enable = true;
+      group = agentsGroup;
       reverseProxy.domain = "openchamber.${intraDomain}";
       environmentFile = config.sops.secrets.openchamber_env_file.path;
-      workingDirectory = "${config.my.user.home}/Kod";
+      workingDirectory = agentsDir;
     };
   };
 }
