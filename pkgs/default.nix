@@ -42,4 +42,5 @@ in rec {
   livecodes = pkgs.callPackage ./livecodes {};
   jellystat = pkgs.callPackage ./jellystat {};
   noctalia-plugins = pkgs.callPackage ./noctalia-plugins {};
+  openchamber = pkgs.callPackage ./openchamber {};
 }

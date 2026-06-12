@@ -1,4 +1,5 @@
 {
+  my,
   pkgs,
   config,
   lib,
@@ -49,6 +50,7 @@ in {
       alejandra
       statix
       github-copilot-cli
+      my.pkgs.openchamber
     ];
   };
 }
