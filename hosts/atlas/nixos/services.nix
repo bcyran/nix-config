@@ -76,6 +76,9 @@ in {
     opencode_env_file = {
       restartUnits = ["opencode.service"];
     };
+    openchamber_env_file = {
+      restartUnits = ["openchamber.service"];
+    };
   };
 
   users.groups.${mediaGroup} = {};
@@ -305,8 +308,12 @@ in {
     };
     opencode = {
       enable = true;
-      reverseProxy.domain = "opencode.${intraDomain}";
-      environmentFile = config.sops.secrets.opencode_env_file.path;
+      workingDirectory = "${config.my.user.home}/Kod";
+    };
+    openchamber = {
+      enable = true;
+      reverseProxy.domain = "openchamber.${intraDomain}";
+      environmentFile = config.sops.secrets.openchamber_env_file.path;
       workingDirectory = "${config.my.user.home}/Kod";
     };
   };
