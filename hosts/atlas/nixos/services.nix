@@ -73,6 +73,9 @@ in {
     changedetection_env_file = {
       restartUnits = ["changedetection-io.service"];
     };
+    opencode_env_file = {
+      restartUnits = ["opencode.service"];
+    };
   };
 
   users.groups.${mediaGroup} = {};
@@ -299,6 +302,11 @@ in {
     playwright-chromium = {
       enable = true;
       reverseProxy.domain = "playwright-chromium.${intraDomain}";
+    };
+    opencode = {
+      enable = true;
+      reverseProxy.domain = "opencode.${intraDomain}";
+      environmentFile = config.sops.secrets.opencode_env_file.path;
     };
   };
 }
