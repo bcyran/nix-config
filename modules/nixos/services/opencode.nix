@@ -52,9 +52,11 @@ in {
         # Git 2.35.2+ rejects repos whose owner doesn't match the calling user.
         # The service is already sandboxed (ProtectSystem=strict,
         # ReadWritePaths limited to workingDirectory), so * is safe here.
-        GIT_CONFIG_COUNT = "1";
+        GIT_CONFIG_COUNT = "2";
         GIT_CONFIG_KEY_0 = "safe.directory";
         GIT_CONFIG_VALUE_0 = "*";
+        GIT_CONFIG_KEY_1 = "core.sharedRepository";
+        GIT_CONFIG_VALUE_1 = "group";
       };
 
       serviceConfig = {
