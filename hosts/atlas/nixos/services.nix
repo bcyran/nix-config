@@ -328,6 +328,7 @@ in {
       enable = true;
       group = agentsGroup;
       workingDirectory = agentsDir;
+      gitSshKeyFile = "/var/lib/opencode/.ssh/id_ed25519";
     };
     openchamber = {
       enable = true;
@@ -335,6 +336,7 @@ in {
       reverseProxy.domain = "openchamber.${intraDomain}";
       environmentFile = config.sops.secrets.openchamber_env_file.path;
       workingDirectory = agentsDir;
+      gitSshKeyFile = "/var/lib/openchamber/.ssh/id_ed25519";
     };
   };
 }

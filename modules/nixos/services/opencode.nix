@@ -25,6 +25,13 @@ in {
       example = "/srv/repos/myapp";
       description = "Working directory for the opencode server. The path will be made read-write accessible inside the service's namespace.";
     };
+
+    gitSshKeyFile = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+      example = "/var/lib/opencode/.ssh/id_ed25519";
+      description = "SSH private key for git push operations. When set, GIT_SSH_COMMAND is configured to use only this key with StrictHostKeyChecking=accept-new.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -46,18 +53,22 @@ in {
       after = ["network.target"];
       wantedBy = ["multi-user.target"];
 
-      environment = {
-        HOME = dataDir;
-        # The working directory repos may be owned by a different user.
-        # Git 2.35.2+ rejects repos whose owner doesn't match the calling user.
-        # The service is already sandboxed (ProtectSystem=strict,
-        # ReadWritePaths limited to workingDirectory), so * is safe here.
-        GIT_CONFIG_COUNT = "2";
-        GIT_CONFIG_KEY_0 = "safe.directory";
-        GIT_CONFIG_VALUE_0 = "*";
-        GIT_CONFIG_KEY_1 = "core.sharedRepository";
-        GIT_CONFIG_VALUE_1 = "group";
-      };
+      environment =
+        {
+          HOME = dataDir;
+          # The working directory repos may be owned by a different user.
+          # Git 2.35.2+ rejects repos whose owner doesn't match the calling user.
+          # The service is already sandboxed (ProtectSystem=strict,
+          # ReadWritePaths limited to workingDirectory), so * is safe here.
+          GIT_CONFIG_COUNT = "2";
+          GIT_CONFIG_KEY_0 = "safe.directory";
+          GIT_CONFIG_VALUE_0 = "*";
+          GIT_CONFIG_KEY_1 = "core.sharedRepository";
+          GIT_CONFIG_VALUE_1 = "group";
+        }
+        // lib.optionalAttrs (cfg.gitSshKeyFile != null) {
+          GIT_SSH_COMMAND = "ssh -i ${cfg.gitSshKeyFile} -o StrictHostKeyChecking=accept-new -o IdentitiesOnly=yes";
+        };
 
       serviceConfig = {
         Type = "simple";
