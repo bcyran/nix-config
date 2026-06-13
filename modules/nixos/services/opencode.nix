@@ -26,11 +26,27 @@ in {
       description = "Working directory for the opencode server. The path will be made read-write accessible inside the service's namespace.";
     };
 
-    gitSshKeyFile = lib.mkOption {
-      type = lib.types.nullOr lib.types.path;
-      default = null;
-      example = "/var/lib/opencode/.ssh/id_ed25519";
-      description = "SSH private key for git push operations. When set, GIT_SSH_COMMAND is configured to use only this key with StrictHostKeyChecking=accept-new.";
+    git = {
+      sshKeyFile = lib.mkOption {
+        type = lib.types.nullOr lib.types.path;
+        default = null;
+        example = "/var/lib/opencode/.ssh/id_ed25519";
+        description = "SSH private key for git push operations. When set, GIT_SSH_COMMAND is configured to use only this key with StrictHostKeyChecking=accept-new.";
+      };
+
+      userName = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        example = "opencode Agent";
+        description = "Git user name for commits made by the service.";
+      };
+
+      userEmail = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        example = "agent@opencode.local";
+        description = "Git user email for commits made by the service.";
+      };
     };
   };
 
@@ -66,8 +82,16 @@ in {
           GIT_CONFIG_KEY_1 = "core.sharedRepository";
           GIT_CONFIG_VALUE_1 = "group";
         }
-        // lib.optionalAttrs (cfg.gitSshKeyFile != null) {
-          GIT_SSH_COMMAND = "ssh -i ${cfg.gitSshKeyFile} -o StrictHostKeyChecking=accept-new -o IdentitiesOnly=yes";
+        // lib.optionalAttrs (cfg.git.sshKeyFile != null) {
+          GIT_SSH_COMMAND = "ssh -i ${cfg.git.sshKeyFile} -o StrictHostKeyChecking=accept-new -o IdentitiesOnly=yes";
+        }
+        // lib.optionalAttrs (cfg.git.userName != null) {
+          GIT_AUTHOR_NAME = cfg.git.userName;
+          GIT_COMMITTER_NAME = cfg.git.userName;
+        }
+        // lib.optionalAttrs (cfg.git.userEmail != null) {
+          GIT_AUTHOR_EMAIL = cfg.git.userEmail;
+          GIT_COMMITTER_EMAIL = cfg.git.userEmail;
         };
 
       serviceConfig = {
