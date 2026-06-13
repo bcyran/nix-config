@@ -7,6 +7,20 @@
 }: let
   cfg = config.my.services.opencode;
   dataDir = "/var/lib/opencode";
+
+  gitconfig = pkgs.writeText "opencode-gitconfig" (lib.generators.toINI {} {
+    core = {
+      sshCommand = "ssh -i ${cfg.git.sshKeyFile} -o StrictHostKeyChecking=accept-new -o IdentitiesOnly=yes";
+      sharedRepository = "group";
+    };
+    safe = {
+      directory = "*";
+    };
+    user = {
+      name = cfg.git.userName;
+      email = cfg.git.userEmail;
+    };
+  });
 in {
   options.my.services.opencode = let
     serviceName = "opencode";
@@ -28,22 +42,19 @@ in {
 
     git = {
       sshKeyFile = lib.mkOption {
-        type = lib.types.nullOr lib.types.path;
-        default = null;
+        type = lib.types.path;
         example = "/var/lib/opencode/.ssh/id_ed25519";
-        description = "SSH private key for git push operations. When set, GIT_SSH_COMMAND is configured to use only this key with StrictHostKeyChecking=accept-new.";
+        description = "SSH private key for git push operations.";
       };
 
       userName = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
+        type = lib.types.str;
         example = "opencode Agent";
         description = "Git user name for commits made by the service.";
       };
 
       userEmail = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
+        type = lib.types.str;
         example = "agent@opencode.local";
         description = "Git user email for commits made by the service.";
       };
@@ -64,35 +75,18 @@ in {
       groups.${cfg.group} = {};
     };
 
+    systemd.tmpfiles.rules = [
+      "L+ ${dataDir}/.gitconfig 0644 ${cfg.user} ${cfg.group} - ${gitconfig}"
+    ];
+
     systemd.services.opencode = {
       description = "opencode server";
       after = ["network.target"];
       wantedBy = ["multi-user.target"];
 
-      environment =
-        {
-          HOME = dataDir;
-          # The working directory repos may be owned by a different user.
-          # Git 2.35.2+ rejects repos whose owner doesn't match the calling user.
-          # The service is already sandboxed (ProtectSystem=strict,
-          # ReadWritePaths limited to workingDirectory), so * is safe here.
-          GIT_CONFIG_COUNT = "2";
-          GIT_CONFIG_KEY_0 = "safe.directory";
-          GIT_CONFIG_VALUE_0 = "*";
-          GIT_CONFIG_KEY_1 = "core.sharedRepository";
-          GIT_CONFIG_VALUE_1 = "group";
-        }
-        // lib.optionalAttrs (cfg.git.sshKeyFile != null) {
-          GIT_SSH_COMMAND = "ssh -i ${cfg.git.sshKeyFile} -o StrictHostKeyChecking=accept-new -o IdentitiesOnly=yes";
-        }
-        // lib.optionalAttrs (cfg.git.userName != null) {
-          GIT_AUTHOR_NAME = cfg.git.userName;
-          GIT_COMMITTER_NAME = cfg.git.userName;
-        }
-        // lib.optionalAttrs (cfg.git.userEmail != null) {
-          GIT_AUTHOR_EMAIL = cfg.git.userEmail;
-          GIT_COMMITTER_EMAIL = cfg.git.userEmail;
-        };
+      environment = {
+        HOME = dataDir;
+      };
 
       serviceConfig = {
         Type = "simple";
