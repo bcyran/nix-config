@@ -264,6 +264,21 @@ in {
               siteMonitor = makeStaticHostDomainUrl "bentopdf";
             };
           }
+          {
+            OpenCode = {
+              description = "AI coding agent.";
+              icon = "opencode";
+              siteMonitor = makeServiceLoopbackUrl "opencode";
+            };
+          }
+          {
+            OpenChamber = {
+              description = "OpenCode UI.";
+              icon = "https://openchamber.dev/logo-dark.svg";
+              href = makeServiceDomainUrl "openchamber";
+              siteMonitor = makeServiceLoopbackUrl "openchamber";
+            };
+          }
         ];
       }
       {
