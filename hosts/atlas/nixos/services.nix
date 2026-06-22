@@ -196,7 +196,7 @@ in {
           name = "Music YT";
           path = "${my.lib.const.paths.atlas.fastMedia}/music/youtube";
           type = "sendonly";
-          devices = ["slimbook" "pixel7"];
+          devices = ["slimbook"];
         }
         {
           name = "Music Lidarr";
