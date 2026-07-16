@@ -35,20 +35,26 @@ in {
           "--height 100%"
           "--border"
         ];
-        changeDirWidgetCommand = "fd --type d ${fdCommonArgs}";
-        changeDirWidgetOptions = [
-          "--preview 'eza --color=always --tree {}' | head -n 200"
-        ];
-        fileWidgetCommand = "fd --type f ${fdCommonArgs}";
-        fileWidgetOptions = [
-          "--preview 'bat -n --color=always {}'"
-          "--bind 'ctrl-/:change-preview-window(down|hidden|)'"
-        ];
-        historyWidgetOptions = [
-          "--bind 'ctrl-y:execute-silent(echo -n {2..} | wl-copy)+abort'"
-          "--color header:italic"
-          "--header 'Press CTRL-Y to copy command into clipboard'"
-        ];
+        changeDirWidget = {
+          command = "fd --type d ${fdCommonArgs}";
+          options = [
+            "--preview 'eza --color=always --tree {}' | head -n 200"
+          ];
+        };
+        fileWidget = {
+          command = "fd --type f ${fdCommonArgs}";
+          options = [
+            "--preview 'bat -n --color=always {}'"
+            "--bind 'ctrl-/:change-preview-window(down|hidden|)'"
+          ];
+        };
+        historyWidget = {
+          options = [
+            "--bind 'ctrl-y:execute-silent(echo -n {2..} | wl-copy)+abort'"
+            "--color header:italic"
+            "--header 'Press CTRL-Y to copy command into clipboard'"
+          ];
+        };
       };
     };
 }

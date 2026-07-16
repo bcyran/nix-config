@@ -24,6 +24,7 @@ in {
     nixpkgs = {
       overlays = [
         my.overlays.stable-packages
+        my.overlays.fixes
       ];
 
       config = {
