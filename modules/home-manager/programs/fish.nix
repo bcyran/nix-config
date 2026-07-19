@@ -19,7 +19,7 @@ in {
         shellAliases = {
           git = "LANG=en_US.UTF-8 command git";
           k = "kubectl";
-          ls = "eza --icons";
+          ls = "eza --icons=auto";
           la = "ls --all";
           ll = "ls --all --long --classify";
           tree = "eza --tree";
