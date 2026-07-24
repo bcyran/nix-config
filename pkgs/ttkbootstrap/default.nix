@@ -9,7 +9,7 @@
   pillow,
 }:
 buildPythonPackage rec {
-  pname = "ttkboostrap";
+  pname = "ttkbootstrap";
   version = "1.20.3";
   disable = pythonOlder "3.7";
   pyproject = true;
