@@ -12,6 +12,7 @@ in {
       enable = true;
       settings = {
         autoupdate = false;
+        plugin = ["superpowers@git+https://github.com/obra/superpowers.git"];
       };
       tui = {
         theme = "tokyonight";
