@@ -6,13 +6,6 @@
     };
   };
   fixes = final: prev: {
-    # FIXME: Remove once upstream tests are fixed.
-    btrsync = prev.btrsync.overrideAttrs (old: {
-      disabledTests = (old.disabledTests or []) ++ [
-        "TestBaseMatch"
-        "TestUnderGlob"
-      ];
-    });
     glances = prev.glances.overrideAttrs (old: {
       disabledTests = (old.disabledTests or []) ++ [
         "test_serverslist_returns_200"

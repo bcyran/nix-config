@@ -38,6 +38,9 @@ in rec {
   fio-bench = pkgs.callPackage ./fio-bench {
     inherit (pkgs) writeShellApplication fio jq;
   };
+  btrsync = pkgs.callPackage ./btrsync {
+    inherit (python3Packages) buildPythonPackage setuptools pytestCheckHook;
+  };
   bentopdf = pkgs.callPackage ./bentopdf {};
   livecodes = pkgs.callPackage ./livecodes {};
   jellystat = pkgs.callPackage ./jellystat {};
