@@ -22,7 +22,7 @@ in {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     virtualisation.oci-containers.containers.drawio = {
-      image = "jgraph/drawio:${drawioVersion}";
+      image = "docker.io/jgraph/drawio:${drawioVersion}";
       autoStart = true;
       ports = ["${cfg.address}:${builtins.toString cfg.port}:8080"];
     };

@@ -39,7 +39,7 @@ in {
     };
 
     virtualisation.oci-containers.containers.joplin = {
-      image = "joplin/server:${joplinVersion}";
+      image = "docker.io/joplin/server:${joplinVersion}";
       autoStart = true;
       ports = ["${cfg.address}:${toString cfg.port}:${toString cfg.port}"];
       environment = {

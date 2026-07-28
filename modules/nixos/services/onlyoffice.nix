@@ -27,7 +27,7 @@ in {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     virtualisation.oci-containers.containers.onlyoffice = {
-      image = "onlyoffice/documentserver:${onlyofficeVersion}";
+      image = "docker.io/onlyoffice/documentserver:${onlyofficeVersion}";
       autoStart = true;
       ports = ["${cfg.address}:${builtins.toString cfg.port}:80"];
       volumes = [

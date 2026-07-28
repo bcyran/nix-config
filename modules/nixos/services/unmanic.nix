@@ -32,7 +32,7 @@ in {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     virtualisation.oci-containers.containers.unmanic = {
-      image = "josh5/unmanic:${unmanicVersion}";
+      image = "docker.io/josh5/unmanic:${unmanicVersion}";
       autoStart = true;
       ports = [
         "${cfg.address}:${builtins.toString cfg.port}:8888"
