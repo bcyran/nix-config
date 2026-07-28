@@ -24,17 +24,11 @@ in rec {
     inherit (python3Packages) buildPythonApplication pythonOlder hatchling hatch-vcs appdirs;
     inherit ttkbootstrap philipstv;
   };
-  kidex = pkgs.callPackage ./kidex {};
-  go-hass-agent = pkgs.callPackage ./go-hass-agent {};
   joplin-plugins = pkgs.callPackage ./joplin-plugins {};
   xiaomi_miio_fan = pkgs.callPackage ./xiaomi_miio_fan {
     inherit (python314Packages) python-miio;
   };
   koinsight = pkgs.callPackage ./koinsight {};
-  flint-kvm = pkgs.callPackage ./flint-kvm {};
-  fio-plot = pkgs.callPackage ./fio-plot {
-    inherit (python3Packages) buildPythonApplication setuptools numpy matplotlib pillow pyparsing rich;
-  };
   fio-bench = pkgs.callPackage ./fio-bench {
     inherit (pkgs) writeShellApplication fio jq;
   };
