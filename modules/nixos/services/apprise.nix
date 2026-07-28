@@ -6,7 +6,7 @@
 }: let
   cfg = config.my.services.apprise;
 
-  appriseVersion = "1.5.0";
+  appriseVersion = "v1.5.1";
   user = "apprise";
   group = "apprise";
   dataDir = "/var/lib/apprise";

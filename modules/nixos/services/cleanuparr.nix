@@ -6,7 +6,7 @@
 }: let
   cfg = config.my.services.cleanuparr;
 
-  cleanuparrVersion = "2.9.13";
+  cleanuparrVersion = "2.10.1";
   user = "cleanuparr";
   group = "cleanuparr";
   dataDir = "/var/lib/cleanuparr";
