@@ -38,7 +38,6 @@ in {
         "match:title Postęp działań na plikach, float on"
       ];
       layerrule = [
-        "match:namespace anyrun, no_anim on"
         "match:namespace noctalia, blur on, blur_popups on, ignore_alpha 0.5"
       ];
     };

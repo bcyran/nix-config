@@ -40,10 +40,6 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    anyrun = {
-      url = "github:anyrun-org/anyrun";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     hyprcursor-phinger = {
       url = "github:jappie3/hyprcursor-phinger";
       inputs.nixpkgs.follows = "nixpkgs";

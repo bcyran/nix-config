@@ -172,48 +172,12 @@
     ",XF86MonBrightnessUp, exec, ${noctaliaExecWrapper} brightness increase"
   ];
 
-  # Non-noctalia shell binds
-  defaultShellBinds = [
-    "$mod, slash, exec, ${execWrapper} playerctl play-pause"
-    "$mod, comma, exec, ${execWrapper} playerctl previous"
-    "$mod, period, exec, ${execWrapper} playerctl next"
-
-    "CONTROL, space, exec, ${execWrapper} swaync-client --toggle-panel"
-    "CONTROL, escape, exec, ${execWrapper} swaync-client --close-latest"
-
-    "$mod, space, exec, ${execWrapper} anyrun"
-    "$mod SHIFT, m, exec, ${execWrapper} loginctl lock-session"
-  ];
-
-  # Non-noctalia locked binds (active on lock screen, non-repeatable)
-  defaultLockedBinds = [
-    ",XF86AudioMute, exec, ${execWrapper} volume toggle"
-  ];
-
-  # Non-noctalia locked repeatable binds (active on lock screen, repeat while held)
-  defaultRepeatableLockedBinds = [
-    ",XF86AudioRaiseVolume, exec, ${execWrapper} volume up"
-    ",XF86AudioLowerVolume, exec, ${execWrapper} volume down"
-
-    ",XF86MonBrightnessDown, exec, ${execWrapper} backlight down 10"
-    ",XF86MonBrightnessUp, exec, ${execWrapper} backlight up 10"
-  ];
-
   # Select shell-specific binds
-  shellBinds =
-    if cfg.withNoctalia
-    then noctaliaShellBinds
-    else defaultShellBinds;
+  shellBinds = noctaliaShellBinds;
 
-  lockedBinds =
-    if cfg.withNoctalia
-    then noctaliaLockedBinds
-    else defaultLockedBinds;
+  lockedBinds = noctaliaLockedBinds;
 
-  repeatableLockedBinds =
-    if cfg.withNoctalia
-    then noctaliaRepeatableLockedBinds
-    else defaultRepeatableLockedBinds;
+  repeatableLockedBinds = noctaliaRepeatableLockedBinds;
 in {
   config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland = {
