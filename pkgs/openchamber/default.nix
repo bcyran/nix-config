@@ -12,7 +12,7 @@
 }:
 buildNpmPackage (finalAttrs: {
   pname = "openchamber";
-  version = "1.12.4";
+  version = "1.17.0";
   nodejs = nodejs_22;
 
   desktopItems = [
@@ -34,7 +34,7 @@ buildNpmPackage (finalAttrs: {
 
   src = fetchzip {
     url = "https://registry.npmjs.org/@openchamber/web/-/web-${finalAttrs.version}.tgz";
-    hash = "sha256-lP3dDj1iwW43N6G4m9OqSHxctC1ioMqiMj/DUHbLrnY=";
+    hash = "sha256-N3WwVX0i1Ume/4bkJT3trEIngDyovZI+/DHMc48GftU=";
     stripRoot = false;
   };
 
@@ -46,7 +46,7 @@ buildNpmPackage (finalAttrs: {
     fi
   '';
 
-  npmDepsHash = "sha256-PUIjdTBwsQFlZHReJMLaLzYIhnJvgtolQapJ2ykBahQ=";
+  npmDepsHash = "sha256-0HQ+Pyy5coJcJZyK8Uis88HBCB2SDAvHhZvLWv117u0=";
 
   postPatch = ''
     cp ${./package-lock.json} package-lock.json
