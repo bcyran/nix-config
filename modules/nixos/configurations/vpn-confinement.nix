@@ -55,6 +55,25 @@ in {
       example = "proton";
       description = "The name of the VPN namespace.";
     };
+
+    allowedEgress = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      example = ["10.0.0.0/8" "192.168.1.50"];
+      description = ''
+        Subnets, ranges, and specific addresses that services inside the VPN
+        namespace may initiate new outgoing connections to outside the VPN
+        tunnel, e.g. a download client running on the host or LAN. Without
+        this, the namespace's kill switch drops any new outgoing connection
+        to destinations that aren't listed here.
+
+        Note: "127.0.0.1" cannot be used to reach a host-side service this
+        way. The kernel always routes the entire 127.0.0.0/8 range to the
+        namespace's own loopback interface, regardless of any custom routes,
+        so traffic to it never actually leaves the namespace. Use a real,
+        routable host/LAN address instead (e.g. via a reverse proxy).
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -73,10 +92,11 @@ in {
       inherit (cfg) wireguardConfigFile;
 
       accessibleFrom = [
-        "192.168.1.0/24"
         "10.0.0.0/8"
         "127.0.0.1"
       ];
+
+      inherit (cfg) allowedEgress;
     };
 
     systemd.services.vpn-test-service = {

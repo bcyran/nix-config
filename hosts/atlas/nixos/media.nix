@@ -4,6 +4,7 @@
   ...
 }: let
   inherit (my.lib.const.paths.atlas) downloads slowMedia fastMedia;
+  inherit (my.lib.network) mkCidr;
   intraDomain = my.lib.const.domains.intra;
   mediaGroup = "media";
   vpnNs = "airvpn";
@@ -36,6 +37,9 @@ in {
     enable = true;
     wireguardConfigFile = config.sops.secrets.airvpn_conf_file.path;
     namespaceName = vpnNs;
+    # Allow Sonarr/Radarr (inside the VPN namespace) to reach SABnzbd, which
+    # intentionally runs outside the VPN, via Caddy on the LAN/bridge.
+    allowedEgress = [(mkCidr my.lib.const.lan.devices.atlas.ip 32)];
   };
 
   my.services = {
