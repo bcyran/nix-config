@@ -239,7 +239,7 @@ in {
       enable = true;
       environmentFiles = [config.sops.secrets.speedtest_tracker_env_file.path];
       reverseProxy.domain = "speedtest.${intraDomain}";
-      servers = [5679];
+      servers = [6522];
     };
     glances = {
       enable = true;
