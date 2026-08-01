@@ -83,6 +83,7 @@ in {
           "group"
           "ping"
           "device_tracker"
+          "nmap_tracker"
           "media_player"
           "yeelight"
           "philips_js"
