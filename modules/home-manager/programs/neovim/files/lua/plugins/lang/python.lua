@@ -1,17 +1,4 @@
 return {
-  -- Ensure external deps are installed
-  {
-    "mason-org/mason.nvim",
-    optional = true,
-    opts = function(_, opts)
-      opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, {
-        "ty",
-        "ruff",
-      })
-    end,
-  },
-
   -- Add Python & related treesitter syntaxes
   {
     "nvim-treesitter/nvim-treesitter",

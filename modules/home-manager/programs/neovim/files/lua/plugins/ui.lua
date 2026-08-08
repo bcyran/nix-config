@@ -82,7 +82,6 @@ return {
         "TelescopePrompt",
         "neo-tree",
         "lazy",
-        "mason",
       },
       handlers = {
         cursor = false,
