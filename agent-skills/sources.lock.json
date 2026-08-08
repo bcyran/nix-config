@@ -1,0 +1,42 @@
+{
+  "manifests": {
+    "simple-english": {
+      "filter": {
+        "maxDepth": null,
+        "nameRegex": null
+      },
+      "idPrefix": null,
+      "pin": {
+        "at": null,
+        "branch": "main",
+        "owner": "AminBlg",
+        "preReleases": false,
+        "releasePrefix": null,
+        "repo": "SimpleEnglish",
+        "submodules": false,
+        "type": "github",
+        "versionUpperBound": null
+      },
+      "subdir": "skills"
+    }
+  },
+  "npins": {
+    "pins": {
+      "simple-english": {
+        "branch": "main",
+        "hash": "sha256-QmlV9OZ4CNxI+pV7jDcn4n3Zet1+9W7h5oTNCUQ/vrY=",
+        "repository": {
+          "owner": "AminBlg",
+          "repo": "SimpleEnglish",
+          "type": "GitHub"
+        },
+        "revision": "59bf6702197a5aadc96d197ea17f290d8d50dcd3",
+        "submodules": false,
+        "type": "Git",
+        "url": "https://github.com/AminBlg/SimpleEnglish/archive/59bf6702197a5aadc96d197ea17f290d8d50dcd3.tar.gz"
+      }
+    },
+    "version": 8
+  },
+  "schemaVersion": 1
+}

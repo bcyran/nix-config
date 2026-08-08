@@ -1,9 +1,15 @@
 {
   config,
   lib,
+  my,
   ...
 }: let
   cfg = config.my.programs.opencode;
+  agentLib = my.inputs.agent-skills.lib.agent-skills;
+  skillSources = agentLib.sourcesFromLock {
+    manifestsDir = "${my}/agent-skills/sources";
+    lockFile = "${my}/agent-skills/sources.lock.json";
+  };
 in {
   options.my.programs.opencode.enable = lib.mkEnableOption "opencode";
 
@@ -20,6 +26,13 @@ in {
       tui = {
         theme = "tokyonight";
       };
+    };
+
+    programs.agent-skills = {
+      enable = true;
+      sources = skillSources;
+      skills.enable = ["simple-english"];
+      targets.opencode.enable = true;
     };
   };
 }

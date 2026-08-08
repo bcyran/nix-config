@@ -57,6 +57,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Agent skills.
+    agent-skills = {
+      url = "github:Kyure-A/agent-skills-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Secret management
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -90,6 +96,19 @@
   in {
     # Pakcages exported by this flake. Build using `nix build .#package`.
     packages = myLib.forEachSystemPkgs systems inputs.nixpkgs (pkgs: import ./pkgs pkgs);
+
+    # Apps exported by this flake.
+    apps = myLib.forEachSystemPkgs systems inputs.nixpkgs (pkgs: {
+      # Update the agent skills source lock file.
+      skills-sources-lock = {
+        type = "app";
+        program = "${inputs.agent-skills.lib.agent-skills.mkSourceLockProgram {
+          inherit pkgs;
+          manifestsDir = "agent-skills/sources";
+          lockFile = "agent-skills/sources.lock.json";
+        }}/bin/skills-sources-lock";
+      };
+    });
 
     # We use `alejandra` as a formatter. Format using `nix fmt`.
     formatter = myLib.forEachSystemPkgs systems inputs.nixpkgs (pkgs: pkgs.alejandra);
