@@ -53,6 +53,8 @@ in {
         marksman
         markdownlint-cli2
         taplo
+        ruff
+        ty
       ];
     };
 
