@@ -1,5 +1,24 @@
 {
   "manifests": {
+    "mattpocock-skills": {
+      "filter": {
+        "maxDepth": null,
+        "nameRegex": null
+      },
+      "idPrefix": null,
+      "pin": {
+        "at": null,
+        "branch": "main",
+        "owner": "mattpocock",
+        "preReleases": false,
+        "releasePrefix": null,
+        "repo": "skills",
+        "submodules": false,
+        "type": "github",
+        "versionUpperBound": null
+      },
+      "subdir": "skills"
+    },
     "simple-english": {
       "filter": {
         "maxDepth": null,
@@ -22,6 +41,19 @@
   },
   "npins": {
     "pins": {
+      "mattpocock-skills": {
+        "branch": "main",
+        "hash": "sha256-pseSJJb5nBBGPzpxA1GzjGLB9OrT+u0At1saJ4NqZ1E=",
+        "repository": {
+          "owner": "mattpocock",
+          "repo": "skills",
+          "type": "GitHub"
+        },
+        "revision": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
+        "submodules": false,
+        "type": "Git",
+        "url": "https://github.com/mattpocock/skills/archive/84fdeffd12f2ee307994d1eb6feb48173b6e0502.tar.gz"
+      },
       "simple-english": {
         "branch": "main",
         "hash": "sha256-QmlV9OZ4CNxI+pV7jDcn4n3Zet1+9W7h5oTNCUQ/vrY=",

@@ -31,7 +31,12 @@ in {
     programs.agent-skills = {
       enable = true;
       sources = skillSources;
-      skills.enable = ["simple-english"];
+      skills.enable = [
+        "simple-english"
+        "engineering/grill-with-docs"
+        "productivity/grilling"
+        "engineering/domain-modeling"
+      ];
       targets.opencode.enable = true;
     };
   };
