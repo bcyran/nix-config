@@ -20,11 +20,14 @@ in {
         autoupdate = false;
         plugin = [
           "superpowers@git+https://github.com/obra/superpowers.git"
-          "opencode-rules@git+https://github.com/frap129/opencode-rules.git"
+          "opencode-rules@latest"
         ];
       };
       tui = {
         theme = "tokyonight";
+        plugin = [
+          "opencode-rules@latest"
+        ];
       };
     };
 
