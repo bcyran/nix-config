@@ -29,12 +29,6 @@ in {
       description = "Whether to wrap hyprland execution with uwsm.";
     };
 
-    withHy3 = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Whether to enable the hy3 plugin for Hyprland.";
-    };
-
     withNoctalia = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -51,7 +45,6 @@ in {
       };
       configType = "hyprlang";
       settings.env = lib.mapAttrsToList (name: value: "${name},${value}") envVars;
-      plugins = lib.optionals cfg.withHy3 [pkgs.hyprlandPlugins.hy3];
     };
 
     programs.hyprcursor-phinger.enable = true;
