@@ -13,9 +13,10 @@ in {
   config = lib.mkIf cfg.enable {
     services.greetd = {
       enable = true;
+      useTextGreeter = true;
       settings = {
         default_session = {
-          command = "${tuigreetBin} --time --remember --remember-session --asterisks";
+          command = "${tuigreetBin} --time --remember --remember-session --asterisks --sessions /run/current-system/sw/share/wayland-sessions";
           user = "greeter";
         };
       };

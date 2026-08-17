@@ -15,7 +15,6 @@ in {
     enable = lib.mkEnableOption serviceName;
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 8123;
-    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
   };
 
@@ -33,7 +32,6 @@ in {
 
       home-assistant = {
         enable = true;
-        inherit (cfg) openFirewall;
 
         config = {
           homeassistant = {
