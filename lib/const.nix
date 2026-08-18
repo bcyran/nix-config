@@ -4,6 +4,7 @@ rec {
     root = "cyran.dev";
     intra = "intra.${root}";
     extra = "extra.${root}";
+    lab = "lab.${root}";
     vps = "vps.${root}";
     wg = "wg.${root}";
   };

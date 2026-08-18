@@ -9,8 +9,21 @@
 
   rootDomain = my.lib.const.domains.root;
   extraDomain = my.lib.const.domains.extra;
+  labDomain = my.lib.const.domains.lab;
   vpsWgDomain = my.lib.const.wireguard.peers.vps.domain;
   vpsWgAddresses = with my.lib.const.wireguard.peers.vps; [ip "[${ipv6}]"];
+
+  ovhTlsConfig = ''
+    tls {
+      resolvers ${lib.concatStringsSep " " my.lib.const.dns.ips};
+      dns ovh {
+        endpoint {$OVH_CYRAN_DEV_ENDPOINT}
+        application_key {$OVH_CYRAN_DEV_APPLICATION_KEY}
+        application_secret {$OVH_CYRAN_DEV_APPLICATION_SECRET}
+        consumer_key {$OVH_CYRAN_DEV_CONSUMER_KEY}
+      }
+    }
+  '';
 in {
   sops.secrets = {
     caddy_env_file = {
@@ -59,17 +72,12 @@ in {
             updateWebhookConfig = "Github X-Hub-Signature-256 {$GITHUB_CYRAN_DEV_WEBHOOK_SECRET}";
           };
         };
-        reverseProxyHostsCommonExtraConfig = ''
-          tls {
-            resolvers ${lib.concatStringsSep " " my.lib.const.dns.ips};
-            dns ovh {
-              endpoint {$OVH_CYRAN_DEV_ENDPOINT}
-              application_key {$OVH_CYRAN_DEV_APPLICATION_KEY}
-              application_secret {$OVH_CYRAN_DEV_APPLICATION_SECRET}
-              consumer_key {$OVH_CYRAN_DEV_CONSUMER_KEY}
-            }
+        extraConfig = ''
+          *.${labDomain} {
+            ${ovhTlsConfig}
           }
         '';
+        reverseProxyHostsCommonExtraConfig = ovhTlsConfig;
         # Externally available services hosted on atlas (home server).
         reverseProxyHosts = {
           "jellyfin.${extraDomain}" = {
