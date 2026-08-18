@@ -276,22 +276,17 @@
     "my-private": {
       "inputs": {
         "my": [],
-        "my-secrets": [
-          "my-secrets"
-        ],
         "nixpkgs": [
           "nixpkgs"
         ],
-        "sops-nix": [
-          "sops-nix"
-        ]
+        "wettermin-ical": "wettermin-ical"
       },
       "locked": {
-        "lastModified": 1739218805,
-        "narHash": "sha256-kZA1YChIn83DGd148L+FOwXAX50wDK+eT5aUUgdXswI=",
+        "lastModified": 1787077040,
+        "narHash": "sha256-JRwKwTu0NcU1rzF1r6WApwMZ2DwtcfjD3fmG6TM34BA=",
         "ref": "refs/heads/main",
-        "rev": "09fd030b74bde62f0bbfcc1f5e5ef88507aa6fb8",
-        "revCount": 2,
+        "rev": "59f2bb75468221b0c738cec845780bf21ece0546",
+        "revCount": 5,
         "type": "git",
         "url": "ssh://git@github.com/bcyran/nix-private"
       },
@@ -303,10 +298,10 @@
     "my-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1786973868,
-        "narHash": "sha256-2u2mQ3GGsYblEwzQZ/nFYCviL/kbjgCtQ0a5OL/tQhg=",
+        "lastModified": 1787074315,
+        "narHash": "sha256-CZW9KO1HJj2xjs3RMG3M8LEqUMVxoETwLwifcRqYXTQ=",
         "ref": "main",
-        "rev": "09324c59d6fd2e7338d157399cacbcd1b26570cc",
+        "rev": "5335c819a3697d5cb6262629071482d12765113e",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/bcyran/nix-secrets.git"
@@ -432,7 +427,7 @@
           "noctalia",
           "nixpkgs"
         ],
-        "systems": "systems_2",
+        "systems": "systems_3",
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
@@ -573,6 +568,21 @@
     },
     "systems_2": {
       "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_3": {
+      "locked": {
         "lastModified": 1689347949,
         "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
         "owner": "nix-systems",
@@ -641,6 +651,28 @@
       "original": {
         "owner": "Maroka-chan",
         "repo": "VPN-Confinement",
+        "type": "github"
+      }
+    },
+    "wettermin-ical": {
+      "inputs": {
+        "nixpkgs": [
+          "my-private",
+          "nixpkgs"
+        ],
+        "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1786965126,
+        "narHash": "sha256-SWkqSGgPu97bhS0/GuWf30+FZ/UJ1rc584/wppe+wuA=",
+        "owner": "bcyran",
+        "repo": "wettermin-ical",
+        "rev": "1f73d09b71f84283479aa80b7ed0d5553da680b6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bcyran",
+        "repo": "wettermin-ical",
         "type": "github"
       }
     }

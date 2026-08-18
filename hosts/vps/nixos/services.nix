@@ -49,9 +49,9 @@ in {
   };
 
   my = {
-    # This module from my `nix-private` flake enables more websites in the same way as
-    # `staticGitHosts` below.
-    private.websites.enable = true;
+    # This module from my `nix-private` flake enables more websites and services via
+    # `staticGitHosts` and `reverseProxyHosts` in the similar way as below.
+    private.services.enable = true;
     services = {
       caddy = {
         enable = true;
