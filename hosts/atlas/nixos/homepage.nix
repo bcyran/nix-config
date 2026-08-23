@@ -134,6 +134,20 @@ in {
             };
           }
           {
+            "Tandoor" = rec {
+              description = "Recipe manager.";
+              icon = "tandoor-recipes";
+              href = makeServiceDomainUrl "tandoor";
+              siteMonitor = makeServiceLoopbackUrl "tandoor";
+              widget = {
+                type = "tandoor";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_TANDOOR_API_KEY}}";
+                fields = ["users" "recipes"];
+              };
+            };
+          }
+          {
             Forgejo = rec {
               description = "Git server.";
               icon = "forgejo";
