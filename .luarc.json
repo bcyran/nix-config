@@ -1,0 +1,12 @@
+{
+  "diagnostics": {
+    "globals": [
+      "hl"
+    ]
+  },
+  "workspace": {
+    "library": [
+      "~/.nix-profile/share/hypr/stubs"
+    ]
+  }
+}

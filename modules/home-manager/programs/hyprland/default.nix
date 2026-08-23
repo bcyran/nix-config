@@ -4,7 +4,10 @@
   lib,
   ...
 }: let
+  inherit (config.colorScheme) palette;
   cfg = config.my.programs.hyprland;
+  toLua = lib.generators.toLua {};
+
   envVars = {
     NIXOS_OZONE_WL = "1";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
@@ -12,6 +15,15 @@
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
     HYPRCURSOR_THEME = "phinger-cursors-dark-hyprcursor";
     HYPRCURSOR_SIZE = "24";
+  };
+
+  generated = {
+    inherit (cfg) execWrapper withUWSM withNoctalia;
+    fontFamily = builtins.elemAt config.fonts.fontconfig.defaultFonts.sansSerif 0;
+    palette = {
+      inherit (palette) accentPrimary base00 base05 base10;
+    };
+    env = envVars;
   };
 in {
   options.my.programs.hyprland = {
@@ -43,8 +55,26 @@ in {
         enable = !cfg.withUWSM;
         enableXdgAutostart = !cfg.withUWSM;
       };
-      configType = "hyprlang";
-      settings.env = lib.mapAttrsToList (name: value: "${name},${value}") envVars;
+      configType = "lua";
+      extraLuaFiles = {
+        # Nix -> Lua bridge, same pattern as our Neovim config: a pure-data
+        # module with the handful of values computed from Nix (colors, fonts,
+        # feature flags). Not auto-loaded; hand-written modules `require` it
+        # themselves when they need a value.
+        "config.generated" = {
+          content = "return ${toLua generated}\n";
+          autoLoad = false;
+        };
+
+        "config.env" = ./files/config/env.lua;
+        "config.input" = ./files/config/input.lua;
+        "config.look" = ./files/config/look.lua;
+        "config.animations" = ./files/config/animations.lua;
+        "config.binds" = ./files/config/binds.lua;
+        "config.rules" = ./files/config/rules.lua;
+        "config.autostart" = ./files/config/autostart.lua;
+        "config.monitors" = ./files/config/monitors.lua;
+      };
     };
 
     programs.hyprcursor-phinger.enable = true;
@@ -63,10 +93,4 @@ in {
       "Xft.rgba" = "rgb";
     };
   };
-
-  imports = [
-    ./binds.nix
-    ./settings.nix
-    ./rules.nix
-  ];
 }
