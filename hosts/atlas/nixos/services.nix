@@ -81,6 +81,9 @@ in {
     openchamber_env_file = {
       restartUnits = ["openchamber.service"];
     };
+    tandoor_env_file = {
+      restartUnits = ["tandoor-recipes.service"];
+    };
   };
 
   # Ensure common groups exist, so that services can use them without depending on each other.
@@ -345,6 +348,11 @@ in {
         userName = config.my.user.fullName;
         userEmail = config.my.user.email;
       };
+    };
+    tandoor = {
+      enable = true;
+      reverseProxy.domain = "tandoor.${intraDomain}";
+      environmentFiles = [config.sops.secrets.tandoor_env_file.path];
     };
   };
 }
