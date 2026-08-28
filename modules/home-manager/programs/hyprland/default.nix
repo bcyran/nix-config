@@ -54,6 +54,12 @@ in {
       default = {};
       description = "Additional environment variables to set for Hyprland.";
     };
+
+    extraLuaFiles = lib.mkOption {
+      type = lib.types.attrsOf lib.types.path;
+      default = {};
+      description = "Additional Lua config files to load, keyed by module name.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -82,7 +88,7 @@ in {
         "config.rules" = ./files/config/rules.lua;
         "config.autostart" = ./files/config/autostart.lua;
         "config.monitors" = ./files/config/monitors.lua;
-      };
+      } // cfg.extraLuaFiles;
     };
 
     programs.hyprcursor-phinger.enable = true;
