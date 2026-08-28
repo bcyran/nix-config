@@ -17,13 +17,15 @@
     HYPRCURSOR_SIZE = "24";
   };
 
+  allEnvVars = envVars // cfg.extraEnvVars;
+
   generated = {
     inherit (cfg) execWrapper withUWSM withNoctalia;
     fontFamily = builtins.elemAt config.fonts.fontconfig.defaultFonts.sansSerif 0;
     palette = {
       inherit (palette) accentPrimary base00 base05 base10;
     };
-    env = envVars;
+    env = allEnvVars;
   };
 in {
   options.my.programs.hyprland = {
@@ -45,6 +47,12 @@ in {
       type = lib.types.bool;
       default = false;
       description = "Whether to use Noctalia shell integration for Hyprland.";
+    };
+
+    extraEnvVars = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = {};
+      description = "Additional environment variables to set for Hyprland.";
     };
   };
 
@@ -80,7 +88,7 @@ in {
     programs.hyprcursor-phinger.enable = true;
     home = {
       packages = [pkgs.hyprcursor];
-      sessionVariables = envVars;
+      sessionVariables = allEnvVars;
     };
 
     xresources.properties = {
