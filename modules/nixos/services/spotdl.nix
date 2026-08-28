@@ -43,7 +43,7 @@
     "--host"
     effectiveAddress
     "--port"
-    (builtins.toString cfg.port)
+    (builtins.toString cfg.web.port)
     "--web-use-output-dir"
   ];
   spotdlCommonArgsStr = builtins.concatStringsSep " " spotdlCommonArgs;
@@ -82,9 +82,6 @@ in {
     enable = lib.mkEnableOption serviceName;
     user = my.lib.options.mkUserOption serviceName;
     group = my.lib.options.mkGroupOption serviceName;
-    port = my.lib.options.mkPortOption serviceName 8089;
-    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
 
     mediaDir = lib.mkOption {
       type = lib.types.path;
@@ -100,6 +97,25 @@ in {
       example = "proton";
       description = "The name of the VPN namespace. VPN is disabled if not given.";
     };
+
+    web = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Whether to enable the ${serviceName} web interface.";
+      };
+      port = my.lib.options.mkPortOption serviceName 8089;
+      openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
+      reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
+    };
+
+    sync = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Whether to enable the periodic ${serviceName} playlist sync.";
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -112,7 +128,7 @@ in {
       ];
 
       services = {
-        spotdl = {
+        spotdl = lib.mkIf cfg.web.enable {
           description = "SpotDL web interface";
           after = ["network.target"];
           wantedBy = ["multi-user.target"];
@@ -133,7 +149,7 @@ in {
           };
         };
 
-        spotdl-sync = {
+        spotdl-sync = lib.mkIf cfg.sync.enable {
           description = "Spotify playlists synchronization service";
           after = ["network.target"];
 
@@ -190,10 +206,10 @@ in {
       groups = lib.mkIf (cfg.group == "spotdl") {spotdl = {};};
     };
 
-    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
-      ${cfg.reverseProxy.domain} = {
+    my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.web.enable && cfg.web.reverseProxy.domain != null) {
+      ${cfg.web.reverseProxy.domain} = {
         upstreamAddress = effectiveAddress;
-        upstreamPort = cfg.port;
+        upstreamPort = cfg.web.port;
       };
     };
   };
