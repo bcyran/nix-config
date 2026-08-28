@@ -103,7 +103,8 @@ in {
     };
     spotdl = {
       enable = true;
-      reverseProxy.domain = "spotdl.${intraDomain}";
+      sync.enable = true;
+      web.enable = false;
       environmentFile = config.sops.secrets.spotdl_env_file.path;
       group = mediaGroup;
       mediaDir = "${fastMedia}/music/youtube";

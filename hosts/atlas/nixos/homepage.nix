@@ -480,14 +480,6 @@ in {
               siteMonitor = makeServiceDomainUrl "pinchflat";
             };
           }
-          {
-            SpotDL = {
-              description = "YouTube music downloader.";
-              icon = "youtube-dl";
-              href = makeServiceDomainUrl "spotdl";
-              siteMonitor = makeServiceDomainUrl "spotdl";
-            };
-          }
         ];
       }
       {
