@@ -48,6 +48,10 @@
       url = "github:noctalia-dev/noctalia-shell?ref=legacy-v4";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     timewall = {
       url = "github:bcyran/timewall";
       inputs.nixpkgs.follows = "nixpkgs";

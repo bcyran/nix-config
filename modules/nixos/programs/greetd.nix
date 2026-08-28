@@ -5,19 +5,21 @@
   ...
 }: let
   cfg = config.my.programs.greetd;
-
-  tuigreetBin = lib.getExe pkgs.tuigreet;
 in {
   options.my.programs.greetd.enable = lib.mkEnableOption "greetd";
 
   config = lib.mkIf cfg.enable {
-    services.greetd = {
+    programs.noctalia-greeter = {
       enable = true;
-      useTextGreeter = true;
       settings = {
-        default_session = {
-          command = "${tuigreetBin} --time --remember --remember-session --asterisks --sessions /run/current-system/sw/share/wayland-sessions";
-          user = "greeter";
+        user.default = config.my.user.name;
+        keyboard.layout = "pl";
+        session.default = "Hyprland (uwsm-managed)";
+        idle.timeout = 300;
+        cursor = {
+          theme = "phinger-cursors-dark";
+          size = 24;
+          path = "${pkgs.phinger-cursors}/share/icons";
         };
       };
     };
