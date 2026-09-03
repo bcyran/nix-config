@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  inherit (config.colorScheme) palette;
+  inherit (config.my.colorscheme) palette;
   cfg = config.my.programs.fish;
 in {
   options.my.programs.fish.enable = lib.mkEnableOption "fish";

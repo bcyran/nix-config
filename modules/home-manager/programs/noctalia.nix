@@ -5,7 +5,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.colorScheme) palette;
+  inherit (config.my.colorscheme) palette;
   cfg = config.my.programs.noctalia;
 
   noctaliaPluginsUrl = "https://github.com/noctalia-dev/noctalia-plugins";

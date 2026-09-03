@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (config.colorScheme) palette;
+  inherit (config.my.colorscheme) palette;
   cfg = config.my.programs.fzf;
 in {
   options.my.programs.fzf.enable = lib.mkEnableOption "fzf";

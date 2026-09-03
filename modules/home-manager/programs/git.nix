@@ -7,7 +7,7 @@
   cfg = config.my.programs.git;
 
   # NOTE: Would be nice to find a way to derive this from base16 theme colors
-  deltaThemeName = config.colorScheme.slug;
+  deltaThemeName = config.my.colorscheme.slug;
   deltaTheme = pkgs.writeText "${deltaThemeName}.gitconfig" ''
     [delta "${deltaThemeName}"]
       minus-style                   = syntax "#3a273a"

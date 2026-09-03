@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (config.colorScheme) palette;
+  inherit (config.my.colorscheme) palette;
   cfg = config.my.programs.btop;
 in {
   options.my.programs.btop.enable = lib.mkEnableOption "btop";
@@ -12,10 +12,10 @@ in {
     programs.btop = {
       enable = true;
       settings = {
-        color_theme = config.colorScheme.slug;
+        color_theme = config.my.colorscheme.slug;
       };
       themes = {
-        "${config.colorScheme.slug}" = ''
+        "${config.my.colorscheme.slug}" = ''
           # Main bg
           theme[main_bg]="#${palette.base00}"
 

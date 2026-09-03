@@ -5,8 +5,8 @@
 }: let
   cfg = config.my.programs.ghostty;
 
-  themeName = config.colorScheme.slug;
-  inherit (config.colorScheme) palette;
+  themeName = config.my.colorscheme.slug;
+  inherit (config.my.colorscheme) palette;
 in {
   options.my.programs.ghostty.enable = lib.mkEnableOption "ghostty";
 

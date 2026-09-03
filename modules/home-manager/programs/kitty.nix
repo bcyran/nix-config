@@ -4,10 +4,10 @@
   lib,
   ...
 }: let
-  inherit (config.colorScheme) palette;
+  inherit (config.my.colorscheme) palette;
   cfg = config.my.programs.kitty;
 
-  kittyThemeFile = pkgs.writeText "${config.colorScheme.slug}.conf" ''
+  kittyThemeFile = pkgs.writeText "${config.my.colorscheme.slug}.conf" ''
     background #${palette.base00}
     foreground #${palette.base05}
     selection_background #${palette.base02}

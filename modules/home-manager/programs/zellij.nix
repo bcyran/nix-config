@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (config.colorscheme) palette;
+  inherit (config.my.colorscheme) palette;
   cfg = config.my.programs.zellij;
 in {
   options.my.programs.zellij = {

@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  inherit (config.colorScheme) slug name author palette;
+  inherit (config.my.colorscheme) slug name author palette;
   cfg = config.my.programs.bat;
 
   batTheme = pkgs.replaceVars ./bat.tmTheme ({

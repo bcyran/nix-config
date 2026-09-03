@@ -17,6 +17,9 @@
   # Caddy utilities.
   caddy = import ./caddy.nix {inherit lib;};
 
+  # Color utilities.
+  colors = import ./colors.nix {inherit lib toIntBase16;};
+
   # forEachSystemPkgs :: [<system>] -> <nixpkgs> -> (<packages> -> <attrs>) -> <attrs>
   #
   # Generates attributes for each system in `systems` using `f` with packages for that system
@@ -76,4 +79,9 @@
   # Maps a list of items to an attribute set using given function.
   # The function should return an attribute set with `name` and `value` fields.
   mapListToAttrs = fun: plugins: builtins.listToAttrs (map fun plugins);
+
+  # toIntBase16 :: string -> int
+  #
+  # Converts a hex string (without "0x" prefix) to an integer.
+  toIntBase16 = hexStr: (builtins.fromTOML "v = 0x${hexStr}").v;
 }

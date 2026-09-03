@@ -4,8 +4,8 @@
   lib,
   ...
 }: let
-  inherit (config.colorScheme) palette;
-  inherit (my.inputs.nix-colors.lib.conversions) hexToRGBString;
+  inherit (config.my.colorscheme) palette;
+  inherit (my.lib.colors) hexToRGBString;
   cfg = config.my.programs.zathura;
 in {
   options.my.programs.zathura.enable = lib.mkEnableOption "zathura";
