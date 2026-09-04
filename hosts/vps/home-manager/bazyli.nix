@@ -1,7 +1,7 @@
 {my, ...}: {
   imports = [
     my.homeManagerModules.default
-    ../common/user.nix
+    ../common/host.nix
   ];
 
   my = {
@@ -11,7 +11,6 @@
     };
     presets = {
       cli.enable = true;
-      tokyonight.enable = true;
     };
     programs = {
       zellij = {

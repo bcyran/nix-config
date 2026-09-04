@@ -10,5 +10,6 @@
       uid = 1000;
       groups = ["networkmanager" "wheel"];
     };
+    presets.tokyonight.enable = true;
   };
 }

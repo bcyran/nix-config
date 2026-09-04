@@ -8,7 +8,7 @@
 in {
   imports = [
     my.homeManagerModules.default
-    ../common/user.nix
+    ../common/host.nix
   ];
 
   sops = {
@@ -31,7 +31,6 @@ in {
       desktop.enable = true;
       noctalia.enable = true;
       personal.enable = true;
-      tokyonight.enable = true;
     };
     programs = {
       noctalia.monitors = {

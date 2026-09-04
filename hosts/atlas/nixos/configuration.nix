@@ -17,7 +17,7 @@
 
     ./disks.nix
     ./hardware-configuration.nix
-    ../common/user.nix
+    ../common/host.nix
     ./homepage.nix
     ./services.nix
     ./media.nix

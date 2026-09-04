@@ -17,7 +17,7 @@
 
     ./disks.nix
     ./hardware-configuration.nix
-    ../common/user.nix
+    ../common/host.nix
     ./wireguard.nix
   ];
 

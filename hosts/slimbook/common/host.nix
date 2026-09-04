@@ -8,7 +8,8 @@
       configDir = "${home}/nix-config";
       shell = pkgs.fish;
       uid = 1000;
-      groups = ["networkmanager" "wheel" "agents"];
+      groups = ["networkmanager" "wheel"];
     };
+    presets.tokyonight.enable = true;
   };
 }
