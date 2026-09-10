@@ -34,13 +34,9 @@ in {
         enable = true;
 
         config = {
-          homeassistant = {
-            latitude = "!secret home_latitute";
-            longitude = "!secret home_longitude";
-            country = "PL";
-            unit_system = "metric";
-            internal_url = "https://${cfg.reverseProxy.domain}";
-          };
+          # This forces the nix module to not generate the `homeassistant` section in configuration.yaml.
+          # Otherwise Home Assistant will not let us configure those settings in the UI.
+          homeassistant.time_zone = lib.mkForce null;
           http = {
             use_x_forwarded_for = true;
             server_host = cfg.address;
