@@ -81,7 +81,10 @@
     enable = true;
     settings.drivebay = {
       disks = [
-        "`find /dev/disk/by-id -name 'ata-*' -and -not -name '*-part*' -printf '%p '`"
+        "/dev/disk/by-id/ata-WDC_WD40EFPX-68C6CN0_WD-WX12D55N5U3R"
+        "/dev/disk/by-id/ata-WDC_WD40EFPX-68C6CN0_WD-WX32D35A9520"
+        "/dev/disk/by-id/ata-WDC_WD40EFPX-68C6CN0_WD-WX32D35A9DEJ"
+        "/dev/disk/by-id/ata-WDC_WD43PURZ-74BWPY0_WD-WX32D8415Y28"
       ];
       pwmPaths = [
         "/sys/class/hwmon/hwmon3/pwm1:70:50"
