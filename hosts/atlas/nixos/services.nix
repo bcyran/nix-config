@@ -85,6 +85,9 @@ in {
       restartUnits = ["tandoor-recipes.service"];
     };
     forgejo_runner_token = {};
+    renovate_token = {
+      restartUnits = ["renovate.service"];
+    };
   };
 
   # Ensure common groups exist, so that services can use them without depending on each other.
@@ -278,6 +281,11 @@ in {
       serverUrl = "https://forgejo.${intraDomain}";
       uuid = "30a0282e-57f8-4296-ae8b-8fae963e8715";
       tokenFile = config.sops.secrets.forgejo_runner_token.path;
+    };
+    renovate = {
+      enable = true;
+      endpoint = "https://forgejo.${intraDomain}/api/v1/";
+      tokenFile = config.sops.secrets.renovate_token.path;
     };
     ntfy = {
       enable = true;
