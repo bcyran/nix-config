@@ -1,6 +1,6 @@
 hosts := `ls -d hosts/*/ | xargs -n1 basename`
-current_host := `hostname`
-current_user := `whoami`
+current_host := `hostname 2>/dev/null || echo ""`
+current_user := `whoami 2>/dev/null || echo ""`
 target := "ssh://atlas"
 
 # Update flake inputs (or a specific input).
