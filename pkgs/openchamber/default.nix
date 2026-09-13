@@ -72,10 +72,10 @@ buildNpmPackage (finalAttrs: {
 
     wrapProgram $out/bin/openchamber \
       --prefix PATH : ${lib.makeBinPath [
-        git
-        openssh
-        opencode
-      ]} \
+      git
+      openssh
+      opencode
+    ]} \
       --set DISABLE_AUTOUPDATER 1 \
       --set npm_config_update_notifier false
   '';

@@ -7,7 +7,6 @@
   pytestCheckHook,
   nix-update-script,
 }:
-
 buildPythonPackage rec {
   pname = "btrsync";
   version = "0.3-unstable-2026-07-27";
@@ -20,15 +19,15 @@ buildPythonPackage rec {
     hash = "sha256-wy8RlpBr+p9G59awH2BmgAM15ewlU5zEAgIYuUJugks=";
   };
 
-  build-system = [ setuptools ];
+  build-system = [setuptools];
 
-  propagatedBuildInputs = [ btrfs-progs ];
+  propagatedBuildInputs = [btrfs-progs];
 
-  nativeCheckInputs = [ pytestCheckHook ];
+  nativeCheckInputs = [pytestCheckHook];
 
-  pythonImportsCheck = [ "btrsync" ];
+  pythonImportsCheck = ["btrsync"];
 
-  passthru.updateScript = nix-update-script { };
+  passthru.updateScript = nix-update-script {};
 
   meta = {
     description = "Btrfs replication made easy (testing dev branch)";
@@ -36,6 +35,6 @@ buildPythonPackage rec {
     changelog = "https://github.com/bcyran/btrsync/blob/${src.rev}/CHANGELOG.md";
     license = lib.licenses.gpl3Only;
     mainProgram = "btrsync";
-    maintainers = with lib.maintainers; [ bcyran ];
+    maintainers = with lib.maintainers; [bcyran];
   };
 }

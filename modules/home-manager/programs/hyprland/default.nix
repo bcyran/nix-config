@@ -70,25 +70,27 @@ in {
         enableXdgAutostart = !cfg.withUWSM;
       };
       configType = "lua";
-      extraLuaFiles = {
-        # Nix -> Lua bridge, same pattern as our Neovim config: a pure-data
-        # module with the handful of values computed from Nix (colors, fonts,
-        # feature flags). Not auto-loaded; hand-written modules `require` it
-        # themselves when they need a value.
-        "config.generated" = {
-          content = "return ${toLua generated}\n";
-          autoLoad = false;
-        };
+      extraLuaFiles =
+        {
+          # Nix -> Lua bridge, same pattern as our Neovim config: a pure-data
+          # module with the handful of values computed from Nix (colors, fonts,
+          # feature flags). Not auto-loaded; hand-written modules `require` it
+          # themselves when they need a value.
+          "config.generated" = {
+            content = "return ${toLua generated}\n";
+            autoLoad = false;
+          };
 
-        "config.env" = ./files/config/env.lua;
-        "config.input" = ./files/config/input.lua;
-        "config.look" = ./files/config/look.lua;
-        "config.animations" = ./files/config/animations.lua;
-        "config.binds" = ./files/config/binds.lua;
-        "config.rules" = ./files/config/rules.lua;
-        "config.autostart" = ./files/config/autostart.lua;
-        "config.monitors" = ./files/config/monitors.lua;
-      } // cfg.extraLuaFiles;
+          "config.env" = ./files/config/env.lua;
+          "config.input" = ./files/config/input.lua;
+          "config.look" = ./files/config/look.lua;
+          "config.animations" = ./files/config/animations.lua;
+          "config.binds" = ./files/config/binds.lua;
+          "config.rules" = ./files/config/rules.lua;
+          "config.autostart" = ./files/config/autostart.lua;
+          "config.monitors" = ./files/config/monitors.lua;
+        }
+        // cfg.extraLuaFiles;
     };
 
     programs.hyprcursor-phinger.enable = true;
