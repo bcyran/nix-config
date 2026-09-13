@@ -264,6 +264,10 @@ in {
       enable = true;
       reverseProxy.domain = "immich.${intraDomain}";
     };
+    dawarich = {
+      enable = true;
+      reverseProxy.domain = "dawarich.${intraDomain}";
+    };
     forgejo = {
       enable = true;
       reverseProxy.domain = "forgejo.${intraDomain}";
