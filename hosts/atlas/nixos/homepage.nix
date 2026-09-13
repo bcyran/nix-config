@@ -106,6 +106,40 @@ in {
             };
           }
           {
+            Dawarich = rec {
+              description = "Location and travel history tracking.";
+              icon = "dawarich";
+              href = makeServiceDomainUrl "dawarich";
+              siteMonitor = makeServiceLoopbackUrl "dawarich";
+              widget = {
+                type = "customapi";
+                url = "${siteMonitor}/api/v1/stats?api_key={{HOMEPAGE_VAR_DAWARICH_API_KEY}}";
+                refreshInterval = 30000;
+                mappings = [
+                  {
+                    field = "totalDistanceKm";
+                    label = "Total distance";
+                    format = {
+                      type = "number";
+                      options.maximumFractionDigits = 1;
+                    };
+                    suffix = " km";
+                  }
+                  {
+                    field = "totalPointsTracked";
+                    label = "Points tracked";
+                    format.type = "number";
+                  }
+                  {
+                    field = "totalCitiesVisited";
+                    label = "Cities";
+                    format.type = "number";
+                  }
+                ];
+              };
+            };
+          }
+          {
             Linkwarden = rec {
               description = "Bookmark manager.";
               icon = "linkwarden";
