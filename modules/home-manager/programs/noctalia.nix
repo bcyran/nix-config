@@ -91,7 +91,7 @@
     };
     usbDriveManager = {
       defaultSettings = {
-        autoMount = true;
+        autoMount = false;
         fileBrowser = "thunar";
         hideWhenEmpty = true;
         iconColor = "none";
@@ -397,7 +397,7 @@ in {
           showPreview = true;
         };
         usb-drive-manager = {
-          autoMount = true;
+          autoMount = false;
           fileBrowser = "thunar";
           terminalCommand = "kitty";
           showNotifications = true;
