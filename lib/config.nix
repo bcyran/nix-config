@@ -35,7 +35,7 @@
           inputs.lanzaboote.nixosModules.lanzaboote
           my.nixosModules.default
 
-          "${inputs.self}/hosts/${name}/common/user.nix"
+          "${inputs.self}/hosts/${name}/common/host.nix"
           "${inputs.self}/hosts/${name}/nixos/disks.nix"
           "${inputs.self}/hosts/${name}/nixos/hardware-configuration.nix"
 
