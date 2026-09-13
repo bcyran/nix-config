@@ -13,11 +13,10 @@ in {
       upower.enable = mkDefault true;
       kanata.enable = mkDefault true;
     };
+    my.services = {
+      tuned.enable = mkDefault true;
+    };
     services = {
-      tuned = {
-        enable = mkDefault true;
-        ppdSupport = mkDefault true;
-      };
       tlp.enable = mkForce false;
       logind.settings.Login = {
         HandleLidSwitch = mkDefault "suspend";
