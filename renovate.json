@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "nix": {
+    "enabled": true
+  },
+  "enabledManagers": [
+    "nix"
+  ],
+  "timezone": "Europe/Warsaw",
+  "commitMessagePrefix": "chore(flake):",
+  "commitMessageAction": "Update",
+  "commitMessageTopic": "the lockfile",
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "matchManagers": [
+        "nix"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch",
+        "pin",
+        "digest",
+        "replacement"
+      ],
+      "enabled": false
+    }
+  ]
+}
