@@ -37,7 +37,7 @@ in {
           ROOT_URL = "https://${cfg.reverseProxy.domain}";
         };
         actions = {
-          ENABLED = false;
+          ENABLED = true;
         };
         service = {
           DISABLE_REGISTRATION = true;
