@@ -84,6 +84,7 @@ in {
     tandoor_env_file = {
       restartUnits = ["tandoor-recipes.service"];
     };
+    forgejo_runner_token = {};
   };
 
   # Ensure common groups exist, so that services can use them without depending on each other.
@@ -271,6 +272,12 @@ in {
     forgejo = {
       enable = true;
       reverseProxy.domain = "forgejo.${intraDomain}";
+    };
+    forgejo-runner = {
+      enable = true;
+      serverUrl = "https://forgejo.${intraDomain}";
+      uuid = "30a0282e-57f8-4296-ae8b-8fae963e8715";
+      tokenFile = config.sops.secrets.forgejo_runner_token.path;
     };
     ntfy = {
       enable = true;
