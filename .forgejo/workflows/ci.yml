@@ -41,5 +41,8 @@ jobs:
           alejandra --check .
           statix check
 
+      - name: Check
+        run: nix flake check
+
       - name: Build configurations
         run: just build all bazyli
