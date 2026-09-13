@@ -188,19 +188,9 @@ in {
               href = makeServiceDomainUrl "forgejo";
               siteMonitor = makeServiceLoopbackUrl "forgejo";
               widget = {
-                type = "customapi";
-                url = "${siteMonitor}/api/v1/repos/search?limit=100";
-                headers = {
-                  "Authorization" = "token {{HOMEPAGE_VAR_FORGEJO_API_TOKEN}}";
-                };
-                refreshInterval = 30000;
-                mappings = [
-                  {
-                    field = "data";
-                    format = "size";
-                    label = "Repositories";
-                  }
-                ];
+                type = "gitea";
+                url = siteMonitor;
+                key = "{{HOMEPAGE_VAR_FORGEJO_API_TOKEN}}";
               };
             };
           }
