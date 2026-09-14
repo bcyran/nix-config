@@ -38,6 +38,14 @@ in {
       owner = caddyCfg.user;
       reloadUnits = ["caddy.service"];
     };
+    deploy_srednia_com_ssh_key_file = {
+      owner = caddyCfg.user;
+      reloadUnits = ["caddy.service"];
+    };
+    deploy_edaostrowska_pl_ssh_key_file = {
+      owner = caddyCfg.user;
+      reloadUnits = ["caddy.service"];
+    };
     crowdsec_console_token_file = {
       owner = crowdsecCfg.user;
       reloadUnits = ["crowdsec.service"];
@@ -49,9 +57,6 @@ in {
   };
 
   my = {
-    # This module from my `nix-private` flake enables more websites and services via
-    # `staticGitHosts` and `reverseProxyHosts` in the similar way as below.
-    private.services.enable = true;
     services = {
       caddy = {
         enable = true;
@@ -70,6 +75,17 @@ in {
             repoUrl = "git@github.com:bcyran/bazyli-cyran.git";
             sshKeyFile = config.sops.secrets.deploy_cyran_dev_ssh_key_file.path;
             updateWebhookConfig = "Github X-Hub-Signature-256 {$GITHUB_CYRAN_DEV_WEBHOOK_SECRET}";
+          };
+          "srednia.com" = {
+            repoUrl = "git@github.com:bcyran/kalkulator-sredniej.git";
+            sshKeyFile = config.sops.secrets.deploy_srednia_com_ssh_key_file.path;
+            updateWebhookConfig = "Github X-Hub-Signature-256 {$GITHUB_SREDNIA_COM_WEBHOOK_SECRET}";
+            extraRouteConfig = "try_files {path} /index.html";
+          };
+          "edaostrowska.pl" = {
+            repoUrl = "git@github.com:bcyran/eda-ostrowska.git";
+            sshKeyFile = config.sops.secrets.deploy_edaostrowska_pl_ssh_key_file.path;
+            updateWebhookConfig = "Github X-Hub-Signature-256 {$GITHUB_EDAOSTROWSKA_PL_WEBHOOK_SECRET}";
           };
         };
         extraConfig = ''
@@ -93,6 +109,10 @@ in {
         };
       };
       fail2ban.enable = true;
+      wettermin-ical = {
+        enable = true;
+        reverseProxy.domain = "wettermin.${labDomain}";
+      };
       crowdsec = {
         enable = true;
         consoleTokenFile = config.sops.secrets.crowdsec_console_token_file.path;

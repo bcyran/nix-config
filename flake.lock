@@ -212,28 +212,6 @@
         "type": "github"
       }
     },
-    "my-private": {
-      "inputs": {
-        "my": [],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "wettermin-ical": "wettermin-ical"
-      },
-      "locked": {
-        "lastModified": 1787077040,
-        "narHash": "sha256-JRwKwTu0NcU1rzF1r6WApwMZ2DwtcfjD3fmG6TM34BA=",
-        "ref": "refs/heads/main",
-        "rev": "59f2bb75468221b0c738cec845780bf21ece0546",
-        "revCount": 5,
-        "type": "git",
-        "url": "ssh://git@github.com/bcyran/nix-private"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/bcyran/nix-private"
-      }
-    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -334,7 +312,7 @@
           "noctalia",
           "nixpkgs"
         ],
-        "systems": "systems_2",
+        "systems": "systems",
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
@@ -384,7 +362,6 @@
         "hyprcursor-phinger": "hyprcursor-phinger",
         "lanzaboote": "lanzaboote",
         "monique": "monique",
-        "my-private": "my-private",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
@@ -392,7 +369,8 @@
         "noctalia-greeter": "noctalia-greeter",
         "sops-nix": "sops-nix",
         "timewall": "timewall",
-        "vpn-confinement": "vpn-confinement"
+        "vpn-confinement": "vpn-confinement",
+        "wettermin-ical": "wettermin-ical"
       }
     },
     "rust-overlay": {
@@ -459,21 +437,6 @@
     },
     "systems": {
       "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_2": {
-      "locked": {
         "lastModified": 1689347949,
         "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
         "owner": "nix-systems",
@@ -484,6 +447,21 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "systems_2": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
         "type": "github"
       }
     },
@@ -548,10 +526,9 @@
     "wettermin-ical": {
       "inputs": {
         "nixpkgs": [
-          "my-private",
           "nixpkgs"
         ],
-        "systems": "systems"
+        "systems": "systems_2"
       },
       "locked": {
         "lastModified": 1786965126,

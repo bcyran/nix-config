@@ -63,19 +63,15 @@
       url = "github:Kyure-A/agent-skills-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     # Secret management
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Private configs
-    my-private = {
-      url = "git+ssh://git@github.com/bcyran/nix-private";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        my.follows = "";
-      };
+
+    wettermin-ical = {
+      url = "github:bcyran/wettermin-ical";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

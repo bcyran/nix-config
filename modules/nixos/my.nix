@@ -2,7 +2,7 @@
   imports = [
     my.inputs.sops-nix.nixosModules.sops
     my.inputs.vpn-confinement.nixosModules.default
-    my.inputs.my-private.nixosModules.default
+    my.inputs.wettermin-ical.nixosModules.default
     my.inputs.noctalia-greeter.nixosModules.default
 
     ./options
