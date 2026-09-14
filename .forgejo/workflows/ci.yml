@@ -19,26 +19,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure GitHub deploy keys
-        env:
-          DEPLOY_KEY_SECRETS: ${{ secrets.DEPLOY_KEY_SECRETS }}
-          DEPLOY_KEY_PRIVATE: ${{ secrets.DEPLOY_KEY_PRIVATE }}
-        run: |
-          set -euo pipefail
-
-          install -d -m 700 "$HOME/.ssh"
-          echo "$DEPLOY_KEY_SECRETS" > "$HOME/.ssh/deploy_secrets"
-          echo "$DEPLOY_KEY_PRIVATE" > "$HOME/.ssh/deploy_private"
-          chmod 600 "$HOME/.ssh/deploy_secrets" "$HOME/.ssh/deploy_private"
-          ssh-keyscan github.com >> "$HOME/.ssh/known_hosts" 2>/dev/null
-          eval "$(ssh-agent -s)"
-          ssh-add -q "$HOME/.ssh/deploy_secrets" "$HOME/.ssh/deploy_private"
-
-          {
-            echo "SSH_AUTH_SOCK=${SSH_AUTH_SOCK}"
-            echo "GIT_SSH_COMMAND=ssh -o IdentitiesOnly=no -o StrictHostKeyChecking=accept-new"
-          } >> "$GITHUB_ENV"
-
       - name: Lint
         run: |
           alejandra --check .
