@@ -234,24 +234,6 @@
         "url": "ssh://git@github.com/bcyran/nix-private"
       }
     },
-    "my-secrets": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789315670,
-        "narHash": "sha256-C/h2sGhdqqGwhRmcOm9r0s3Qg76JSy2myuS+XinOqQI=",
-        "ref": "main",
-        "rev": "7e344188082edfac790245c4f14c42dc8f796596",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/bcyran/nix-secrets.git"
-      },
-      "original": {
-        "ref": "main",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/bcyran/nix-secrets.git"
-      }
-    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -403,7 +385,6 @@
         "lanzaboote": "lanzaboote",
         "monique": "monique",
         "my-private": "my-private",
-        "my-secrets": "my-secrets",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",

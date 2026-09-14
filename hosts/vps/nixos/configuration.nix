@@ -35,7 +35,7 @@
   };
 
   sops = let
-    vpsSopsFile = "${inputs.my-secrets}/vps.yaml";
+    vpsSopsFile = "${inputs.self}/secrets/vps.yaml";
   in {
     defaultSopsFile = vpsSopsFile;
     secrets = {

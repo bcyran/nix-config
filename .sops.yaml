@@ -1,0 +1,35 @@
+keys:
+  - &secrets_admin age1g30d8pdvtdp3ftzls6mptm8qee9c8pejrs3jclqc937lxg74wersfafzz7
+  - &slimbook_root age1c5rfnc3pphnepqrp8z8p3t4ycey24k3rjvj36cxckwefx500velsawftq3
+  - &slimbook_bazyli age1f0u2pdya9lj8w03hktnhq0q4mwpga4wulf43rqjycvd39yffvvhqr53rr7
+  - &atlas_root age1jymc5q93qtfyqsqaqmg6s337fdwu9zdxgqzr90lvv7mfeamjsass96khms
+  - &atlas_bazyli age185k9p46xxxc2uymg777kn8ng7nykqh5tj29wag7u2048xxgj75fq2vjlqs
+  - &vps_root age1a5pyaehehv87ydx7qpqdjgthzkcvjpmr43w44jjx5c84e4qxj9jsg8tcyj
+  - &vps_bazyli age1an28w2m765n42dh4h4pkzkagdd5uf5rdtrexlpau4n0mdmnn4s6qzklt8s
+
+creation_rules:
+  - path_regex: ^secrets/wifi\.yaml$
+    key_groups:
+      - age:
+          - *secrets_admin
+          - *slimbook_root
+  - path_regex: ^secrets/slimbook\.yaml$
+    key_groups:
+      - age:
+          - *secrets_admin
+          - *slimbook_root
+  - path_regex: ^secrets/slimbook_bazyli\.yaml$
+    key_groups:
+      - age:
+          - *secrets_admin
+          - *slimbook_bazyli
+  - path_regex: ^secrets/atlas\.yaml$
+    key_groups:
+      - age:
+          - *secrets_admin
+          - *atlas_root
+  - path_regex: ^secrets/vps\.yaml$
+    key_groups:
+      - age:
+          - *secrets_admin
+          - *vps_root

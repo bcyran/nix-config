@@ -69,11 +69,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    my-secrets = {
-      url = "git+ssh://git@github.com/bcyran/nix-secrets.git?ref=main&shallow=1";
-      flake = false;
-    };
-
     # Private configs
     my-private = {
       url = "git+ssh://git@github.com/bcyran/nix-private";

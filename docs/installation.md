@@ -72,14 +72,10 @@ Set the LUKS password if prompted.
     It will also print the keys both in SSH and in age format.
 2. Use the public keys to prepare all the necessary secrets.
     Remember to:
-    - Prepare new secret files for this host.
+    - Prepare new secret files for this host under `./secrets`.
     - Update existing secret files with `sops updatekeys`.
-    - Authorize the target host keys to access the secrets repo.
-    - Update the secrets in the lockfile to the latest commit:
-
-        ```shell
-        nix flake update my-secrets
-        ```
+    - Commit the new/updated files in `./secrets` (and stage them with `git add` at minimum,
+      so the flake picks them up even before committing).
 
 3. Start the system config rebuild:
 

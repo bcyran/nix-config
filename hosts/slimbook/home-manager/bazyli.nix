@@ -12,7 +12,7 @@ in {
   ];
 
   sops = {
-    defaultSopsFile = "${inputs.my-secrets}/slimbook_bazyli.yaml";
+    defaultSopsFile = "${inputs.self}/secrets/slimbook_bazyli.yaml";
     secrets = {
       syncthing_key = {};
       syncthing_cert = {};

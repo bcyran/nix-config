@@ -13,7 +13,7 @@
 - Secure Boot with [Lanzaboote](https://github.com/nix-community/lanzaboote).
 - BTRFS with home directory snapshots.
 - Secrets provisioning with [sops-nix](https://github.com/Mic92/sops-nix).
-  The secrets are stored in a separate, private repo.
+  Secrets are encrypted with `sops`/`age` and committed directly in this repo under `./secrets`.
 - The entire configuration is modularized and exported from the flake.
   This allows using selected (or all) parts in other flakes.
 - Semi-automated installation.

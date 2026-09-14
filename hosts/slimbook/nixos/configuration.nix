@@ -24,8 +24,8 @@
   networking.hostName = "slimbook";
 
   sops = let
-    slimbookSopsFile = "${inputs.my-secrets}/slimbook.yaml";
-    wifiSopsFile = "${inputs.my-secrets}/wifi.yaml";
+    slimbookSopsFile = "${inputs.self}/secrets/slimbook.yaml";
+    wifiSopsFile = "${inputs.self}/secrets/wifi.yaml";
   in {
     defaultSopsFile = slimbookSopsFile;
     secrets = {

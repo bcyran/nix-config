@@ -31,7 +31,7 @@
   };
 
   sops = let
-    atlasSopsFile = "${inputs.my-secrets}/atlas.yaml";
+    atlasSopsFile = "${inputs.self}/secrets/atlas.yaml";
   in {
     defaultSopsFile = atlasSopsFile;
     secrets = {
