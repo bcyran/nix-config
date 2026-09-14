@@ -11,10 +11,13 @@
   ],
   "timezone": "Europe/Warsaw",
   "commitMessagePrefix": "chore(flake):",
-  "commitMessageAction": "Update",
-  "commitMessageTopic": "the lockfile",
   "lockFileMaintenance": {
-    "enabled": true
+    "enabled": true,
+    "schedule": [
+      "* 5 * * *"
+    ],
+    "commitMessageAction": "update",
+    "commitMessageTopic": "the lockfile"
   },
   "packageRules": [
     {
