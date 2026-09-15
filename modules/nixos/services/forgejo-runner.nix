@@ -65,9 +65,11 @@ in {
           bash
           coreutils
           curl
+          dix
           gawk
           gnused
           just
+          jq
           nix
           nodejs
           openssh
