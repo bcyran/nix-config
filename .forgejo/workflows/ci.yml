@@ -12,20 +12,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  check:
     runs-on: native
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Lint
-        run: |
-          alejandra --check .
-          statix check
+      - name: Format
+        run: alejandra --check .
 
-      - name: Check
+      - name: Lint
+        run: statix check
+
+      - name: Evaluate
         run: nix flake check
+
+  build:
+    runs-on: native
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Build configurations
         run: just build all bazyli
