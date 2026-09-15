@@ -1,0 +1,28 @@
+name: "Dix closure diff"
+description: "Build Nix closures for the base and head commits of a pull request, diff each pair with dix, and post the result as a PR comment."
+
+inputs:
+  base-sha:
+    description: "Commit to use as the diff base (usually the PR target branch)."
+    required: true
+  head-sha:
+    description: "Commit to use as the diff head (usually the PR source branch)."
+    required: true
+  pr-number:
+    description: "Pull request number to comment on."
+    required: true
+  closures:
+    description: "Newline-separated flake attributes of the closures to diff. An entry may be prefixed with a user-friendly label using the form 'label=attribute'."
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Diff closures and comment"
+      shell: bash
+      env:
+        DIX_BASE_SHA: ${{ inputs.base-sha }}
+        DIX_HEAD_SHA: ${{ inputs.head-sha }}
+        DIX_PR_NUMBER: ${{ inputs.pr-number }}
+        DIX_CLOSURES: ${{ inputs.closures }}
+      run: "${{ forgejo.action_path }}/dix-diff.sh"

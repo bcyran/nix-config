@@ -29,3 +29,29 @@ jobs:
 
       - name: Build configurations
         run: just build all bazyli
+
+  diff:
+    needs: build
+    if: forgejo.event_name == 'pull_request'
+    runs-on: native
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Diff flake outputs
+        if: forgejo.event_name == 'pull_request'
+        uses: ./.forgejo/dix-diff
+        with:
+          base-sha: ${{ forgejo.event.pull_request.base.sha }}
+          head-sha: ${{ forgejo.event.pull_request.head.sha }}
+          pr-number: ${{ forgejo.event.pull_request.number }}
+          closures: |
+            slimbook=nixosConfigurations.slimbook.config.system.build.toplevel
+            bazyli@slimbook=homeConfigurations.bazyli@slimbook.activationPackage
+            atlas=nixosConfigurations.atlas.config.system.build.toplevel
+            bazyli@atlas=homeConfigurations.bazyli@atlas.activationPackage
+            vps=nixosConfigurations.vps.config.system.build.toplevel
+            bazyli@vps=homeConfigurations.bazyli@vps.activationPackage
