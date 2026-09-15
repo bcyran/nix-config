@@ -17,7 +17,8 @@
       "* 5 * * *"
     ],
     "commitMessageAction": "update",
-    "commitMessageTopic": "the lockfile"
+    "commitMessageTopic": "the lockfile",
+    "rebaseWhen": "behind-base-branch"
   },
   "packageRules": [
     {
