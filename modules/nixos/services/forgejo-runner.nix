@@ -43,6 +43,12 @@ in {
       default = [];
       description = "Extra packages available to jobs running with the host runtime.";
     };
+
+    capacity = lib.mkOption {
+      type = lib.types.int;
+      default = 4;
+      description = "The maximum number of concurrent jobs the runner can handle.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -50,7 +56,9 @@ in {
       enable = true;
 
       settings = {
-        runner.labels = cfg.labels;
+        runner = {
+          inherit (cfg) labels capacity;
+        };
         server.connections.default = {
           url = cfg.serverUrl;
           inherit (cfg) uuid;
