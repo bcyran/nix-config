@@ -88,6 +88,9 @@ in {
     renovate_token = {
       restartUnits = ["renovate.service"];
     };
+    renovate_github_com_token = {
+      restartUnits = ["renovate.service"];
+    };
   };
 
   # Ensure common groups exist, so that services can use them without depending on each other.
@@ -285,7 +288,10 @@ in {
     renovate = {
       enable = true;
       endpoint = "https://forgejo.${intraDomain}/api/v1/";
-      tokenFile = config.sops.secrets.renovate_token.path;
+      credentials = {
+        RENOVATE_TOKEN = config.sops.secrets.renovate_token.path;
+        RENOVATE_GITHUB_COM_TOKEN = config.sops.secrets.renovate_github_com_token.path;
+      };
     };
     ntfy = {
       enable = true;

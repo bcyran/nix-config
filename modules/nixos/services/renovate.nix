@@ -17,10 +17,13 @@ in {
       description = "The URL of the Forgejo API endpoint to which Renovate connects.";
     };
 
-    tokenFile = lib.mkOption {
-      type = lib.types.path;
-      example = "/run/secrets/renovate-token";
-      description = "The path to the file containing the Forgejo API token.";
+    credentials = lib.mkOption {
+      type = lib.types.attrsOf lib.types.path;
+      default = {};
+      example = {
+        RENOVATE_TOKEN = "/run/secrets/renovate-token";
+      };
+      description = "Credential files to pass to the Renovate service. Each attribute name is the environment variable and the value is the file path.";
     };
 
     schedule = lib.mkOption {
@@ -40,7 +43,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.renovate = {
       enable = true;
-      inherit (cfg) schedule;
+      inherit (cfg) schedule credentials;
       runtimePackages = with pkgs; [nix];
       settings =
         {
@@ -49,9 +52,6 @@ in {
           autodiscover = true;
         }
         // cfg.settings;
-      credentials = {
-        RENOVATE_TOKEN = cfg.tokenFile;
-      };
     };
   };
 }
