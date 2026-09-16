@@ -6,7 +6,8 @@
 }: let
   cfg = config.my.services.cleanuparr;
 
-  cleanuparrVersion = "2.10.1";
+  # renovate: datasource=docker packageName=ghcr.io/cleanuparr/cleanuparr
+  imageVersion = "2.10.1";
   user = "cleanuparr";
   group = "cleanuparr";
   dataDir = "/var/lib/cleanuparr";
@@ -26,7 +27,7 @@ in {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     virtualisation.oci-containers.containers.cleanuparr = {
-      image = "ghcr.io/cleanuparr/cleanuparr:${cleanuparrVersion}";
+      image = "ghcr.io/cleanuparr/cleanuparr:${imageVersion}";
       autoStart = true;
       ports = [
         "${cfg.address}:${builtins.toString cfg.port}:${builtins.toString cfg.port}"

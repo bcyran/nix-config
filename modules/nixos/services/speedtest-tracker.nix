@@ -6,7 +6,8 @@
 }: let
   cfg = config.my.services.speedtest-tracker;
 
-  speedtestTrackerVersion = "v1.14.6";
+  # renovate: datasource=docker packageName=lscr.io/linuxserver/speedtest-tracker
+  imageVersion = "v1.14.6";
   dataDir = "/var/lib/speedtest-tracker";
 in {
   options.my.services.speedtest-tracker = let
@@ -37,7 +38,7 @@ in {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     virtualisation.oci-containers.containers.speedtest-tracker = {
-      image = "lscr.io/linuxserver/speedtest-tracker:version-${speedtestTrackerVersion}";
+      image = "lscr.io/linuxserver/speedtest-tracker:version-${imageVersion}";
       autoStart = true;
       ports = ["${cfg.address}:${builtins.toString cfg.port}:80"];
       volumes = [

@@ -6,7 +6,8 @@
 }: let
   cfg = config.my.services.drawio;
 
-  drawioVersion = "31.1.2";
+  # renovate: datasource=docker packageName=docker.io/jgraph/drawio
+  imageVersion = "31.1.2";
 in {
   options.my.services.drawio = let
     serviceName = "draw.io";
@@ -22,7 +23,7 @@ in {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     virtualisation.oci-containers.containers.drawio = {
-      image = "docker.io/jgraph/drawio:${drawioVersion}";
+      image = "docker.io/jgraph/drawio:${imageVersion}";
       autoStart = true;
       ports = ["${cfg.address}:${builtins.toString cfg.port}:8080"];
     };

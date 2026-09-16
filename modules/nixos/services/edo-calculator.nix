@@ -6,7 +6,8 @@
 }: let
   cfg = config.my.services.edo-calculator;
 
-  edoCalculatorVersion = "sha-eef4742";
+  # renovate: datasource=docker packageName=ghcr.io/krbob/edo-calculator
+  imageVersion = "sha-eef4742";
 in {
   options.my.services.edo-calculator = let
     serviceName = "EDO Calculator";
@@ -22,7 +23,7 @@ in {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     virtualisation.oci-containers.containers.edo-calculator = {
-      image = "ghcr.io/krbob/edo-calculator:${edoCalculatorVersion}";
+      image = "ghcr.io/krbob/edo-calculator:${imageVersion}";
       autoStart = true;
       ports = ["${cfg.address}:${builtins.toString cfg.port}:8080"];
     };

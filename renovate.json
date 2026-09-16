@@ -7,7 +7,22 @@
     "enabled": true
   },
   "enabledManagers": [
-    "nix"
+    "nix",
+    "custom.regex"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Bump oci-container image versions pinned as imageVersion in NixOS service modules",
+      "managerFilePatterns": [
+        "/modules/nixos/services/.+\\.nix$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-]+?) packageName=(?<packageName>\\S+?)\\s*\\n\\s*imageVersion = \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    }
   ],
   "timezone": "Europe/Warsaw",
   "commitMessagePrefix": "chore(flake):",
@@ -34,6 +49,21 @@
         "replacement"
       ],
       "enabled": false
+    },
+    {
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "groupName": "container images",
+      "groupSlug": "container-images",
+      "commitMessageAction": "update",
+      "commitMessageTopic": "container images",
+      "schedule": [
+        "* 5 * * 1"
+      ]
     }
   ]
 }

@@ -7,7 +7,8 @@
   cfg = config.my.services.joplin;
   postgresCfg = config.my.services.postgresql;
 
-  joplinVersion = "3.7.1";
+  # renovate: datasource=docker packageName=docker.io/joplin/server
+  imageVersion = "3.7.1";
   dbName = "joplin";
   dbUser = "joplin";
 in {
@@ -39,7 +40,7 @@ in {
     };
 
     virtualisation.oci-containers.containers.joplin = {
-      image = "docker.io/joplin/server:${joplinVersion}";
+      image = "docker.io/joplin/server:${imageVersion}";
       autoStart = true;
       ports = ["${cfg.address}:${toString cfg.port}:${toString cfg.port}"];
       environment = {

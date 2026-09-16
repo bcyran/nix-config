@@ -6,7 +6,8 @@
 }: let
   cfg = config.my.services.apprise;
 
-  appriseVersion = "v1.5.1";
+  # renovate: datasource=docker packageName=docker.io/caronc/apprise
+  imageVersion = "v1.5.1";
   user = "apprise";
   group = "apprise";
   dataDir = "/var/lib/apprise";
@@ -25,7 +26,7 @@ in {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     virtualisation.oci-containers.containers.apprise = {
-      image = "docker.io/caronc/apprise:${appriseVersion}";
+      image = "docker.io/caronc/apprise:${imageVersion}";
       autoStart = true;
       ports = ["${cfg.address}:${builtins.toString cfg.port}:8000"];
       volumes = [

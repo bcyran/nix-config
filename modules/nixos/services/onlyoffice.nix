@@ -9,7 +9,8 @@
 }: let
   cfg = config.my.services.onlyoffice;
 
-  onlyofficeVersion = "9.4.0.1";
+  # renovate: datasource=docker packageName=docker.io/onlyoffice/documentserver
+  imageVersion = "9.4.0.1";
   dataDir = "/var/lib/onlyoffice";
 in {
   options.my.services.onlyoffice = let
@@ -27,7 +28,7 @@ in {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     virtualisation.oci-containers.containers.onlyoffice = {
-      image = "docker.io/onlyoffice/documentserver:${onlyofficeVersion}";
+      image = "docker.io/onlyoffice/documentserver:${imageVersion}";
       autoStart = true;
       ports = ["${cfg.address}:${builtins.toString cfg.port}:80"];
       volumes = [
