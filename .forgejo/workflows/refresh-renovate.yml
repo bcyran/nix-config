@@ -1,0 +1,68 @@
+name: Refresh Renovate
+
+on:
+  schedule:
+    - cron: "30 4 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: refresh-renovate
+  cancel-in-progress: true
+
+jobs:
+  add-rebase-label:
+    runs-on: native
+
+    steps:
+      - name: Add rebase label to lockfile maintenance PR
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          api="${FORGEJO_API_URL:-}"
+          repo="${FORGEJO_REPOSITORY:-}"
+          token="${FORGEJO_TOKEN:-}"
+          if [[ -z "${api}" ]]; then
+            echo "FORGEJO_API_URL is not set" >&2
+            exit 1
+          fi
+          if [[ -z "${repo}" ]]; then
+            echo "FORGEJO_REPOSITORY is not set" >&2
+            exit 1
+          fi
+          if [[ -z "${token}" ]]; then
+            echo "no Forgejo token is available" >&2
+            exit 1
+          fi
+          if ! command -v jq >/dev/null; then
+            echo "jq is not in PATH" >&2
+            exit 1
+          fi
+          if ! command -v curl >/dev/null; then
+            echo "curl is not in PATH" >&2
+            exit 1
+          fi
+
+          label_name="rebase"
+          head_branch="renovate/lock-file-maintenance"
+
+          pr_number="$(
+            curl -fsS -H "Authorization: token ${token}" \
+              "${api}/repos/${repo}/pulls?state=open&limit=50" \
+              | jq -r --arg head "${head_branch}" \
+                '.[] | select(.head.ref == $head) | .number' \
+              | head -n 1
+          )" || { echo "failed to list open PRs" >&2; exit 1; }
+
+          if [[ -z "${pr_number}" ]]; then
+            echo "no open PR for branch '${head_branch}'; nothing to do"
+            exit 0
+          fi
+
+          echo "adding label '${label_name}' to PR #${pr_number}"
+          curl -fsS -X POST -H "Authorization: token ${token}" \
+            -H "Content-Type: application/json" \
+            -d "{\"labels\":[\"${label_name}\"]}" \
+            "${api}/repos/${repo}/issues/${pr_number}/labels" >/dev/null \
+            || { echo "failed to add label to PR #${pr_number}" >&2; exit 1; }
+          echo "done"
