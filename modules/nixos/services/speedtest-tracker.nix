@@ -7,7 +7,7 @@
   cfg = config.my.services.speedtest-tracker;
 
   # renovate: datasource=docker packageName=lscr.io/linuxserver/speedtest-tracker
-  imageVersion = "v1.14.6";
+  imageVersion = "1.15.0";
   dataDir = "/var/lib/speedtest-tracker";
 in {
   options.my.services.speedtest-tracker = let
