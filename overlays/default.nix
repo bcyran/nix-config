@@ -18,20 +18,16 @@
     opencode = prev.opencode.override {bun = bun_1_3_13;};
 
     glances = prev.glances.overrideAttrs (old: {
-      disabledTests =
-        (old.disabledTests or [])
+      # These modules spawn the Glances server with subprocess.Popen, wait a
+      # fixed time.sleep(5) instead of polling, then immediately make HTTP
+      # requests. Under the load of a parallel nixos-rebuild the server
+      # often is not available yet, so the requests fail with ConnectionError.
+      disabledTestPaths =
+        (old.disabledTestPaths or [])
         ++ [
-          "test_serverslist_returns_200"
-          "test_serverslist_returns_list"
-          "test_serverslist_has_servers"
-          "test_serverslist_server_has_required_fields"
-          "test_serverslist_server_types"
-          "test_serverslist_server_protocols"
-          "test_no_password_field_in_response"
-          "test_no_uri_field_in_response"
-          "test_no_credential_in_any_field"
-          "test_repeated_calls_consistent"
-          "test_repeated_calls_never_leak_credentials"
+          "tests/test_restful.py"
+          "tests/test_xmlrpc.py"
+          "tests/test_browser_restful.py"
         ];
     });
   };
