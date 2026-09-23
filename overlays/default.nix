@@ -5,18 +5,7 @@
       config.allowUnfree = true;
     };
   };
-  fixes = final: prev: let
-    bun_1_3_13 = prev.bun.overrideAttrs (old: rec {
-      version = "1.3.13";
-      src = prev.fetchurl {
-        url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-linux-x64-baseline.zip";
-        hash = "sha256-nYokKSpwaAkCBdqsCloiP19pc29Sh+N7+I07QDHtx1A=";
-      };
-    });
-  in {
-    # FIXME: Remove once https://github.com/NixOS/nixpkgs/issues/563241 is fixed
-    opencode = prev.opencode.override {bun = bun_1_3_13;};
-
+  fixes = final: prev: {
     glances = prev.glances.overrideAttrs (old: {
       # These modules spawn the Glances server with subprocess.Popen, wait a
       # fixed time.sleep(5) instead of polling, then immediately make HTTP
