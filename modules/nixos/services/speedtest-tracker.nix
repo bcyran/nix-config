@@ -38,7 +38,7 @@ in {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
     virtualisation.oci-containers.containers.speedtest-tracker = {
-      image = "lscr.io/linuxserver/speedtest-tracker:version-${imageVersion}";
+      image = "lscr.io/linuxserver/speedtest-tracker:version-v${imageVersion}";
       autoStart = true;
       ports = ["${cfg.address}:${builtins.toString cfg.port}:80"];
       volumes = [
