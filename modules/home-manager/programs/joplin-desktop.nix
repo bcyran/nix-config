@@ -45,17 +45,12 @@ in {
   config = lib.mkIf cfg.enable {
     programs.joplin-desktop = {
       enable = true;
-      general.editor = lib.getExe pkgs.neovim;
-      sync = lib.mkIf cfg.sync.enable {
-        target = "joplin-server";
-        interval = "5m";
-      };
-
-      extraConfig = let
+      settings = let
         inherit (config.fonts.fontconfig) defaultFonts;
         editorFont = builtins.elemAt defaultFonts.monospace 0;
       in
         {
+          "editor" = lib.getExe pkgs.neovim;
           "editor.codeView" = true;
           locale = "pl_PL";
           dateFormat = "DD.MM.YYYY";
@@ -126,6 +121,9 @@ in {
           windowContentZoomFactor = 110;
         }
         // lib.optionalAttrs cfg.sync.enable {
+          "sync.target" = 9;
+          "sync.interval" = 300;
+
           "sync.9.path" = cfg.sync.path;
           "sync.9.username" = cfg.sync.username;
         };
