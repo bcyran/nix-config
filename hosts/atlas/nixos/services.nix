@@ -91,6 +91,10 @@ in {
     renovate_github_com_token = {
       restartUnits = ["renovate.service"];
     };
+    mail_relay_sasl_passwd_file = {
+      owner = "postfix";
+      restartUnits = ["postfix.service"];
+    };
   };
 
   # Ensure common groups exist, so that services can use them without depending on each other.
@@ -378,6 +382,12 @@ in {
       enable = true;
       reverseProxy.domain = "tandoor.${intraDomain}";
       environmentFiles = [config.sops.secrets.tandoor_env_file.path];
+    };
+    mail-relay = {
+      enable = true;
+      senderAddress = "${config.networking.hostName}@${my.lib.const.domains.root}";
+      relayHost = "[smtp.protonmail.ch]:587";
+      saslPasswordFile = config.sops.secrets.mail_relay_sasl_passwd_file.path;
     };
   };
 }
