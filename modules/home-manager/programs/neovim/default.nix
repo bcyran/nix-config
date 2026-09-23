@@ -64,6 +64,8 @@ in {
         recursive = true;
       };
 
+      "nvim/markdownlint.json".source = ./files/markdownlint.json;
+
       "nvim/lua/config/settings.lua".text = ''
         local settings = {
           copilot_enabled = ${boolToString cfg.settings.copilot.enable},
