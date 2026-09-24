@@ -3,6 +3,7 @@ name: Refresh Renovate
 on:
   schedule:
     - cron: "30 4 * * *"
+      timezone: "Europe/Warsaw"
   workflow_dispatch:
 
 concurrency:
