@@ -18,10 +18,7 @@ in {
       enable = true;
       settings = {
         autoupdate = false;
-        plugin = [
-          "superpowers@git+https://github.com/obra/superpowers.git"
-          "opencode-rules@latest"
-        ];
+        plugin = ["opencode-rules@latest"];
       };
       tui = {
         theme = "tokyonight";
@@ -39,6 +36,9 @@ in {
         "engineering/grill-with-docs"
         "productivity/grilling"
         "engineering/domain-modeling"
+        "caveman"
+        "ponytail"
+        "i-have-adhd"
       ];
       targets.opencode.enable = true;
     };

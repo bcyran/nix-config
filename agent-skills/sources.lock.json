@@ -1,5 +1,43 @@
 {
   "manifests": {
+    "caveman": {
+      "filter": {
+        "maxDepth": null,
+        "nameRegex": "^caveman$"
+      },
+      "idPrefix": null,
+      "pin": {
+        "at": null,
+        "branch": "main",
+        "owner": "JuliusBrussee",
+        "preReleases": false,
+        "releasePrefix": null,
+        "repo": "caveman",
+        "submodules": false,
+        "type": "github",
+        "versionUpperBound": null
+      },
+      "subdir": "skills"
+    },
+    "i-have-adhd": {
+      "filter": {
+        "maxDepth": null,
+        "nameRegex": null
+      },
+      "idPrefix": null,
+      "pin": {
+        "at": null,
+        "branch": "main",
+        "owner": "ayghri",
+        "preReleases": false,
+        "releasePrefix": null,
+        "repo": "i-have-adhd",
+        "submodules": false,
+        "type": "github",
+        "versionUpperBound": null
+      },
+      "subdir": "skills"
+    },
     "mattpocock-skills": {
       "filter": {
         "maxDepth": null,
@@ -18,6 +56,25 @@
         "versionUpperBound": null
       },
       "subdir": "skills"
+    },
+    "ponytail": {
+      "filter": {
+        "maxDepth": null,
+        "nameRegex": "^ponytail$"
+      },
+      "idPrefix": null,
+      "pin": {
+        "at": null,
+        "branch": "main",
+        "owner": "DietrichGebert",
+        "preReleases": false,
+        "releasePrefix": null,
+        "repo": "ponytail",
+        "submodules": false,
+        "type": "github",
+        "versionUpperBound": null
+      },
+      "subdir": ".openclaw/skills"
     },
     "simple-english": {
       "filter": {
@@ -41,31 +98,70 @@
   },
   "npins": {
     "pins": {
+      "caveman": {
+        "branch": "main",
+        "hash": "sha256-KFfU8LmNajKLZcOXOFisn4beTcg2YL+rpasr39UgSZE=",
+        "repository": {
+          "owner": "JuliusBrussee",
+          "repo": "caveman",
+          "type": "GitHub"
+        },
+        "revision": "2fd153c67988e980fb0b2455c90832159a6a5a25",
+        "submodules": false,
+        "type": "Git",
+        "url": "https://github.com/JuliusBrussee/caveman/archive/2fd153c67988e980fb0b2455c90832159a6a5a25.tar.gz"
+      },
+      "i-have-adhd": {
+        "branch": "main",
+        "hash": "sha256-UExi0k71MOtLwqVaFRGhgvqq6+jxwbQxZZVZxceHGrw=",
+        "repository": {
+          "owner": "ayghri",
+          "repo": "i-have-adhd",
+          "type": "GitHub"
+        },
+        "revision": "839872f9d1cd634fed642b4589ce7226199cc15f",
+        "submodules": false,
+        "type": "Git",
+        "url": "https://github.com/ayghri/i-have-adhd/archive/839872f9d1cd634fed642b4589ce7226199cc15f.tar.gz"
+      },
       "mattpocock-skills": {
         "branch": "main",
-        "hash": "sha256-pseSJJb5nBBGPzpxA1GzjGLB9OrT+u0At1saJ4NqZ1E=",
+        "hash": "sha256-L3CpIT2DeI+fUFl9fcygojtQo2DzEen69rMD1XqR1vM=",
         "repository": {
           "owner": "mattpocock",
           "repo": "skills",
           "type": "GitHub"
         },
-        "revision": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
+        "revision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/mattpocock/skills/archive/84fdeffd12f2ee307994d1eb6feb48173b6e0502.tar.gz"
+        "url": "https://github.com/mattpocock/skills/archive/c55ee46073ed923f86ce59a5eb3b6d895095d1b7.tar.gz"
+      },
+      "ponytail": {
+        "branch": "main",
+        "hash": "sha256-PES5XrSYx0VBXWVHEDRykGy0SAmJfV/luzy8Gfg0aAQ=",
+        "repository": {
+          "owner": "DietrichGebert",
+          "repo": "ponytail",
+          "type": "GitHub"
+        },
+        "revision": "e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156",
+        "submodules": false,
+        "type": "Git",
+        "url": "https://github.com/DietrichGebert/ponytail/archive/e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156.tar.gz"
       },
       "simple-english": {
         "branch": "main",
-        "hash": "sha256-QmlV9OZ4CNxI+pV7jDcn4n3Zet1+9W7h5oTNCUQ/vrY=",
+        "hash": "sha256-CPD3x2wcU7INpOpqn0Hg4iY9gB1BAfuHU8e9w//s1sA=",
         "repository": {
           "owner": "AminBlg",
           "repo": "SimpleEnglish",
           "type": "GitHub"
         },
-        "revision": "59bf6702197a5aadc96d197ea17f290d8d50dcd3",
+        "revision": "79b590fc8596523d92c26b1ea7e33236606ef069",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/AminBlg/SimpleEnglish/archive/59bf6702197a5aadc96d197ea17f290d8d50dcd3.tar.gz"
+        "url": "https://github.com/AminBlg/SimpleEnglish/archive/79b590fc8596523d92c26b1ea7e33236606ef069.tar.gz"
       }
     },
     "version": 8
