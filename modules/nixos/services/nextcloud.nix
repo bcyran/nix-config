@@ -23,6 +23,7 @@ in {
       description = "Path to the file containing the admin password.";
     };
     whiteboardEnvironmentFiles = my.lib.options.mkEnvironmentFilesOption "Nextcloud Whiteboard";
+    email = my.lib.options.mkEmailOptions serviceName config;
 
     caddyExtraConfig = lib.mkOption {
       type = lib.types.lines;
@@ -73,10 +74,19 @@ in {
         };
         extraAppsEnable = true;
 
-        settings = {
-          default_phone_region = "PL";
-          overwriteprotocol = "https";
-        };
+        settings =
+          {
+            default_phone_region = "PL";
+            overwriteprotocol = "https";
+          }
+          // lib.optionalAttrs cfg.email.enable {
+            mail_smtpmode = "smtp";
+            mail_smtphost = cfg.email.host;
+            mail_smtpport = cfg.email.port;
+            mail_smtpsecure = "";
+            mail_from_address = lib.head (lib.splitString "@" cfg.email.fromAddress);
+            mail_domain = lib.last (lib.splitString "@" cfg.email.fromAddress);
+          };
 
         phpOptions = {
           "opcache.jit" = "tracing";

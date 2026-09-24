@@ -1,5 +1,8 @@
 # Helpers used in ../modules/nixos/services.
-{lib}: {
+{
+  lib,
+  const,
+}: {
   mkAddressOption = serviceName:
     lib.mkOption {
       type = lib.types.str;
@@ -78,4 +81,29 @@
       example = "/path/to/media";
       description = "The path to the directory for ${serviceName}.";
     };
+
+  mkEmailOptions = serviceName: config: {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether to send outgoing emails for ${serviceName}.";
+    };
+    fromAddress = lib.mkOption {
+      type = lib.types.nonEmptyStr;
+      default = "${config.networking.hostName}@${const.domains.root}";
+      description = "Sender address used by ${serviceName} for outgoing emails.";
+    };
+    host = lib.mkOption {
+      type = lib.types.nonEmptyStr;
+      default = "127.0.0.1";
+      example = "relay.internal";
+      description = "The SMTP host through which ${serviceName} sends outgoing emails.";
+    };
+    port = lib.mkOption {
+      type = lib.types.int;
+      default = 25;
+      example = 587;
+      description = "The SMTP port on which ${serviceName} connects to send outgoing emails.";
+    };
+  };
 }

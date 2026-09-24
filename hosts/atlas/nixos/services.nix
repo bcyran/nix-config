@@ -282,6 +282,7 @@ in {
     forgejo = {
       enable = true;
       reverseProxy.domain = "forgejo.${intraDomain}";
+      email.enable = true;
     };
     forgejo-runner = {
       enable = true;
@@ -324,6 +325,7 @@ in {
       domain = "nextcloud.${intraDomain}";
       adminPassFile = config.sops.secrets.nextcloud_admin_pass.path;
       whiteboardEnvironmentFiles = [config.sops.secrets.nextcloud_whiteboard_env_file.path];
+      email.enable = true;
     };
     collabora = {
       enable = true;
@@ -382,6 +384,7 @@ in {
       enable = true;
       reverseProxy.domain = "tandoor.${intraDomain}";
       environmentFiles = [config.sops.secrets.tandoor_env_file.path];
+      email.enable = true;
     };
     mail-relay = {
       enable = true;

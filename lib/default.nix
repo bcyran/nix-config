@@ -3,7 +3,7 @@
   config = import ./config.nix {inherit lib;};
 
   # Utilities for creating custom options.
-  options = import ./options.nix {inherit lib;};
+  options = import ./options.nix {inherit lib const;};
 
   # Utilities related to NetworkManager.
   nm = import ./nm.nix {inherit lib;};

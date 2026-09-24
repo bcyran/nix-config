@@ -17,6 +17,7 @@ in {
     port = my.lib.options.mkPortOption serviceName 8085;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
+    email = my.lib.options.mkEmailOptions serviceName config;
   };
 
   config = lib.mkIf cfg.enable {
@@ -41,6 +42,13 @@ in {
         };
         service = {
           DISABLE_REGISTRATION = true;
+        };
+        mailer = lib.mkIf cfg.email.enable {
+          ENABLED = true;
+          PROTOCOL = "smtp";
+          SMTP_ADDR = cfg.email.host;
+          SMTP_PORT = toString cfg.email.port;
+          FROM = cfg.email.fromAddress;
         };
       };
 
