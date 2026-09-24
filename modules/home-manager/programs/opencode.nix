@@ -2,6 +2,7 @@
   config,
   lib,
   my,
+  pkgs,
   ...
 }: let
   cfg = config.my.programs.opencode;
@@ -14,17 +15,37 @@ in {
   options.my.programs.opencode.enable = lib.mkEnableOption "opencode";
 
   config = lib.mkIf cfg.enable {
+    home.packages = [
+      pkgs.rtk
+      pkgs.codegraph
+    ];
+
     programs.opencode = {
       enable = true;
       settings = {
         autoupdate = false;
-        plugin = ["opencode-rules@latest"];
+        plugin = [
+          "opencode-rules@latest"
+          "${pkgs.rtk.src}/hooks/opencode/rtk.ts"
+        ];
+        mcp.servers = {
+          codegraph = {
+            type = "local";
+            command = [
+              (lib.getExe pkgs.codegraph)
+              "serve"
+              "--mcp"
+            ];
+          };
+          nixos = {
+            type = "local";
+            command = [(lib.getExe pkgs.mcp-nixos)];
+          };
+        };
       };
       tui = {
         theme = "tokyonight";
-        plugin = [
-          "opencode-rules@latest"
-        ];
+        plugin = ["opencode-rules@latest"];
       };
     };
 
