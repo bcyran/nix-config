@@ -128,6 +128,7 @@ in {
           ".vim"
           ".rgignore"
           ".direnv"
+          ".codegraph"
         ];
         signing.format = null;
       };
