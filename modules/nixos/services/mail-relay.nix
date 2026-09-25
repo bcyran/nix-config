@@ -52,7 +52,7 @@ in {
         smtp_sasl_auth_enable = "yes";
         smtp_sasl_security_options = "noanonymous";
         smtp_sasl_password_maps = "texthash:${cfg.saslPasswordFile}";
-        smtp_generic_maps = "static:${cfg.senderAddress}";
+        sender_canonical_maps = "static:${cfg.senderAddress}";
       };
     };
   };
