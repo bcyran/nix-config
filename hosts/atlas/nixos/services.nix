@@ -70,6 +70,12 @@ in {
       restartUnits = ["linkwarden.service"];
     };
     mqtt_hass_password_file = {};
+    mqtt_zigbee2mqtt_password_file = {};
+    zigbee2mqtt_secret_file = {
+      path = "/run/secrets/zigbee2mqtt-secret.yaml"; # must end with `.yaml` or `.yml`
+      owner = "zigbee2mqtt";
+      restartUnits = ["zigbee2mqtt.service"];
+    };
     ntfy_sh_env_file = {};
     paperless_password_file = {};
     changedetection_env_file = {
@@ -243,7 +249,18 @@ in {
           acl = ["readwrite #"];
           passwordFile = config.sops.secrets.mqtt_hass_password_file.path;
         };
+        zigbee2mqtt = {
+          acl = ["readwrite zigbee2mqtt/#" "readwrite homeassistant/#"];
+          passwordFile = config.sops.secrets.mqtt_zigbee2mqtt_password_file.path;
+        };
       };
+    };
+    zigbee2mqtt = {
+      enable = true;
+      reverseProxy.domain = "z2m.${intraDomain}";
+      serialPort = "/dev/serial/by-id/usb-SONOFF_SONOFF_Dongle_Max_MG24_e840dd99f9a0f011b71c2881bb936ffa-if00-port0";
+      mqtt.user = "zigbee2mqtt";
+      secretFile = config.sops.secrets.zigbee2mqtt_secret_file.path;
     };
     uptime-kuma = {
       enable = true;
