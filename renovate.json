@@ -60,10 +60,25 @@
       "groupName": "container images",
       "groupSlug": "container-images",
       "commitMessageAction": "update",
-      "commitMessageTopic": "container images",
+      "commitMessageTopic": "{{#if (lookup (distinct (lookupArray upgrades 'depName')) 1)}}container images{{else}}{{{packageName}}}{{/if}}",
       "schedule": [
         "* 5 * * 1"
       ]
+    },
+    {
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": null,
+      "groupSlug": null,
+      "commitMessageAction": "update",
+      "commitMessageTopic": "{{{packageName}}}"
     }
   ]
 }
