@@ -38,7 +38,7 @@ in {
     services = {
       nextcloud = {
         enable = true;
-        package = pkgs.nextcloud34;
+        package = pkgs.nextcloud35;
         hostName = cfg.domain;
         https = true;
         maxUploadSize = "16G";
@@ -58,7 +58,6 @@ in {
             calendar
             contacts
             deck
-            news
             notes
             tasks
             whiteboard
@@ -67,8 +66,8 @@ in {
             cospend
             ;
           drawio = pkgs.fetchNextcloudApp {
-            sha256 = "sha256-WNrdVNwL1/5ODxMZ2jxmxLcBXx0/DoQ1t4zfyC1Pxjs=";
-            url = "https://github.com/arnowelzel/drawio-nextcloud/releases/download/v4.2.5/drawio-v4.2.5.tar.gz";
+            sha256 = "sha256-OsNNda1TjQZ8TRGdRkKBtCTBlYosfvEU3h0dUv6omBw=";
+            url = "https://github.com/arnowelzel/drawio-nextcloud/releases/download/v4.3.9/drawio-v4.3.9.tar.gz";
             license = "agpl3Only";
           };
         };
