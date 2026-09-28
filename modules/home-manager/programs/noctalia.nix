@@ -144,8 +144,8 @@ in {
           position = "top";
           thickness = 34;
           padding = 12;
-          margin_edge = 8;
-          margin_ends = 8;
+          margin_edge = 0;
+          margin_ends = 0;
           widget_spacing = 16;
           font_scale = 1.11;
           font_weight = 400;
