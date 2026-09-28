@@ -10,7 +10,7 @@ in {
   options.my.programs.greetd.enable = lib.mkEnableOption "greetd";
 
   config = lib.mkIf cfg.enable {
-    programs.noctalia-greeter = {
+    services.displayManager.noctalia-greeter = {
       enable = true;
       settings = {
         user.default = config.my.user.name;
