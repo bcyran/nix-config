@@ -45,20 +45,6 @@ in {
           "DP-9" # Right monitor upon second plug
           "DP-10" # Left monitor upon second plug
         ];
-        ddcMappings = [
-          {
-            device = "/sys/class/backlight/ddcci14";
-            output = "DP-5";
-          }
-          {
-            device = "/sys/class/backlight/ddcci15";
-            output = "DP-6";
-          }
-          {
-            device = "/sys/class/backlight/ddcci16";
-            output = "DP-7";
-          }
-        ];
       };
       timewall.enable = false;
       cameractrls.enable = true;

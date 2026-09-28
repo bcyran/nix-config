@@ -2,7 +2,7 @@ local generated = require("config.generated")
 
 local mod = "SUPER"
 local execWrapper = generated.execWrapper
-local noctaliaExecWrapper = execWrapper .. " noctalia-shell ipc call"
+local noctaliaExecWrapper = execWrapper .. " noctalia msg"
 
 local function bindExec(keys, cmd, flags)
   hl.bind(keys, hl.dsp.exec_cmd(cmd), flags)
@@ -43,7 +43,6 @@ hl.bind(mod .. " + K", hl.dsp.focus({ direction = "u" }))
 hl.bind(mod .. " + J", hl.dsp.focus({ direction = "d" }))
 hl.bind(mod .. " + U", hl.dsp.focus({ monitor = "l" }))
 hl.bind(mod .. " + I", hl.dsp.focus({ monitor = "r" }))
-hl.bind(mod .. " + Tab", hl.dsp.focus({ last = true }))
 
 hl.bind(mod .. " + D", hl.dsp.workspace.toggle_special("dropdown"))
 
@@ -58,9 +57,9 @@ hl.bind(mod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 --------------------
 -- Screenshots    --
 --------------------
-bindExec(mod .. " + S", execWrapper .. " scr area")
-bindExec(mod .. " + SHIFT + S", execWrapper .. " scr active")
-bindExec(mod .. " + CONTROL + S", execWrapper .. " scr output")
+bindExec(mod .. " + S", noctaliaExecWrapper .. " screenshot-region")
+bindExec(mod .. " + SHIFT + S", noctaliaExecWrapper .. " screenshot-fullscreen pick")
+bindExec(mod .. " + CONTROL + S", noctaliaExecWrapper .. " screenshot-fullscreen")
 
 --------------------
 -- Apps           --
@@ -73,21 +72,21 @@ bindExec(mod .. " + N", execWrapper .. " thunar")
 --------------------
 -- Noctalia shell --
 --------------------
-bindExec(mod .. " + slash", noctaliaExecWrapper .. " media playPause")
+bindExec(mod .. " + slash", noctaliaExecWrapper .. " media toggle")
 bindExec(mod .. " + SHIFT + slash", noctaliaExecWrapper .. " media toggle")
 bindExec(mod .. " + comma", noctaliaExecWrapper .. " media previous")
 bindExec(mod .. " + period", noctaliaExecWrapper .. " media next")
 
-bindExec("CONTROL + space", noctaliaExecWrapper .. " notifications toggleHistory")
-bindExec("CONTROL + SHIFT + space", noctaliaExecWrapper .. " notifications clear")
-bindExec("CONTROL + escape", noctaliaExecWrapper .. " notifications dismissAll")
+bindExec("CONTROL + space", noctaliaExecWrapper .. " panel-toggle control-center notifications")
+bindExec("CONTROL + SHIFT + space", noctaliaExecWrapper .. " notification-clear-history")
+bindExec("CONTROL + escape", noctaliaExecWrapper .. " notification-clear-active")
 
-bindExec(mod .. " + space", noctaliaExecWrapper .. " launcher toggle")
-bindExec(mod .. " + W", noctaliaExecWrapper .. " launcher windows")
-bindExec(mod .. " + SHIFT + V", noctaliaExecWrapper .. " launcher clipboard")
-bindExec(mod .. " + grave", noctaliaExecWrapper .. " settings toggle")
-bindExec(mod .. " + SHIFT + space", noctaliaExecWrapper .. " controlCenter toggle")
-bindExec(mod .. " + SHIFT + M", noctaliaExecWrapper .. " lockScreen lock")
+bindExec(mod .. " + space", noctaliaExecWrapper .. " panel-toggle launcher")
+bindExec(mod .. " + Tab", noctaliaExecWrapper .. " window-switcher")
+bindExec(mod .. " + SHIFT + V", noctaliaExecWrapper .. " panel-toggle clipboard")
+bindExec(mod .. " + grave", noctaliaExecWrapper .. " settings-toggle")
+bindExec(mod .. " + SHIFT + space", noctaliaExecWrapper .. " panel-toggle control-center")
+bindExec(mod .. " + SHIFT + M", noctaliaExecWrapper .. " session lock")
 
 --------------------
 -- Workspaces     --
@@ -103,13 +102,13 @@ end
 -- Media keys     --
 --------------------
 -- Active on lock screen, non-repeatable.
-bindExec("XF86AudioMute", noctaliaExecWrapper .. " volume muteOutput", { locked = true })
+bindExec("XF86AudioMute", noctaliaExecWrapper .. " volume-mute", { locked = true })
 
 -- Active on lock screen, repeat while held.
-bindExec("XF86AudioRaiseVolume", noctaliaExecWrapper .. " volume increase", { locked = true, repeating = true })
-bindExec("XF86AudioLowerVolume", noctaliaExecWrapper .. " volume decrease", { locked = true, repeating = true })
-bindExec("XF86MonBrightnessDown", noctaliaExecWrapper .. " brightness decrease", { locked = true, repeating = true })
-bindExec("XF86MonBrightnessUp", noctaliaExecWrapper .. " brightness increase", { locked = true, repeating = true })
+bindExec("XF86AudioRaiseVolume", noctaliaExecWrapper .. " volume-up", { locked = true, repeating = true })
+bindExec("XF86AudioLowerVolume", noctaliaExecWrapper .. " volume-down", { locked = true, repeating = true })
+bindExec("XF86MonBrightnessDown", noctaliaExecWrapper .. " brightness-down", { locked = true, repeating = true })
+bindExec("XF86MonBrightnessUp", noctaliaExecWrapper .. " brightness-up", { locked = true, repeating = true })
 
 --------------------
 -- Mouse binds    --

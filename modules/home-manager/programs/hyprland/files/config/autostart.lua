@@ -6,7 +6,7 @@ hl.on("hyprland.start", function()
   end
 
   if generated.withNoctalia then
-    hl.exec_cmd(generated.execWrapper .. " noctalia-shell")
+    hl.exec_cmd(generated.execWrapper .. " noctalia")
   end
 
   hl.exec_cmd(generated.execWrapper .. " kitty --class terminal-workspace")
