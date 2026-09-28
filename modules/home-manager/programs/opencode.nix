@@ -28,6 +28,33 @@ in {
           "opencode-rules@latest"
           "${pkgs.rtk.src}/hooks/opencode/rtk.ts"
         ];
+        permission = {
+          external_directory = {
+            "/nix/store/**" = "allow";
+          };
+          read = {
+            "*" = "allow";
+            "*.env" = "deny";
+            "*.env.*" = "deny";
+            "*.env.example" = "allow";
+            "~/.ssh" = "deny";
+            "~/.ssh/**" = "deny";
+          };
+          edit = {
+            "*" = "allow";
+            "/nix/**" = "deny";
+            "/etc/**" = "deny";
+            "~/.ssh" = "deny";
+            "~/.ssh/**" = "deny";
+          };
+          bash = {
+            "ssh *" = "deny";
+            "scp *" = "deny";
+            "sftp *" = "deny";
+            "* ~/.ssh" = "deny";
+            "* ~/.ssh/*" = "deny";
+          };
+        };
         mcp.servers = {
           codegraph = {
             type = "local";
