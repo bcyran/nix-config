@@ -24,7 +24,7 @@ in {
 
     hardware.graphics.enable = true;
     systemd.services.jellyfin.serviceConfig = {
-      DeviceAllow = ["char-drm rw"];
+      DeviceAllow = ["char-drm rw" "char-kfd rw"];
       SupplementaryGroups = ["video" "render"];
     };
 
