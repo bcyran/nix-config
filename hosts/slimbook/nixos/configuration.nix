@@ -113,9 +113,17 @@
     };
   };
 
-  nix.settings.secret-key-files = [
-    config.sops.secrets.nix_store_binary_cache_key.path
-  ];
+  nix.settings = {
+    substituters = [
+      "https://cache.${my.lib.const.domains.intra}"
+    ];
+    trusted-public-keys = [
+      my.lib.const.binaryCacheKeys.intra
+    ];
+    secret-key-files = [
+      config.sops.secrets.nix_store_binary_cache_key.path
+    ];
+  };
 
   services.hardware.bolt.enable = true;
 
