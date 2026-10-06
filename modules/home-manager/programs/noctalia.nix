@@ -162,23 +162,24 @@ in {
           start = [
             "control-center"
             "workspaces"
-            "active-window"
+            "active_window"
           ];
           center = [];
           end = [
-            "lock-keys"
+            "lock_keys"
             "privacy"
             "media"
-            "audio-visualizer"
+            "audio_visualizer"
             "tray"
             "volume"
             "brightness"
             "caffeine"
             "network"
             "bluetooth"
-            "sysmon-cpu-usage"
-            "sysmon-cpu-temp"
-            "sysmon-ram"
+            "cpu"
+            "temp"
+            "ram"
+            "weather"
             "battery"
             "notifications"
             "clock"
@@ -195,7 +196,9 @@ in {
         };
 
         widget = {
-          "control-center".type = "control-center";
+          control-center = {
+            type = "control-center";
+          };
 
           workspaces = {
             type = "workspaces";
@@ -212,7 +215,7 @@ in {
             font_weight = 700;
           };
 
-          active-window = {
+          active_window = {
             type = "active_window";
             display = "text_only";
             max_length = 800;
@@ -221,7 +224,7 @@ in {
             show_empty_label = false;
           };
 
-          lock-keys = {
+          lock_keys = {
             type = "lock_keys";
             display = "short";
             show_caps_lock = true;
@@ -250,7 +253,7 @@ in {
             actions.middle = "media toggle";
           };
 
-          audio-visualizer = {
+          audio_visualizer = {
             type = "audio_visualizer";
             width = 56;
             bands = 16;
@@ -295,28 +298,33 @@ in {
             hide_when_adapter_off = true;
           };
 
-          sysmon-cpu-usage = {
+          cpu = {
             type = "sysmon";
             stat = "cpu_usage";
             visualization = "gauge";
-            show_value = true;
+            show_value = false;
             show_glyph = true;
           };
 
-          sysmon-cpu-temp = {
+          temp = {
             type = "sysmon";
             stat = "cpu_temp";
             visualization = "gauge";
-            show_value = true;
+            show_value = false;
             show_glyph = true;
           };
 
-          sysmon-ram = {
+          ram = {
             type = "sysmon";
             stat = "ram_used";
             visualization = "gauge";
-            show_value = true;
+            show_value = false;
             show_glyph = true;
+          };
+
+          weather = {
+            type = "weather";
+            show_condition = false;
           };
 
           battery = {
