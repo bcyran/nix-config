@@ -59,3 +59,9 @@ rollback target="both" generations="1":
         activation=$(home-manager generations | sed -n "$((n + 1))p" | sed 's/.*-> //')
         "$activation/activate"
     fi
+
+# Diff Noctalia user config against GUI/runtime settings overrides.
+noctalia-diff:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    nix shell nixpkgs#json-diff nixpkgs#yq-go -c bash -c 'json-diff <(NOCTALIA_STATE_HOME=$(mktemp -d) noctalia config export | yq -p toml -o json ".") <(noctalia config export | yq -p toml -o json ".")' || true
