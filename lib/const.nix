@@ -127,4 +127,7 @@ rec {
   users = {
     remoteBuild = "remotebuild";
   };
+  urls = {
+    nixCache = "https://cache.${domains.intra}";
+  };
 }

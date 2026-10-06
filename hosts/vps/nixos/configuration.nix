@@ -76,7 +76,7 @@
       my.lib.const.binaryCacheKeys.intra
     ];
     substituters = [
-      "https://cache.${my.lib.const.domains.intra}"
+      my.lib.const.urls.nixCache
     ];
   };
 

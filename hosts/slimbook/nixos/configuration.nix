@@ -115,7 +115,7 @@
 
   nix.settings = {
     substituters = [
-      "https://cache.${my.lib.const.domains.intra}"
+      my.lib.const.urls.nixCache
     ];
     trusted-public-keys = [
       my.lib.const.binaryCacheKeys.intra
