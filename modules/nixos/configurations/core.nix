@@ -36,6 +36,9 @@ in {
         auto-optimise-store = true;
         warn-dirty = false;
         download-buffer-size = 524288000; # 500 MiB
+        # This will additionally add your inputs to the system's legacy channels
+        # Making legacy nix commands consistent as well, awesome!
+        nix-path = ["/etc/nix/path"];
       };
       extraOptions =
         if (cfg.nixExtraOptionsFile != null)
@@ -45,10 +48,6 @@ in {
       # This will add each flake input as a registry
       # To make nix3 commands consistent with your flake
       registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-
-      # This will additionally add your inputs to the system's legacy channels
-      # Making legacy nix commands consistent as well, awesome!
-      nixPath = ["/etc/nix/path"];
     };
 
     environment.etc =
