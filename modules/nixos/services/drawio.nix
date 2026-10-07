@@ -7,7 +7,7 @@
   cfg = config.my.services.drawio;
 
   # renovate: datasource=docker packageName=docker.io/jgraph/drawio
-  imageVersion = "31.4.6";
+  imageVersion = "31.7.0";
 in {
   options.my.services.drawio = let
     serviceName = "draw.io";
