@@ -32,7 +32,9 @@ in {
   config = lib.mkIf cfg.enable {
     services.bazarr = {
       enable = true;
-      listenPort = cfg.port;
+      settings.general = {
+        inherit (cfg) port;
+      };
       inherit (cfg) user group openFirewall;
     };
 
