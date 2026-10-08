@@ -28,8 +28,8 @@ in {
 
     schedule = lib.mkOption {
       type = with lib.types; nullOr str;
-      default = "*:30";
-      example = "*:30";
+      default = "*:0/10";
+      example = "*:0/15";
       description = "How often to run Renovate. See systemd.time(7) for the format.";
     };
 
