@@ -19,6 +19,9 @@ in {
 
     environment.systemPackages = [pkgs.ddcutil];
 
+    hardware.i2c.enable = true;
+    users.groups.i2c.members = [config.my.user.name];
+
     # Source: https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/15
     services.udev.extraRules = ''
       SUBSYSTEM=="i2c-dev", ACTION=="add",\
