@@ -185,13 +185,6 @@ in {
             "clock"
           ];
 
-          actions = {
-            right = "panel-toggle control-center";
-            middle = "none";
-            scroll_up = "none";
-            scroll_down = "none";
-          };
-
           monitor = secondaryMonitors;
         };
 
