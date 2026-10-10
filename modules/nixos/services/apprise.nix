@@ -23,51 +23,45 @@ in {
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
   };
 
-  config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
+  config = lib.mkIf cfg.enable (lib.mkMerge [
+    {
+      networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
-    virtualisation.oci-containers.containers.apprise = {
-      image = "docker.io/caronc/apprise:${imageVersion}";
-      autoStart = true;
-      ports = ["${cfg.address}:${builtins.toString cfg.port}:8000"];
-      volumes = [
-        "${dataDir}/config:/config"
-      ];
-      environment = {
-        PUID = toString config.users.users.${cfg.user}.uid;
-        PGID = toString config.users.groups.${cfg.group}.gid;
-        APPRISE_STATEFUL_MODE = "simple";
-        APPRISE_WORKER_COUNT = "1";
+      virtualisation.oci-containers.containers.apprise = {
+        image = "docker.io/caronc/apprise:${imageVersion}";
+        autoStart = true;
+        ports = ["${cfg.address}:${builtins.toString cfg.port}:8000"];
+        volumes = [
+          "${dataDir}/config:/config"
+        ];
+        environment = {
+          PUID = toString config.users.users.${cfg.user}.uid;
+          PGID = toString config.users.groups.${cfg.group}.gid;
+          APPRISE_STATEFUL_MODE = "simple";
+          APPRISE_WORKER_COUNT = "1";
+        };
+        extraOptions = [
+          # Expose host's loopback interface in the container as 10.0.2.2.
+          "--network=slirp4netns:allow_host_loopback=true"
+          "--userns=keep-id"
+          "--cap-drop=ALL"
+          "--security-opt=no-new-privileges"
+        ];
+        podman.user = cfg.user;
       };
-      extraOptions = [
-        # Expose host's loopback interface in the container as 10.0.2.2.
-        "--network=slirp4netns:allow_host_loopback=true"
-        "--userns=keep-id"
-        "--cap-drop=ALL"
-        "--security-opt=no-new-privileges"
+
+      systemd.tmpfiles.rules = [
+        "d '${dataDir}' 0750 ${cfg.user} ${cfg.group} - -"
+        "d '${dataDir}/config' 0750 ${cfg.user} ${cfg.group} - -"
       ];
-      podman.user = cfg.user;
-    };
 
-    users = rec {
-      users.${cfg.user} = {
-        home = dataDir;
-        createHome = true;
-        inherit (cfg) group;
-        inherit uid;
-        isSystemUser = true;
-        autoSubUidGidRange = true;
-        linger = true;
-      };
-      groups.${cfg.group}.gid = users.${cfg.user}.uid;
-    };
+      my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
+    }
 
-    systemd.tmpfiles.rules = [
-      "d '${dataDir}' 0750 ${cfg.user} ${cfg.group} - -"
-      "d '${dataDir}/config' 0750 ${cfg.user} ${cfg.group} - -"
-      "d '/var/lib/containers/rootless/${toString uid}' 0700 ${cfg.user} ${cfg.group} - -"
-    ];
-
-    my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
-  };
+    (my.lib.ociContainers.mkRootlessPodmanUser {
+      inherit (cfg) user group;
+      home = dataDir;
+      inherit uid;
+    })
+  ]);
 }

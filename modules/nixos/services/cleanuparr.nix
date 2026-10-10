@@ -24,54 +24,48 @@ in {
     environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
   };
 
-  config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
+  config = lib.mkIf cfg.enable (lib.mkMerge [
+    {
+      networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
-    virtualisation.oci-containers.containers.cleanuparr = {
-      image = "ghcr.io/cleanuparr/cleanuparr:${imageVersion}";
-      autoStart = true;
-      ports = [
-        "${cfg.address}:${builtins.toString cfg.port}:${builtins.toString cfg.port}"
-      ];
-      volumes = [
-        "${dataDir}/config:/config"
-      ];
-      environment = {
-        PORT = builtins.toString cfg.port;
-        PUID = toString config.users.users.${cfg.user}.uid;
-        PGID = toString config.users.groups.${cfg.group}.gid;
-        UMASK = "022";
-        TZ = "Europe/Warsaw";
+      virtualisation.oci-containers.containers.cleanuparr = {
+        image = "ghcr.io/cleanuparr/cleanuparr:${imageVersion}";
+        autoStart = true;
+        ports = [
+          "${cfg.address}:${builtins.toString cfg.port}:${builtins.toString cfg.port}"
+        ];
+        volumes = [
+          "${dataDir}/config:/config"
+        ];
+        environment = {
+          PORT = builtins.toString cfg.port;
+          PUID = toString config.users.users.${cfg.user}.uid;
+          PGID = toString config.users.groups.${cfg.group}.gid;
+          UMASK = "022";
+          TZ = "Europe/Warsaw";
+        };
+        extraOptions = [
+          "--network=slirp4netns:allow_host_loopback=true"
+          "--userns=keep-id"
+          "--cap-drop=ALL"
+          "--security-opt=no-new-privileges"
+        ];
+        inherit (cfg) environmentFiles;
+        podman.user = cfg.user;
       };
-      extraOptions = [
-        "--network=slirp4netns:allow_host_loopback=true"
-        "--userns=keep-id"
-        "--cap-drop=ALL"
-        "--security-opt=no-new-privileges"
+
+      systemd.tmpfiles.rules = [
+        "d '${dataDir}' 0750 ${cfg.user} ${cfg.group} - -"
+        "d '${dataDir}/config' 0750 ${cfg.user} ${cfg.group} - -"
       ];
-      inherit (cfg) environmentFiles;
-      podman.user = cfg.user;
-    };
 
-    users = rec {
-      users.${cfg.user} = {
-        home = dataDir;
-        createHome = true;
-        inherit (cfg) group;
-        inherit uid;
-        isSystemUser = true;
-        autoSubUidGidRange = true;
-        linger = true;
-      };
-      groups.${cfg.group}.gid = users.${cfg.user}.uid;
-    };
+      my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
+    }
 
-    systemd.tmpfiles.rules = [
-      "d '${dataDir}' 0750 ${cfg.user} ${cfg.group} - -"
-      "d '${dataDir}/config' 0750 ${cfg.user} ${cfg.group} - -"
-      "d '/var/lib/containers/rootless/${toString uid}' 0700 ${cfg.user} ${cfg.group} - -"
-    ];
-
-    my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
-  };
+    (my.lib.ociContainers.mkRootlessPodmanUser {
+      inherit (cfg) user group;
+      home = dataDir;
+      inherit uid;
+    })
+  ]);
 }

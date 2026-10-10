@@ -17,6 +17,9 @@
   # Caddy utilities.
   caddy = import ./caddy.nix {inherit lib;};
 
+  # Utilities for running rootless OCI containers.
+  ociContainers = import ./oci-containers.nix;
+
   # Color utilities.
   colors = import ./colors.nix {inherit lib toIntBase16;};
 
