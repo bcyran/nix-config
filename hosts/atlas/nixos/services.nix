@@ -275,7 +275,7 @@ in {
       enable = true;
       keyFile = config.sops.secrets.speedtest_tracker_key_file.path;
       reverseProxy.domain = "speedtest.${intraDomain}";
-      servers = [6522];
+      servers = [36250];
     };
     glances = {
       enable = true;
