@@ -5,6 +5,8 @@
   ...
 }: let
   cfg = config.my.programs.podman;
+
+  rootlessStorageDir = "/var/lib/containers/rootless";
 in {
   options.my.programs.podman = {
     enable = lib.mkEnableOption "podman";
@@ -12,7 +14,10 @@ in {
 
   config = lib.mkIf cfg.enable {
     virtualisation = {
-      containers.enable = true;
+      containers = {
+        enable = true;
+        storage.settings.storage.rootless_storage_path = "${rootlessStorageDir}/$UID";
+      };
 
       oci-containers.backend = "podman";
 
@@ -32,5 +37,9 @@ in {
         defaultNetwork.settings.dns_enabled = lib.mkForce false;
       };
     };
+
+    systemd.tmpfiles.rules = [
+      "d ${rootlessStorageDir} 1777 root root - -"
+    ];
   };
 }
