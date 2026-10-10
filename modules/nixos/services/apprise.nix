@@ -8,14 +8,15 @@
 
   # renovate: datasource=docker packageName=docker.io/caronc/apprise
   imageVersion = "v1.5.4";
-  user = "apprise";
-  group = "apprise";
   dataDir = "/var/lib/apprise";
+  uid = 2004;
 in {
   options.my.services.apprise = let
     serviceName = "Apprise";
   in {
     enable = lib.mkEnableOption serviceName;
+    user = my.lib.options.mkUserOption serviceName;
+    group = my.lib.options.mkGroupOption serviceName;
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 8098;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
@@ -33,31 +34,38 @@ in {
         "${dataDir}/config:/config"
       ];
       environment = {
-        PUID = toString config.users.users.${user}.uid;
-        PGID = toString config.users.groups.${group}.gid;
+        PUID = toString config.users.users.${cfg.user}.uid;
+        PGID = toString config.users.groups.${cfg.group}.gid;
         APPRISE_STATEFUL_MODE = "simple";
         APPRISE_WORKER_COUNT = "1";
       };
       extraOptions = [
         # Expose host's loopback interface in the container as 10.0.2.2.
         "--network=slirp4netns:allow_host_loopback=true"
+        "--userns=keep-id"
+        "--cap-drop=ALL"
+        "--security-opt=no-new-privileges"
       ];
+      podman.user = cfg.user;
     };
 
     users = rec {
-      users.${user} = {
+      users.${cfg.user} = {
         home = dataDir;
         createHome = true;
-        inherit group;
-        uid = 2004;
+        inherit (cfg) group;
+        inherit uid;
         isSystemUser = true;
+        autoSubUidGidRange = true;
+        linger = true;
       };
-      groups.${group}.gid = users.${user}.uid;
+      groups.${cfg.group}.gid = users.${cfg.user}.uid;
     };
 
     systemd.tmpfiles.rules = [
-      "d '${dataDir}' 0750 ${user} ${group} - -"
-      "d '${dataDir}/config' 0750 ${user} ${group} - -"
+      "d '${dataDir}' 0750 ${cfg.user} ${cfg.group} - -"
+      "d '${dataDir}/config' 0750 ${cfg.user} ${cfg.group} - -"
+      "d '/var/lib/containers/rootless/${toString uid}' 0700 ${cfg.user} ${cfg.group} - -"
     ];
 
     my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
