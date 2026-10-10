@@ -19,5 +19,23 @@
           "tests/test_browser_restful.py"
         ];
     });
+
+    # FIXME: Remove when https://github.com/containers/podman/issues/29805 is fixed.
+    # Podman 5.8.7 fails to copy archives into containers when the target path
+    # crosses an absolute symlink such as /var/run -> /run ("path escapes from
+    # parent"), which breaks Forgejo runner jobs. Pin to the last good version.
+    # https://github.com/containers/podman/issues/29805
+    podman = prev.podman.overrideAttrs (old: let
+      version = "5.8.4";
+    in {
+      inherit version;
+      src = prev.fetchFromGitHub {
+        owner = "podman-container-tools";
+        repo = "podman";
+        tag = "v${version}";
+        hash = "sha256-zhEtMZVKiv1L72EMlwgz8sHpmvhejGp98oW63aPj+rQ=";
+      };
+      doInstallCheck = false;
+    });
   };
 }
