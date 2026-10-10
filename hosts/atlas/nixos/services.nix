@@ -51,8 +51,13 @@ in {
     homepage_env_file = {
       restartUnits = ["homepage-dashboard.service"];
     };
-    speedtest_tracker_env_file = {
-      restartUnits = ["${containersBackend}-speedtest-tracker.service"];
+    speedtest_tracker_key_file = {
+      owner = config.my.services.speedtest-tracker.user;
+      restartUnits = [
+        "speedtest-tracker-setup.service"
+        "phpfpm-speedtest-tracker.service"
+        "speedtest-tracker-queue-worker.service"
+      ];
     };
     nix_store_binary_cache_key = {
       restartUnits = ["nix-serve.service"];
@@ -268,7 +273,7 @@ in {
     };
     speedtest-tracker = {
       enable = true;
-      environmentFiles = [config.sops.secrets.speedtest_tracker_env_file.path];
+      keyFile = config.sops.secrets.speedtest_tracker_key_file.path;
       reverseProxy.domain = "speedtest.${intraDomain}";
       servers = [6522];
     };

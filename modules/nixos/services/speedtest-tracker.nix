@@ -5,20 +5,36 @@
   ...
 }: let
   cfg = config.my.services.speedtest-tracker;
+  caddyCfg = config.services.caddy;
 
-  # renovate: datasource=docker packageName=lscr.io/linuxserver/speedtest-tracker
-  imageVersion = "1.15.0";
-  dataDir = "/var/lib/speedtest-tracker";
+  phpFastcgiConfig = ''
+    root * ${config.services.speedtest-tracker.package}/public
+    encode zstd gzip
+    php_fastcgi unix/${config.services.phpfpm.pools.speedtest-tracker.socket}
+    file_server
+  '';
 in {
   options.my.services.speedtest-tracker = let
     serviceName = "Speedtest Tracker";
   in {
     enable = lib.mkEnableOption serviceName;
+    user = my.lib.options.mkUserOption serviceName;
+    group = my.lib.options.mkGroupOption serviceName;
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 8082;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    environmentFiles = my.lib.options.mkEnvironmentFilesOption serviceName;
+
+    keyFile = lib.mkOption {
+      type = lib.types.path;
+      example = "/run/secrets/speedtest-tracker-app-key";
+      description = ''
+        Path to a file containing the application encryption key. The file
+        should contain a 32 character random app key, which may be generated
+        with:
+          echo "base64:$(head -c 32 /dev/urandom | base64)" > /path/to/key-file
+      '';
+    };
 
     servers = lib.mkOption {
       type = with lib.types; listOf int;
@@ -37,43 +53,41 @@ in {
   config = lib.mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
-    virtualisation.oci-containers.containers.speedtest-tracker = {
-      image = "lscr.io/linuxserver/speedtest-tracker:version-v${imageVersion}";
-      autoStart = true;
-      ports = ["${cfg.address}:${builtins.toString cfg.port}:80"];
-      volumes = [
-        "${dataDir}:/config"
-      ];
-      environment = {
-        PUID = toString config.users.users.speedtest-tracker.uid;
-        PGID = toString config.users.groups.speedtest-tracker.gid;
+    users.groups.${cfg.group}.members = [caddyCfg.user];
+
+    services.speedtest-tracker = {
+      enable = true;
+      inherit (cfg) user group;
+      settings = {
+        APP_KEY_FILE = cfg.keyFile;
+        APP_URL =
+          if cfg.reverseProxy.domain != null
+          then "https://${cfg.reverseProxy.domain}"
+          else "http://${cfg.address}:${toString cfg.port}";
         DB_CONNECTION = "sqlite";
         DISPLAY_TIMEZONE = "Europe/Warsaw";
         DATETIME_FORMAT = "d.m.y H:i:s";
         CHART_DATETIME_FORMAT = "d.m H:i";
         SPEEDTEST_SCHEDULE = "0 * * * *";
-        PUBLIC_DASHBOARD = "true";
+        PUBLIC_DASHBOARD = true;
         SPEEDTEST_SERVERS = lib.concatMapStringsSep "," toString cfg.servers;
         SPEEDTEST_BLOCKED_SERVERS = lib.concatMapStringsSep "," toString cfg.blockedServers;
       };
-      extraOptions = [
-        # Expose host's loopback interface in the container as 10.0.2.2.
-        "--network=slirp4netns:allow_host_loopback=true"
-      ];
-      inherit (cfg) environmentFiles;
     };
 
-    users = rec {
-      users.speedtest-tracker = {
-        home = dataDir;
-        createHome = true;
-        group = "speedtest-tracker";
-        uid = 2001;
-        isSystemUser = true;
+    services.caddy.virtualHosts =
+      {
+        "http://${cfg.address}:${toString cfg.port}" = {
+          listenAddresses = [cfg.address];
+          extraConfig = phpFastcgiConfig;
+        };
+      }
+      // lib.optionalAttrs (cfg.reverseProxy.domain != null) {
+        ${cfg.reverseProxy.domain} = {
+          inherit (cfg.reverseProxy) listenAddresses;
+          logFormat = my.lib.caddy.mkLogConfig cfg.reverseProxy.domain;
+          extraConfig = phpFastcgiConfig;
+        };
       };
-      groups.speedtest-tracker.gid = users.speedtest-tracker.uid;
-    };
-
-    my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
   };
 }
