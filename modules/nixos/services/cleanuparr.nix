@@ -8,14 +8,15 @@
 
   # renovate: datasource=docker packageName=ghcr.io/cleanuparr/cleanuparr
   imageVersion = "2.10.9";
-  user = "cleanuparr";
-  group = "cleanuparr";
   dataDir = "/var/lib/cleanuparr";
+  uid = 2005;
 in {
   options.my.services.cleanuparr = let
     serviceName = "Cleanuparr";
   in {
     enable = lib.mkEnableOption serviceName;
+    user = my.lib.options.mkUserOption serviceName;
+    group = my.lib.options.mkGroupOption serviceName;
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 11011;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
@@ -37,31 +38,38 @@ in {
       ];
       environment = {
         PORT = builtins.toString cfg.port;
-        PUID = toString config.users.users.${user}.uid;
-        PGID = toString config.users.groups.${group}.gid;
+        PUID = toString config.users.users.${cfg.user}.uid;
+        PGID = toString config.users.groups.${cfg.group}.gid;
         UMASK = "022";
         TZ = "Europe/Warsaw";
       };
       extraOptions = [
         "--network=slirp4netns:allow_host_loopback=true"
+        "--userns=keep-id"
+        "--cap-drop=ALL"
+        "--security-opt=no-new-privileges"
       ];
       inherit (cfg) environmentFiles;
+      podman.user = cfg.user;
     };
 
     users = rec {
-      users.${user} = {
+      users.${cfg.user} = {
         home = dataDir;
         createHome = true;
-        inherit group;
-        uid = 2005;
+        inherit (cfg) group;
+        inherit uid;
         isSystemUser = true;
+        autoSubUidGidRange = true;
+        linger = true;
       };
-      groups.${group}.gid = users.${user}.uid;
+      groups.${cfg.group}.gid = users.${cfg.user}.uid;
     };
 
     systemd.tmpfiles.rules = [
-      "d '${dataDir}' 0750 ${user} ${group} - -"
-      "d '${dataDir}/config' 0750 ${user} ${group} - -"
+      "d '${dataDir}' 0750 ${cfg.user} ${cfg.group} - -"
+      "d '${dataDir}/config' 0750 ${cfg.user} ${cfg.group} - -"
+      "d '/var/lib/containers/rootless/${toString uid}' 0700 ${cfg.user} ${cfg.group} - -"
     ];
 
     my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
