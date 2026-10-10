@@ -11,11 +11,15 @@
   imageVersion = "3.7.2";
   dbName = "joplin";
   dbUser = "joplin";
+  dataDir = "/var/lib/joplin";
+  uid = 2007;
 in {
   options.my.services.joplin = let
     serviceName = "Joplin";
   in {
     enable = lib.mkEnableOption serviceName;
+    user = my.lib.options.mkUserOption serviceName;
+    group = my.lib.options.mkGroupOption serviceName;
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 22300;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
@@ -57,8 +61,28 @@ in {
         # This is needed for PostgreSQL access because it seems that Joplin
         # cannot connect via unix socket.
         "--network=slirp4netns:allow_host_loopback=true"
+        "--cap-drop=ALL"
+        "--security-opt=no-new-privileges"
       ];
+      podman.user = cfg.user;
     };
+
+    users = rec {
+      users.${cfg.user} = {
+        home = dataDir;
+        createHome = true;
+        inherit (cfg) group;
+        inherit uid;
+        isSystemUser = true;
+        autoSubUidGidRange = true;
+        linger = true;
+      };
+      groups.${cfg.group}.gid = users.${cfg.user}.uid;
+    };
+
+    systemd.tmpfiles.rules = [
+      "d '/var/lib/containers/rootless/${toString uid}' 0700 ${cfg.user} ${cfg.group} - -"
+    ];
 
     my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
   };
