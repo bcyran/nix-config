@@ -308,9 +308,12 @@ in {
     };
     forgejo-runner = {
       enable = true;
-      serverUrl = "https://forgejo.${intraDomain}";
-      uuid = "30a0282e-57f8-4296-ae8b-8fae963e8715";
-      tokenFile = config.sops.secrets.forgejo_runner_token.path;
+      connections.local = {
+        url = "https://forgejo.${intraDomain}";
+        routeToHost = true;
+        uuid = "30a0282e-57f8-4296-ae8b-8fae963e8715";
+        tokenFile = config.sops.secrets.forgejo_runner_token.path;
+      };
     };
     renovate = {
       enable = true;
