@@ -39,6 +39,9 @@ in {
         };
         actions = {
           ENABLED = true;
+          # TODO: We don't want to depend on GitHub.
+          # Maybe mirror needed actions on our instance?
+          DEFAULT_ACTIONS_URL = "https://github.com";
         };
         service = {
           DISABLE_REGISTRATION = true;
