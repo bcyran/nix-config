@@ -28,6 +28,7 @@ in {
         nix-index.enable = mkDefault true;
         yazi.enable = mkDefault true;
         opencode.enable = mkDefault true;
+        herdr.enable = mkDefault true;
         glow.enable = mkDefault true;
       };
     };
