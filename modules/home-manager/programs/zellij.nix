@@ -241,17 +241,122 @@ in {
 
       themes {
         custom {
-          bg "#${palette.base00}"
-          black "#${palette.base00}"
-          blue "#${palette.base0D}"
-          cyan "#${palette.base0C}"
-          fg "#${palette.base05}"
-          green "#${palette.base0B}"
-          magenta "#${palette.base0E}"
-          orange "#${palette.base09}"
-          red "#${palette.base08}"
-          white "#${palette.base05}"
-          yellow "#${palette.base0A}"
+          text_unselected {
+            base "#${palette.base05}"
+            background "#${palette.base01}"
+            emphasis_0 "#${palette.base0A}"
+            emphasis_1 "#${palette.base0C}"
+            emphasis_2 "#${palette.base0D}"
+            emphasis_3 "#${palette.base0E}"
+          }
+          text_selected {
+            base "#${palette.base05}"
+            background "#${palette.base00}"
+            emphasis_0 "#${palette.base0A}"
+            emphasis_1 "#${palette.base0C}"
+            emphasis_2 "#${palette.base0D}"
+            emphasis_3 "#${palette.base0E}"
+          }
+          ribbon_selected {
+            base "#${palette.base01}"
+            background "#${palette.base0D}"
+            emphasis_0 "#${palette.base0C}"
+            emphasis_1 "#${palette.base09}"
+            emphasis_2 "#${palette.base0E}"
+            emphasis_3 "#${palette.base0D}"
+          }
+          ribbon_unselected {
+            base "#${palette.base01}"
+            background "#${palette.base04}"
+            emphasis_0 "#${palette.base0C}"
+            emphasis_1 "#${palette.base05}"
+            emphasis_2 "#${palette.base0D}"
+            emphasis_3 "#${palette.base0E}"
+          }
+          table_title {
+            base "#${palette.base0D}"
+            background "#${palette.base00}"
+            emphasis_0 "#${palette.base0A}"
+            emphasis_1 "#${palette.base0C}"
+            emphasis_2 "#${palette.base0D}"
+            emphasis_3 "#${palette.base0E}"
+          }
+          table_cell_selected {
+            base "#${palette.base05}"
+            background "#${palette.base00}"
+            emphasis_0 "#${palette.base0A}"
+            emphasis_1 "#${palette.base0C}"
+            emphasis_2 "#${palette.base0D}"
+            emphasis_3 "#${palette.base0E}"
+          }
+          table_cell_unselected {
+            base "#${palette.base05}"
+            background "#${palette.base01}"
+            emphasis_0 "#${palette.base0A}"
+            emphasis_1 "#${palette.base0C}"
+            emphasis_2 "#${palette.base0D}"
+            emphasis_3 "#${palette.base0E}"
+          }
+          list_selected {
+            base "#${palette.base05}"
+            background "#${palette.base00}"
+            emphasis_0 "#${palette.base0A}"
+            emphasis_1 "#${palette.base0C}"
+            emphasis_2 "#${palette.base0D}"
+            emphasis_3 "#${palette.base0E}"
+          }
+          list_unselected {
+            base "#${palette.base05}"
+            background "#${palette.base01}"
+            emphasis_0 "#${palette.base0A}"
+            emphasis_1 "#${palette.base0C}"
+            emphasis_2 "#${palette.base0D}"
+            emphasis_3 "#${palette.base0E}"
+          }
+          frame_selected {
+            base "#${palette.base0D}"
+            background "#${palette.base00}"
+            emphasis_0 "#${palette.base0A}"
+            emphasis_1 "#${palette.base0C}"
+            emphasis_2 "#${palette.base0E}"
+            emphasis_3 "#${palette.base00}"
+          }
+          frame_highlight {
+            base "#${palette.base0A}"
+            background "#${palette.base00}"
+            emphasis_0 "#${palette.base0E}"
+            emphasis_1 "#${palette.base0A}"
+            emphasis_2 "#${palette.base0A}"
+            emphasis_3 "#${palette.base0A}"
+          }
+          exit_code_success {
+            base "#${palette.base0D}"
+            background "#${palette.base00}"
+            emphasis_0 "#${palette.base0C}"
+            emphasis_1 "#${palette.base01}"
+            emphasis_2 "#${palette.base0E}"
+            emphasis_3 "#${palette.base0D}"
+          }
+          exit_code_error {
+            base "#${palette.base08}"
+            background "#${palette.base00}"
+            emphasis_0 "#${palette.base0A}"
+            emphasis_1 "#${palette.base00}"
+            emphasis_2 "#${palette.base00}"
+            emphasis_3 "#${palette.base00}"
+          }
+          multiplayer_user_colors {
+            player_1 "#${palette.base0E}"
+            player_2 "#${palette.base0D}"
+            player_3 "#${palette.base00}"
+            player_4 "#${palette.base0A}"
+            player_5 "#${palette.base0C}"
+            player_6 "#${palette.base00}"
+            player_7 "#${palette.base08}"
+            player_8 "#${palette.base00}"
+            player_9 "#${palette.base00}"
+            player_10 "#${palette.base00}"
+          }
         }
       }
       theme "custom"
