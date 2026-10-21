@@ -39,6 +39,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.pinchflat = {
       enable = true;
+      package = my.pkgs.pinchflat-ngx;
       inherit (cfg) port mediaDir openFirewall;
       secretsFile = cfg.environmentFile;
 
