@@ -29,6 +29,12 @@ in {
           Enabled = true;
           SearchInAllDatabases = true;
           HttpAuthPermission = true;
+          # Home Manager installs the native messaging manifest into the read-only
+          # Nix store, so KeePassXC cannot rewrite it on startup and pops up
+          # "Could not save the native messaging script file for chromium".
+          # The store-provided manifest is already up to date, so keep KeePassXC
+          # from touching it.
+          UpdateBinaryPath = false;
         };
         SSHAgent = {
           Enabled = false;
