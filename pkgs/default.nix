@@ -35,5 +35,6 @@ in rec {
   bentopdf = pkgs.callPackage ./bentopdf {};
   livecodes = pkgs.callPackage ./livecodes {};
   jellystat = pkgs.callPackage ./jellystat {};
+  pinchflat-ngx = pkgs.callPackage ./pinchflat-ngx {};
   openchamber = pkgs.callPackage ./openchamber {};
 }
