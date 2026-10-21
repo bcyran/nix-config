@@ -62,9 +62,6 @@ in {
     nix_store_binary_cache_key = {
       restartUnits = ["nix-serve.service"];
     };
-    nextcloud_admin_pass = {
-      owner = "nextcloud";
-    };
     nextcloud_whiteboard_env_file = {
       restartUnits = ["nextcloud-whiteboard-server.service"];
     };
@@ -348,7 +345,6 @@ in {
     nextcloud = {
       enable = true;
       domain = "nextcloud.${intraDomain}";
-      adminPassFile = config.sops.secrets.nextcloud_admin_pass.path;
       whiteboardEnvironmentFiles = [config.sops.secrets.nextcloud_whiteboard_env_file.path];
       email.enable = true;
     };

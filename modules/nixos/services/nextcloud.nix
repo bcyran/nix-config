@@ -18,10 +18,6 @@ in {
       example = "nextcloud.example.com";
       description = "Domain for the Nextcloud instance.";
     };
-    adminPassFile = lib.mkOption {
-      type = lib.types.path;
-      description = "Path to the file containing the admin password.";
-    };
     whiteboardEnvironmentFiles = my.lib.options.mkEnvironmentFilesOption "Nextcloud Whiteboard";
     email = my.lib.options.mkEmailOptions serviceName config;
 
@@ -44,8 +40,7 @@ in {
         maxUploadSize = "16G";
 
         config = {
-          adminuser = "admin";
-          adminpassFile = cfg.adminPassFile;
+          adminuser = null;
           dbtype = "pgsql";
         };
 
