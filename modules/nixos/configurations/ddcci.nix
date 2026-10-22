@@ -8,13 +8,59 @@
 
   ddcutilBin = "${pkgs.ddcutil}/bin/ddcutil";
   sleepBin = "${pkgs.coreutils}/bin/sleep";
+
+  kernel = config.boot.kernelPackages.kernel;
+  kernelBuildDir = "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build";
+
+  # FIXME: nixpkgs' kernel-modules aggregator now requires every external module to
+  # carry a `.ko.cer` certificate next to it (see nixpkgs PR #571181).
+  # ddcci-driver's upstream Makefile installed modules by hand (`install -m
+  # 644 ddcci.ko ...`), which never produced that certificate and broke
+  # `system.modulesTree` with e.g. `cat: extra/ddcci.ko.cer: No such file or
+  # directory`. This nixpkgs pin predates the upstream fix
+  # (https://github.com/NixOS/nixpkgs/pull/577222), so replicate it here:
+  # build/install through the kernel's own make rules (`modules`/
+  # `modules_install`) instead of the vendored Makefiles' custom targets.
+  ddcciDriver = config.boot.kernelPackages.ddcci-driver.overrideAttrs (_: {
+    __structuredAttrs = true;
+    strictDeps = true;
+    enableParallelBuilding = true;
+
+    prePatch = "";
+
+    makeFlags =
+      config.boot.kernelPackages.kernelModuleMakeFlags
+      ++ [
+        "KERNELRELEASE=${kernel.modDirVersion}"
+      ];
+
+    installFlags = [
+      "INSTALL_MOD_PATH=${placeholder "out"}"
+    ];
+
+    buildPhase = ''
+      runHook preBuild
+      make modules -C ${kernelBuildDir} M=$(pwd)/ddcci "''${makeFlags[@]}"
+      make modules -C ${kernelBuildDir} M=$(pwd)/ddcci-backlight "''${makeFlags[@]}"
+      runHook postBuild
+    '';
+
+    installPhase = ''
+      runHook preInstall
+      make modules_install -C ${kernelBuildDir} M=$(pwd)/ddcci \
+        "''${makeFlags[@]}" "''${installFlags[@]}"
+      make modules_install -C ${kernelBuildDir} M=$(pwd)/ddcci-backlight \
+        "''${makeFlags[@]}" "''${installFlags[@]}"
+      runHook postInstall
+    '';
+  });
 in {
   options.my.configurations.ddcci.enable = lib.mkEnableOption "ddcci";
 
   config = lib.mkIf cfg.enable {
     boot = {
       kernelModules = ["i2c-dev" "ddcci_backlight"];
-      extraModulePackages = [config.boot.kernelPackages.ddcci-driver];
+      extraModulePackages = [ddcciDriver];
     };
 
     environment.systemPackages = [pkgs.ddcutil];
