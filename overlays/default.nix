@@ -20,14 +20,14 @@
         ];
     });
 
-    # FIXME: requests-hardened 1.3.0 pins uv_build<0.12.0 in pyproject.toml, but
-    # nixpkgs already ships uv-build 0.12.x, which makes pypaBuildPhase fail
-    # the build dependency check. Relax the upper bound until upstream
-    # releases a version compatible with the newer uv_build.
     pythonPackagesExtensions =
       prev.pythonPackagesExtensions
       ++ [
         (pyfinal: pyprev: {
+          # FIXME: requests-hardened 1.3.0 pins uv_build<0.12.0 in pyproject.toml, but
+          # nixpkgs already ships uv-build 0.12.x, which makes pypaBuildPhase fail
+          # the build dependency check. Relax the upper bound until upstream
+          # releases a version compatible with the newer uv_build.
           requests-hardened = pyprev.requests-hardened.overrideAttrs (old: {
             postPatch =
               (old.postPatch or "")
@@ -35,6 +35,26 @@
                 substituteInPlace pyproject.toml \
                   --replace-fail 'uv_build>=0.11.0,<0.12.0' 'uv_build>=0.11.0,<0.13.0'
               '';
+          });
+
+          # FIXME: pyopenjtalk-plus's test suite expects its own "must be str"
+          # TypeError, but Cython 3.3.0 now type-checks list[str] elements first
+          # and raises its own message. This breaks piper-tts and, through it,
+          # calibre. Backport of the upstream test fix
+          # (tsukumijima/pyopenjtalk-plus@90b644f) via fetchpatch, the same patch
+          # https://github.com/NixOS/nixpkgs/pull/576063 adds. Remove when that PR
+          # reaches nixos-unstable.
+          pyopenjtalk-plus = pyprev.pyopenjtalk-plus.overrideAttrs (old: {
+            patches =
+              (old.patches or [])
+              ++ [
+                (final.fetchpatch {
+                  name = "fix-cython-3.3.0.patch";
+                  url = "https://github.com/tsukumijima/pyopenjtalk-plus/commit/90b644f9e9d397882e6eafe4dcd1843a4fde6a63.patch";
+                  includes = ["tests/test_frontend.py"];
+                  hash = "sha256-Jb7T/bRUHxqwBLwV6xYC/teaFHm5GmqJxA7sCX+oiNI=";
+                })
+              ];
           });
         })
       ];
