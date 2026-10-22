@@ -40,7 +40,6 @@ in {
         maxUploadSize = "16G";
 
         config = {
-          adminuser = null;
           dbtype = "pgsql";
         };
 
