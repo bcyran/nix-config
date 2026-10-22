@@ -20,6 +20,25 @@
         ];
     });
 
+    # FIXME: requests-hardened 1.3.0 pins uv_build<0.12.0 in pyproject.toml, but
+    # nixpkgs already ships uv-build 0.12.x, which makes pypaBuildPhase fail
+    # the build dependency check. Relax the upper bound until upstream
+    # releases a version compatible with the newer uv_build.
+    pythonPackagesExtensions =
+      prev.pythonPackagesExtensions
+      ++ [
+        (pyfinal: pyprev: {
+          requests-hardened = pyprev.requests-hardened.overrideAttrs (old: {
+            postPatch =
+              (old.postPatch or "")
+              + ''
+                substituteInPlace pyproject.toml \
+                  --replace-fail 'uv_build>=0.11.0,<0.12.0' 'uv_build>=0.11.0,<0.13.0'
+              '';
+          });
+        })
+      ];
+
     # FIXME: Remove when https://github.com/containers/podman/issues/29805 is fixed.
     # Podman 5.8.7 fails to copy archives into containers when the target path
     # crosses an absolute symlink such as /var/run -> /run ("path escapes from
