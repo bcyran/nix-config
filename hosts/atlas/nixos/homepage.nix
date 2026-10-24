@@ -538,6 +538,20 @@ in {
             };
           }
           {
+            NetAlertX = {
+              description = "Network devices monitoring.";
+              icon = "netalertx";
+              href = makeServiceDomainUrl "netalertx";
+              siteMonitor = makeServiceLoopbackUrl "netalertx";
+              widget = {
+                type = "netalertx";
+                url = makeLoopbackUrl servicesCfg.netalertx.graphqlPort;
+                key = "{{HOMEPAGE_VAR_NETALERTX_API_TOKEN}}";
+                version = 2;
+              };
+            };
+          }
+          {
             Glances = {
               description = "Live resources usage monitoring.";
               icon = "glances";

@@ -328,6 +328,11 @@ in {
       enable = true;
       reverseProxy.domain = "apprise.${intraDomain}";
     };
+    netalertx = {
+      enable = true;
+      reverseProxy.domain = "netalertx.${intraDomain}";
+      scanSubnets = ["${my.lib.const.lan.subnet} --interface=enp5s0"];
+    };
     ntfy-systemd = {
       enable = true;
       serverUrl = "http://127.0.0.1:${toString config.my.services.ntfy.port}";
