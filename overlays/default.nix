@@ -5,7 +5,31 @@
       config.allowUnfree = true;
     };
   };
-  fixes = final: prev: {
+  fixes = final: prev: let
+    # FIXME: speech-dispatcher needs python at build time to build its Python
+    # library; with strictDeps it must be in nativeBuildInputs, otherwise Orca
+    # produces no sound. Backport of
+    # https://github.com/NixOS/nixpkgs/pull/577607. Remove when that PR
+    # reaches nixos-unstable.
+    patchedSpeechd = prev.speechd.overrideAttrs (old: {
+      nativeBuildInputs =
+        (old.nativeBuildInputs or [])
+        ++ [prev.python3Packages.python];
+      buildInputs = prev.lib.lists.remove prev.python3Packages.python (
+        old.buildInputs or []
+      );
+    });
+    patchedSpeechdMinimal = patchedSpeechd.override {
+      withLibao = false;
+      withPulse = false;
+      withAlsa = false;
+      withOss = false;
+      withFlite = false;
+      withEspeak = false;
+      withPico = false;
+      withPipewire = false;
+    };
+  in {
     glances = prev.glances.overrideAttrs (old: {
       # These modules spawn the Glances server with subprocess.Popen, wait a
       # fixed time.sleep(5) instead of polling, then immediately make HTTP
@@ -19,6 +43,14 @@
           "tests/test_browser_restful.py"
         ];
     });
+
+    # Only patch the packages that actually consume speechd's Python bindings
+    # (qtspeech only needs the C library, so it doesn't need this) to avoid
+    # rebuilding chromium and everything else that links speechd/speechd-minimal.
+    calibre = prev.calibre.override {
+      speechSupport = true;
+      speechd-minimal = patchedSpeechdMinimal;
+    };
 
     pythonPackagesExtensions =
       prev.pythonPackagesExtensions
