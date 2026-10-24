@@ -76,6 +76,14 @@ in {
               "2a03:4000:52:499:ffff::200/128"
             ];
           }
+          # Client #2
+          {
+            publicKey = "MzVA/fuknUuse0KFEus6HKxUKubZGcIYlzmJYlNnIwQ=";
+            allowedIPs = [
+              "10.100.200.201/32"
+              "2a03:4000:52:499:ffff::201/128"
+            ];
+          }
         ];
       };
     };
