@@ -70,10 +70,7 @@ in {
           };
         };
       };
-      tui = {
-        theme = "tokyonight";
-        plugin = ["opencode-rules@latest"];
-      };
+      cli.theme = "tokyonight";
     };
 
     programs.agent-skills = {
