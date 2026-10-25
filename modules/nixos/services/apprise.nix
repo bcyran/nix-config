@@ -7,7 +7,7 @@
   cfg = config.my.services.apprise;
 
   # renovate: datasource=docker packageName=docker.io/caronc/apprise
-  imageVersion = "1.5.4";
+  imageVersion = "2.0.2";
   dataDir = "/var/lib/apprise";
   uid = 2004;
 in {
