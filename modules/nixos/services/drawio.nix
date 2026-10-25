@@ -7,7 +7,7 @@
   cfg = config.my.services.drawio;
 
   # renovate: datasource=docker packageName=docker.io/jgraph/drawio
-  imageVersion = "31.7.0";
+  imageVersion = "32.6.1";
   dataDir = "/var/lib/drawio";
   uid = 2002;
 in {
