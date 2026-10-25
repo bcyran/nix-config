@@ -35,8 +35,17 @@ in {
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
     backendApiUrl = lib.mkOption {
       type = lib.types.str;
-      default = "http://localhost:${toString cfg.graphqlPort}";
-      description = "URL to use when accessing GraphQL server.";
+      default = "/server";
+      example = "https://netalertx.example.com/server";
+      description = ''
+        Base URL the (browser-side) web UI uses to reach the GraphQL server.
+        Keep this a same-origin relative path: the container's own nginx
+        proxies `/server` to the GraphQL port, so the browser never needs
+        direct access to `graphqlPort`. An absolute URL such as
+        `http://host:20212` makes the browser issue a cross-origin request,
+        which is blocked (CORS, and mixed content when the UI is served over
+        HTTPS).
+      '';
     };
     scanSubnets = lib.mkOption {
       type = lib.types.listOf lib.types.str;
