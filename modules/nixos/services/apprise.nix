@@ -28,7 +28,7 @@ in {
       networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
       virtualisation.oci-containers.containers.apprise = {
-        image = "docker.io/caronc/apprise:v${imageVersion}";
+        image = "docker.io/caronc/apprise:${imageVersion}";
         autoStart = true;
         ports = ["${cfg.address}:${builtins.toString cfg.port}:8000"];
         volumes = [
