@@ -17,7 +17,6 @@ in {
 
   config = lib.mkIf cfg.enable {
     boot = {
-      initrd.systemd.enable = true;
       loader.systemd-boot.enable = lib.mkForce false;
       lanzaboote = {
         enable = true;
