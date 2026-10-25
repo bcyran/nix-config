@@ -56,19 +56,6 @@
       prev.pythonPackagesExtensions
       ++ [
         (pyfinal: pyprev: {
-          # FIXME: requests-hardened 1.3.0 pins uv_build<0.12.0 in pyproject.toml, but
-          # nixpkgs already ships uv-build 0.12.x, which makes pypaBuildPhase fail
-          # the build dependency check. Relax the upper bound until upstream
-          # releases a version compatible with the newer uv_build.
-          requests-hardened = pyprev.requests-hardened.overrideAttrs (old: {
-            postPatch =
-              (old.postPatch or "")
-              + ''
-                substituteInPlace pyproject.toml \
-                  --replace-fail 'uv_build>=0.11.0,<0.12.0' 'uv_build>=0.11.0,<0.13.0'
-              '';
-          });
-
           # FIXME: pyopenjtalk-plus's test suite expects its own "must be str"
           # TypeError, but Cython 3.3.0 now type-checks list[str] elements first
           # and raises its own message. This breaks piper-tts and, through it,
