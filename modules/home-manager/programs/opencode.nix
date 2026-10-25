@@ -70,7 +70,7 @@ in {
           };
         };
       };
-      cli.theme = "tokyonight";
+      cli.theme.name = "tokyonight";
     };
 
     programs.agent-skills = {
