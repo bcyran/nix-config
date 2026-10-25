@@ -10,7 +10,7 @@
   cfg = config.my.services.onlyoffice;
 
   # renovate: datasource=docker packageName=docker.io/onlyoffice/documentserver
-  imageVersion = "9.4.0.1";
+  imageVersion = "10.0.0.1";
   dataDir = "/var/lib/onlyoffice";
 in {
   options.my.services.onlyoffice = let
