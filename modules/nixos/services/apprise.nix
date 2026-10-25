@@ -7,7 +7,7 @@
   cfg = config.my.services.apprise;
 
   # renovate: datasource=docker packageName=docker.io/caronc/apprise
-  imageVersion = "v1.5.4";
+  imageVersion = "1.5.4";
   dataDir = "/var/lib/apprise";
   uid = 2004;
 in {
@@ -28,7 +28,7 @@ in {
       networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
 
       virtualisation.oci-containers.containers.apprise = {
-        image = "docker.io/caronc/apprise:${imageVersion}";
+        image = "docker.io/caronc/apprise:v${imageVersion}";
         autoStart = true;
         ports = ["${cfg.address}:${builtins.toString cfg.port}:8000"];
         volumes = [
