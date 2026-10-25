@@ -56,6 +56,12 @@
       prev.pythonPackagesExtensions
       ++ [
         (pyfinal: pyprev: {
+          # FIXME: nixpkgs bumped python3Packages.mcp to 2.x
+          # (https://github.com/NixOS/nixpkgs/pull/575004), which fastmcp-slim
+          # does not support, so it is marked broken and breaks mcp-nixos.
+          # Build it against mcp_1 instead. Remove when fixed upstream.
+          fastmcp-slim = pyprev.fastmcp-slim.override {mcp = pyfinal.mcp_1;};
+
           # FIXME: pyopenjtalk-plus's test suite expects its own "must be str"
           # TypeError, but Cython 3.3.0 now type-checks list[str] elements first
           # and raises its own message. This breaks piper-tts and, through it,
