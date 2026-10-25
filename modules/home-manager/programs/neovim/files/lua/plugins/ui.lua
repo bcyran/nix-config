@@ -72,18 +72,21 @@ return {
 
   {
     "petertriho/nvim-scrollbar",
+    branch = "refactor/v2",
     event = "VeryLazy",
     opts = {
-      excluded_filetypes = {
-        "cmp_docs",
-        "cmp_menu",
-        "noice",
-        "prompt",
-        "TelescopePrompt",
-        "neo-tree",
-        "lazy",
+      exclude = {
+        filetypes = {
+          cmp_docs = true,
+          cmp_menu = true,
+          noice = true,
+          prompt = true,
+          TelescopePrompt = true,
+          ["neo-tree"] = true,
+          lazy = true,
+        },
       },
-      handlers = {
+      providers = {
         cursor = false,
       },
     },
