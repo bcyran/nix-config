@@ -55,7 +55,11 @@ in {
           blocking = {
             denylists = {
               ads = [
-                "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+                "https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/mmaster/hosts"
+                "https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/refs/heads/master/youtubelist.txt"
+              ];
+              privacy = [
+                "https://raw.githubusercontent.com/hkamran80/blocklists/refs/heads/main/smart-tv.txt"
               ];
             };
             clientGroupsBlock = {
