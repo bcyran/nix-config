@@ -25,6 +25,11 @@ in {
       allowedHosts = "localhost,127.0.0.1:${toString cfg.port},${cfg.reverseProxy.domain}";
     };
 
+    systemd.services.homepage-dashboard.environment = {
+      HOMEPAGE_AUTH_ENABLED = "true";
+      HOMEPAGE_EXTERNAL_URL = "http://${cfg.reverseProxy.domain}";
+    };
+
     my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
       ${cfg.reverseProxy.domain} = {
         upstreamAddress = "127.0.0.1";
