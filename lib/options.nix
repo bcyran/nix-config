@@ -24,6 +24,21 @@
       description = "Whether to open the firewall for the ${serviceName}.";
     };
 
+  mkAllowedLoopbackPortsOption = serviceName:
+    lib.mkOption {
+      type = with lib.types; listOf port;
+      default = [];
+      example = [5432];
+      description = ''
+        TCP ports of the host's loopback interface that the ${serviceName}
+        container may connect to. They are reachable at 127.0.0.1 inside the
+        container. By default the container has no access to the host's loopback.
+
+        This is specific to rootless Podman containers and is implemented with
+        pasta's `-T` option (see `my.lib.ociContainers.mkLoopbackNetworkOptions`).
+      '';
+    };
+
   mkEnvironmentFileOption = serviceName:
     lib.mkOption {
       type = with lib.types; nullOr path;

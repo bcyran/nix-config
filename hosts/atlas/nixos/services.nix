@@ -327,6 +327,7 @@ in {
     apprise = {
       enable = true;
       reverseProxy.domain = "apprise.${intraDomain}";
+      allowedLoopbackPorts = [config.my.services.ntfy.port];
     };
     netalertx = {
       enable = true;
@@ -341,6 +342,7 @@ in {
     joplin = {
       enable = true;
       reverseProxy.domain = "joplin.${intraDomain}";
+      allowedLoopbackPorts = [config.my.services.postgresql.port];
     };
     nix-serve = {
       enable = true;

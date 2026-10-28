@@ -45,7 +45,6 @@ in {
           TZ = "Europe/Warsaw";
         };
         extraOptions = [
-          "--network=slirp4netns:allow_host_loopback=true"
           "--userns=keep-id"
           "--cap-drop=ALL"
           "--security-opt=no-new-privileges"

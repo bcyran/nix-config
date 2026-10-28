@@ -11,6 +11,7 @@
   imageVersion = "3.7.3";
   dbName = "joplin";
   dbUser = "joplin";
+  postgresHostAlias = "postgres";
   dataDir = "/var/lib/joplin";
   uid = 2007;
 in {
@@ -24,6 +25,7 @@ in {
     port = my.lib.options.mkPortOption serviceName 22300;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
+    allowedLoopbackPorts = my.lib.options.mkAllowedLoopbackPortsOption serviceName;
   };
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
@@ -50,21 +52,24 @@ in {
         ports = ["${cfg.address}:${toString cfg.port}:${toString cfg.port}"];
         environment = {
           DB_CLIENT = "pg";
-          POSTGRES_HOST = "10.0.2.2";
+          # Joplin replaces "localhost" and "127.0.0.1" with host.docker.internal,
+          # which does not reach the forwarded port. Use an alias for 127.0.0.1
+          # instead. Other loopback addresses do not work because pasta
+          # connects to the same address on the host.
+          POSTGRES_HOST = postgresHostAlias;
           POSTGRES_PORT = toString postgresCfg.port;
           POSTGRES_DATABASE = dbName;
           POSTGRES_USER = dbUser;
           APP_BASE_URL = "https://${cfg.reverseProxy.domain}";
           APP_PORT = toString cfg.port;
         };
-        extraOptions = [
-          # Expose host's loopback interface in the container as 10.0.2.2.
-          # This is needed for PostgreSQL access because it seems that Joplin
-          # cannot connect via unix socket.
-          "--network=slirp4netns:allow_host_loopback=true"
-          "--cap-drop=ALL"
-          "--security-opt=no-new-privileges"
-        ];
+        extraOptions =
+          my.lib.ociContainers.mkLoopbackNetworkOptions cfg.allowedLoopbackPorts
+          ++ [
+            "--add-host=${postgresHostAlias}:127.0.0.1"
+            "--cap-drop=ALL"
+            "--security-opt=no-new-privileges"
+          ];
         podman.user = cfg.user;
       };
 

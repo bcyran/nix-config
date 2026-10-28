@@ -21,6 +21,7 @@ in {
     port = my.lib.options.mkPortOption serviceName 8098;
     openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
+    allowedLoopbackPorts = my.lib.options.mkAllowedLoopbackPortsOption serviceName;
   };
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
@@ -40,13 +41,13 @@ in {
           APPRISE_STATEFUL_MODE = "simple";
           APPRISE_WORKER_COUNT = "1";
         };
-        extraOptions = [
-          # Expose host's loopback interface in the container as 10.0.2.2.
-          "--network=slirp4netns:allow_host_loopback=true"
-          "--userns=keep-id"
-          "--cap-drop=ALL"
-          "--security-opt=no-new-privileges"
-        ];
+        extraOptions =
+          my.lib.ociContainers.mkLoopbackNetworkOptions cfg.allowedLoopbackPorts
+          ++ [
+            "--userns=keep-id"
+            "--cap-drop=ALL"
+            "--security-opt=no-new-privileges"
+          ];
         podman.user = cfg.user;
       };
 

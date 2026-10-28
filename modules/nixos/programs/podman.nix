@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   ...
@@ -28,9 +27,6 @@ in {
           enable = true;
           dates = "weekly";
         };
-        # Used for exposing host's localhost to the container:
-        # --network=slirp4netns:allow_host_loopback=true.
-        extraPackages = [pkgs.slirp4netns];
         # Prevent aardvark-dns from starting on port 53 and conflicting with blocky.
         # The changedetection-io nixpkgs module unconditionally sets dns_enabled = true,
         # but container-to-container DNS is not needed in this setup.
