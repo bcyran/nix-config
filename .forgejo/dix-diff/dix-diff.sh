@@ -99,7 +99,7 @@ write_section() { # label content
     else
       base_out="$(readlink -f "${work}/base-${slug}")"
       head_out="$(readlink -f "${work}/head-${slug}")"
-      if out="$(dix --force-correctness --color never "${base_out}" "${head_out}" 2> "${work}/dix.err")"; then
+      if out="$(dix diff --color never "${base_out}" "${head_out}" 2> "${work}/dix.err")"; then
         [[ -n "${out}" ]] || out="No changes."
       else
         out="dix failed: $(head -c 300 "${work}/dix.err" 2> /dev/null || true)"
@@ -140,4 +140,3 @@ curl -fsS -X POST \
   || die "failed to post comment on PR #${DIX_PR_NUMBER}"
 
 log "posted comment on PR #${DIX_PR_NUMBER}"
-
