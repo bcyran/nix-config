@@ -47,7 +47,10 @@ in {
           automation = "!include automations.yaml";
           script = "!include scripts.yaml";
 
-          recorder.db_url = "postgresql://@/hass";
+          recorder = {
+            db_url = "postgresql://@/hass";
+            purge_keep_days = 30;
+          };
 
           mobile_app = {};
           history = {};
