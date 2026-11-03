@@ -1,0 +1,64 @@
+--- a/src/graph.js
++++ b/src/graph.js
+@@ -317,31 +317,42 @@
+         const factor = (arr[index - 1].value - this._min) / (arr[index - 1].value - stop.value);
+         color = interpolateRGB(arr[index - 1].color, stop.color, factor);
+       }
+-      let offset;
+-      if (scale <= 0) {
+-        offset = 0;
+-      } else {
+-        // limit stopValue within max/min
+-        const stopValue = (stop.value >= this._max)
+-          ? this._max
+-          : (stop.value <= this._min)
+-            ? this._min
+-            : stop.value;
+-        // get Y coord for stopValue
+-        const [stopCoord] = this.calcY([[0, 0, stopValue]]);
+-        const [, coordY] = stopCoord;
+-        // calculate absolute offset
+-        offset = coordY / (this._height + this._margin[Y] * 4) * 100;
+-      }
+       return {
+         color: color || stop.color,
+-        offset,
++        value: stop.value,
+       };
+     });
+ 
++    if (scale <= 0) {
++      return gradientStops.map(stop => ({ color: stop.color, offset: 0 }));
++    }
++
++    // get Y coord for a value within the current graph bounds
++    const getOffset = (value) => {
++      const [stopCoord] = this.calcY([[0, 0, value]]);
++      const [, coordY] = stopCoord;
++      return coordY / (this._height + this._margin[Y] * 4) * 100;
++    };
++
++    // Drop out-of-range thresholds and pin the gradient to the graph bounds.
++    // Otherwise the first stop sits at the edge and the line stroke, which
++    // extends past that edge, gets the out-of-range color (e.g. red).
++    const above = gradientStops.filter(stop => stop.value > this._max);
++    const below = gradientStops.filter(stop => stop.value < this._min);
++    const inside = gradientStops.filter(({ value }) => value >= this._min && value <= this._max);
++    const top = above.length ? above[above.length - 1] : inside[0] || below[0];
++    const bottom = below.length
++      ? below[0]
++      : inside[inside.length - 1] || above[above.length - 1];
++    const stops = [
++      { color: top.color, offset: getOffset(this._max) },
++      ...inside.map(stop => ({ color: stop.color, offset: getOffset(stop.value) })),
++      { color: bottom.color, offset: getOffset(this._min) },
++    ];
++
+     return this._invert
+-      ? gradientStops.reverse()
+-      : gradientStops;
++      ? stops.reverse()
++      : stops;
+   }
+ 
+   /**

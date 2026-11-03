@@ -52,6 +52,28 @@
       speechd-minimal = patchedSpeechdMinimal;
     };
 
+    # FIXME: mini-graph-card < 0.14.0-dev.3 stacks color_thresholds stops
+    # outside the Y-axis on the top edge, painting a bogus band of the hottest
+    # color above the line. dev.3 fixes the stacking (#1361, #1441) but leaves
+    # the first stop at the graph edge, so the line stroke still picks up the
+    # out-of-range color; the patch pins the gradient to the graph bounds.
+    # Remove the pin and the patch when nixpkgs ships a release with this fix.
+    home-assistant-custom-lovelace-modules = prev.lib.recurseIntoAttrs (
+      prev.home-assistant-custom-lovelace-modules.extend (_hfinal: hprev: {
+        mini-graph-card = hprev.mini-graph-card.overrideAttrs (_old: {
+          version = "0.14.0-dev.3-p1";
+          src = prev.fetchFromGitHub {
+            owner = "kalkih";
+            repo = "mini-graph-card";
+            tag = "v0.14.0-dev.3";
+            hash = "sha256-1ZSnFkVJ7m6c4rLBJG+hNpfRWo5Jr9SP6GuQOBAoVc8=";
+          };
+          npmDepsHash = "sha256-xzhyYYZLl8pyfK3+MRn35Ffdw/c78v8PjwLlAuQO92g=";
+          patches = [./mini-graph-card-gradient.patch];
+        });
+      })
+    );
+
     pythonPackagesExtensions =
       prev.pythonPackagesExtensions
       ++ [

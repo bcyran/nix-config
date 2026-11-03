@@ -90,6 +90,7 @@ in {
         ];
 
         customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
+          mini-graph-card
           mushroom
           universal-remote-card
         ];
