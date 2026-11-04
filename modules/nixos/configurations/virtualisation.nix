@@ -11,16 +11,24 @@ in {
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       qemu
+      qemu_kvm
       quickemu
     ];
     virtualisation = {
-      libvirtd.enable = true;
+      libvirtd = {
+        enable = true;
+        dbus = {
+          enable = true;
+          package = pkgs.libvirt-dbus;
+        };
+        qemu.package = pkgs.qemu_kvm;
+      };
       spiceUSBRedirection.enable = true;
     };
     programs.virt-manager.enable = true;
     services.spice-vdagentd.enable = true;
 
-    users.users.${config.my.user.name}.extraGroups = ["libvirtd"];
+    users.users.${config.my.user.name}.extraGroups = ["libvirtd" "kvm"];
 
     boot.extraModprobeConfig = ''
       options kvm_intel nested=1
