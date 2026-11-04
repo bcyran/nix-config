@@ -70,6 +70,7 @@
         };
       };
       smart.enable = true;
+      virtualisation.enable = true;
     };
     programs = {
       podman.enable = true;

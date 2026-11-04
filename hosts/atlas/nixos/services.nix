@@ -420,5 +420,9 @@ in {
       relayHost = "[smtp.protonmail.ch]:587";
       saslPasswordFile = config.sops.secrets.mail_relay_sasl_passwd_file.path;
     };
+    cockpit = {
+      enable = true;
+      reverseProxy.domain = "cockpit.${intraDomain}";
+    };
   };
 }
