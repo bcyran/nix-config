@@ -77,7 +77,10 @@
     };
   };
 
-  boot.kernelModules = ["nct6775"]; # Required for fans control
+  boot.kernelModules = [
+    "nct6775" # Required for fan control
+    "drivetemp" # Per-drive hwmon temps, so hddfancontrol does not poll smartctl
+  ];
   services.hddfancontrol = {
     enable = true;
     settings.drivebay = {
@@ -88,14 +91,18 @@
         "/dev/disk/by-id/ata-WDC_WD43PURZ-74BWPY0_WD-WX32D8415Y28"
       ];
       pwmPaths = [
-        "/sys/class/hwmon/hwmon3/pwm7:70:50"
+        # Resolve the nct6799 hwmon instance at start time; hwmonN is assigned by
+        # registration order and can move between boots. nct6775.656 is stable.
+        "`echo /sys/devices/platform/nct6775.656/hwmon/hwmon*`/pwm7:70:50"
       ];
       extraArgs = [
         "--min-fan-speed-prct 0"
         "--drive-temp-range 30 50"
+        "--restore-fan-settings" # hand control back to the BIOS curve on stop
       ];
     };
   };
+  systemd.services."hddfancontrol-drivebay".serviceConfig.Restart = "on-failure";
 
   services.btrfs.autoScrub = {
     enable = true;
