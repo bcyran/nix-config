@@ -88,8 +88,7 @@
         "/dev/disk/by-id/ata-WDC_WD43PURZ-74BWPY0_WD-WX32D8415Y28"
       ];
       pwmPaths = [
-        "/sys/class/hwmon/hwmon3/pwm1:70:50"
-        "/sys/class/hwmon/hwmon3/pwm4:70:50"
+        "/sys/class/hwmon/hwmon3/pwm7:70:50"
       ];
       extraArgs = [
         "--min-fan-speed-prct 0"
