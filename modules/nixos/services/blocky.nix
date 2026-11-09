@@ -128,10 +128,10 @@ in {
             (grafanaDashboardsLib.dashboardEntry {
               name = "blocky";
               path = grafanaDashboardsLib.fetchDashboard {
-                name = "blocky-v6";
+                name = "blocky-v8";
                 id = 13768;
-                version = 6;
-                hash = "sha256-Kxgu2YD6MKjtAZlxiIxOgywLtfPs7cjMBUNjYsdtmE8";
+                version = 8;
+                hash = "sha256-d36bEgEADprIPyKslGQvGsPmJn8kF+EMVzZz6hnihjI=";
               };
               transformations = grafanaDashboardsLib.fillTemplating [
                 {
@@ -151,10 +151,10 @@ in {
             (grafanaDashboardsLib.dashboardEntry {
               name = "blocky-postgres";
               path = grafanaDashboardsLib.fetchDashboard {
-                name = "blocky-postgres-v12";
+                name = "blocky-postgres-v15";
                 id = 17996;
-                version = 12;
-                hash = "sha256-G+iVF/bmMsxZBVT9hqAHHMN1nvIgpYn3VnFPc+Ew3XU=";
+                version = 15;
+                hash = "sha256-LYtAAwNT7AgX21eGhsk1H2AZm9lHQtKsaYGtvD9pP3c=";
               };
               transformations = grafanaDashboardsLib.fillTemplating [
                 {

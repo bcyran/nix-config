@@ -64,8 +64,8 @@ in {
             path = grafanaDashboardsLib.fetchDashboard {
               name = "node-exporter-full";
               id = 1860;
-              version = 37;
-              hash = "sha256-PS9pNh3AqDpBMabZWjqsj1pgp7asuyGeJInP9Bdbpr0=";
+              version = 46;
+              hash = "sha256-2CNB5SU9ChNkTfOjJ/KCD9alCKb6ciLVVN4/fpqGyrg=";
             };
           })
         ];
