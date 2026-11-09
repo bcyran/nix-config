@@ -39,8 +39,8 @@ in {
           path = grafanaDashboardsLib.fetchDashboard {
             name = "smartctl";
             id = 22604;
-            version = 2;
-            hash = "sha256-I6iGSkqduo8uaf2xSwMRuxKPeq+tEnbpmisGEZs6Ucw=";
+            version = 4;
+            hash = "sha256-0+Cgl6TryTnvlLQDpDNJa7USyM6GAZsRPqc4DqjXozc=";
           };
           transformations = grafanaDashboardsLib.fillTemplating [
             {
