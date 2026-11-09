@@ -391,11 +391,11 @@
     },
     "systems": {
       "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "lastModified": 1791244623,
+        "narHash": "sha256-uuanbkFk8a313Zfrxdcz8Us/yQtaxNnKJtX8v0ZPpd8=",
         "owner": "nix-systems",
         "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "rev": "d36eeed142f88b5a636f2e3856a53c61654cf29b",
         "type": "github"
       },
       "original": {
@@ -448,11 +448,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1786965126,
-        "narHash": "sha256-SWkqSGgPu97bhS0/GuWf30+FZ/UJ1rc584/wppe+wuA=",
+        "lastModified": 1794252223,
+        "narHash": "sha256-llDpeNpXRhMhX1hQZ+4aiXxbQ47esnE8xQ96F8X/4zs=",
         "owner": "bcyran",
         "repo": "wettermin-ical",
-        "rev": "1f73d09b71f84283479aa80b7ed0d5553da680b6",
+        "rev": "027f7cccc509ef7bdae2201979517786dfc96458",
         "type": "github"
       },
       "original": {
