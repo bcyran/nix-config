@@ -30,6 +30,17 @@
       withPipewire = false;
     };
   in {
+    # FIXME: nixpkgs' cargo-setup-hook now exports LIBGIT2_NO_VENDOR=1 for every
+    # Rust package, forcing libgit2-sys to use a system libgit2. git-chain pulls
+    # in libgit2-sys 0.17.0, which requires libgit2 >=1.8.1 <1.9.0, while
+    # nixpkgs ships 1.9.x, and git-chain does not depend on libgit2 at all, so
+    # the probe fails and the build aborts. Reset the variable after the setup
+    # hook so libgit2-sys vendors its bundled libgit2. Remove when nixpkgs fixes
+    # git-chain (e.g. by updating git2 or adding a compatible libgit2).
+    git-chain = prev.git-chain.overrideAttrs (old: {
+      preBuild = (old.preBuild or "") + "\nexport LIBGIT2_NO_VENDOR=0\n";
+    });
+
     glances = prev.glances.overrideAttrs (old: {
       # These modules spawn the Glances server with subprocess.Popen, wait a
       # fixed time.sleep(5) instead of polling, then immediately make HTTP
