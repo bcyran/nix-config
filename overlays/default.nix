@@ -41,6 +41,14 @@
       preBuild = (old.preBuild or "") + "\nexport LIBGIT2_NO_VENDOR=0\n";
     });
 
+    # FIXME: nixpkgs now devendors Rust dependencies, so libsodium-sys probes
+    # the system libsodium via pkg-config instead of building the bundled one,
+    # but the package does not list libsodium in buildInputs. Remove when
+    # https://github.com/NixOS/nixpkgs/issues/585458 is fixed.
+    rustdesk-flutter = prev.rustdesk-flutter.overrideAttrs (old: {
+      buildInputs = (old.buildInputs or []) ++ [prev.libsodium];
+    });
+
     glances = prev.glances.overrideAttrs (old: {
       # These modules spawn the Glances server with subprocess.Popen, wait a
       # fixed time.sleep(5) instead of polling, then immediately make HTTP
