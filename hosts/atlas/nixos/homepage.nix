@@ -68,7 +68,7 @@ in {
         in [
           (makeGlancesWidget "CPU" "cpu" true)
           (makeGlancesWidget "Memory" "memory" true)
-          (makeGlancesWidget "Network" "network:enp5s0" true)
+          (makeGlancesWidget "Network" "network:enp6s0" true)
           (makeGlancesWidget "Root" "fs:/" false)
           (makeGlancesWidget "Fast Store" "fs:/mnt/fast_store" false)
           (makeGlancesWidget "Slow Store" "fs:/mnt/slow_store" false)
