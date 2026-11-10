@@ -8,7 +8,7 @@
   postgresCfg = config.my.services.postgresql;
 
   # renovate: datasource=docker packageName=docker.io/joplin/server
-  imageVersion = "3.7.3";
+  imageVersion = "3.7.4";
   dbName = "joplin";
   dbUser = "joplin";
   postgresHostAlias = "postgres";

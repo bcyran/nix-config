@@ -7,7 +7,7 @@
   cfg = config.my.services.cleanuparr;
 
   # renovate: datasource=docker packageName=ghcr.io/cleanuparr/cleanuparr
-  imageVersion = "2.10.12";
+  imageVersion = "2.11.0";
   dataDir = "/var/lib/cleanuparr";
   uid = 2005;
 in {

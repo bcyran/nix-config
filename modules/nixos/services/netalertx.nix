@@ -15,7 +15,7 @@
   cfg = config.my.services.netalertx;
 
   # renovate: datasource=docker packageName=ghcr.io/netalertx/netalertx
-  imageVersion = "26.10.24";
+  imageVersion = "26.10.28";
 
   dataDir = "/var/lib/netalertx";
   # Fixed, rather than auto-assigned, so that `config.users.users.${cfg.user}.uid`
