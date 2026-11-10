@@ -97,6 +97,23 @@
       prev.pythonPackagesExtensions
       ++ [
         (pyfinal: pyprev: {
+          # FIXME: nixpkgs now devendors Rust dependencies, so zstd-sys and
+          # aws-lc-sys probe the system libzstd and aws-lc via pkg-config, but
+          # primp (a dependency of open-webui through ddgs) lists none of them.
+          # Remove when fixed upstream.
+          primp = pyprev.primp.overrideAttrs (old: {
+            nativeBuildInputs = (old.nativeBuildInputs or []) ++ [prev.pkg-config];
+            buildInputs = (old.buildInputs or []) ++ [prev.zstd prev.aws-lc];
+          });
+
+          # FIXME: same as primp: libsqlite3-sys and tikv-jemalloc-sys now probe
+          # system libraries, but chromadb (a dependency of open-webui) does not
+          # list sqlite or rust-jemalloc-sys in buildInputs. Remove when fixed
+          # upstream.
+          chromadb = pyprev.chromadb.overrideAttrs (old: {
+            buildInputs = (old.buildInputs or []) ++ [prev.sqlite prev.rust-jemalloc-sys];
+          });
+
           # FIXME: nixpkgs bumped python3Packages.mcp to 2.x
           # (https://github.com/NixOS/nixpkgs/pull/575004), which fastmcp-slim
           # does not support, so it is marked broken and breaks mcp-nixos.
