@@ -5,7 +5,7 @@
   ...
 }: let
   cfg = config.my.services.open-webui;
-  ollamaCfg = config.my.services.ollama;
+  llamaSwapCfg = config.my.services.llama-swap;
 in {
   options.my.services.open-webui = let
     serviceName = "Open WebUI";
@@ -18,13 +18,22 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = llamaSwapCfg.enable;
+        message = "my.services.open-webui requires my.services.llama-swap to be enabled.";
+      }
+    ];
+
     services.open-webui = {
       enable = true;
       host = cfg.address;
       inherit (cfg) port openFirewall;
       environment = {
-        OLLAMA_API_BASE_URL = "http://127.0.0.1:${toString ollamaCfg.port}";
-        ENABLE_OPENAI_API = "false";
+        ENABLE_OLLAMA_API = "false";
+        ENABLE_OPENAI_API = "true";
+        OPENAI_API_BASE_URL = "http://${llamaSwapCfg.address}:${toString llamaSwapCfg.port}/v1";
+        OPENAI_API_KEY = "none";
       };
     };
 
