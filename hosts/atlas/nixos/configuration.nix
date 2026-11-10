@@ -19,6 +19,7 @@
     ./hardware-configuration.nix
     ../common/host.nix
     ./homepage.nix
+    ./nvidia.nix
     ./services.nix
     ./media.nix
     ./wireguard.nix
