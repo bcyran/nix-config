@@ -332,7 +332,7 @@ in {
     netalertx = {
       enable = true;
       reverseProxy.domain = "netalertx.${intraDomain}";
-      scanSubnets = ["${my.lib.const.lan.subnet} --interface=enp5s0"];
+      scanSubnets = ["${my.lib.const.lan.subnet} --interface=enp6s0"];
     };
     ntfy-systemd = {
       enable = true;
