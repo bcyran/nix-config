@@ -8,6 +8,7 @@
 in {
   imports = [
     my.homeManagerModules.default
+    ../../common/opencode.nix
     ../common/host.nix
   ];
 
