@@ -5,6 +5,8 @@
     ../common/host.nix
   ];
 
+  nixpkgs.config.cudaSupport = true;
+
   my = {
     configurations = {
       core.enable = true;
