@@ -430,10 +430,7 @@ in {
     };
     llama-swap = {
       enable = true;
-      llamaCppPackage = pkgs.llama-cpp-cuda.overrideAttrs (old: {
-        # Only build for RTX 4090 architecture (Ada Lovelace, compute capability 8.9).
-        cmakeFlags = old.cmakeFlags ++ ["-DCMAKE_CUDA_ARCHITECTURES=89"];
-      });
+      llamaCppPackage = pkgs.llama-cpp-cuda;
       modelsDir = "${my.lib.const.paths.atlas.fastStore}/llm";
       reverseProxy.domain = "llama.${intraDomain}";
       environmentFile = config.sops.secrets.llama_swap_env_file.path;
