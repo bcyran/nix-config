@@ -38,6 +38,17 @@ in {
       description = "The llama.cpp package that provides `llama-server`.";
     };
 
+    gpuMonitoringTools = lib.mkOption {
+      type = lib.types.listOf lib.types.package;
+      default = [];
+      example = lib.literalExpression "[config.hardware.nvidia.package.bin]";
+      description = ''
+        Packages added to the service `PATH` for llama-swap's performance monitor.
+        It shells out to `nvidia-smi` or `rocm-smi`; systemd services do not see
+        `/run/current-system/sw/bin`, so the tool must be provided here.
+      '';
+    };
+
     supplementaryGroup = lib.mkOption {
       type = lib.types.str;
       default = "llm-models";
@@ -126,6 +137,7 @@ in {
     users.groups.${cfg.supplementaryGroup}.members = [config.my.user.name];
 
     systemd.services.llama-swap = {
+      path = cfg.gpuMonitoringTools;
       # llama.cpp downloads `--hf-repo` models into LLAMA_CACHE.
       environment.LLAMA_CACHE = lib.mkForce cfg.modelsDir;
       serviceConfig = {

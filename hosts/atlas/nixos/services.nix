@@ -431,6 +431,7 @@ in {
     llama-swap = {
       enable = true;
       llamaCppPackage = pkgs.llama-cpp-cuda;
+      gpuMonitoringTools = [config.hardware.nvidia.package.bin];
       modelsDir = "${my.lib.const.paths.atlas.fastStore}/llm";
       reverseProxy.domain = "llama.${intraDomain}";
       environmentFile = config.sops.secrets.llama_swap_env_file.path;
