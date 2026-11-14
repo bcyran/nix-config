@@ -52,7 +52,10 @@ in {
       enable = true;
 
       settings = {
-        homeassistant.enabled = true;
+        homeassistant = {
+          enabled = true;
+          experimental_event_entities = true;
+        };
         permit_join = false;
 
         serial = {
