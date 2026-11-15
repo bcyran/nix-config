@@ -122,6 +122,9 @@ rec {
       downloads = "${fastStore}/downloads";
       slowMisc = "${slowStore}/misc";
       fastMisc = "${fastStore}/misc";
+      models = "${fastStore}/models";
+      textModels = "${models}/text";
+      mediaModels = "${models}/media";
     };
   };
   users = {

@@ -125,6 +125,7 @@ in {
   #   git config core.sharedRepository group
   systemd.tmpfiles.rules = [
     "d ${agentsDir} 2770 ${config.my.user.name} ${agentsGroup} -"
+    "d ${my.lib.const.paths.atlas.models} 0755 root root -"
   ];
 
   my.configurations = {
@@ -432,7 +433,7 @@ in {
       enable = true;
       llamaCppPackage = pkgs.llama-cpp-cuda;
       gpuMonitoringTools = [config.hardware.nvidia.package.bin];
-      modelsDir = "${my.lib.const.paths.atlas.fastStore}/llm";
+      modelsDir = my.lib.const.paths.atlas.textModels;
       reverseProxy.domain = "llama.${intraDomain}";
       environmentFile = config.sops.secrets.llama_swap_env_file.path;
       models = let
@@ -440,7 +441,7 @@ in {
         kvCacheExtraCompact = ["--cache-type-k q8_0" "--cache-type-v q4_0"];
         qwenMtp = [
           "--spec-type draft-mtp"
-          "--spec-draft-model ${my.lib.const.paths.atlas.fastStore}/llm/mtp-Qwen3.8-27B-Q4_0.gguf"
+          "--spec-draft-model ${my.lib.const.paths.atlas.textModels}/mtp-Qwen3.8-27B-Q4_0.gguf"
           "--spec-draft-n-max 3"
         ];
       in {
@@ -521,7 +522,7 @@ in {
             ++ kvCacheCompact
             ++ [
               "--spec-type draft-mtp"
-              "--spec-draft-model ${my.lib.const.paths.atlas.fastStore}/llm/mtp-gemma-4-31B-it.gguf"
+              "--spec-draft-model ${my.lib.const.paths.atlas.textModels}/mtp-gemma-4-31B-it.gguf"
               "--spec-draft-n-max 3"
               "--no-mmproj"
             ];
