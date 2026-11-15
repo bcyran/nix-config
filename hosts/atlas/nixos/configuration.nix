@@ -111,12 +111,6 @@
     limit = "100M";
   };
 
-  nix.settings = {
-    trusted-public-keys = [
-      my.lib.const.binaryCacheKeys.slimbook
-    ];
-  };
-
   # Limit memory used for builds
   systemd.services.nix-daemon.serviceConfig = {
     MemoryAccounting = true;
