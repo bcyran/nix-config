@@ -378,5 +378,9 @@ in {
       enable = true;
       reverseProxy.domain = "cockpit.${intraDomain}";
     };
+    coolercontrol = {
+      enable = true;
+      reverseProxy.domain = "coolercontrol.${intraDomain}";
+    };
   };
 }
