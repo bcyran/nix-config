@@ -169,11 +169,6 @@ in {
       enable = true;
       reverseProxy.domain = "openwebui.${intraDomain}";
     };
-    comfyui = {
-      enable = true;
-      modelsDir = "${my.lib.const.paths.atlas.models}/comfyui";
-      reverseProxy.domain = "comfyui.${intraDomain}";
-    };
     invokeai = {
       enable = true;
       modelsDir = "${my.lib.const.paths.atlas.models}/invokeai";
