@@ -4,14 +4,6 @@
   inherit (pkgs) python314Packages;
 in rec {
   # example = pkgs.callPackage ./example { };
-  backlight = pkgs.callPackage ./backlight {};
-  volume = pkgs.callPackage ./volume {};
-  hyprpaperset = pkgs.callPackage ./hyprpaperset {};
-  wallpaper = pkgs.callPackage ./wallpaper {
-    inherit (pkgs) writeShellApplication coreutils;
-    inherit hyprpaperset;
-  };
-  scr = pkgs.callPackage ./scr {};
   joplin-plugins = pkgs.callPackage ./joplin-plugins {};
   xiaomi_miio_fan = pkgs.callPackage ./xiaomi_miio_fan {
     inherit (python314Packages) python-miio;

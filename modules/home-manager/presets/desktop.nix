@@ -42,10 +42,6 @@ in {
       libnotify
       wl-clipboard
       playerctl
-      my.pkgs.volume
-      my.pkgs.backlight
-      my.pkgs.wallpaper
-      my.pkgs.scr
     ];
 
     fonts.fontconfig = {

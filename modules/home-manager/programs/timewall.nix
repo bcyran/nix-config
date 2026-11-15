@@ -1,5 +1,5 @@
 {
-  my,
+  pkgs,
   config,
   lib,
   ...
@@ -12,7 +12,7 @@ in {
     services.timewall = {
       enable = true;
       config = {
-        setter.command = ["${lib.getExe my.pkgs.hyprpaperset}" "%f"];
+        setter.command = ["${lib.getExe pkgs.noctalia}" "msg" "wallpaper-set" "%f"];
         location = {
           lat = 51.11;
           lon = 17.02;
