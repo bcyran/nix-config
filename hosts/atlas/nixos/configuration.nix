@@ -22,6 +22,7 @@
     ./nvidia.nix
     ./services.nix
     ./media.nix
+    ./ai.nix
     ./wireguard.nix
     ./backup.nix
   ];
