@@ -36,6 +36,12 @@ in {
           };
         }
         {
+          AI = {
+            style = "row";
+            columns = 3;
+          };
+        }
+        {
           Monitoring = {
             style = "row";
             columns = 3;
@@ -302,21 +308,6 @@ in {
               siteMonitor = makeStaticHostDomainUrl "bentopdf";
             };
           }
-          {
-            OpenCode = {
-              description = "AI coding agent.";
-              icon = "opencode";
-              siteMonitor = makeServiceLoopbackUrl "opencode";
-            };
-          }
-          {
-            OpenChamber = {
-              description = "OpenCode UI.";
-              icon = "https://openchamber.dev/logo-dark.svg";
-              href = makeServiceDomainUrl "openchamber";
-              siteMonitor = makeServiceLoopbackUrl "openchamber";
-            };
-          }
         ];
       }
       {
@@ -503,6 +494,49 @@ in {
               icon = "pinchflat";
               href = makeServiceDomainUrl "pinchflat";
               siteMonitor = makeServiceDomainUrl "pinchflat";
+            };
+          }
+        ];
+      }
+      {
+        "AI" = [
+          {
+            "llama-swap" = {
+              description = "Local LLM models server.";
+              icon = "https://cdn.jsdelivr.net/gh/selfhst/icons/svg/llama-cpp.svg";
+              href = makeServiceDomainUrl "llama-swap";
+              siteMonitor = "${makeServiceLoopbackUrl "llama-swap"}/health";
+            };
+          }
+          {
+            "Open WebUI" = {
+              description = "Chat interface for LLMs.";
+              icon = "open-webui";
+              href = makeServiceDomainUrl "open-webui";
+              siteMonitor = makeServiceLoopbackUrl "open-webui";
+            };
+          }
+          {
+            InvokeAI = {
+              description = "AI image generation.";
+              icon = "invoke-ai";
+              href = makeServiceDomainUrl "invokeai";
+              siteMonitor = makeServiceLoopbackUrl "invokeai";
+            };
+          }
+          {
+            OpenCode = {
+              description = "AI coding agent.";
+              icon = "opencode";
+              siteMonitor = makeServiceLoopbackUrl "opencode";
+            };
+          }
+          {
+            OpenChamber = {
+              description = "OpenCode UI.";
+              icon = "https://openchamber.dev/logo-dark.svg";
+              href = makeServiceDomainUrl "openchamber";
+              siteMonitor = makeServiceLoopbackUrl "openchamber";
             };
           }
         ];
