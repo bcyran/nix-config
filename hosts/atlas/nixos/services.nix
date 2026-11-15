@@ -432,7 +432,7 @@ in {
       enable = true;
       llamaCppPackage = pkgs.llama-cpp-cuda;
       gpuMonitoringTools = [config.hardware.nvidia.package.bin];
-      modelsDir = my.lib.const.paths.atlas.textModels;
+      modelsDir = "${my.lib.const.paths.atlas.models}/llama";
       reverseProxy.domain = "llama.${intraDomain}";
       environmentFile = config.sops.secrets.llama_swap_env_file.path;
       models = let
@@ -440,7 +440,7 @@ in {
         kvCacheExtraCompact = ["--cache-type-k q8_0" "--cache-type-v q4_0"];
         qwenMtp = [
           "--spec-type draft-mtp"
-          "--spec-draft-model ${my.lib.const.paths.atlas.textModels}/mtp-Qwen3.8-27B-Q4_0.gguf"
+          "--spec-draft-model ${my.lib.const.paths.atlas.models}/llama/mtp-Qwen3.8-27B-Q4_0.gguf"
           "--spec-draft-n-max 3"
         ];
       in {
@@ -521,7 +521,7 @@ in {
             ++ kvCacheCompact
             ++ [
               "--spec-type draft-mtp"
-              "--spec-draft-model ${my.lib.const.paths.atlas.textModels}/mtp-gemma-4-31B-it.gguf"
+              "--spec-draft-model ${my.lib.const.paths.atlas.models}/llama/mtp-gemma-4-31B-it.gguf"
               "--spec-draft-n-max 3"
               "--no-mmproj"
             ];
@@ -539,7 +539,7 @@ in {
     };
     comfyui = {
       enable = true;
-      modelsDir = my.lib.const.paths.atlas.mediaModels;
+      modelsDir = "${my.lib.const.paths.atlas.models}/comfyui";
       reverseProxy.domain = "comfyui.${intraDomain}";
     };
     invokeai = {
