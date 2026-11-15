@@ -542,5 +542,10 @@ in {
       modelsDir = my.lib.const.paths.atlas.mediaModels;
       reverseProxy.domain = "comfyui.${intraDomain}";
     };
+    invokeai = {
+      enable = true;
+      modelsDir = "${my.lib.const.paths.atlas.models}/invokeai";
+      reverseProxy.domain = "invokeai.${intraDomain}";
+    };
   };
 }
