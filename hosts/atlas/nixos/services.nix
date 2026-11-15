@@ -538,5 +538,10 @@ in {
       enable = true;
       reverseProxy.domain = "openwebui.${intraDomain}";
     };
+    comfyui = {
+      enable = true;
+      modelsDir = my.lib.const.paths.atlas.mediaModels;
+      reverseProxy.domain = "comfyui.${intraDomain}";
+    };
   };
 }

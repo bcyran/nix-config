@@ -28,6 +28,19 @@ in {
       enable = true;
       inherit (cfg) port;
       listen = [cfg.address];
+      extraArgs = [
+        # ComfyUI's DynamicVRAM stages every loaded model in a pinned host buffer sized
+        # from free RAM, which cannot be swapped out. Unpinned pages can be, so offload
+        # through the NVMe instead and keep some VRAM free for the VAE decode spike.
+        "--disable-pinned-memory"
+        "--fast-disk"
+        "--vram-headroom"
+        "1.5"
+        # Drops the paid partner/API nodes and serves the frontend with a CSP that
+        # only allows connections back to this origin.
+        "--offline"
+        "--disable-product-tips"
+      ];
     };
 
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
