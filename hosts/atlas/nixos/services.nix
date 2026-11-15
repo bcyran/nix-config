@@ -288,7 +288,6 @@ in {
       enable = true;
       environmentFile = config.sops.secrets.linkwarden_env_file.path;
       reverseProxy.domain = "linkwarden.${intraDomain}";
-      llm = "phi3";
     };
     iperf = {
       enable = true;
