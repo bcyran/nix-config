@@ -23,22 +23,6 @@ build host=current_host user=current_user:
         nix build ".#homeConfigurations.{{ user }}@$h.activationPackage"
     done
 
-# Copy NixOS and home-manager configs for a host (or "all") to the target store.
-push host=current_host user=current_user:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    if [ "{{ host }}" = "all" ]; then
-        hosts="{{ hosts }}"
-    else
-        hosts="{{ host }}"
-    fi
-    for h in $hosts; do
-        echo "Pushing NixOS config for $h..."
-        nix copy --to "{{ target }}" ".#nixosConfigurations.$h.config.system.build.toplevel"
-        echo "Pushing home-manager config for {{ user }}@$h..."
-        nix copy --to "{{ target }}" ".#homeConfigurations.{{ user }}@$h.activationPackage"
-    done
-
 # Switch NixOS and home-manager configs using nh.
 switch host=current_host user=current_user:
     nh os switch . --hostname {{ host }}
