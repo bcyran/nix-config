@@ -93,7 +93,7 @@ in {
           contextSize = 131072;
           extraArgs =
             ["--temp 1.0" "--top-p 0.95" "--top-k 20" "--min-p 0"]
-            ++ kvCacheCompact
+            ++ kvCacheExtraCompact
             ++ qwenMtp
             # With multimodal projection, we only have enough VRAM for 1 slot.
             ++ ["--parallel 1"];
