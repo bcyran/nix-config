@@ -81,30 +81,8 @@
 
   boot.kernelModules = [
     "nct6775" # Required for fan control
-    "drivetemp" # Per-drive hwmon temps, so hddfancontrol does not poll smartctl
+    "drivetemp" # Per-drive hwmon temps
   ];
-  services.hddfancontrol = {
-    enable = true;
-    settings.drivebay = {
-      disks = [
-        "/dev/disk/by-id/ata-WDC_WD40EFPX-68C6CN0_WD-WX12D55N5U3R"
-        "/dev/disk/by-id/ata-WDC_WD40EFPX-68C6CN0_WD-WX32D35A9520"
-        "/dev/disk/by-id/ata-WDC_WD40EFPX-68C6CN0_WD-WX32D35A9DEJ"
-        "/dev/disk/by-id/ata-WDC_WD43PURZ-74BWPY0_WD-WX32D8415Y28"
-      ];
-      pwmPaths = [
-        # Resolve the nct6799 hwmon instance at start time; hwmonN is assigned by
-        # registration order and can move between boots. nct6775.656 is stable.
-        "`echo /sys/devices/platform/nct6775.656/hwmon/hwmon*`/pwm7:70:50"
-      ];
-      extraArgs = [
-        "--min-fan-speed-prct 0"
-        "--drive-temp-range 30 50"
-        "--restore-fan-settings" # hand control back to the BIOS curve on stop
-      ];
-    };
-  };
-  systemd.services."hddfancontrol-drivebay".serviceConfig.Restart = "on-failure";
 
   services.btrfs.autoScrub = {
     enable = true;
