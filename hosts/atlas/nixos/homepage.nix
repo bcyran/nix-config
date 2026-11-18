@@ -517,11 +517,10 @@ in {
             };
           }
           {
-            InvokeAI = {
+            ComfyUI = {
               description = "AI image generation.";
-              icon = "invoke-ai";
-              href = makeServiceDomainUrl "invokeai";
-              siteMonitor = makeServiceLoopbackUrl "invokeai";
+              icon = "comfyui";
+              href = makeServiceDomainUrl "comfyui";
             };
           }
           {

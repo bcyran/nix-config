@@ -174,5 +174,11 @@ in {
       modelsDir = "${my.lib.const.paths.atlas.models}/invokeai";
       reverseProxy.domain = "invokeai.${intraDomain}";
     };
+    comfyui = {
+      enable = true;
+      socketActivation.enable = true;
+      modelsDir = "${my.lib.const.paths.atlas.models}/comfyui";
+      reverseProxy.domain = "comfyui.${intraDomain}";
+    };
   };
 }
