@@ -48,8 +48,7 @@ in {
         environment = {
           INVOKEAI_PORT = builtins.toString cfg.port;
           INVOKEAI_MULTIUSER = "true";
-          INVOKEAI_MAX_CACHE_RAM_GB = "6";
-          INVOKEAI_KEEP_RAM_COPY_OF_WEIGHTS = "false";
+          INVOKEAI_MODEL_CACHE_KEEP_ALIVE_MIN = "5";
           HOME = "/invokeai";
           HF_HOME = "/invokeai/.cache/huggingface";
           MPLCONFIGDIR = "/invokeai/.matplotlib";
