@@ -17,6 +17,9 @@
   # Caddy utilities.
   caddy = import ./caddy.nix {inherit lib;};
 
+  # On-demand systemd socket activation helpers.
+  socketActivation = import ./socket-activation.nix {inherit lib options;};
+
   # Utilities for running rootless OCI containers.
   ociContainers = import ./oci-containers.nix;
 
