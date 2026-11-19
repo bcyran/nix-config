@@ -2,6 +2,7 @@
   my,
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.my.services.nix-serve;
@@ -25,6 +26,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.nix-serve = {
       enable = true;
+      package = pkgs.nix-serve-ng;
       bindAddress = cfg.address;
       inherit (cfg) port openFirewall secretKeyFile;
     };
