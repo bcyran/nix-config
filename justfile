@@ -23,6 +23,12 @@ build host=current_host user=current_user:
         nix build ".#homeConfigurations.{{ user }}@$h.activationPackage"
     done
 
+# Run all CI checks (format, lint, evaluate).
+check:
+    alejandra --check .
+    statix check
+    nix flake check
+
 # Switch NixOS and home-manager configs using nh.
 switch host=current_host user=current_user:
     nh os switch . --hostname {{ host }}

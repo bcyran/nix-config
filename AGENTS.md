@@ -11,12 +11,12 @@ Personal NixOS + Home Manager flake. User `bazyli`; hosts `slimbook` (laptop/des
    - `tools.nixos.nix({action:"search", source:"home-manager", query:"programs.foo"})` (HM option)
    - Check the option's type and default too. For options from flake inputs (disko, sops-nix, ...), read the input's source in `/nix/store`. If you cannot verify, say so; do not guess.
 3. **ALWAYS verify the build AFTER writing code.** Run `just build <host>` (e.g. `just build atlas`; no argument = current host). Use `just build all` for changes to shared code (`modules/`, `lib/`, `overlays/`, `pkgs/`). Fix errors and rebuild until it passes. Do not call a task done without a passing build; if you could not run it, say so.
-4. **Never read, decrypt, or print `secrets/*.yaml`**, and never put secrets in Nix code (the store is world-readable). Use sops: `config.sops.secrets.<name>.path`.
+4. **ALWAYS run the checks with `just check` AFTER writing code.** This runs format, lint, and flake evaluation. Do not substitute individual commands. Fix errors and rerun until it passes. Do not call a task done without a passing check; if you could not run it, say so.
+5. **Never read, decrypt, or print `secrets/*.yaml`**, and never put secrets in Nix code (the store is world-readable). Use sops: `config.sops.secrets.<name>.path`.
 
 ## Practical notes
 
 - `git add` new files before building (flakes ignore untracked files). Do not commit unless asked.
-- Before finishing also run `nix fmt` (alejandra) and `statix check`; CI enforces both.
 - Do not hand-edit `flake.lock`, `hardware-configuration.nix`, `agent-skills/sources.lock.json`. Do not run `nix flake update` unless asked.
 - Builds are slow. For a quick check use `nix eval .#nixosConfigurations.<host>.config.<option path>`.
 - `just --list` shows all recipes. `nix build .#<name>` builds a custom package.
