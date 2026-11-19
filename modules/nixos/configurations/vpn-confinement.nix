@@ -91,7 +91,7 @@ in {
       enable = true;
       inherit (cfg) wireguardConfigFile;
 
-      accessibleFrom = [
+      allowedIngress = [
         "10.0.0.0/8"
         "127.0.0.1"
       ];

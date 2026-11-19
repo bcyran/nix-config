@@ -119,12 +119,10 @@ in {
           to = cfg.port;
         }
       ];
-      openVPNPorts = [
-        {
-          port = cfg.peerPort;
-          protocol = "both";
-        }
-      ];
+      vpn = {
+        allowedTCPPorts = [cfg.peerPort];
+        allowedUDPPorts = [cfg.peerPort];
+      };
     };
 
     my.services.caddy.reverseProxyHosts = lib.optionalAttrs (cfg.reverseProxy.domain != null) {
