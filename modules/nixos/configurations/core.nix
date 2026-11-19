@@ -20,6 +20,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+
     nixpkgs = {
       overlays = [
         my.overlays.stable-packages
