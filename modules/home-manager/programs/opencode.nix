@@ -147,7 +147,29 @@ in {
           };
         }
         // lib.optionalAttrs (providers != {}) {inherit providers;};
-      cli.theme.name = "tokyonight";
+      cli = {
+        theme.name = "tokyonight";
+        session = {
+          thinking = "hide";
+          grouping = "auto";
+          verbosity = "medium";
+          image_preview = true;
+          permissions = "prompt";
+        };
+        tabs = {
+          mode = "off";
+          layout = "horizontal";
+          indicators = "status";
+        };
+        diffs = {
+          view = "unified";
+          wrap = "word";
+          tree = true;
+          single = false;
+        };
+        prompt.image_preview = true;
+        attention.notifications = true;
+      };
     };
 
     programs.agent-skills = {
