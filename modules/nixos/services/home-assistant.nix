@@ -16,32 +16,6 @@ in {
     address = my.lib.options.mkAddressOption serviceName;
     port = my.lib.options.mkPortOption serviceName 8123;
     reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-    voice = {
-      enable = lib.mkEnableOption "local voice assistant support (Wyoming STT/TTS)";
-      sttModel = lib.mkOption {
-        type = lib.types.str;
-        default = "turbo";
-        example = "small-int8";
-        description = "faster-whisper model used for speech-to-text.";
-      };
-      sttLanguage = lib.mkOption {
-        type = lib.types.str;
-        default = "en";
-        example = "pl";
-        description = "Language code passed to the speech-to-text server.";
-      };
-      sttDevice = lib.mkOption {
-        type = lib.types.enum ["cpu" "cuda" "auto"];
-        default = "cpu";
-        description = "Device used for speech-to-text inference.";
-      };
-      ttsVoice = lib.mkOption {
-        type = lib.types.str;
-        default = "en_US-ryan-medium";
-        example = "pl_PL-gosia-medium";
-        description = "Piper voice key from wyoming-piper's voices.json.";
-      };
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -98,25 +72,22 @@ in {
             psycopg2
           ];
 
-        extraComponents =
-          [
-            "default_config"
-            "met"
-            "google_translate"
-            "mobile_app"
-            "group"
-            "ping"
-            "device_tracker"
-            "nmap_tracker"
-            "media_player"
-            "yeelight"
-            "philips_js"
-            "xiaomi_miio"
-            "mqtt"
-          ]
-          ++ lib.optionals cfg.voice.enable [
-            "wyoming"
-          ];
+        extraComponents = [
+          "default_config"
+          "met"
+          "google_translate"
+          "mobile_app"
+          "group"
+          "ping"
+          "device_tracker"
+          "nmap_tracker"
+          "media_player"
+          "yeelight"
+          "philips_js"
+          "xiaomi_miio"
+          "mqtt"
+          "wyoming"
+        ];
 
         customComponents = [
           my.pkgs.xiaomi_miio_fan
@@ -127,21 +98,6 @@ in {
           mushroom
           universal-remote-card
         ];
-      };
-
-      wyoming = lib.mkIf cfg.voice.enable {
-        faster-whisper.servers.hass = {
-          enable = true;
-          model = cfg.voice.sttModel;
-          language = cfg.voice.sttLanguage;
-          device = cfg.voice.sttDevice;
-          uri = "tcp://127.0.0.1:10300";
-        };
-        piper.servers.hass = {
-          enable = true;
-          voice = cfg.voice.ttsVoice;
-          uri = "tcp://127.0.0.1:10200";
-        };
       };
     };
 
