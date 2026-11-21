@@ -20,6 +20,10 @@
         enable = true;
         enableShellIntegration = true;
       };
+      btop.extraDisks = [
+        my.lib.const.paths.atlas.fastStore
+        my.lib.const.paths.atlas.slowStore
+      ];
     };
   };
 }

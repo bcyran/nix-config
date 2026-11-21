@@ -6,13 +6,21 @@
   inherit (config.my.colorscheme) palette;
   cfg = config.my.programs.btop;
 in {
-  options.my.programs.btop.enable = lib.mkEnableOption "btop";
+  options.my.programs.btop = {
+    enable = lib.mkEnableOption "btop";
+    extraDisks = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = "Extra mountpoints to show in btop's disks section, besides root and swap.";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     programs.btop = {
       enable = true;
       settings = {
         color_theme = config.my.colorscheme.slug;
+        disks_filter = lib.concatStringsSep " " (["/"] ++ cfg.extraDisks);
       };
       themes = {
         "${config.my.colorscheme.slug}" = ''
