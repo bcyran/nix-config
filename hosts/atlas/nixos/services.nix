@@ -218,6 +218,13 @@ in {
     home-assistant = {
       enable = true;
       reverseProxy.domain = "hass.${intraDomain}";
+      voice = {
+        enable = true;
+        sttModel = "medium-int8";
+        sttLanguage = "pl";
+        sttDevice = "cpu";
+        ttsVoice = "pl_PL-gosia-medium";
+      };
     };
     mosquitto = {
       enable = true;
