@@ -165,6 +165,7 @@ in {
         };
       };
     };
+    wyoming-openai-gateway.enable = true;
     open-webui = {
       enable = true;
       reverseProxy.domain = "openwebui.${intraDomain}";
