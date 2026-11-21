@@ -17,4 +17,5 @@ in rec {
   jellystat = pkgs.callPackage ./jellystat {};
   pinchflat-ngx = pkgs.callPackage ./pinchflat-ngx {};
   openchamber = pkgs.callPackage ./openchamber {};
+  wyoming-openai-gateway = pkgs.callPackage ./wyoming-openai-gateway {};
 }
