@@ -5,14 +5,14 @@ Personal NixOS + Home Manager flake. User `bazyli`; hosts `slimbook` (laptop/des
 ## Hard rules
 
 1. **NEVER switch configurations.** Forbidden: `just switch|rollback|push`, `nh os|home switch`, `nixos-rebuild switch|boot|test`, `home-manager switch`, `switch-to-configuration`. Building is fine; activating is the user's job.
-2. **Verify every option and package exists BEFORE writing it.** Never use names from memory. Use the `nixos` MCP server via `execute`:
-   - `tools.nixos.nix({action:"search", type:"options", query:"services.foo"})` (NixOS option)
-   - `tools.nixos.nix({action:"info", query:"pkgname"})` (package)
-   - `tools.nixos.nix({action:"search", source:"home-manager", query:"programs.foo"})` (HM option)
-   - Check the option's type and default too. For options from flake inputs (disko, sops-nix, ...), read the input's source in `/nix/store`. If you cannot verify, say so; do not guess.
-3. **ALWAYS verify the build AFTER writing code.** Run `just build <host>` (e.g. `just build atlas`; no argument = current host). Use `just build all` for changes to shared code (`modules/`, `lib/`, `overlays/`, `pkgs/`). Fix errors and rebuild until it passes. Do not call a task done without a passing build; if you could not run it, say so.
-4. **ALWAYS run the checks with `just check` AFTER writing code.** This runs format, lint, and flake evaluation. Do not substitute individual commands. Fix errors and rerun until it passes. Do not call a task done without a passing check; if you could not run it, say so.
-5. **Never read, decrypt, or print `secrets/*.yaml`**, and never put secrets in Nix code (the store is world-readable). Use sops: `config.sops.secrets.<name>.path`.
+2. **Verify every option and package exists BEFORE writing it.** Never use names from memory. Use the `nixos` MCP `nix` tool:
+   - `{action:"search", type:"options", query:"services.foo"}` (NixOS option)
+   - `{action:"info", query:"pkgname"}` (package)
+   - `{action:"search", source:"home-manager", query:"programs.foo"}` (HM option)
+   - Check the option's type and default too. For options from flake inputs (disko, sops-nix, ...), read the input's source in `/nix/store`. Without MCP: `nix eval .#nixosConfigurations.<host>.options.<path>.type` or `nix search nixpkgs <pkg>`.
+   - If you cannot verify a name, stop and say so (or ask); do not guess.
+3. **After ANY edit, run in order:** `git add` new files → `just build <host>` (no argument = current host; `just build all` for shared code in `modules/`, `lib/`, `overlays/`, `pkgs/`) → `just check` (runs `alejandra --check`, `statix`, `nix flake check`; fix formatting with `alejandra .`). Fix errors and rerun until both pass. Do not call a task done without both passing; if you could not run them, say so.
+4. **Never read, decrypt, or print `secrets/*.yaml`**, and never put secrets in Nix code (the store is world-readable). Use sops: `config.sops.secrets.<name>.path`.
 
 ## Practical notes
 
@@ -53,55 +53,22 @@ secrets/            sops-encrypted, do not touch
 
 | Goal | Edit |
 | --- | --- |
-| New NixOS service | new `modules/nixos/services/<name>.nix`; enable in `hosts/<host>/nixos/services.nix` (atlas, vps) |
+| New NixOS service | skill `new-nixos-service` |
 | New HM program | new `modules/home-manager/programs/<name>.nix`; enable in a preset or `hosts/<host>/home-manager/bazyli.nix` |
 | Host-specific NixOS setting | `hosts/<host>/nixos/configuration.nix` or sibling file |
 | Host-specific HM setting | `hosts/<host>/home-manager/bazyli.nix` |
-| Custom package | `pkgs/<name>/default.nix` + entry in `pkgs/default.nix` |
-| Nixpkgs override/patch | `overlays/default.nix` |
+| Custom package | skill `new-package` |
+| Nixpkgs override/patch | skill `overlay-patch` |
 | New host | `hosts/<host>/{common,nixos,home-manager}/` + `mkSystem` and `mkHome` entries in `flake.nix` |
 | New secret | declare in host `sops.secrets`; ask the user to add the value |
 | Neovim / Hyprland config | Lua under `modules/home-manager/programs/{neovim,hyprland}/files/` |
+| Preset (group of enabled modules) | `modules/{nixos,home-manager}/presets/<name>.nix`, using `lib.mkDefault` |
 
-## `my.lib` helpers for services
+## Skills
 
-- `my.lib.options.mkAddressOption name`, `mkPortOption name default`, `mkOpenFirewallOption name`, `mkReverseProxyOptions name`, `mkEnvironmentFileOption(s) name`
-- `my.lib.caddy.mkReverseProxy cfg` assigned to `my.services.caddy.reverseProxyHosts`
-- `my.lib.ociContainers` (rootless Podman helpers), `my.lib.const` (domains, ports, wireguard), `my.lib.colors`
+Repo-local skills in `.agents/skills/`:
 
-## Service module template
-
-Copy this shape (real example: `modules/nixos/services/ntfy.nix`). HM program example: `modules/home-manager/programs/btop.nix`.
-
-```nix
-{
-  my,
-  config,
-  lib,
-  ...
-}: let
-  cfg = config.my.services.foo;
-in {
-  options.my.services.foo = let
-    serviceName = "foo";
-  in {
-    enable = lib.mkEnableOption serviceName;
-    address = my.lib.options.mkAddressOption serviceName;
-    port = my.lib.options.mkPortOption serviceName 8080;
-    openFirewall = my.lib.options.mkOpenFirewallOption serviceName;
-    reverseProxy = my.lib.options.mkReverseProxyOptions serviceName;
-  };
-
-  config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port];
-    services.foo = {
-      enable = true;
-      settings = {
-        listen = "${cfg.address}:${toString cfg.port}";
-        base-url = "https://${cfg.reverseProxy.domain}";
-      };
-    };
-    my.services.caddy.reverseProxyHosts = my.lib.caddy.mkReverseProxy cfg;
-  };
-}
-```
+- `new-nixos-service`: use when adding a service that has an upstream NixOS module
+- `new-package`: use when software is not in nixpkgs (`pkgs/` workflow)
+- `oci-container-service`: use when only a container image exists (rootless Podman)
+- `overlay-patch`: use when a nixpkgs package is broken or needs a patch (`overlays/`)
