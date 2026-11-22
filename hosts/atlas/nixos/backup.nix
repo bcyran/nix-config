@@ -6,6 +6,80 @@
   ...
 }: let
   replicasStore = my.lib.const.paths.atlas.replicas;
+  resticCommonArgs = [
+    "--group-by host,tags"
+    "--retry-lock 2h"
+  ];
+  mkManageLatest = {
+    host,
+    tag,
+    snapshotsGlob,
+    latestSnapshotPath,
+  }:
+    pkgs.writeShellApplication {
+      name = "restic-${host}-${tag}-latest";
+      runtimeInputs = [
+        pkgs.btrfs-progs
+        pkgs.coreutils
+        pkgs.findutils
+      ];
+      text = ''
+        if [ "$1" = prepare ]; then
+          snapshot="$(
+            find ${snapshotsGlob} -maxdepth 0 -type d 2>/dev/null | sort | tail -n 1 || true
+          )"
+          if [ -z "$snapshot" ]; then
+            echo "No snapshot found matching ${snapshotsGlob}" >&2
+            exit 1
+          fi
+          if [ -e "${latestSnapshotPath}" ]; then
+            btrfs subvolume delete "${latestSnapshotPath}"
+          fi
+          btrfs subvolume snapshot "$snapshot" "${latestSnapshotPath}"
+        elif [ "$1" = cleanup ]; then
+          if [ -e "${latestSnapshotPath}" ]; then
+            btrfs subvolume delete "${latestSnapshotPath}"
+          fi
+        else
+          echo "Usage: $0 prepare|cleanup" >&2
+          exit 1
+        fi
+      '';
+    };
+  mkResticBackupFromBtrbkSnapshots = {
+    host,
+    tag,
+    snapshotsGlob,
+    time,
+  }: let
+    latestSnapshotPath = "${builtins.dirOf snapshotsGlob}/restic-${host}-${tag}-latest";
+    manageLatest = mkManageLatest {
+      inherit host tag snapshotsGlob latestSnapshotPath;
+    };
+  in {
+    initialize = true;
+    dynamicFilesFrom = "echo ${latestSnapshotPath}";
+    backupPrepareCommand = "${lib.getExe manageLatest} prepare";
+    backupCleanupCommand = "${lib.getExe manageLatest} cleanup";
+    extraBackupArgs =
+      [
+        "--host ${host}"
+        "--tag ${tag}"
+      ]
+      ++ resticCommonArgs;
+    pruneOpts =
+      [
+        "--keep-daily 7"
+      ]
+      ++ resticCommonArgs;
+    timerConfig = {
+      OnCalendar = time;
+      Persistent = true;
+    };
+    passwordFile = config.sops.secrets.restic_password_file.path;
+    environmentFile = config.sops.secrets.restic_env_file.path;
+    repositoryFile = config.sops.secrets.restic_repository_name_file.path;
+  };
 in {
   sops.secrets = {
     restic_password_file = {};
@@ -60,42 +134,7 @@ in {
       ];
     };
 
-    restic.backups = let
-      mkResticBackupFromBtrbkSnapshots = {
-        host,
-        tag,
-        snapshotsGlob,
-        time,
-      }: let
-        commonArgs = [
-          "--group-by host,tags"
-          "--retry-lock 2h"
-        ];
-      in {
-        initialize = true;
-        dynamicFilesFrom = ''
-          find ${snapshotsGlob} -maxdepth 0 -type d | sort | tail -n 1
-        '';
-        extraBackupArgs =
-          [
-            "--host ${host}"
-            "--tag ${tag}"
-          ]
-          ++ commonArgs;
-        pruneOpts =
-          [
-            "--keep-daily 7"
-          ]
-          ++ commonArgs;
-        timerConfig = {
-          OnCalendar = time;
-          Persistent = true;
-        };
-        passwordFile = config.sops.secrets.restic_password_file.path;
-        environmentFile = config.sops.secrets.restic_env_file.path;
-        repositoryFile = config.sops.secrets.restic_repository_name_file.path;
-      };
-    in {
+    restic.backups = {
       atlas-root = mkResticBackupFromBtrbkSnapshots {
         host = "atlas";
         tag = "root";
