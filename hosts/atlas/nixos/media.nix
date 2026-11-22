@@ -3,7 +3,7 @@
   my,
   ...
 }: let
-  inherit (my.lib.const.paths.atlas) downloads slowMedia fastMedia;
+  inherit (my.lib.const.paths.atlas) downloads media;
   inherit (my.lib.network) mkCidr;
   intraDomain = my.lib.const.domains.intra;
   mediaGroup = "media";
@@ -85,21 +85,21 @@ in {
       reverseProxy.domain = "sonarr.${intraDomain}";
       group = mediaGroup;
       vpnNamespace = vpnNs;
-      mediaDir = "${slowMedia}/tv";
+      mediaDir = "${media}/tv";
     };
     radarr = {
       enable = true;
       reverseProxy.domain = "radarr.${intraDomain}";
       group = mediaGroup;
       vpnNamespace = vpnNs;
-      mediaDir = "${slowMedia}/movies";
+      mediaDir = "${media}/movies";
     };
     lidarr = {
       enable = true;
       reverseProxy.domain = "lidarr.${intraDomain}";
       group = mediaGroup;
       vpnNamespace = vpnNs;
-      mediaDir = "${fastMedia}/music/lidarr";
+      mediaDir = "${media}/music/lidarr";
     };
     spotdl = {
       enable = true;
@@ -107,14 +107,14 @@ in {
       web.enable = false;
       environmentFile = config.sops.secrets.spotdl_env_file.path;
       group = mediaGroup;
-      mediaDir = "${fastMedia}/music/youtube";
+      mediaDir = "${media}/music/youtube";
     };
     pinchflat = {
       enable = true;
       reverseProxy.domain = "pinchflat.${intraDomain}";
       environmentFile = config.sops.secrets.pinchflat_env_file.path;
       group = mediaGroup;
-      mediaDir = "${slowMedia}/youtube";
+      mediaDir = "${media}/youtube";
     };
     bazarr = {
       enable = true;
@@ -149,7 +149,7 @@ in {
       enable = true;
       group = mediaGroup;
       reverseProxy.domain = "calibre.${intraDomain}";
-      calibreLibrary = "${fastMedia}/ebooks/calibre";
+      calibreLibrary = "${media}/ebooks/calibre";
     };
     audiobookshelf = {
       enable = true;
@@ -158,7 +158,7 @@ in {
     };
     kiwix = {
       enable = true;
-      libraryPath = "${slowMedia}/kiwix";
+      libraryPath = "${media}/kiwix";
       reverseProxy.domain = "kiwix.${intraDomain}";
     };
   };

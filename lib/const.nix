@@ -115,8 +115,7 @@ rec {
     atlas = rec {
       slowStore = "/mnt/slow_store";
       fastStore = "/mnt/fast_store";
-      slowMedia = "${slowStore}/media";
-      fastMedia = "${fastStore}/media";
+      media = "${slowStore}/media";
       replicas = "${slowStore}/replicas";
       downloads = "${fastStore}/downloads";
       slowMisc = "${slowStore}/misc";

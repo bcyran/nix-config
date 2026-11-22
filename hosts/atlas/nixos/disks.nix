@@ -213,7 +213,6 @@ in {
                       mountOptions = ssdBtrfsMountOptions;
                     };
                     "@fast_store/downloads" = {};
-                    "@fast_store/media" = {};
                     "@fast_store/misc" = {};
                   };
                 };

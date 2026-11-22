@@ -193,19 +193,19 @@ in {
         }
         {
           name = "Music YT";
-          path = "${my.lib.const.paths.atlas.fastMedia}/music/youtube";
+          path = "${my.lib.const.paths.atlas.media}/music/youtube";
           type = "sendonly";
           devices = ["slimbook"];
         }
         {
           name = "Music Lidarr";
-          path = "${my.lib.const.paths.atlas.fastMedia}/music/lidarr";
+          path = "${my.lib.const.paths.atlas.media}/music/lidarr";
           type = "sendonly";
           devices = ["slimbook"];
         }
         {
           name = "Ebooks";
-          path = "${my.lib.const.paths.atlas.fastMedia}/ebooks/calibre";
+          path = "${my.lib.const.paths.atlas.media}/ebooks/calibre";
           devices = ["slimbook"];
         }
       ];
