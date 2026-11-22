@@ -212,7 +212,6 @@ in {
                       mountpoint = "/var/lib";
                       mountOptions = ssdBtrfsMountOptions;
                     };
-                    "@fast_store/backup" = {};
                     "@fast_store/downloads" = {};
                     "@fast_store/media" = {};
                     "@fast_store/misc" = {};

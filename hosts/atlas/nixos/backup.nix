@@ -5,7 +5,6 @@
   pkgs,
   ...
 }: let
-  backupStore = my.lib.const.paths.atlas.backup;
   replicasStore = my.lib.const.paths.atlas.replicas;
 in {
   sops.secrets = {
@@ -112,7 +111,7 @@ in {
       slimbook-home = mkResticBackupFromBtrbkSnapshots {
         host = "slimbook";
         tag = "home";
-        snapshotsGlob = "${backupStore}/slimbook/home.*";
+        snapshotsGlob = "${replicasStore}/slimbook/home.*";
         time = "03:00";
       };
     };
@@ -135,50 +134,17 @@ in {
     })
   ];
 
-  systemd.services =
-    (
-      let
-        notifyFailedServices = [
-          "btrbk-root"
-          "btrbk-fast_store"
-          "restic-backups-atlas-root"
-          "restic-backups-atlas-var_lib"
-          "restic-backups-slimbook-home"
-        ];
-        mkOnFailure = serviceName: {
-          onFailure = ["ntfy-failed@${serviceName}.service"];
-        };
-      in
-        lib.genAttrs notifyFailedServices mkOnFailure
-    )
-    // {
-      btrsync = let
-        src = "${backupStore}/slimbook";
-        dst = "${replicasStore}/slimbook";
-      in {
-        description = "Btrfs snapshot synchronization service";
-        serviceConfig.Type = "oneshot";
-        script = ''
-          ${lib.getExe pkgs.btrsync} --no-confirm --create-destpath --verbose ${src}/ ${dst}/
-
-          # btrsync doesn't clean up subvolumes that no longer exist in the source.
-          declare -A src_subvols
-          for entry in ${src}/*/; do
-            [[ -d "$entry" ]] || continue
-            src_subvols["$(basename "$entry")"]=1
-          done
-
-          for entry in ${dst}/*/; do
-            [[ -d "$entry" ]] || continue
-            name="$(basename "$entry")"
-            if [[ -z "''${src_subvols[$name]+x}" ]]; then
-              echo "Deleting stale subvolume: ${dst}/$name"
-              ${lib.getExe' pkgs.btrfs-progs "btrfs"} subvolume delete "${dst}/$name"
-            fi
-          done
-        '';
-        startAt = "*-*-* 00:00:00";
-        onFailure = ["ntfy-failed@btrsync.service"];
-      };
+  systemd.services = let
+    notifyFailedServices = [
+      "btrbk-root"
+      "btrbk-fast_store"
+      "restic-backups-atlas-root"
+      "restic-backups-atlas-var_lib"
+      "restic-backups-slimbook-home"
+    ];
+    mkOnFailure = serviceName: {
+      onFailure = ["ntfy-failed@${serviceName}.service"];
     };
+  in
+    lib.genAttrs notifyFailedServices mkOnFailure;
 }

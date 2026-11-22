@@ -131,14 +131,14 @@
     inherit (my.lib.const) lan paths;
     snapshotRetention = "14d";
     snapshotRetentionMin = "3d";
-    backupStore = "ssh://${lan.devices.atlas.domain}${paths.atlas.backup}";
+    replicasStore = "ssh://${lan.devices.atlas.domain}${paths.atlas.replicas}";
   in {
     onCalendar = "hourly";
     settings = {
       volume."/" = {
         subvolume = "/home";
         snapshot_dir = "/.snapshots";
-        target = "${backupStore}/slimbook";
+        target = "${replicasStore}/slimbook";
         ssh_user = "btrbk";
         ssh_identity = config.sops.secrets.btrbk_ssh_key.path;
         target_preserve = snapshotRetention;
