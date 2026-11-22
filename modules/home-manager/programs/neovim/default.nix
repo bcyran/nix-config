@@ -4,7 +4,6 @@
   lib,
   ...
 }: let
-  inherit (lib.trivial) boolToString;
   cfg = config.my.programs.neovim;
 
   kittyBin = "${pkgs.kitty}/bin/kitty";
@@ -12,9 +11,6 @@
 in {
   options.my.programs.neovim = {
     enable = lib.mkEnableOption "neovim";
-    settings = {
-      codeium.enable = lib.mkEnableOption "codeium";
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -58,14 +54,6 @@ in {
       };
 
       "nvim/markdownlint.json".source = ./files/markdownlint.json;
-
-      "nvim/lua/config/settings.lua".text = ''
-        local settings = {
-          codeium_enabled = ${boolToString cfg.settings.codeium.enable},
-        }
-
-        return settings
-      '';
     };
 
     xdg.desktopEntries.nvim = {
