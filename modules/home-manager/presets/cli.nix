@@ -30,6 +30,7 @@ in {
         omp.enable = mkDefault true;
         herdr.enable = mkDefault true;
         glow.enable = mkDefault true;
+        lazygit.enable = mkDefault true;
       };
     };
 
