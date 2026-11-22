@@ -65,6 +65,7 @@ in {
       llamaCppPackage = pkgs.llama-cpp-cuda;
       gpuMonitoringTools = [config.hardware.nvidia.package.bin];
       modelsDir = "${my.lib.const.paths.atlas.models}/llama";
+      ttl = 900;
       reverseProxy.domain = "llama.${intraDomain}";
       environmentFile = config.sops.secrets.llama_swap_env_file.path;
       models = let
