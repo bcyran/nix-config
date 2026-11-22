@@ -177,5 +177,9 @@ in {
       modelsDir = "${my.lib.const.paths.atlas.models}/comfyui";
       reverseProxy.domain = "comfyui.${intraDomain}";
     };
+    forgejo-mcp = {
+      enable = true;
+      reverseProxy.domain = "forgejo-mcp.${intraDomain}";
+    };
   };
 }
