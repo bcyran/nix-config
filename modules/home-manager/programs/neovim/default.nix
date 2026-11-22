@@ -4,7 +4,6 @@
   lib,
   ...
 }: let
-  inherit (lib) types;
   inherit (lib.trivial) boolToString;
   cfg = config.my.programs.neovim;
 
@@ -15,12 +14,6 @@ in {
     enable = lib.mkEnableOption "neovim";
     settings = {
       codeium.enable = lib.mkEnableOption "codeium";
-      copilot = {
-        enable = lib.mkOption {
-          type = types.bool;
-          default = true;
-        };
-      };
     };
   };
 
@@ -68,7 +61,6 @@ in {
 
       "nvim/lua/config/settings.lua".text = ''
         local settings = {
-          copilot_enabled = ${boolToString cfg.settings.copilot.enable},
           codeium_enabled = ${boolToString cfg.settings.codeium.enable},
         }
 
