@@ -5,61 +5,18 @@
   ...
 }: let
   intraDomain = my.lib.const.domains.intra;
-  agentsGroup = "agents";
-  agentsDir = "/var/lib/agents";
 in {
   sops.secrets = {
-    opencode_env_file = {
-      restartUnits = ["opencode.service"];
-    };
-    openchamber_env_file = {
-      restartUnits = ["openchamber.service"];
-    };
     llama_swap_env_file = {
       restartUnits = ["llama-swap.service"];
     };
   };
 
-  users.groups.${agentsGroup} = {
-    # Allow the human user to access files created by agent service users.
-    members = [config.my.user.name];
-  };
-
-  # Ensure common agents directory exists.
-  # Mode 2770: setgid ensures new subdirectories (e.g. cloned repos) inherit
-  # the agents group, so service users can write to them.
-  # NOTE: existing repos need a one-time fix:
-  #   chown -R :agents /var/lib/agents && chmod -R g+rw /var/lib/agents
-  # For ongoing correct permissions inside repos also run:
-  #   git config core.sharedRepository group
   systemd.tmpfiles.rules = [
-    "d ${agentsDir} 2770 ${config.my.user.name} ${agentsGroup} -"
     "d ${my.lib.const.paths.atlas.models} 0755 root root -"
   ];
 
   my.services = {
-    opencode = {
-      enable = true;
-      group = agentsGroup;
-      workingDirectory = agentsDir;
-      git = {
-        sshKeyFile = "/var/lib/opencode/.ssh/id_ed25519";
-        userName = config.my.user.fullName;
-        userEmail = config.my.user.email;
-      };
-    };
-    openchamber = {
-      enable = true;
-      group = agentsGroup;
-      reverseProxy.domain = "openchamber.${intraDomain}";
-      environmentFile = config.sops.secrets.openchamber_env_file.path;
-      workingDirectory = agentsDir;
-      git = {
-        sshKeyFile = "/var/lib/openchamber/.ssh/id_ed25519";
-        userName = config.my.user.fullName;
-        userEmail = config.my.user.email;
-      };
-    };
     llama-swap = {
       enable = true;
       llamaCppPackage = pkgs.llama-cpp-cuda;
