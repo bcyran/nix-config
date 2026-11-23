@@ -28,11 +28,6 @@ in {
       models = let
         kvCacheCompact = ["--cache-type-k q8_0" "--cache-type-v q8_0"];
         kvCacheExtraCompact = ["--cache-type-k q8_0" "--cache-type-v q4_0"];
-        qwenMtp = [
-          "--spec-type draft-mtp"
-          "--spec-draft-model ${my.lib.const.paths.atlas.models}/llama/mtp-Qwen3.8-27B-Q4_0.gguf"
-          "--spec-draft-n-max 3"
-        ];
       in {
         qwen38 = {
           name = "Qwen 3.8 27B";
@@ -41,20 +36,15 @@ in {
           extraArgs =
             ["--temp 1.0" "--top-p 0.95" "--top-k 20" "--min-p 0"]
             ++ kvCacheExtraCompact
-            ++ qwenMtp
-            # For most chats we disable multimodal projection but keep auto slots for better parallelism.
-            ++ ["--no-mmproj"];
-        };
-        qwen38-multimodal = {
-          name = "Qwen 3.8 27B (multimodal)";
-          hf = "unsloth/Qwen3.8-27B-GGUF:UD-Q4_K_M";
-          contextSize = 131072;
-          extraArgs =
-            ["--temp 1.0" "--top-p 0.95" "--top-k 20" "--min-p 0"]
-            ++ kvCacheExtraCompact
-            ++ qwenMtp
-            # With multimodal projection, we only have enough VRAM for 1 slot.
-            ++ ["--parallel 1"];
+            ++ [
+              "--spec-type draft-mtp"
+              "--spec-draft-model ${my.lib.const.paths.atlas.models}/llama/mtp-Qwen3.8-27B-Q4_0.gguf"
+              "--spec-draft-n-max 3"
+              # The GPU has no room for the vision tower at this context size.
+              # Keep it in host RAM: image requests are slower but I use it only occasionally so it's a good compromise.
+              "--no-mmproj-offload"
+              "--image-min-tokens 1024"
+            ];
         };
         qwen3-coder = {
           name = "Qwen 3 Coder 30B";
