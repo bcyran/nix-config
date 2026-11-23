@@ -28,6 +28,9 @@ in {
       models = let
         kvCacheCompact = ["--cache-type-k q8_0" "--cache-type-v q8_0"];
         kvCacheExtraCompact = ["--cache-type-k q8_0" "--cache-type-v q4_0"];
+        # llama.cpp defaults to top_k 40 and min_p 0.05; vendors that only
+        # specify temp/top_p want both filters disabled.
+        noExtraFilters = ["--top-k 0" "--min-p 0"];
       in {
         qwen38 = {
           name = "Qwen 3.8 27B";
@@ -58,7 +61,7 @@ in {
           name = "North Mini Code";
           hf = "unsloth/North-Mini-Code-1.0-GGUF:UD-Q4_K_S";
           contextSize = 131072;
-          extraArgs = ["--temp 1.0" "--top-p 0.95"];
+          extraArgs = ["--temp 1.0" "--top-p 0.95"] ++ noExtraFilters;
         };
         glm47-flash = {
           name = "GLM 4.7 Flash";
@@ -70,14 +73,15 @@ in {
           name = "Nemotron Cascade 2";
           hf = "bartowski/nvidia_Nemotron-Cascade-2-30B-A3B-GGUF:IQ4_XS";
           contextSize = 131072;
-          extraArgs = ["--temp 1.0" "--top-p 0.95"];
+          extraArgs = ["--temp 1.0" "--top-p 0.95"] ++ noExtraFilters;
         };
         devstral-small2 = {
           name = "Devstral Small 2";
           hf = "unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF:UD-Q3_K_XL";
           contextSize = 131072;
           extraArgs =
-            ["--temp 0.15"]
+            ["--temp 0.15" "--top-p 1.0"]
+            ++ noExtraFilters
             ++ kvCacheExtraCompact;
         };
         flint = {
@@ -90,14 +94,14 @@ in {
           name = "Gemma 4 26B A4B";
           hf = "unsloth/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
           contextSize = 131072;
-          extraArgs = ["--temp 1.0" "--top-p 0.95" "--top-k 64"];
+          extraArgs = ["--temp 1.0" "--top-p 0.95" "--top-k 64" "--min-p 0"];
         };
         gemma4-31b = {
           name = "Gemma 4 31B";
           hf = "unsloth/gemma-4-31B-it-qat-GGUF:UD-Q4_K_XL";
           contextSize = 65536;
           extraArgs =
-            ["--temp 1.0" "--top-p 0.95" "--top-k 64"]
+            ["--temp 1.0" "--top-p 0.95" "--top-k 64" "--min-p 0"]
             ++ kvCacheCompact
             ++ [
               "--spec-type draft-mtp"
@@ -110,6 +114,7 @@ in {
           name = "Gemma 4 12B";
           hf = "unsloth/gemma-4-12B-it-qat-GGUF:UD-Q4_K_XL";
           contextSize = 16384;
+          extraArgs = ["--temp 1.0" "--top-p 0.95" "--top-k 64" "--min-p 0"];
         };
       };
     };
