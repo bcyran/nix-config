@@ -144,6 +144,10 @@ in {
               type = "local";
               command = [(lib.getExe pkgs.mcp-nixos)];
             };
+            context7 = {
+              type = "local";
+              command = [(lib.getExe pkgs.context7-mcp)];
+            };
           };
         }
         // lib.optionalAttrs (providers != {}) {inherit providers;};
