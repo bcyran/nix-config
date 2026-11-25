@@ -10,6 +10,10 @@ in {
     llama_swap_env_file = {
       restartUnits = ["llama-swap.service"];
     };
+    nextcloud_context_agent_env_file = {
+      owner = config.my.services.nextcloud-context-agent.user;
+      restartUnits = ["${config.virtualisation.oci-containers.backend}-nextcloud-context-agent.service"];
+    };
   };
 
   systemd.tmpfiles.rules = [
@@ -132,6 +136,11 @@ in {
     forgejo-mcp = {
       enable = true;
       reverseProxy.domain = "forgejo-mcp.${intraDomain}";
+    };
+    nextcloud.taskProcessingWorkers = 1;
+    nextcloud-context-agent = {
+      enable = true;
+      environmentFile = config.sops.secrets.nextcloud_context_agent_env_file.path;
     };
   };
 }
