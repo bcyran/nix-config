@@ -21,6 +21,16 @@ in {
     whiteboardEnvironmentFiles = my.lib.options.mkEnvironmentFilesOption "Nextcloud Whiteboard";
     email = my.lib.options.mkEmailOptions serviceName config;
 
+    taskProcessingWorkers = lib.mkOption {
+      type = lib.types.ints.unsigned;
+      default = 0;
+      example = 4;
+      description = ''
+        Number of workers that process AI tasks as soon as they are scheduled.
+        Without them, AI tasks run only with background jobs (every 5 minutes).
+      '';
+    };
+
     caddyExtraConfig = lib.mkOption {
       type = lib.types.lines;
       default = "";
@@ -30,6 +40,21 @@ in {
 
   config = lib.mkIf cfg.enable {
     users.groups.nextcloud.members = ["nextcloud" caddyCfg.user];
+
+    # https://docs.nextcloud.com/server/stable/admin_manual/ai/overview.html#improve-ai-task-pickup-speed
+    systemd.services = lib.listToAttrs (map (i:
+      lib.nameValuePair "nextcloud-ai-worker-${toString i}" {
+        description = "Nextcloud AI task worker ${toString i}";
+        wantedBy = ["multi-user.target"];
+        requires = ["nextcloud-setup.service"];
+        after = ["nextcloud-setup.service"];
+        serviceConfig = {
+          User = "nextcloud";
+          # The worker exits after the timeout, so that it picks up config changes.
+          ExecStart = "${config.services.nextcloud.occ}/bin/nextcloud-occ taskprocessing:worker -t 300";
+          Restart = "always";
+        };
+      }) (lib.range 1 cfg.taskProcessingWorkers));
 
     services = {
       nextcloud = {
@@ -58,10 +83,16 @@ in {
             richdocuments
             tables
             cospend
+            integration_openai
             ;
           drawio = pkgs.fetchNextcloudApp {
             sha256 = "sha256-OsNNda1TjQZ8TRGdRkKBtCTBlYosfvEU3h0dUv6omBw=";
             url = "https://github.com/arnowelzel/drawio-nextcloud/releases/download/v4.3.9/drawio-v4.3.9.tar.gz";
+            license = "agpl3Only";
+          };
+          assistant = pkgs.fetchNextcloudApp {
+            sha256 = "sha256-apKf1kiMb2WWv1gnI6RO3T2vRDfQ6hND+EV9W3+Rb0E=";
+            url = "https://github.com/nextcloud-releases/assistant/releases/download/v4.1.0/assistant-v4.1.0.tar.gz";
             license = "agpl3Only";
           };
         };
