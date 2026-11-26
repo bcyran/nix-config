@@ -137,6 +137,7 @@ in {
       enable = true;
       reverseProxy.domain = "forgejo-mcp.${intraDomain}";
     };
+    joplin-server-mcp.enable = true;
     nextcloud.taskProcessingWorkers = 1;
     nextcloud-context-agent = {
       enable = true;
