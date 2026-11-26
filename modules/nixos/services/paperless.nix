@@ -32,6 +32,7 @@ in {
       inherit (cfg) address port passwordFile;
       inherit (cfg.reverseProxy) domain;
       settings = {
+        PAPERLESS_ALLOWED_HOSTS = "127.0.0.1";
         PAPERLESS_OCR_LANGUAGE = "pol+eng";
         PAPERLESS_TIME_ZONE = "Europe/Warsaw";
       };
